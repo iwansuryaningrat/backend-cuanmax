@@ -8,11 +8,12 @@ Cuanmax is a start-up company that serve online education in focused at trade an
 
 **Tech:**
 
-- **JS (Javascript)**
+- **Javascript**
 - **NodeJS**
 - **ExpressJS**
 - **MongoDB**
 - **NPM**
+- **RESTful API**
 
 **Tools:**
 
