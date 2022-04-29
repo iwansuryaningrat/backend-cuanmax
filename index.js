@@ -19,7 +19,7 @@ app.use(
 
 app.get("/", (req, res) => {
   res.json({
-    message: "Welcome to the REST API",
+    message: "Welcome to the Cuanmax REST API",
   });
 });
 
