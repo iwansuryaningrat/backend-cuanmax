@@ -18,7 +18,9 @@ app.use(
 // MongoDB Connection
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.json({
+    message: "Welcome to the REST API",
+  });
 });
 
 app.listen(process.env.PORT, () => {
