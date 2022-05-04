@@ -3,6 +3,7 @@ module.exports = (app) => {
   const router = require("express").Router();
 
   router.get("/", playlists.findAll);
+  router.post("/", playlists.create);
 
   app.use("/api/v1/playlists", router);
 };
