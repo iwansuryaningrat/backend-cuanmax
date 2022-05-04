@@ -7,5 +7,6 @@ const db = {};
 
 db.mongoose = mongoose;
 db.url = dbConfig.url;
+db.playlists = require("./playlists.model")(mongoose);
 
 module.exports = db;

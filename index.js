@@ -22,7 +22,7 @@ db.mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log(`Database connected`);
+    console.log(`Database connected!`);
   })
   .catch((err) => {
     console.log(`Cannot connect to database!`, err);
@@ -38,3 +38,6 @@ app.get("/", (req, res) => {
 app.listen(process.env.PORT, () => {
   console.log(`Server started on port http//localhost:${process.env.PORT}`);
 });
+
+// Playlists Router
+require("./src/routes/playlists.routes")(app);

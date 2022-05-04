@@ -16,6 +16,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Playlist = mongoose.model("playlist", schema);
-  return Playlist;
+  const Playlists = mongoose.model("playlists", schema);
+  return Playlists;
 };
