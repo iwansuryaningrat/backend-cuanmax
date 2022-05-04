@@ -1,7 +1,6 @@
 // Express REST server
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
 // Load .env file
 require("dotenv").config();
 
@@ -16,6 +15,19 @@ app.use(
 );
 
 // MongoDB Connection
+const db = require("./src/models/index");
+db.mongoose
+  .connect(db.url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log(`Database connected`);
+  })
+  .catch((err) => {
+    console.log(`Cannot connect to database!`, err);
+    process.exit();
+  });
 
 app.get("/", (req, res) => {
   res.json({
