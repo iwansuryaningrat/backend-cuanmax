@@ -1,3 +1,4 @@
-module.exports = {
-  url: "mongodb://localhost:27017/collect_cuanmax",
+// MongoDB configuration
+module.export = {
+  url: "mongodb://localhost:27017/cuanmax",
 };
