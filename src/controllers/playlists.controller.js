@@ -49,3 +49,27 @@ exports.findOne = (req, res) => {
       });
     });
 };
+
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  Playlists.findByIdAndUpdate(id, req.body)
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      res.send({
+        message: "Playlist was updated",
+      });
+    })
+    .catch((err) => {
+      res.status(409).send({
+        message: err.message || "Some error while update playlist.",
+      });
+    });
+};
+
+exports.delete = (req, res) => {};
