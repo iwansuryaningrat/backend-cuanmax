@@ -1,6 +1,8 @@
 // Express REST server
 const express = require("express");
 const cors = require("cors");
+const multer = require("multer");
+const bodyParser = require("body-parser");
 // Load .env file
 require("dotenv").config();
 
@@ -39,5 +41,5 @@ app.listen(process.env.PORT, () => {
   console.log(`Server started on port http//localhost:${process.env.PORT}`);
 });
 
-// Playlists Router
-require("./src/routes/playlists.routes")(app);
+// Routers
+require("./src/routes/playlists.routes")(app); // Playlist Router
