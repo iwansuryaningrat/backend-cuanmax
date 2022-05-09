@@ -1,4 +1,4 @@
 // MongoDB configuration
 module.exports = {
-  url: "mongodb://localhost:27017/cuanmax",
+  url: "mongodb+srv://cuanmax-dev:Undip.jaya123@cuanmax.cys5n.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
 };
