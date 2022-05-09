@@ -16,6 +16,35 @@ app.use(
   })
 );
 
+// Image Uploader Setup
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./assets/foto");
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().newTime + "-" + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+app.use(
+  multer({
+    storage: fileStorage,
+    fileFilter: fileFilter,
+  }).single("image")
+);
+
 // MongoDB Connection
 const db = require("./src/models/index");
 db.mongoose

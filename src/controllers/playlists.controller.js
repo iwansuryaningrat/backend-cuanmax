@@ -18,7 +18,7 @@ exports.create = (req, res) => {
     name: req.body.name,
     category: req.body.category,
     description: req.body.description,
-    image: req.body.image,
+    image: req.file.path,
     count: 0,
   });
 
