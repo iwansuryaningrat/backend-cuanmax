@@ -7,7 +7,9 @@ module.exports = (mongoose) => {
       image: String,
       count: Number,
     },
-    { timestamp: true }
+    {
+      timestamp: true,
+    }
   );
 
   schema.method("toJSON", function () {
