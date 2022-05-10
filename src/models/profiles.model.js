@@ -21,9 +21,7 @@ module.exports = (mongoose) => {
         referalAccount: [{ username: String }],
       },
     },
-    {
-      timestamp: true,
-    }
+    { timestamps: true }
   );
 
   schema.method("toJSON", function () {
