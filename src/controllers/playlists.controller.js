@@ -19,7 +19,7 @@ exports.create = (req, res) => {
     category: req.body.category,
     description: req.body.description,
     image: req.file.path,
-    count: 0,
+    videoCount: 0,
   });
 
   playlists

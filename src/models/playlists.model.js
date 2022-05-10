@@ -5,11 +5,9 @@ module.exports = (mongoose) => {
       category: String,
       description: String,
       image: String,
-      count: Number,
+      videoCount: Number,
     },
-    {
-      timestamp: true,
-    }
+    { timestamps: true }
   );
 
   schema.method("toJSON", function () {
