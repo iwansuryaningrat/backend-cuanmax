@@ -22,7 +22,7 @@ const fileStorage = multer.diskStorage({
     cb(null, "./assets/foto");
   },
   filename: (req, file, cb) => {
-    cb(null, new Date().newTime + "-" + file.originalname);
+    cb(null, new Date().getTime() + "-" + file.originalname);
   },
 });
 
