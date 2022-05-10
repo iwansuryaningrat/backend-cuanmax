@@ -29,9 +29,7 @@ Cuanmax is a start-up company that serve online education in focused at trade an
 - **Nodemon**
 - **Nodemailer**
 - **Mongoose**
-- **Cors**
-- **midtrans-client**
-- **dotenv**
+- **etc.**
 
 **Third Party API:**
 
