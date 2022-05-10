@@ -72,3 +72,4 @@ app.listen(process.env.PORT, () => {
 
 // Routers
 require("./src/routes/playlists.routes")(app); // Playlist Router
+require("./src/routes/profiles.routes")(app); // Profiles Router
