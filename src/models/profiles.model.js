@@ -8,7 +8,7 @@ module.exports = (mongoose) => {
       image: String,
       type: {
         accountType: {
-          type: String,
+          member: String,
           startDate: Date,
           endDate: Date,
         },
