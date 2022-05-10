@@ -29,9 +29,7 @@ Cuanmax is a start-up company that serve online education in focused at trade an
 - **Nodemon**
 - **Nodemailer**
 - **Mongoose**
-- **Cors**
-- **midtrans-client**
-- **dotenv**
+- **etc.**
 
 **Third Party API:**
 
@@ -55,3 +53,5 @@ For support, please email [iwan.suryaningrat28@gmail.com](mailto:iwan.suryaningr
 ## License
 
 [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+
+https://www.loginradius.com/blog/engineering/hashing-user-passwords-using-bcryptjs/
