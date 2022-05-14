@@ -64,3 +64,4 @@ require("./src/routes/playlists.routes")(app); // Playlist Router
 require("./src/routes/profiles.routes")(app); // Profiles Router
 require("./src/routes/videos.routes")(app); // Videos Router
 require("./src/routes/signup.routes")(app); // Signup Router
+require("./src/routes/subscribers.routes")(app); // Subscribers Router

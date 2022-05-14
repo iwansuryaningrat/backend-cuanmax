@@ -1,14 +1,35 @@
 const db = require("../models/index");
-const Videos = db.videos;
+const Subscribers = db.subscribers;
 
 exports.findAll = (req, res) => {
-  Videos.find()
+  Subscribers.find()
     .then((result) => {
       res.send(result);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error while retrieving videos.",
+        message: err.message || "Some error while retrieving Subscribers.",
+      });
+    });
+};
+
+exports.create = (req, res) => {
+  const subscribers = new Subscribers({
+    email: req.body.email,
+    startDate: new Date(),
+    endDate: "",
+    status: "active",
+  });
+
+  Subscribers.save(subscribers)
+    .then((result) => {
+      res.status(200).send({
+        message: "Playlist successfully added.",
+      });
+    })
+    .catch((err) => {
+      res.status(409).send({
+        message: err.message || "Some error while creating Subscribers.",
       });
     });
 };
@@ -16,13 +37,13 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Videos.findById(id)
+  Subscribers.findById(id)
     .then((result) => {
       res.send(result);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error while showing video.",
+        message: err.message || "Some error while showing Subscribers.",
       });
     });
 };
@@ -30,7 +51,7 @@ exports.findOne = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Videos.findByIdAndRemove(id)
+  Subscribers.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
         res.status(404).send({
@@ -44,7 +65,7 @@ exports.delete = (req, res) => {
     })
     .catch((err) => {
       res.status(409).send({
-        message: err.message || "Some error while delete video.",
+        message: err.message || "Some error while delete playlist.",
       });
     });
 };
