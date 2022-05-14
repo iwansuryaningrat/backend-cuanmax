@@ -12,3 +12,5 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+exports.create = (req, res) => {};
