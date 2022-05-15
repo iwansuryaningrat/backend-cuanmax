@@ -55,3 +55,4 @@ require("./src/routes/videos.routes")(app); // Videos Router
 require("./src/routes/signup.routes")(app); // Signup Router
 require("./src/routes/subscribers.routes")(app); // Subscribers Router
 require("./src/routes/message.routes")(app); // Message Router
+require("./src/routes/pricing.routes")(app); // Pricing Router
