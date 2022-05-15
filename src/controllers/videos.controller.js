@@ -1,5 +1,5 @@
 const db = require("../models/index");
-const Videos = db.Videos;
+const Videos = db.videos;
 
 exports.findAll = (req, res) => {
   Videos.find()
