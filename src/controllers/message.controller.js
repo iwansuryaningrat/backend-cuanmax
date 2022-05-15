@@ -1,3 +1,4 @@
+const { message } = require("../models/index");
 const db = require("../models/index");
 const Message = db.message;
 
@@ -15,11 +16,12 @@ exports.findAll = (req, res) => {
 
 exports.create = (req, res) => {
   const message = new Message({
-    name: req.body.name,
-    category: req.body.category,
-    description: req.body.description,
-    image: req.file.path,
-    videoCount: 0,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    subject: req.body.subject,
+    message: req.body.message,
+    status: "Unreaded",
   });
 
   Message.save(message)
