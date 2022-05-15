@@ -1,3 +1,5 @@
+const multer = require("multer");
+
 // Image Uploader Setup
 exports.imageStorage = multer.diskStorage({
   destination: (req, file, cb) => {

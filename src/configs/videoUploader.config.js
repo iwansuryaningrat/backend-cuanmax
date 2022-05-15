@@ -1,3 +1,5 @@
+const multer = require("multer");
+
 // Video Uploader Setup
 exports.videoStorage = multer.diskStorage({
   destination: (req, file, cb) => {
