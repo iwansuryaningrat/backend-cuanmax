@@ -6,6 +6,10 @@ const bodyParser = require("body-parser");
 // Load .env file
 require("dotenv").config();
 
+// Load File Configuration
+const imageConfig = require("./src/configs/imageUploader.config");
+const videoConfig = require("./src/configs/videoUploader.config");
+
 const app = express();
 
 app.use(cors());
@@ -16,33 +20,18 @@ app.use(
   })
 );
 
-// Image Uploader Setup
-const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./assets/foto");
-  },
-  filename: (req, file, cb) => {
-    cb(null, new Date().getTime() + "-" + file.originalname);
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
+app.use(
+  multer({
+    storage: imageConfig.imageStorage,
+    fileFilter: imageConfig.imageFilter,
+  }).single("image")
+);
 
 app.use(
   multer({
-    storage: fileStorage,
-    fileFilter: fileFilter,
-  }).single("image")
+    storage: videoConfig.videoStorage,
+    fileFilter: videoConfig.videoFilter,
+  }).single("video")
 );
 
 // MongoDB Connection
