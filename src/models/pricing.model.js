@@ -1,10 +1,19 @@
 module.exports = (mongoose) => {
   const schema = mongoose.Schema(
     {
-      memberName: String,
-      duration: String,
+      memberName: {
+        type: String,
+        require: true,
+      },
+      duration: {
+        type: String,
+        require: true,
+      },
       price: Number,
-      discountPrice: Number,
+      discountPrice: {
+        type: Number,
+        require: true,
+      },
       currency: String,
       feature: [{ name: String, status: Boolean }],
     },

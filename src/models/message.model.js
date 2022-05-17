@@ -3,9 +3,18 @@ module.exports = (mongoose) => {
     {
       firstName: String,
       lastName: String,
-      email: String,
-      subject: String,
-      message: String,
+      email: {
+        type: String,
+        require: true,
+      },
+      subject: {
+        type: String,
+        require: true,
+      },
+      message: {
+        type: String,
+        require: true,
+      },
       status: String,
     },
     { timestamps: true }

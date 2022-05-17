@@ -1,10 +1,19 @@
 module.exports = (mongoose) => {
   const schema = mongoose.Schema(
     {
-      title: String,
+      title: {
+        type: String,
+        require: true,
+      },
       description: String,
-      url: String,
-      image: String,
+      url: {
+        type: String,
+        require: true,
+      },
+      image: {
+        type: String,
+        default: "",
+      },
       playlist: {
         id: String,
         name: String,
