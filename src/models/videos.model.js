@@ -10,7 +10,7 @@ module.exports = (mongoose) => {
         type: String,
         require: true,
       },
-      image: {
+      thumbnail: {
         type: String,
         default: "",
       },
