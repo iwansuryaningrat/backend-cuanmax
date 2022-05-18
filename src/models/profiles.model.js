@@ -29,7 +29,10 @@ module.exports = (mongoose) => {
         isAdmin: Boolean,
       },
       referal: {
-        referalCode: String,
+        referalCode: {
+          type: String,
+          unique: true,
+        },
         referalLink: String,
         referalCount: Number,
         referalAccount: [{ username: String }],
