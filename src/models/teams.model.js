@@ -30,6 +30,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Message = mongoose.model("message", schema);
-  return Message;
+  const Teams = mongoose.model("teams", schema);
+  return Teams;
 };
