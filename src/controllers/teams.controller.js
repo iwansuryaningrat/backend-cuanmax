@@ -48,3 +48,29 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+exports.create = (req, res) => {
+  const team = new Teams({
+    name: req.body.name,
+    position: req.body.position,
+    photo: req.file.path,
+    contact: {
+      instagram: req.body.instagram,
+      facebook: req.body.facebook,
+      twitter: req.body.twitter,
+      linkedin: req.body.linkedin,
+    },
+  });
+
+  Teams.save(team)
+    .then((result) => {
+      res.status(200).send({
+        message: "Team successfully added.",
+      });
+    })
+    .catch((err) => {
+      res.status(409).send({
+        message: err.message || "Some error while creating team.",
+      });
+    });
+};
