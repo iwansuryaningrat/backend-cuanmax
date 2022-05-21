@@ -62,7 +62,8 @@ exports.create = (req, res) => {
     },
   });
 
-  Teams.save(team)
+  team
+    .save(team)
     .then((result) => {
       res.status(200).send({
         message: "Team successfully added.",
