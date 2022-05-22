@@ -1,21 +1,21 @@
 module.exports = (mongoose) => {
   const schema = mongoose.Schema(
     {
-      name: {
+      memberName: {
         type: String,
         require: true,
       },
-      category: {
+      duration: {
         type: String,
         require: true,
       },
-      description: String,
-      image: {
-        type: String,
-        default:
-          "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png",
+      price: Number,
+      discountPrice: {
+        type: Number,
+        require: true,
       },
-      videoCount: Number,
+      currency: String,
+      feature: [{ name: String, status: Boolean }],
     },
     { timestamps: true }
   );
@@ -26,6 +26,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Playlists = mongoose.model("playlists", schema);
-  return Playlists;
+  const Pricing = mongoose.model("pricing", schema);
+  return Pricing;
 };

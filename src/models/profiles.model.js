@@ -1,11 +1,25 @@
 module.exports = (mongoose) => {
   const schema = mongoose.Schema(
     {
-      name: String,
-      username: String,
-      email: String,
+      name: {
+        type: String,
+      },
+      username: {
+        type: String,
+        require: true,
+        unique: true,
+      },
+      email: {
+        type: String,
+        require: true,
+        unique: true,
+      },
       password: String,
-      image: String,
+      image: {
+        type: String,
+        default:
+          "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png",
+      },
       type: {
         accountType: {
           member: String,
@@ -15,7 +29,10 @@ module.exports = (mongoose) => {
         isAdmin: Boolean,
       },
       referal: {
-        referalCode: String,
+        referalCode: {
+          type: String,
+          unique: true,
+        },
         referalLink: String,
         referalCount: Number,
         referalAccount: [{ username: String }],
