@@ -27,6 +27,28 @@ exports.findOne = (req, res) => {
     });
 };
 
+exports.create = (req, res) => {
+  const voucher = new Vouchers({
+    voucherCode: req.body.voucherCode,
+    voucherName: req.body.voucherName,
+    voucherDescription: req.body.voucherDescription,
+    voucherDiscount: req.body.voucherDiscount,
+    voucherType: req.body.voucherType,
+    voucherExpiry: req.body.voucherExpiry,
+  });
+
+  voucher
+    .save()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error while creating voucher.",
+      });
+    });
+};
+
 exports.delete = (req, res) => {
   const id = req.params.id;
 

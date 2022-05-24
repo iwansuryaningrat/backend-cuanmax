@@ -4,6 +4,7 @@ module.exports = (app) => {
 
   router.get("/", vouchers.findAll);
   router.get("/:id", vouchers.findOne);
+  router.post("/", vouchers.create);
   router.delete("/:id", vouchers.delete);
 
   app.use("/api/v1/vouchers", router);
