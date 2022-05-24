@@ -2,7 +2,8 @@
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
+
 // Load .env file
 require("dotenv").config();
 
