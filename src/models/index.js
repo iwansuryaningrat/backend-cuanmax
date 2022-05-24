@@ -14,5 +14,6 @@ db.subscribers = require("./subscribers.model")(mongoose);
 db.message = require("./message.model")(mongoose);
 db.pricing = require("./pricing.model")(mongoose);
 db.teams = require("./teams.model")(mongoose);
+db.vouchers = require("./vouchers.model")(mongoose);
 
 module.exports = db;
