@@ -18,7 +18,18 @@ module.exports = (mongoose) => {
         type: String,
         require: true,
       },
-      feature: [{ name: String, status: Boolean }],
+      feature: [
+        {
+          name: {
+            type: String,
+            require: true,
+          },
+          status: {
+            type: Boolean,
+            require: true,
+          },
+        },
+      ],
     },
     { timestamps: true }
   );
