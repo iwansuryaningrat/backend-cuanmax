@@ -13,7 +13,6 @@ const videoConfig = require("./src/configs/videoUploader.config");
 const app = express();
 
 app.use(cors());
-app.use(bodyParser());
 app.use(express.json());
 app.use(
   express.urlencoded({
