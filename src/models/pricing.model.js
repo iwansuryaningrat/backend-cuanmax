@@ -14,7 +14,10 @@ module.exports = (mongoose) => {
         type: Number,
         require: true,
       },
-      currency: String,
+      currency: {
+        type: String,
+        require: true,
+      },
       feature: [{ name: String, status: Boolean }],
     },
     { timestamps: true }
