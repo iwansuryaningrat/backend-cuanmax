@@ -37,6 +37,22 @@ module.exports = (mongoose) => {
         referalCount: Number,
         referalAccount: [{ username: String }],
       },
+      voucher: [
+        {
+          voucherId: {
+            type: String,
+          },
+          voucherCode: {
+            type: String,
+          },
+          voucherDiscount: {
+            type: Number,
+          },
+          voucherExpiry: {
+            type: Date,
+          },
+        },
+      ],
     },
     { timestamps: true }
   );
