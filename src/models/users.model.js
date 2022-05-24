@@ -63,6 +63,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Profiles = mongoose.model("profiles", schema);
-  return Profiles;
+  const Users = mongoose.model("users", schema);
+  return Users;
 };
