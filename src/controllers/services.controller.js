@@ -52,3 +52,25 @@ exports.findOne = (req, res) => {
       });
     });
 };
+
+exports.delete = (req, res) => {
+  const id = req.params.id;
+
+  Services.findByIdAndRemove(id)
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "Service not found",
+        });
+      }
+
+      res.send({
+        message: "Service was deleted",
+      });
+    })
+    .catch((err) => {
+      res.status(409).send({
+        message: err.message || "Some error while delete service.",
+      });
+    });
+};
