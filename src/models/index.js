@@ -16,5 +16,6 @@ db.pricing = require("./pricing.model")(mongoose);
 db.teams = require("./teams.model")(mongoose);
 db.vouchers = require("./vouchers.model")(mongoose);
 db.testimoni = require("./testimoni.model")(mongoose);
+db.services = require("./services.model")(mongoose);
 
 module.exports = db;
