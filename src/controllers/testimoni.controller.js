@@ -69,3 +69,25 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  Testimoni.findByIdAndUpdate(id, req.body)
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "Testimoni not found",
+        });
+      }
+
+      res.send({
+        message: "Testimoni was updated",
+      });
+    })
+    .catch((err) => {
+      res.status(409).send({
+        message: err.message || "Some error while update testimoni.",
+      });
+    });
+};
