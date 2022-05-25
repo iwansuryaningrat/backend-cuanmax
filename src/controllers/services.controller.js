@@ -74,3 +74,25 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  Services.findByIdAndUpdate(id, req.body)
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "Service not found",
+        });
+      }
+
+      res.send({
+        message: "Service was updated",
+      });
+    })
+    .catch((err) => {
+      res.status(409).send({
+        message: err.message || "Some error while update service.",
+      });
+    });
+};
