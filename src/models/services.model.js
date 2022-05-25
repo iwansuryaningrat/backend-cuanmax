@@ -10,7 +10,7 @@ module.exports = (mongoose) => {
         type: String,
         default: "",
       },
-      benefit: [
+      benefits: [
         {
           benefitName: String,
         },
