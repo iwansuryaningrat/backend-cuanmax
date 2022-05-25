@@ -24,7 +24,8 @@ exports.create = (req, res) => {
     status: "Unreaded",
   });
 
-  Message.save(message)
+  message
+    .save()
     .then((result) => {
       res.status(200).send({
         message: "Message successfully added.",
