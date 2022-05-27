@@ -1,5 +1,6 @@
 const db = require("../models/index");
-const Profiles = db.profiles;
+const Users = db.users;
+const Vouchers = db.vouchers;
 
 // Belum Selesai
 exports.create = (req, res) => {
@@ -16,14 +17,89 @@ exports.create = (req, res) => {
     });
   }
 
-  Profiles.findOne({ referal: { referalCode: referal } }, (err, result) => {
-    if (err) {
-      return res.status(500).send({
-        message: "Error while retrieving profiles.",
-      });
+  // Validate email
+  const oldUser = Users.findOne({ email: email });
+  if (oldUser) {
+    return res.status(409).send({
+      message: "User Already Exist. Please Login",
+    });
+  }
+
+  // Find referal
+  const referalUser = Users.findOne({ referal: { referalCode: referal } });
+  if (!referalUser) {
+    return res.status(409).send({
+      message: "Referal Code is not valid",
+    });
+  } else {
+    referalUser.referal.referalCount += 1;
+    referalUser.referal.referalAccount.push({ username: username });
+    referalUser.save();
+
+    let voucher = Vouchers.findOne({ voucherCode: "CUANMAX2021" });
+    if (voucher && voucher.voucherNumber > 0) {
+      voucher.voucherNumber -= 1;
+      voucher.save();
     }
-    if (result) {
-      Profiles.findOneAndUpdate(result.id);
-    }
+  }
+
+  //Encrypt user password
+  encryptedPassword = bcrypt.hash(password, 10);
+
+  // Create new user
+  const newUser = new Users({
+    name: name,
+    username: username,
+    email: email.toLowerCase(),
+    password: encryptedPassword,
+    type: {
+      accountType: {
+        member: "Member",
+        startDate: new Date(),
+      },
+      isAdmin: admin,
+    },
+    referal: {
+      referalCode: username.toUpperCase(),
+      referalLink: ``,
+      referalCount: 0,
+      referalAccount: [],
+    },
+    voucher: [
+      {
+        voucherCode: "CUANMAX2021",
+        voucherExpiry: new Date().setDate(new Date().getDate() + 30),
+      },
+    ],
   });
+
+  // Save new user
+  newUser
+    .save()
+    .then((data) => {
+      // Create token
+      const token = jwt.sign(
+        {
+          user: {
+            id: newUser._id,
+            name: newUser.name,
+            username: newUser.username,
+            email: newUser.email,
+          },
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1h",
+        }
+      );
+
+      data.token = token;
+
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while creating the User.",
+      });
+    });
 };
