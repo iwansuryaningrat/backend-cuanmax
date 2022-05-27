@@ -1,6 +1,9 @@
 const db = require("../models/index");
 const Users = db.users;
 const Vouchers = db.vouchers;
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const bcrypt = require("bcrypt");
 
 // Belum Selesai
 exports.create = (req, res) => {
