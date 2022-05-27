@@ -39,14 +39,8 @@ module.exports = (mongoose) => {
       },
       voucher: [
         {
-          voucherId: {
-            type: String,
-          },
           voucherCode: {
             type: String,
-          },
-          voucherDiscount: {
-            type: Number,
           },
           voucherExpiry: {
             type: Date,
