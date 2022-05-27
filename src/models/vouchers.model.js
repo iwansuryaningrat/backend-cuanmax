@@ -15,6 +15,9 @@ module.exports = (mongoose) => {
         type: Number,
         require: true,
       },
+      voucherNumber: {
+        type: Number,
+      },
       voucherType: {
         type: String,
         require: true,
