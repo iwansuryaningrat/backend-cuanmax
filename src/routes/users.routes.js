@@ -4,8 +4,8 @@ module.exports = (app) => {
   const router = require("express").Router();
 
   router.get("/", auth.auth, users.findAll);
-  router.get("/:id", users.findOne);
-  router.delete("/:id", users.delete);
+  router.get("/:id", auth.auth, users.findOne);
+  router.delete("/:id", auth.auth, users.delete);
 
   app.use("/api/v1/users", router);
 };
