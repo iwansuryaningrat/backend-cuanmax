@@ -6,7 +6,7 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 
 // Belum Selesai
-exports.create = (req, res) => {
+exports.signup = (req, res) => {
   const name = req.body.name;
   const username = req.body.username;
   const email = req.body.email;
