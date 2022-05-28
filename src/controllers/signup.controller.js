@@ -6,7 +6,7 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 
 // Belum Selesai
-exports.signup = (req, res) => {
+exports.signup = async (req, res) => {
   const name = req.body.name;
   const username = req.body.username;
   const email = req.body.email;
@@ -21,7 +21,7 @@ exports.signup = (req, res) => {
   }
 
   // Validate email
-  const oldUser = Users.findOne({ email: email });
+  const oldUser = await Users.findOne({ email: email });
   if (oldUser) {
     return res.status(409).send({
       message: "User Already Exist. Please Login",
@@ -29,25 +29,30 @@ exports.signup = (req, res) => {
   }
 
   // Find referal
-  const referalUser = Users.findOne({ referal: { referalCode: referal } });
-  if (!referalUser) {
-    return res.status(409).send({
-      message: "Referal Code is not valid",
-    });
-  } else {
-    referalUser.referal.referalCount += 1;
-    referalUser.referal.referalAccount.push({ username: username });
-    referalUser.save();
+  if (referal) {
+    const referalUser = Users.findOne({ referal: { referalCode: referal } });
+    if (!referalUser) {
+      return res.status(409).send({
+        message: "Referal Code is not valid",
+      });
+    } else {
+      referalUser.referal.referalCount += 1;
+      referalUser.referal.referalAccount.push({ username: username });
+      referalUser.save();
 
-    let voucher = Vouchers.findOne({ voucherCode: "CUANMAX2021" });
-    if (voucher && voucher.voucherNumber > 0) {
-      voucher.voucherNumber -= 1;
-      voucher.save();
+      let voucher = Vouchers.findOne({ voucherCode: "CUANMAX2021" });
+      if (voucher && voucher.voucherNumber > 0) {
+        voucher.voucherNumber -= 1;
+        voucher.save();
+      }
     }
   }
 
   //Encrypt user password
-  encryptedPassword = bcrypt.hash(password, 10);
+  // generate salt to hash password
+  const salt = await bcrypt.genSalt(10);
+  // now we set user password to hashed password
+  encryptedPassword = await bcrypt.hash(password, salt);
 
   // Create new user
   const newUser = new Users({
@@ -97,9 +102,11 @@ exports.signup = (req, res) => {
         }
       );
 
-      data.token = token;
-
-      res.send(data);
+      res.send({
+        message: "User created successfully",
+        token: token,
+        data: data,
+      });
     })
     .catch((err) => {
       res.status(500).send({
