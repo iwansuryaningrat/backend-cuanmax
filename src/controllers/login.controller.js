@@ -29,6 +29,7 @@ exports.login = (req, res) => {
                 email: user.email,
                 name: user.name,
                 admin: user.type.isAdmin,
+                role: user.type.accountType.member,
               },
               process.env.JWT_SECRET,
               {

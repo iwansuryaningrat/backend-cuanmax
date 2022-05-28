@@ -57,7 +57,7 @@ exports.create = (req, res) => {
     password: encryptedPassword,
     type: {
       accountType: {
-        member: "Member",
+        member: " Basic Member",
         startDate: new Date(),
       },
       isAdmin: admin,
@@ -88,6 +88,7 @@ exports.create = (req, res) => {
             email: newUser.email,
             name: newUser.name,
             admin: newUser.type.isAdmin,
+            role: newUser.type.accountType.member,
           },
         },
         process.env.JWT_SECRET,
