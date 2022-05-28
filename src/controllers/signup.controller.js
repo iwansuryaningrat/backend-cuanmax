@@ -85,9 +85,9 @@ exports.create = (req, res) => {
         {
           user: {
             id: newUser._id,
-            name: newUser.name,
-            username: newUser.username,
             email: newUser.email,
+            name: newUser.name,
+            admin: newUser.type.isAdmin,
           },
         },
         process.env.JWT_SECRET,
