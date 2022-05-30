@@ -1,35 +1,31 @@
 module.exports = (mongoose) => {
   const schema = mongoose.Schema(
     {
-      memberName: {
+      voucherCode: {
+        type: String,
+        unique: true,
+        require: true,
+      },
+      voucherName: {
         type: String,
         require: true,
       },
-      duration: {
-        type: String,
-        require: true,
-      },
-      price: Number,
-      discountPrice: {
+      voucherDescription: String,
+      voucherDiscount: {
         type: Number,
         require: true,
       },
-      currency: {
+      voucherNumber: {
+        type: Number,
+      },
+      voucherType: {
         type: String,
         require: true,
       },
-      feature: [
-        {
-          name: {
-            type: String,
-            require: true,
-          },
-          status: {
-            type: Boolean,
-            require: true,
-          },
-        },
-      ],
+      voucherExpiry: {
+        type: Date,
+        require: true,
+      },
     },
     { timestamps: true }
   );
@@ -40,6 +36,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Pricing = mongoose.model("pricing", schema);
-  return Pricing;
+  const Vouchers = mongoose.model("vouchers", schema);
+  return Vouchers;
 };

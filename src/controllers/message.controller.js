@@ -24,7 +24,8 @@ exports.create = (req, res) => {
     status: "Unreaded",
   });
 
-  Message.save(message)
+  message
+    .save()
     .then((result) => {
       res.status(200).send({
         message: "Message successfully added.",
@@ -91,6 +92,20 @@ exports.delete = (req, res) => {
     .catch((err) => {
       res.status(409).send({
         message: err.message || "Some error while delete message.",
+      });
+    });
+};
+
+exports.findByStatus = (req, res) => {
+  const status = req.params.status;
+
+  Message.find({ status: status })
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error while showing message.",
       });
     });
 };

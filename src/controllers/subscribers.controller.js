@@ -21,7 +21,8 @@ exports.create = (req, res) => {
     status: "active",
   });
 
-  Subscribers.save(subscribers)
+  subscribers
+    .save()
     .then((result) => {
       res.status(200).send({
         message: "Playlist successfully added.",

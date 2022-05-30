@@ -1,35 +1,27 @@
 module.exports = (mongoose) => {
   const schema = mongoose.Schema(
     {
-      memberName: {
+      name: {
         type: String,
         require: true,
       },
-      duration: {
+      position: {
         type: String,
         require: true,
       },
-      price: Number,
-      discountPrice: {
-        type: Number,
-        require: true,
-      },
-      currency: {
+      company: {
         type: String,
         require: true,
       },
-      feature: [
-        {
-          name: {
-            type: String,
-            require: true,
-          },
-          status: {
-            type: Boolean,
-            require: true,
-          },
-        },
-      ],
+      body: {
+        type: String,
+        require: true,
+      },
+      photosUrl: {
+        type: String,
+        require: true,
+        default: "",
+      },
     },
     { timestamps: true }
   );
@@ -40,6 +32,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Pricing = mongoose.model("pricing", schema);
-  return Pricing;
+  const Testimoni = mongoose.model("testimoni", schema);
+  return Testimoni;
 };

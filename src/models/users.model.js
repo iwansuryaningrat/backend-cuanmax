@@ -37,6 +37,16 @@ module.exports = (mongoose) => {
         referalCount: Number,
         referalAccount: [{ username: String }],
       },
+      voucher: [
+        {
+          voucherCode: {
+            type: String,
+          },
+          voucherExpiry: {
+            type: Date,
+          },
+        },
+      ],
     },
     { timestamps: true }
   );
@@ -47,6 +57,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Profiles = mongoose.model("profiles", schema);
-  return Profiles;
+  const Users = mongoose.model("users", schema);
+  return Users;
 };

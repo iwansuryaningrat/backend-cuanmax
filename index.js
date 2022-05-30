@@ -2,7 +2,8 @@
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
+
 // Load .env file
 require("dotenv").config();
 
@@ -50,10 +51,13 @@ app.listen(process.env.PORT, () => {
 
 // Routers
 require("./src/routes/playlists.routes")(app); // Playlist Router
-require("./src/routes/profiles.routes")(app); // Profiles Router
+require("./src/routes/users.routes")(app); // Users Router
 require("./src/routes/videos.routes")(app); // Videos Router
-require("./src/routes/signup.routes")(app); // Signup Router
 require("./src/routes/subscribers.routes")(app); // Subscribers Router
 require("./src/routes/message.routes")(app); // Message Router
 require("./src/routes/pricing.routes")(app); // Pricing Router
 require("./src/routes/teams.routes")(app); // Teams Router
+require("./src/routes/vouchers.routes")(app); // Vouchers Router
+require("./src/routes/testimoni.routes")(app); // Testimoni Router
+require("./src/routes/services.routes")(app); // Services Router
+require("./src/routes/auth.routes")(app); // Auth Router
