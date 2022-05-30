@@ -11,7 +11,7 @@ exports.signup = async (req, res) => {
   const username = req.body.username;
   const email = req.body.email;
   let password = req.body.password;
-  const admin = req.body.admin;
+  const admin = req.body.admin ? req.body.admin : false;
   const referal = req.body.referal;
 
   if (!name || !username || !email || !password) {
