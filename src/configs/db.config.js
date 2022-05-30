@@ -1,4 +1,7 @@
+// Load .env file
+require("dotenv").config();
+
 // MongoDB configuration
 module.exports = {
-  url: "mongodb+srv://cuanmax-dev:Undip.jaya123@cuanmax.cys5n.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  url: process.env.MONGODB_URI,
 };
