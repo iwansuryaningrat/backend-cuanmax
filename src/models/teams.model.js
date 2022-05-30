@@ -5,17 +5,21 @@ module.exports = (mongoose) => {
         type: String,
         require: true,
       },
-      category: {
+      position: {
         type: String,
         require: true,
       },
-      description: String,
-      image: {
+      photo: {
         type: String,
         default:
-          "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png",
+          "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default_team_image_xqjqjy.png",
       },
-      videoCount: Number,
+      contact: {
+        instagram: String,
+        facebook: String,
+        twitter: String,
+        linkedin: String,
+      },
     },
     { timestamps: true }
   );
@@ -26,6 +30,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Playlists = mongoose.model("playlists", schema);
-  return Playlists;
+  const Teams = mongoose.model("teams", schema);
+  return Teams;
 };

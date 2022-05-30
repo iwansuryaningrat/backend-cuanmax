@@ -2,9 +2,14 @@
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
+
 // Load .env file
 require("dotenv").config();
+
+// Load File Configuration
+const imageConfig = require("./src/configs/imageUploader.config");
+const videoConfig = require("./src/configs/videoUploader.config");
 
 const app = express();
 
@@ -16,33 +21,18 @@ app.use(
   })
 );
 
-// Image Uploader Setup
-const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./assets/foto");
-  },
-  filename: (req, file, cb) => {
-    cb(null, new Date().getTime() + "-" + file.originalname);
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
+app.use(
+  multer({
+    storage: imageConfig.imageStorage,
+    fileFilter: imageConfig.imageFilter,
+  }).single("image")
+);
 
 app.use(
   multer({
-    storage: fileStorage,
-    fileFilter: fileFilter,
-  }).single("image")
+    storage: videoConfig.videoStorage,
+    fileFilter: videoConfig.videoFilter,
+  }).single("video")
 );
 
 // MongoDB Connection
@@ -61,4 +51,13 @@ app.listen(process.env.PORT, () => {
 
 // Routers
 require("./src/routes/playlists.routes")(app); // Playlist Router
-require("./src/routes/profiles.routes")(app); // Profiles Router
+require("./src/routes/users.routes")(app); // Users Router
+require("./src/routes/videos.routes")(app); // Videos Router
+require("./src/routes/subscribers.routes")(app); // Subscribers Router
+require("./src/routes/message.routes")(app); // Message Router
+require("./src/routes/pricing.routes")(app); // Pricing Router
+require("./src/routes/teams.routes")(app); // Teams Router
+require("./src/routes/vouchers.routes")(app); // Vouchers Router
+require("./src/routes/testimoni.routes")(app); // Testimoni Router
+require("./src/routes/services.routes")(app); // Services Router
+require("./src/routes/auth.routes")(app); // Auth Router
