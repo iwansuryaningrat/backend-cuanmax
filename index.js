@@ -1,15 +1,15 @@
 // Express REST server
 const express = require("express");
 const cors = require("cors");
-const multer = require("multer");
+// const multer = require("multer");
 // const bodyParser = require("body-parser");
 
 // Load .env file
 require("dotenv").config();
 
 // Load File Configuration
-const imageConfig = require("./src/configs/imageUploader.config");
-const videoConfig = require("./src/configs/videoUploader.config");
+// const imageConfig = require("./src/configs/imageUploader.config");
+// const videoConfig = require("./src/configs/videoUploader.config");
 
 const app = express();
 
@@ -21,19 +21,19 @@ app.use(
   })
 );
 
-app.use(
-  multer({
-    storage: imageConfig.imageStorage,
-    fileFilter: imageConfig.imageFilter,
-  }).single("image")
-);
+// app.use(
+//   multer({
+//     storage: imageConfig.imageStorage,
+//     fileFilter: imageConfig.imageFilter,
+//   }).single("image")
+// );
 
-app.use(
-  multer({
-    storage: videoConfig.videoStorage,
-    fileFilter: videoConfig.videoFilter,
-  }).single("video")
-);
+// app.use(
+//   multer({
+//     storage: videoConfig.videoStorage,
+//     fileFilter: videoConfig.videoFilter,
+//   }).single("video")
+// );
 
 // MongoDB Connection
 const db = require("./src/services/db.connect");
