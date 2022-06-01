@@ -61,3 +61,4 @@ require("./src/routes/vouchers.routes")(app); // Vouchers Router
 require("./src/routes/testimoni.routes")(app); // Testimoni Router
 require("./src/routes/services.routes")(app); // Services Router
 require("./src/routes/auth.routes")(app); // Auth Router
+require("./src/routes/watchlist.routes")(app); // Watchlist Router
