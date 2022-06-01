@@ -1,4 +1,3 @@
-/* Example in Node.js */
 const axios = require("axios");
 require("dotenv").config();
 
