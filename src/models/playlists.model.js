@@ -10,6 +10,14 @@ module.exports = (mongoose) => {
         require: true,
       },
       description: String,
+      instructor: {
+        type: String,
+        require: true,
+      },
+      videoLevel: {
+        type: String,
+        require: true,
+      },
       image: {
         type: String,
         default:
