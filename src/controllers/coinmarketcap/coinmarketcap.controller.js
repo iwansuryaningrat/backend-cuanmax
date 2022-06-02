@@ -6,7 +6,8 @@ exports.latest = async (req, res) => {
   try {
     response = await axios.get(
       process.env.COINMARKETCAP_ENDPOINT +
-        "v1/cryptocurrency/quotes/latest?symbol=BTC,ETH,DOGE",
+        // "v2/cryptocurrency/info?symbol=BTC,USDT,XRP,BNB",
+        "v1/cryptocurrency/map?sort=cmc_rank",
       {
         headers: {
           "X-CMC_PRO_API_KEY": process.env.COINMARKETCAP_API_KEY,
@@ -23,7 +24,7 @@ exports.latest = async (req, res) => {
   }
   if (response) {
     // success
-    const json = response.data;
+    const json = response.data.data;
 
     res.send(json);
   }
