@@ -2,8 +2,29 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Cuanmax API",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "description": "OpenAPI for Cuanmax RESTful API",
+    "contact": {
+      "name": "Iwan Suryaningrat",
+      "email": "iwansuryaningrat@cuanmax.id"
+    },
+    "license": {
+      "name": "APACHE 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
   },
-  "servers": [{ "url": "https://api.server.test/v1" }],
+  "servers": [
+    {
+      "description": "Cuanmax RESTful API Server",
+      "url": "https://{environment}.cuanmax.id/api/v1",
+      "variables": {
+        "environment": {
+          "description": "Server Environment",
+          "default": "dev",
+          "enum": ["dev", "stag", "prod"]
+        }
+      }
+    }
+  ],
   "paths": {}
 }
