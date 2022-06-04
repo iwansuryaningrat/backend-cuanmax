@@ -20,7 +20,7 @@
       "variables": {
         "environment": {
           "description": "Server Environment",
-          "default": "dev",
+          "default": "prod",
           "enum": ["dev", "stag", "prod"]
         }
       }
