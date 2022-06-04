@@ -34,7 +34,7 @@
             "jwt": []
           }
         ],
-        "tags": ["palylist"],
+        "tags": ["pla ylist"],
         "summary": "Get all playlist",
         "description": "Get all playlist",
         "operationId": "getPlaylist",
@@ -46,6 +46,62 @@
                 "schema": {
                   "type": "array"
                 }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Palylist not found"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create new playlist",
+        "description": "Create new playlist",
+        "operationId": "createPlaylist",
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Playlist name"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Playlist description"
+                  },
+                  "image": {
+                    "type": "string",
+                    "description": "Playlist image"
+                  },
+                  "songs": {
+                    "type": "array",
+                    "description": "Playlist songs",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
