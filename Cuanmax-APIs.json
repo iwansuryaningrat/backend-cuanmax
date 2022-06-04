@@ -3,7 +3,7 @@
   "info": {
     "title": "Cuanmax RESTful API",
     "version": "1.0.0",
-    "description": "OpenAPI for Cuanmax RESTful API",
+    "description": "RESTful API for Cuanmax Application",
     "contact": {
       "name": "Iwan Suryaningrat",
       "email": "iwansuryaningrat@cuanmax.id"
