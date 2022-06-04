@@ -26,5 +26,37 @@
       }
     }
   ],
-  "paths": {}
+  "paths": {
+    "/playlist": {
+      "get": {
+        "security": [
+          {
+            "jwt": []
+          }
+        ],
+        "tags": ["palylist"],
+        "summary": "Get all playlist",
+        "description": "Get all playlist",
+        "operationId": "getPlaylist",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Palylist not found"
+          }
+        }
+      }
+    }
+  }
 }
