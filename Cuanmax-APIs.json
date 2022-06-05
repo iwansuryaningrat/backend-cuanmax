@@ -34,7 +34,7 @@
             "jwt": []
           }
         ],
-        "tags": ["pla ylist"],
+        "tags": ["playlist"],
         "summary": "Get all playlist",
         "description": "Get all playlist",
         "operationId": "getPlaylist",
