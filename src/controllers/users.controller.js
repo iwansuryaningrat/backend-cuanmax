@@ -5,19 +5,9 @@ exports.findAll = (req, res) => {
   Users.find()
     .then((result) => {
       res.send({
-        name: result.name,
-        username: result.username,
-        email: result.email,
-        image: result.imageLink,
-        type: {
-          memberType: result.type.accountType.member,
-          adminType: result.type.isAdmin,
-        },
-        referal: {
-          referalCode: result.referal.referalCode,
-          referalCount: result.referal.referalCount,
-          referalAccount: result.referal.referalAccount,
-        },
+        message: "Users fetched successfully!",
+        timestamp: new Date(),
+        data: result,
       });
     })
     .catch((err) => {
@@ -192,4 +182,43 @@ exports.changePassword = (req, res) => {
       });
     }
   });
+};
+
+exports.changeProfilePicture = (req, res) => {
+  const id = req.params.id;
+
+  let imageLink = file.path;
+  console.log(imageLink);
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
+
+  const user = Users.findById(id);
+  if (!user) {
+    return res.status(404).send({
+      message: "User not found",
+    });
+  }
+
+  Users.findByIdAndUpdate(id, { imageLink: imageLink })
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "User not found",
+        });
+      }
+      res.send({
+        message: "User's profile picture updated successfully.",
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message ||
+          "Some error occurred while changing the profile picture.",
+      });
+    });
 };
