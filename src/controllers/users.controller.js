@@ -6,7 +6,7 @@ exports.findAll = (req, res) => {
     .then((result) => {
       res.send({
         message: "Users fetched successfully!",
-        timestamp: new Date(),
+        timestamp: new Date().toString(),
         data: result,
       });
     })
