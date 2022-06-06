@@ -8,7 +8,7 @@ exports.login = (req, res) => {
   // Validate request
   if (!req.body.email && !req.body.password) {
     res.status(400).send({
-      message: "Content can not be empty!",
+      message: "Invalid Email or Password!",
     });
   }
 
@@ -18,7 +18,7 @@ exports.login = (req, res) => {
     .then((user) => {
       if (!user) {
         res.status(404).send({
-          message: "User not found",
+          message: "User not found!",
         });
       } else {
         bcrypt.compare(req.body.password, user.password, (err, result) => {
@@ -37,12 +37,12 @@ exports.login = (req, res) => {
               }
             );
             res.status(200).send({
-              message: "User logged in",
+              message: "Login Success",
               token: token,
             });
           } else {
             res.status(401).send({
-              message: "Password incorrect",
+              message: "Password incorrect!",
             });
           }
         });
@@ -50,7 +50,7 @@ exports.login = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while creating the User.",
+        message: err.message || "Some error occurred while loging in the User.",
       });
     });
 };
