@@ -246,6 +246,11 @@ exports.referal = (req, res) => {
   const referal = req.params.referal;
   const username = req.params.username;
 
+  const day = new Date().getDate() + 1;
+  const month = new Date().getMonth() + 1;
+  const year = new Date().getFullYear();
+  const date = `${day}/${month}/${year}`;
+
   if (!referal || !username) {
     return res.status(400).send({
       message: "Referal code and username are required",
@@ -276,7 +281,7 @@ exports.referal = (req, res) => {
         message: "Referal code is successfully used.",
         data: {
           discountPercent: 10,
-          expiryDate: new Date(Date.now() + 3600 * 1000 * 24),
+          expiryDate: date,
         },
       });
     })
