@@ -133,3 +133,63 @@ exports.update = (req, res) => {
       });
     });
 };
+
+exports.ChangePassword = (req, res) => {
+  const id = req.params.id;
+  const oldPassword = req.body.oldPassword;
+  let newPassword = req.body.newPassword;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
+
+  const user = Users.findById(id);
+  if (!user) {
+    return res.status(404).send({
+      message: "User not found",
+    });
+  }
+
+  bcrypt.compare(oldPassword, user.password, (err, result) => {
+    if (err) {
+      return res.status(500).send({
+        message:
+          err.message || "Some error occurred while changing the password.",
+      });
+    } else if (!result) {
+      return res.status(401).send({
+        message: "Invalid password",
+      });
+    } else {
+      bcrypt.hash(newPassword, 10, (err, hash) => {
+        if (err) {
+          return res.status(500).send({
+            message:
+              err.message || "Some error occurred while changing the password.",
+          });
+        }
+        newPassword = hash;
+        Users.findByIdAndUpdate(id, { password: newPassword })
+          .then((result) => {
+            if (!result) {
+              res.status(404).send({
+                message: "User not found",
+              });
+            }
+            res.send({
+              message: "User updated successfully.",
+            });
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message:
+                err.message ||
+                "Some error occurred while changing the password.",
+            });
+          });
+      });
+    }
+  });
+};
