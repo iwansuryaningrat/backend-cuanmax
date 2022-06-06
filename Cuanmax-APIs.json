@@ -292,6 +292,566 @@
           }
         }
       }
+    },
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get All Users",
+        "description": "Get All Users",
+        "operationId": "getAllUsers",
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "image": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "object",
+                      "properties": {
+                        "memberType": {
+                          "type": "string"
+                        },
+                        "isAdmin": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "referal": {
+                      "type": "object",
+                      "properties": {
+                        "referalCode": {
+                          "type": "string"
+                        },
+                        "referalCount": {
+                          "type": "integer"
+                        },
+                        "referalAccount": {
+                          "type": "array",
+                          "properties": {
+                            "username": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "name": "John Doe",
+                    "username": "johndoe",
+                    "email": "exampl@mail.com",
+                    "image": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
+                    "type": {
+                      "memberType": "Basic Member",
+                      "isAdmin": false
+                    },
+                    "referal": {
+                      "referalCode": "JOHNDOE",
+                      "referalCount": 1,
+                      "referalAccount": [{ "username": "johndoe" }]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while fetching the Users."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get User By ID",
+        "description": "Get User By ID",
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "image": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "object",
+                      "properties": {
+                        "memberType": {
+                          "type": "string"
+                        },
+                        "isAdmin": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "referal": {
+                      "type": "object",
+                      "properties": {
+                        "referalCode": {
+                          "type": "string"
+                        },
+                        "referalCount": {
+                          "type": "integer"
+                        },
+                        "referalAccount": {
+                          "type": "array",
+                          "properties": {
+                            "username": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "name": "John Doe",
+                    "username": "johndoe",
+                    "email": "exampl@mail.com",
+                    "image": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
+                    "type": {
+                      "memberType": "Basic Member",
+                      "isAdmin": false
+                    },
+                    "referal": {
+                      "referalCode": "JOHNDOE",
+                      "referalCount": 1,
+                      "referalAccount": [{ "username": "johndoe" }]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User Not Found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error while retrieving the user."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update User By ID",
+        "description": "Update User By ID",
+        "operationId": "updateUserById",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "image": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "object",
+                    "properties": {
+                      "memberType": {
+                        "type": "string"
+                      },
+                      "isAdmin": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "referal": {
+                    "type": "object",
+                    "properties": {
+                      "referalCode": {
+                        "type": "string"
+                      },
+                      "referalCount": {
+                        "type": "integer"
+                      },
+                      "referalAccount": {
+                        "type": "array",
+                        "properties": {
+                          "username": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "name": "John Doe",
+                  "username": "johndoe",
+                  "email": "email@example.com",
+                  "image": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
+                  "type": {
+                    "memberType": "Basic Member",
+                    "isAdmin": false
+                  },
+                  "referal": {
+                    "referalCode": "JOHNDOE",
+                    "referalCount": 1,
+                    "referalAccount": [{ "username": "johndoe" }]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "image": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "object",
+                          "properties": {
+                            "memberType": {
+                              "type": "string"
+                            },
+                            "isAdmin": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "referal": {
+                          "type": "object",
+                          "properties": {
+                            "referalCode": {
+                              "type": "string"
+                            },
+                            "referalCount": {
+                              "type": "integer"
+                            },
+                            "referalAccount": {
+                              "type": "array",
+                              "properties": {
+                                "username": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "User Updated Successfully",
+                    "data": {
+                      "name": "John Doe",
+                      "username": "johndoe",
+                      "email": "exampl@mail.com",
+                      "image": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
+                      "type": {
+                        "memberType": "Basic Member",
+                        "isAdmin": false
+                      },
+                      "referal": {
+                        "referalCode": "JOHNDOE",
+                        "referalCount": 1,
+                        "referalAccount": [{ "username": "johndoe" }]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Id is required"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User not found"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while updating the user."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete User",
+        "description": "Delete User",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User Deleted Successfully"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Id is required"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User not found"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while deleting the user."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
