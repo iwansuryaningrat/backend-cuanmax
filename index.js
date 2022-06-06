@@ -2,6 +2,8 @@
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
+const path = require("path");
+
 // const bodyParser = require("body-parser");
 
 // Load .env file
@@ -12,6 +14,9 @@ const imageConfig = require("./src/configs/imageUploader.config");
 // const videoConfig = require("./src/configs/videoUploader.config");
 
 const app = express();
+
+// File Access Control
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 app.use(cors());
 app.use(express.json());
