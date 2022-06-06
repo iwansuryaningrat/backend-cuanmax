@@ -3,9 +3,10 @@ module.exports = (app) => {
   const auth = require("../middlewares/auth");
   const router = require("express").Router();
 
-  router.get("/", users.findAll);
-  router.get("/:id", users.findOne);
+  router.get("/", auth.auth, users.findAll);
+  router.get("/:id", auth.auth, users.findOne);
   router.post("/:id", auth.auth, users.update);
+  router.post("/:id/changepassword", auth.auth, users.changePassword);
   router.delete("/:id", auth.auth, users.delete);
 
   app.use("/api/v1/users", router);
