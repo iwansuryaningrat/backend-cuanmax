@@ -42,7 +42,7 @@ exports.signup = async (req, res) => {
     type: {
       accountType: {
         member: "Basic Member",
-        startDate: new Date(),
+        startDate: new Date().toString(),
       },
       isAdmin: admin,
     },
