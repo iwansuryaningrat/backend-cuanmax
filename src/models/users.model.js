@@ -14,8 +14,11 @@ module.exports = (mongoose) => {
         require: true,
         unique: true,
       },
-      password: String,
-      image: {
+      password: {
+        type: String,
+        require: true,
+      },
+      imageLink: {
         type: String,
         default:
           "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png",
@@ -33,20 +36,9 @@ module.exports = (mongoose) => {
           type: String,
           unique: true,
         },
-        referalLink: String,
         referalCount: Number,
         referalAccount: [{ username: String }],
       },
-      voucher: [
-        {
-          voucherCode: {
-            type: String,
-          },
-          voucherExpiry: {
-            type: Date,
-          },
-        },
-      ],
     },
     { timestamps: true }
   );
