@@ -27,89 +27,126 @@
     }
   ],
   "paths": {
-    "/playlist": {
-      "get": {
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
-        "tags": ["playlist"],
-        "summary": "Get all playlist",
-        "description": "Get all playlist",
-        "operationId": "getPlaylist",
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Palylist not found"
-          }
-        }
-      },
+    "/login": {
       "post": {
-        "summary": "Create new playlist",
-        "description": "Create new playlist",
-        "operationId": "createPlaylist",
-        "security": [
-          {
-            "jwt": []
-          }
-        ],
+        "tags": ["Authentication"],
+        "summary": "Login",
+        "description": "Login to Cuanmax",
+        "operationId": "login",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
+                "type": "object",
                 "properties": {
-                  "name": {
+                  "email": {
                     "type": "string",
-                    "description": "Playlist name"
+                    "format": "email"
                   },
-                  "description": {
+                  "password": {
                     "type": "string",
-                    "description": "Playlist description"
-                  },
-                  "image": {
-                    "type": "string",
-                    "description": "Playlist image"
-                  },
-                  "songs": {
-                    "type": "array",
-                    "description": "Playlist songs",
-                    "items": {
+                    "format": "password"
+                  }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "token": {
                       "type": "string"
                     }
+                  },
+                  "example": {
+                    "message": "Login Success",
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTI4MzgxNzk5NjExY2NjNzQ4ZmI4YyIsImVtYWlsIjoiaXdhbi5zdXJ5YW5pbmdyYXRAc3R1ZGVudHMudW5kaXAuYWMuaWQiLCJuYW1lIjoiSXdhbiIsImFkbWluIjpmYWxzZSwicm9sZSI6IiBCYXNpYyBNZW1iZXIiLCJpYXQiOjE2NTQ0NDQ0MDIsImV4cCI6MTY1NDQ0ODAwMn0.s5nfB81F6X5E8wBD0DIRqmP5NNuCQFpGllXEMPfbyeY"
                   }
                 }
               }
             }
           },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "description": "Successful operation",
+          "400": {
+            "description": "Bad Request",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Invalid Email or Password!"
+                  }
+                }
               }
             }
           },
-          "400": {
-            "description": "Invalid ID supplied"
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Password incorrect!"
+                  }
+                }
+              }
+            }
           },
           "404": {
-            "description": "Palylist not found"
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User not found!"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while loging in the User."
+                  }
+                }
+              }
+            }
           }
         }
       }
