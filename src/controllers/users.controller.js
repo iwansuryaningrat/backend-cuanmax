@@ -193,9 +193,6 @@ exports.changePassword = (req, res) => {
 exports.changeProfilePicture = (req, res) => {
   const id = req.params.id;
 
-  let imageLink = file.path;
-  console.log(imageLink);
-
   if (!id) {
     return res.status(400).send({
       message: "Id is required",
@@ -209,7 +206,23 @@ exports.changeProfilePicture = (req, res) => {
     });
   }
 
-  Users.findByIdAndUpdate(id, { imageLink: imageLink })
+  if (!req.file) {
+    return res.status(422).send({
+      message: "No file uploaded",
+    });
+  }
+
+  const imageName = req.file.filename;
+  const imageLink = `${req.protocol}://${req.get(
+    "host"
+  )}/assets/foto/${fileName}`;
+
+  Users.findByIdAndUpdate(id, {
+    image: {
+      imageName: imageName,
+      imageLink: imageLink,
+    },
+  })
     .then((result) => {
       if (!result) {
         res.status(404).send({
