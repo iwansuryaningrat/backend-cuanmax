@@ -29,7 +29,11 @@ module.exports = (mongoose) => {
           startDate: Date,
           endDate: Date,
         },
-        isAdmin: Boolean,
+        isAdmin: {
+          type: Boolean,
+          default: false,
+          require: true,
+        },
       },
       referal: {
         referalCode: {
