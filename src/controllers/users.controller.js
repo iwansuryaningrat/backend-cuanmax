@@ -38,7 +38,10 @@ exports.findOne = (req, res) => {
         name: result.name,
         username: result.username,
         email: result.email,
-        image: result.imageLink,
+        image: {
+          imageName: result.image.imageName,
+          imageLink: result.image.imageLink,
+        },
         type: {
           memberType: result.type.accountType.member,
           adminType: result.type.isAdmin,
@@ -104,7 +107,10 @@ exports.update = (req, res) => {
           name: result.name,
           username: result.username,
           email: result.email,
-          image: result.imageLink,
+          image: {
+            imageName: result.image.imageName,
+            imageLink: result.image.imageLink,
+          },
           type: {
             memberType: result.type.accountType.member,
             adminType: result.type.isAdmin,
