@@ -883,6 +883,10 @@
                   "newPassword": {
                     "type": "string"
                   }
+                },
+                "example": {
+                  "oldPassword": "123456",
+                  "newPassword": "123456789"
                 }
               }
             }
