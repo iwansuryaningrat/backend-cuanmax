@@ -176,18 +176,9 @@
                   "password": {
                     "type": "string",
                     "format": "password"
-                  },
-                  "password_confirmation": {
-                    "type": "string",
-                    "format": "password"
                   }
                 },
-                "required": [
-                  "name",
-                  "email",
-                  "password",
-                  "password_confirmation"
-                ],
+                "required": ["name", "email", "password"],
                 "example": {
                   "name": "User Name",
                   "username": "username",
@@ -307,64 +298,74 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "message": {
                       "type": "string"
                     },
-                    "username": {
+                    "timestamp": {
                       "type": "string"
                     },
-                    "email": {
-                      "type": "string",
-                      "format": "email"
-                    },
-                    "image": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "object",
-                      "properties": {
-                        "memberType": {
-                          "type": "string"
-                        },
-                        "isAdmin": {
-                          "type": "boolean"
-                        }
-                      }
-                    },
-                    "referal": {
-                      "type": "object",
-                      "properties": {
-                        "referalCode": {
-                          "type": "string"
-                        },
-                        "referalCount": {
-                          "type": "integer"
-                        },
-                        "referalAccount": {
-                          "type": "array",
-                          "properties": {
-                            "username": {
-                              "type": "string"
-                            }
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "username": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string",
+                            "format": "email"
+                          },
+                          "password": {
+                            "type": "string",
+                            "format": "password"
+                          },
+                          "type": {
+                            "accountType": {
+                              "member": "Basic Member",
+                              "startDate": "2013-04-28T00:00:00.000Z"
+                            },
+                            "isAdmin": false
+                          },
+                          "referal": {
+                            "referalCode": "JOEDOE",
+                            "referalCount": 0,
+                            "referalAccount": []
                           }
                         }
                       }
                     }
                   },
                   "example": {
-                    "name": "John Doe",
-                    "username": "johndoe",
-                    "email": "exampl@mail.com",
-                    "image": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
-                    "type": {
-                      "memberType": "Basic Member",
-                      "isAdmin": false
-                    },
-                    "referal": {
-                      "referalCode": "JOHNDOE",
-                      "referalCount": 1,
-                      "referalAccount": [{ "username": "johndoe" }]
-                    }
+                    "message": "Users fetched successfully!",
+                    "timestamp": "2022-06-06T19:04:16.110Z",
+                    "data": [
+                      {
+                        "type": {
+                          "accountType": {
+                            "member": "Basic Member",
+                            "startDate": "2022-06-06T19:00:30.599Z"
+                          },
+                          "isAdmin": false
+                        },
+                        "referal": {
+                          "referalCode": "SNINGRAT123",
+                          "referalCount": 0,
+                          "referalAccount": []
+                        },
+                        "name": "Iwan",
+                        "username": "sningrat123",
+                        "email": "iwansuryaningrat@students.undip.ac.id",
+                        "password": "$2b$10$/ZKn3oxFqBOGa1EDnRq3Quyli0F999AtJ6DZMSyJLUVI8c/zxql6e",
+                        "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png",
+                        "createdAt": "2022-06-06T19:00:30.621Z",
+                        "updatedAt": "2022-06-06T19:00:30.621Z",
+                        "id": "629e4ece20ede4b0e1e8a252"
+                      }
+                    ]
                   }
                 }
               }
