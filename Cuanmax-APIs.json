@@ -429,7 +429,15 @@
                       "format": "email"
                     },
                     "image": {
-                      "type": "string"
+                      "type": "object",
+                      "properties": {
+                        "imageName": {
+                          "type": "string"
+                        },
+                        "imageLink": {
+                          "type": "string"
+                        }
+                      }
                     },
                     "type": {
                       "type": "object",
@@ -466,7 +474,10 @@
                     "name": "John Doe",
                     "username": "johndoe",
                     "email": "exampl@mail.com",
-                    "image": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
+                    "image": {
+                      "imageName": "default-profile-picture.png",
+                      "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png"
+                    },
                     "type": {
                       "memberType": "Basic Member",
                       "isAdmin": false
@@ -648,7 +659,15 @@
                           "format": "email"
                         },
                         "image": {
-                          "type": "string"
+                          "type": "object",
+                          "properties": {
+                            "imageName": {
+                              "type": "string"
+                            },
+                            "imageLink": {
+                              "type": "string"
+                            }
+                          }
                         },
                         "type": {
                           "type": "object",
@@ -689,7 +708,10 @@
                       "name": "John Doe",
                       "username": "johndoe",
                       "email": "exampl@mail.com",
-                      "image": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
+                      "image": {
+                        "imageName": "default-profile-picture.png",
+                        "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png"
+                      },
                       "type": {
                         "memberType": "Basic Member",
                         "isAdmin": false
