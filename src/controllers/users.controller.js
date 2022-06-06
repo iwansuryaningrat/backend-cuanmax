@@ -241,3 +241,49 @@ exports.changeProfilePicture = (req, res) => {
       });
     });
 };
+
+exports.referal = (req, res) => {
+  const referal = req.params.referal;
+  const username = req.params.username;
+
+  if (!referal || !username) {
+    return res.status(400).send({
+      message: "Referal code and username are required",
+    });
+  }
+
+  const user = Users.findOne({ referal: { referalCode: referal } });
+  if (!user) {
+    return res.status(404).send({
+      message: "Referal code not found",
+    });
+  }
+
+  Users.findByIdAndUpdate(user._id, {
+    referal: {
+      referalCode: referal,
+      referalCount: user.referal.referalCount + 1,
+      referalAccount: user.referal.referalAccount.push({ username: username }),
+    },
+  })
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "User not found",
+        });
+      }
+      res.send({
+        message: "Referal code is successfully used.",
+        data: {
+          discountPercent: 10,
+          expiryDate: new Date(Date.now() + 3600 * 1000 * 24),
+        },
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while checking the referal.",
+      });
+    });
+};
