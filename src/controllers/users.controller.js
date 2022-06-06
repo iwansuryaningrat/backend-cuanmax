@@ -134,14 +134,14 @@ exports.update = (req, res) => {
     });
 };
 
-exports.ChangePassword = (req, res) => {
+exports.changePassword = (req, res) => {
   const id = req.params.id;
   const oldPassword = req.body.oldPassword;
   let newPassword = req.body.newPassword;
 
-  if (!id) {
+  if (!id || !oldPassword || !newPassword) {
     return res.status(400).send({
-      message: "Id is required",
+      message: "Id, oldPassword and newPassword are required",
     });
   }
 
@@ -179,7 +179,7 @@ exports.ChangePassword = (req, res) => {
               });
             }
             res.send({
-              message: "User updated successfully.",
+              message: "User's password updated successfully.",
             });
           })
           .catch((err) => {
