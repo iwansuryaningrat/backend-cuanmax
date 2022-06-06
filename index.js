@@ -11,7 +11,7 @@ require("dotenv").config();
 
 // Load File Configuration
 const imageConfig = require("./src/configs/imageUploader.config");
-// const videoConfig = require("./src/configs/videoUploader.config");
+const videoConfig = require("./src/configs/videoUploader.config");
 
 const app = express();
 
@@ -33,12 +33,12 @@ app.use(
   }).single("image")
 );
 
-// app.use(
-//   multer({
-//     storage: videoConfig.videoStorage,
-//     fileFilter: videoConfig.videoFilter,
-//   }).single("video")
-// );
+app.use(
+  multer({
+    storage: videoConfig.videoStorage,
+    fileFilter: videoConfig.videoFilter,
+  }).single("video")
+);
 
 // MongoDB Connection
 const db = require("./src/services/db.connect");
