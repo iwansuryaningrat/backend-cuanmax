@@ -150,6 +150,148 @@
           }
         }
       }
+    },
+    "/signup": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Signup",
+        "description": "Signup to Cuanmax",
+        "operationId": "signup",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  },
+                  "password_confirmation": {
+                    "type": "string",
+                    "format": "password"
+                  }
+                },
+                "required": [
+                  "name",
+                  "email",
+                  "password",
+                  "password_confirmation"
+                ],
+                "example": {
+                  "name": "User Name",
+                  "username": "username",
+                  "email": "email@example.com",
+                  "password": "password"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User created successfully",
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTI4MzgxNzk5NjExY2NjNzQ4ZmI4YyIsImVtYWlsIjoiaXdhbi5zdXJ5YW5pbmdyYXRAc3R1ZGVudHMudW5kaXAuYWMuaWQiLCJuYW1lIjoiSXdhbiIsImFkbWluIjpmYWxzZSwicm9sZSI6IiBCYXNpYyBNZW1iZXIiLCJpYXQiOjE2NTQ0NDQ0MDIsImV4cCI6MTY1NDQ0ODAwMn0.s5nfB81F6X5E8wBD0DIRqmP5NNuCQFpGllXEMPfbyeY",
+                    "data": {
+                      "name": "Joe Doe",
+                      "username": "joe",
+                      "email": "example@gmail.com",
+                      "password": "hashed password",
+                      "type": {
+                        "accountType": {
+                          "member": "Basic Member",
+                          "startDate": "2013-04-28T00:00:00.000Z"
+                        },
+                        "isAdmin": false
+                      },
+                      "referal": {
+                        "referalCode": "JOEDOE",
+                        "referalCount": 0,
+                        "referalAccount": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Name, username, email and password are required."
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User Already Exist. Please Login"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while Signing up the User."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
