@@ -51,7 +51,7 @@ app.listen(process.env.PORT, () => {
 
 // Routers
 // require("./src/routes/playlists.routes")(app); // Playlist Router
-// require("./src/routes/users.routes")(app); // Users Router
+require("./src/routes/users.routes")(app); // Users Router
 // require("./src/routes/videos.routes")(app); // Videos Router
 // require("./src/routes/subscribers.routes")(app); // Subscribers Router
 // require("./src/routes/message.routes")(app); // Message Router
