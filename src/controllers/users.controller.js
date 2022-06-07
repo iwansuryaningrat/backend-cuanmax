@@ -44,6 +44,7 @@ exports.findOne = (req, res) => {
         },
         type: {
           memberType: result.type.accountType.member,
+          isNew: result.type.accountType.isNew,
           adminType: result.type.isAdmin,
         },
         referal: {
@@ -113,6 +114,7 @@ exports.update = (req, res) => {
           },
           type: {
             memberType: result.type.accountType.member,
+            isNew: result.type.accountType.isNew,
             adminType: result.type.isAdmin,
           },
           referal: {
