@@ -5,7 +5,10 @@ const Message = db.message;
 exports.findAll = (req, res) => {
   Message.find()
     .then((result) => {
-      res.send(result);
+      res.send({
+        message: "Messages list",
+        data: result,
+      });
     })
     .catch((err) => {
       res.status(500).send({
@@ -28,7 +31,7 @@ exports.create = (req, res) => {
     .save()
     .then((result) => {
       res.status(200).send({
-        message: "Message successfully added.",
+        message: "Message sent successfully.",
       });
     })
     .catch((err) => {
