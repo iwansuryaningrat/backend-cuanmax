@@ -1306,8 +1306,8 @@
     "/messages": {
       "get": {
         "tags": ["Messages"],
-        "summary": "Get Message",
-        "description": "Get Message",
+        "summary": "Get All Message",
+        "description": "Get All Message",
         "operationId": "getMessage",
         "responses": {
           "200": {
