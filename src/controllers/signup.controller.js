@@ -12,7 +12,6 @@ exports.signup = async (req, res) => {
   const email = req.body.email;
   let password = req.body.password;
   const admin = req.body.admin ? req.body.admin : false;
-  const referal = req.body.referal;
 
   if (!name || !username || !email || !password) {
     return res.status(400).send({
@@ -26,26 +25,6 @@ exports.signup = async (req, res) => {
     return res.status(409).send({
       message: "User Already Exist. Please Login",
     });
-  }
-
-  // Find referal
-  if (referal) {
-    const referalUser = Users.findOne({ referal: { referalCode: referal } });
-    if (!referalUser) {
-      return res.status(409).send({
-        message: "Referal Code is not valid",
-      });
-    } else {
-      referalUser.referal.referalCount += 1;
-      referalUser.referal.referalAccount.push({ username: username });
-      referalUser.save();
-
-      let voucher = Vouchers.findOne({ voucherCode: "CUANMAX2021" });
-      if (voucher && voucher.voucherNumber > 0) {
-        voucher.voucherNumber -= 1;
-        voucher.save();
-      }
-    }
   }
 
   //Encrypt user password
@@ -62,23 +41,17 @@ exports.signup = async (req, res) => {
     password: encryptedPassword,
     type: {
       accountType: {
-        member: " Basic Member",
-        startDate: new Date(),
+        member: "Basic Member",
+        startDate: new Date().toString(),
+        isNew: true,
       },
       isAdmin: admin,
     },
     referal: {
       referalCode: username.toUpperCase(),
-      referalLink: ``,
       referalCount: 0,
       referalAccount: [],
     },
-    voucher: [
-      {
-        voucherCode: "CUANMAX2021",
-        voucherExpiry: new Date().setDate(new Date().getDate() + 30),
-      },
-    ],
   });
 
   // Save new user
@@ -110,7 +83,8 @@ exports.signup = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while creating the User.",
+        message:
+          err.message || "Some error occurred while Signing up the User.",
       });
     });
 };
