@@ -5,19 +5,9 @@ exports.findAll = (req, res) => {
   Users.find()
     .then((result) => {
       res.send({
-        name: result.name,
-        username: result.username,
-        email: result.email,
-        image: result.imageLink,
-        type: {
-          memberType: result.type.accountType.member,
-          adminType: result.type.isAdmin,
-        },
-        referal: {
-          referalCode: result.referal.referalCode,
-          referalCount: result.referal.referalCount,
-          referalAccount: result.referal.referalAccount,
-        },
+        message: "Users fetched successfully!",
+        timestamp: new Date().toString(),
+        data: result,
       });
     })
     .catch((err) => {
@@ -48,9 +38,13 @@ exports.findOne = (req, res) => {
         name: result.name,
         username: result.username,
         email: result.email,
-        image: result.imageLink,
+        image: {
+          imageName: result.image.imageName,
+          imageLink: result.image.imageLink,
+        },
         type: {
           memberType: result.type.accountType.member,
+          isNew: result.type.accountType.isNew,
           adminType: result.type.isAdmin,
         },
         referal: {
@@ -114,9 +108,13 @@ exports.update = (req, res) => {
           name: result.name,
           username: result.username,
           email: result.email,
-          image: result.imageLink,
+          image: {
+            imageName: result.image.imageName,
+            imageLink: result.image.imageLink,
+          },
           type: {
             memberType: result.type.accountType.member,
+            isNew: result.type.accountType.isNew,
             adminType: result.type.isAdmin,
           },
           referal: {
@@ -192,4 +190,107 @@ exports.changePassword = (req, res) => {
       });
     }
   });
+};
+
+exports.changeProfilePicture = (req, res) => {
+  const id = req.params.id;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
+
+  const user = Users.findById(id);
+  if (!user) {
+    return res.status(404).send({
+      message: "User not found",
+    });
+  }
+
+  if (!req.file) {
+    return res.status(422).send({
+      message: "No file uploaded",
+    });
+  }
+
+  const imageName = req.file.filename;
+  const imageLink = `${req.protocol}://${req.get(
+    "host"
+  )}/assets/foto/${fileName}`;
+
+  Users.findByIdAndUpdate(id, {
+    image: {
+      imageName: imageName,
+      imageLink: imageLink,
+    },
+  })
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "User not found",
+        });
+      }
+      res.send({
+        message: "User's profile picture updated successfully.",
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message ||
+          "Some error occurred while changing the profile picture.",
+      });
+    });
+};
+
+exports.referal = (req, res) => {
+  const referal = req.params.referal;
+  const username = req.params.username;
+
+  const day = new Date().getDate() + 1;
+  const month = new Date().getMonth() + 1;
+  const year = new Date().getFullYear();
+  const date = `${day}/${month}/${year}`;
+
+  if (!referal || !username) {
+    return res.status(400).send({
+      message: "Referal code and username are required",
+    });
+  }
+
+  const user = Users.findOne({ referal: { referalCode: referal } });
+  if (!user) {
+    return res.status(404).send({
+      message: "Referal code not found",
+    });
+  }
+
+  Users.findByIdAndUpdate(user._id, {
+    referal: {
+      referalCode: referal,
+      referalCount: user.referal.referalCount + 1,
+      referalAccount: user.referal.referalAccount.push({ username: username }),
+    },
+  })
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "User not found",
+        });
+      }
+      res.send({
+        message: "Referal code is successfully used.",
+        data: {
+          discountPercent: 10,
+          expiryDate: date,
+        },
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while checking the referal.",
+      });
+    });
 };

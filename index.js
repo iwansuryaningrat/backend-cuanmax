@@ -1,17 +1,22 @@
 // Express REST server
 const express = require("express");
 const cors = require("cors");
-// const multer = require("multer");
+const multer = require("multer");
+const path = require("path");
+
 // const bodyParser = require("body-parser");
 
 // Load .env file
 require("dotenv").config();
 
 // Load File Configuration
-// const imageConfig = require("./src/configs/imageUploader.config");
-// const videoConfig = require("./src/configs/videoUploader.config");
+const imageConfig = require("./src/configs/imageUploader.config");
+const videoConfig = require("./src/configs/videoUploader.config");
 
 const app = express();
+
+// File Access Control
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 app.use(cors());
 app.use(express.json());
@@ -21,19 +26,19 @@ app.use(
   })
 );
 
-// app.use(
-//   multer({
-//     storage: imageConfig.imageStorage,
-//     fileFilter: imageConfig.imageFilter,
-//   }).single("image")
-// );
+app.use(
+  multer({
+    storage: imageConfig.imageStorage,
+    fileFilter: imageConfig.imageFilter,
+  }).single("image")
+);
 
-// app.use(
-//   multer({
-//     storage: videoConfig.videoStorage,
-//     fileFilter: videoConfig.videoFilter,
-//   }).single("video")
-// );
+app.use(
+  multer({
+    storage: videoConfig.videoStorage,
+    fileFilter: videoConfig.videoFilter,
+  }).single("video")
+);
 
 // MongoDB Connection
 const db = require("./src/services/db.connect");
@@ -54,7 +59,7 @@ app.listen(process.env.PORT, () => {
 require("./src/routes/users.routes")(app); // Users Router
 // require("./src/routes/videos.routes")(app); // Videos Router
 // require("./src/routes/subscribers.routes")(app); // Subscribers Router
-// require("./src/routes/message.routes")(app); // Message Router
+require("./src/routes/message.routes")(app); // Message Router
 // require("./src/routes/pricing.routes")(app); // Pricing Router
 // require("./src/routes/teams.routes")(app); // Teams Router
 // require("./src/routes/vouchers.routes")(app); // Vouchers Router
@@ -62,4 +67,4 @@ require("./src/routes/users.routes")(app); // Users Router
 // require("./src/routes/services.routes")(app); // Services Router
 require("./src/routes/auth.routes")(app); // Auth Router
 // require("./src/routes/watchlist.routes")(app); // Watchlist Router
-// require("./src/routes/coinmarketcap.routes")(app); // Coinmarketcap Router
+require("./src/routes/coinmarketcap.routes")(app); // Coinmarketcap Router

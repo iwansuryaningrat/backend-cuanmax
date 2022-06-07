@@ -176,18 +176,9 @@
                   "password": {
                     "type": "string",
                     "format": "password"
-                  },
-                  "password_confirmation": {
-                    "type": "string",
-                    "format": "password"
                   }
                 },
-                "required": [
-                  "name",
-                  "email",
-                  "password",
-                  "password_confirmation"
-                ],
+                "required": ["name", "email", "password"],
                 "example": {
                   "name": "User Name",
                   "username": "username",
@@ -208,12 +199,87 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "token": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "image": {
+                          "type": "object",
+                          "properties": {
+                            "imageName": {
+                              "type": "string"
+                            },
+                            "imageLink": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "type": {
+                          "type": "object",
+                          "properties": {
+                            "accountType": {
+                              "type": "object",
+                              "properties": {
+                                "member": {
+                                  "type": "string"
+                                },
+                                "startDate": {
+                                  "type": "string"
+                                },
+                                "isNew": {
+                                  "type": "boolean"
+                                }
+                              }
+                            },
+                            "isAdmin": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "referal": {
+                          "type": "object",
+                          "properties": {
+                            "referalCode": {
+                              "type": "string"
+                            },
+                            "referlCount": {
+                              "type": "number"
+                            },
+                            "referalAccount": {
+                              "type": "array"
+                            }
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      }
                     }
                   },
                   "example": {
                     "message": "User created successfully",
                     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTI4MzgxNzk5NjExY2NjNzQ4ZmI4YyIsImVtYWlsIjoiaXdhbi5zdXJ5YW5pbmdyYXRAc3R1ZGVudHMudW5kaXAuYWMuaWQiLCJuYW1lIjoiSXdhbiIsImFkbWluIjpmYWxzZSwicm9sZSI6IiBCYXNpYyBNZW1iZXIiLCJpYXQiOjE2NTQ0NDQ0MDIsImV4cCI6MTY1NDQ0ODAwMn0.s5nfB81F6X5E8wBD0DIRqmP5NNuCQFpGllXEMPfbyeY",
                     "data": {
+                      "id": "5d8f8f8f-d8f8-4f8f-8f8f-8f8f8f8f8f8f",
                       "name": "Joe Doe",
                       "username": "joe",
                       "email": "example@gmail.com",
@@ -221,6 +287,7 @@
                       "type": {
                         "accountType": {
                           "member": "Basic Member",
+                          "isNew": true,
                           "startDate": "2013-04-28T00:00:00.000Z"
                         },
                         "isAdmin": false
@@ -229,7 +296,9 @@
                         "referalCode": "JOEDOE",
                         "referalCount": 0,
                         "referalAccount": []
-                      }
+                      },
+                      "createdAt": "2020-04-28T00:00:00.000Z",
+                      "updatedAt": "2020-04-28T00:00:00.000Z"
                     }
                   }
                 }
@@ -307,64 +376,43 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "message": {
                       "type": "string"
                     },
-                    "username": {
+                    "timestamp": {
                       "type": "string"
                     },
-                    "email": {
-                      "type": "string",
-                      "format": "email"
-                    },
-                    "image": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "object",
-                      "properties": {
-                        "memberType": {
-                          "type": "string"
-                        },
-                        "isAdmin": {
-                          "type": "boolean"
-                        }
-                      }
-                    },
-                    "referal": {
-                      "type": "object",
-                      "properties": {
-                        "referalCode": {
-                          "type": "string"
-                        },
-                        "referalCount": {
-                          "type": "integer"
-                        },
-                        "referalAccount": {
-                          "type": "array",
-                          "properties": {
-                            "username": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
+                    "data": {
+                      "type": "array"
                     }
                   },
                   "example": {
-                    "name": "John Doe",
-                    "username": "johndoe",
-                    "email": "exampl@mail.com",
-                    "image": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
-                    "type": {
-                      "memberType": "Basic Member",
-                      "isAdmin": false
-                    },
-                    "referal": {
-                      "referalCode": "JOHNDOE",
-                      "referalCount": 1,
-                      "referalAccount": [{ "username": "johndoe" }]
-                    }
+                    "message": "Users fetched successfully!",
+                    "timestamp": "2022-06-06T19:04:16.110Z",
+                    "data": [
+                      {
+                        "type": {
+                          "accountType": {
+                            "member": "Basic Member",
+                            "startDate": "2022-06-06T19:00:30.599Z"
+                          },
+                          "isAdmin": false
+                        },
+                        "referal": {
+                          "referalCode": "SNINGRAT123",
+                          "referalCount": 0,
+                          "referalAccount": []
+                        },
+                        "name": "Iwan",
+                        "username": "sningrat123",
+                        "email": "iwansuryaningrat@students.undip.ac.id",
+                        "password": "$2b$10$/ZKn3oxFqBOGa1EDnRq3Quyli0F999AtJ6DZMSyJLUVI8c/zxql6e",
+                        "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png",
+                        "createdAt": "2022-06-06T19:00:30.621Z",
+                        "updatedAt": "2022-06-06T19:00:30.621Z",
+                        "id": "629e4ece20ede4b0e1e8a252"
+                      }
+                    ]
                   }
                 }
               }
@@ -428,7 +476,15 @@
                       "format": "email"
                     },
                     "image": {
-                      "type": "string"
+                      "type": "object",
+                      "properties": {
+                        "imageName": {
+                          "type": "string"
+                        },
+                        "imageLink": {
+                          "type": "string"
+                        }
+                      }
                     },
                     "type": {
                       "type": "object",
@@ -465,7 +521,10 @@
                     "name": "John Doe",
                     "username": "johndoe",
                     "email": "exampl@mail.com",
-                    "image": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
+                    "image": {
+                      "imageName": "default-profile-picture.png",
+                      "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png"
+                    },
                     "type": {
                       "memberType": "Basic Member",
                       "isAdmin": false
@@ -647,7 +706,15 @@
                           "format": "email"
                         },
                         "image": {
-                          "type": "string"
+                          "type": "object",
+                          "properties": {
+                            "imageName": {
+                              "type": "string"
+                            },
+                            "imageLink": {
+                              "type": "string"
+                            }
+                          }
                         },
                         "type": {
                           "type": "object",
@@ -688,7 +755,10 @@
                       "name": "John Doe",
                       "username": "johndoe",
                       "email": "exampl@mail.com",
-                      "image": "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
+                      "image": {
+                        "imageName": "default-profile-picture.png",
+                        "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png"
+                      },
                       "type": {
                         "memberType": "Basic Member",
                         "isAdmin": false
@@ -979,6 +1049,668 @@
                   },
                   "example": {
                     "message": "Some error occurred while changing the password."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}/changepicture": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "Change Picture",
+        "description": "Change User's Picture",
+        "operationId": "changePicture",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multypart/form-data": {
+              "schema": {
+                "type": "file",
+                "properties": {
+                  "image": {
+                    "type": "file"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User's profile picture updated successfully."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Id is required"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User not found"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "No file uploaded"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while changing the picture."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{username}/{referal}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Check Referral",
+        "description": "Get User's Referral to used by other user",
+        "operationId": "getReferral",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "Username",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          },
+          {
+            "name": "referal",
+            "in": "path",
+            "description": "Referal",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "discountPercent": {
+                          "type": "number"
+                        },
+                        "expiryDate": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "User's referral",
+                    "data": {
+                      "discountPercent": 10,
+                      "expiryDate": "2020-05-05"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Referal code and username are required"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Referal code not found"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while checking the referral."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messages": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Get All Message",
+        "description": "Get All Message",
+        "operationId": "getMessage",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "sender": {
+                            "type": "string"
+                          },
+                          "receiver": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Message sent successfully."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while getting the messages."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Messages"],
+        "summary": "Send Message",
+        "description": "Send Message",
+        "operationId": "sendMessage",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "subject": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "firstName": "John",
+                  "lastName": "Doe",
+                  "email": "email@example.com",
+                  "subject": "Subject",
+                  "message": "Message"
+                },
+                "required": ["FirstName", "email", "subject", "message"]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message sent successfully."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error while creating message."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messages/{messageId}": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Get Message",
+        "description": "Get Message",
+        "operationId": "getMessage",
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "Message Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "sender": {
+                          "type": "string"
+                        },
+                        "receiver": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Message sent successfully."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while getting the message."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Messages"],
+        "summary": "Delete Message",
+        "description": "Delete Message",
+        "operationId": "deleteMessage",
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "Message Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message deleted successfully."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message not found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while deleting the message."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messages/{messageId}/read": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Read Message",
+        "description": "Read Message",
+        "operationId": "readMessage",
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "Message Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message read successfully."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while reading the message."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messages/{status}": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Get Messages by Status",
+        "description": "Get Messages by Status",
+        "operationId": "getMessages",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "description": "Status",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message read successfully."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while reading the message."
                   }
                 }
               }

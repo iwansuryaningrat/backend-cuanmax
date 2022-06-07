@@ -18,18 +18,28 @@ module.exports = (mongoose) => {
         type: String,
         require: true,
       },
-      imageLink: {
-        type: String,
-        default:
-          "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png",
+      image: {
+        imageName: {
+          type: String,
+        },
+        imageLink: {
+          type: String,
+          default:
+            "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
+        },
       },
       type: {
         accountType: {
           member: String,
           startDate: Date,
           endDate: Date,
+          isNew: Boolean,
         },
-        isAdmin: Boolean,
+        isAdmin: {
+          type: Boolean,
+          default: false,
+          require: true,
+        },
       },
       referal: {
         referalCode: {
