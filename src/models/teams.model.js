@@ -10,9 +10,12 @@ module.exports = (mongoose) => {
         require: true,
       },
       photo: {
-        type: String,
-        default:
-          "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default_team_image_xqjqjy.png",
+        photoName: {
+          type: String,
+        },
+        photoLink: {
+          type: String,
+        },
       },
       contact: {
         instagram: String,

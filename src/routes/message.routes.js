@@ -1,13 +1,14 @@
 module.exports = (app) => {
   const message = require("../controllers/message.controller");
+  const auth = require("../middlewares/auth");
   const router = require("express").Router();
 
-  router.get("/", message.findAll);
+  router.get("/", auth.auth, message.findAll);
   router.post("/", message.create);
-  router.get("/:id", message.findOne);
-  router.get("/:status", message.findByStatus);
-  router.put("/:id", message.update);
-  router.delete("/:id", message.delete);
+  router.get("/:id", auth.auth, message.findOne);
+  router.get("/:id/read", auth.auth, message.read);
+  router.get("/:id/reply", auth.auth, message.reply);
+  router.delete("/:id", auth.auth, message.delete);
 
-  app.use("/api/v1/message", router);
+  app.use("/api/v1/messages", router);
 };
