@@ -6,8 +6,8 @@ module.exports = (app) => {
   router.get("/", auth.auth, message.findAll);
   router.post("/", message.create);
   router.get("/:id", auth.auth, message.findOne);
-  router.get("/:status", auth.auth, message.findByStatus);
   router.get("/:id/read", auth.auth, message.read);
+  router.get("/:id/reply", auth.auth, message.reply);
   router.delete("/:id", auth.auth, message.delete);
 
   app.use("/api/v1/messages", router);

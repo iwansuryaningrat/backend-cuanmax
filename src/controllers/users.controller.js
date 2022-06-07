@@ -1,6 +1,8 @@
 const db = require("../models/index");
+const bcrypt = require("bcrypt");
 const Users = db.users;
 
+// Done
 exports.findAll = (req, res) => {
   Users.find()
     .then((result) => {
@@ -17,12 +19,13 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Done
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
   if (!id) {
     return res.status(400).send({
-      message: "Id is required",
+      message: "User ID is required.",
     });
   }
 
@@ -35,22 +38,26 @@ exports.findOne = (req, res) => {
       }
 
       res.send({
-        name: result.name,
-        username: result.username,
-        email: result.email,
-        image: {
-          imageName: result.image.imageName,
-          imageLink: result.image.imageLink,
-        },
-        type: {
-          memberType: result.type.accountType.member,
-          isNew: result.type.accountType.isNew,
-          adminType: result.type.isAdmin,
-        },
-        referal: {
-          referalCode: result.referal.referalCode,
-          referalCount: result.referal.referalCount,
-          referalAccount: result.referal.referalAccount,
+        message: "User fetched successfully!",
+        timestamp: new Date().toString(),
+        data: {
+          name: result.name,
+          username: result.username,
+          email: result.email,
+          image: {
+            imageName: result.image.imageName,
+            imageLink: result.image.imageLink,
+          },
+          type: {
+            memberType: result.type.accountType.member,
+            isNew: result.type.accountType.isNew,
+            adminType: result.type.isAdmin,
+          },
+          referal: {
+            referalCode: result.referal.referalCode,
+            referalCount: result.referal.referalCount,
+            referalAccount: result.referal.referalAccount,
+          },
         },
       });
     })
@@ -61,12 +68,13 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Done
 exports.delete = (req, res) => {
   const id = req.params.id;
 
   if (!id) {
     return res.status(400).send({
-      message: "Id is required",
+      message: "User ID is required",
     });
   }
 
@@ -77,7 +85,10 @@ exports.delete = (req, res) => {
           message: "User not found",
         });
       }
-      res.send({ message: "User deleted successfully." });
+      res.send({
+        message: "User deleted successfully.",
+        timestamp: new Date().toString(),
+      });
     })
     .catch((err) => {
       res.status(500).send({
@@ -86,12 +97,13 @@ exports.delete = (req, res) => {
     });
 };
 
+// Done
 exports.update = (req, res) => {
   const id = req.params.id;
 
   if (!id) {
     return res.status(400).send({
-      message: "Id is required",
+      message: "User ID is required.",
     });
   }
 
@@ -104,6 +116,7 @@ exports.update = (req, res) => {
       }
       res.send({
         message: "User updated successfully.",
+        timestamp: new Date().toString(),
         data: {
           name: result.name,
           username: result.username,
@@ -132,6 +145,7 @@ exports.update = (req, res) => {
     });
 };
 
+// Done
 exports.changePassword = (req, res) => {
   const id = req.params.id;
   const oldPassword = req.body.oldPassword;
@@ -139,57 +153,74 @@ exports.changePassword = (req, res) => {
 
   if (!id || !oldPassword || !newPassword) {
     return res.status(400).send({
-      message: "Id, oldPassword and newPassword are required",
+      message: "User ID, Old Password, and New Password are required",
     });
   }
 
-  const user = Users.findById(id);
-  if (!user) {
-    return res.status(404).send({
-      message: "User not found",
+  if (newPassword === oldPassword) {
+    return res.status(409).send({
+      message: "New Password cannot be the same as Old Password",
     });
   }
 
-  bcrypt.compare(oldPassword, user.password, (err, result) => {
-    if (err) {
-      return res.status(500).send({
-        message:
-          err.message || "Some error occurred while changing the password.",
-      });
-    } else if (!result) {
-      return res.status(401).send({
-        message: "Invalid password",
-      });
-    } else {
-      bcrypt.hash(newPassword, 10, (err, hash) => {
+  const user = Users.findById(id)
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "User not found",
+        });
+      }
+
+      bcrypt.compare(oldPassword, result.password, (err, result) => {
         if (err) {
           return res.status(500).send({
             message:
               err.message || "Some error occurred while changing the password.",
           });
-        }
-        newPassword = hash;
-        Users.findByIdAndUpdate(id, { password: newPassword })
-          .then((result) => {
-            if (!result) {
-              res.status(404).send({
-                message: "User not found",
+        } else if (!result) {
+          return res.status(401).send({
+            message: "Invalid old password",
+          });
+        } else {
+          bcrypt.hash(newPassword, 10, (err, hash) => {
+            if (err) {
+              return res.status(500).send({
+                message:
+                  err.message ||
+                  "Some error occurred while changing the password.",
               });
             }
-            res.send({
-              message: "User's password updated successfully.",
-            });
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message:
-                err.message ||
-                "Some error occurred while changing the password.",
-            });
+
+            newPassword = hash;
+            Users.findByIdAndUpdate(id, { password: newPassword })
+              .then((result) => {
+                if (!result) {
+                  res.status(404).send({
+                    message: "User not found",
+                  });
+                }
+                res.send({
+                  message: "User's password updated successfully.",
+                  timestamp: new Date().toString(),
+                });
+              })
+              .catch((err) => {
+                res.status(500).send({
+                  message:
+                    err.message ||
+                    "Some error occurred while changing the password.",
+                });
+              });
           });
+        }
       });
-    }
-  });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving the user.",
+      });
+    });
 };
 
 exports.changeProfilePicture = (req, res) => {
@@ -197,7 +228,7 @@ exports.changeProfilePicture = (req, res) => {
 
   if (!id) {
     return res.status(400).send({
-      message: "Id is required",
+      message: "User ID is required",
     });
   }
 
@@ -259,38 +290,48 @@ exports.referal = (req, res) => {
     });
   }
 
-  const user = Users.findOne({ referal: { referalCode: referal } });
-  if (!user) {
-    return res.status(404).send({
-      message: "Referal code not found",
-    });
-  }
-
-  Users.findByIdAndUpdate(user._id, {
-    referal: {
-      referalCode: referal,
-      referalCount: user.referal.referalCount + 1,
-      referalAccount: user.referal.referalAccount.push({ username: username }),
-    },
-  })
+  Users.findOne({ referal: { referalCode: referal } })
     .then((result) => {
       if (!result) {
         res.status(404).send({
-          message: "User not found",
+          message: "Referal code not found",
         });
       }
-      res.send({
-        message: "Referal code is successfully used.",
-        data: {
-          discountPercent: 10,
-          expiryDate: date,
+
+      Users.findByIdAndUpdate(result.id, {
+        referal: {
+          referalCode: referal,
+          referalCount: result.referal.referalCount + 1,
+          referalAccount: result.referal.referalAccount.push({
+            username: username,
+          }),
         },
-      });
+      })
+        .then((result) => {
+          if (!result) {
+            res.status(404).send({
+              message: "User not found",
+            });
+          }
+          res.send({
+            message: "Referal code is successfully used.",
+            data: {
+              discountPercent: 10,
+              expiryDate: date,
+            },
+          });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while checking the referal.",
+          });
+        });
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while checking the referal.",
+          err.message || "Some error occurred while retrieving the user.",
       });
     });
 };

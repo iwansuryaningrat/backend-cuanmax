@@ -368,6 +368,19 @@
         "summary": "Get All Users",
         "description": "Get All Users",
         "operationId": "getAllUsers",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Operation",
@@ -388,9 +401,12 @@
                   },
                   "example": {
                     "message": "Users fetched successfully!",
-                    "timestamp": "2022-06-06T19:04:16.110Z",
+                    "timestamp": "Wed Jun 08 2022 03:33:49 GMT+0700 (Western Indonesia Time)",
                     "data": [
                       {
+                        "image": {
+                          "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png"
+                        },
                         "type": {
                           "accountType": {
                             "member": "Basic Member",
@@ -409,7 +425,7 @@
                         "password": "$2b$10$/ZKn3oxFqBOGa1EDnRq3Quyli0F999AtJ6DZMSyJLUVI8c/zxql6e",
                         "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png",
                         "createdAt": "2022-06-06T19:00:30.621Z",
-                        "updatedAt": "2022-06-06T19:00:30.621Z",
+                        "updatedAt": "2022-06-06T20:05:37.721Z",
                         "id": "629e4ece20ede4b0e1e8a252"
                       }
                     ]
@@ -455,6 +471,17 @@
               "type": "string",
               "nullable": false
             }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -465,52 +492,57 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "message": {
                       "type": "string"
                     },
-                    "username": {
+                    "timestamp": {
                       "type": "string"
                     },
-                    "email": {
-                      "type": "string",
-                      "format": "email"
-                    },
-                    "image": {
+                    "data": {
                       "type": "object",
                       "properties": {
-                        "imageName": {
+                        "name": {
                           "type": "string"
                         },
-                        "imageLink": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "type": {
-                      "type": "object",
-                      "properties": {
-                        "memberType": {
+                        "username": {
                           "type": "string"
                         },
-                        "isAdmin": {
-                          "type": "boolean"
-                        }
-                      }
-                    },
-                    "referal": {
-                      "type": "object",
-                      "properties": {
-                        "referalCode": {
+                        "email": {
                           "type": "string"
                         },
-                        "referalCount": {
-                          "type": "integer"
-                        },
-                        "referalAccount": {
-                          "type": "array",
+                        "image": {
+                          "type": "object",
                           "properties": {
-                            "username": {
+                            "imageName": {
                               "type": "string"
+                            },
+                            "imageLink": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "type": {
+                          "type": "object",
+                          "properties": {
+                            "memberType": {
+                              "type": "string"
+                            },
+                            "isAdmin": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "referal": {
+                          "type": "object",
+                          "properties": {
+                            "referalCode": {
+                              "type": "string"
+                            },
+                            "referalCount": {
+                              "type": "number"
+                            },
+                            "referalAccount": {
+                              "type": "array"
                             }
                           }
                         }
@@ -518,21 +550,24 @@
                     }
                   },
                   "example": {
-                    "name": "John Doe",
-                    "username": "johndoe",
-                    "email": "exampl@mail.com",
-                    "image": {
-                      "imageName": "default-profile-picture.png",
-                      "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png"
-                    },
-                    "type": {
-                      "memberType": "Basic Member",
-                      "isAdmin": false
-                    },
-                    "referal": {
-                      "referalCode": "JOHNDOE",
-                      "referalCount": 1,
-                      "referalAccount": [{ "username": "johndoe" }]
+                    "message": "User fetched successfully!",
+                    "timestamp": "Wed Jun 08 2022 03:41:39 GMT+0700 (Western Indonesia Time)",
+                    "data": {
+                      "name": "Iwan",
+                      "username": "sningrat123",
+                      "email": "iwansuryaningrat@students.undip.ac.id",
+                      "image": {
+                        "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png"
+                      },
+                      "type": {
+                        "memberType": "Basic Member",
+                        "adminType": false
+                      },
+                      "referal": {
+                        "referalCode": "SNINGRAT123",
+                        "referalCount": 0,
+                        "referalAccount": []
+                      }
                     }
                   }
                 }
@@ -609,6 +644,17 @@
             "schema": {
               "type": "string",
               "nullable": false
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
             }
           }
         ],
@@ -692,6 +738,9 @@
                     "message": {
                       "type": "string"
                     },
+                    "timestamp": {
+                      "type": "string"
+                    },
                     "data": {
                       "type": "object",
                       "properties": {
@@ -750,23 +799,22 @@
                     }
                   },
                   "example": {
-                    "message": "User Updated Successfully",
+                    "message": "User updated successfully.",
+                    "timestamp": "2020-04-20T12:00:00.000Z",
                     "data": {
-                      "name": "John Doe",
-                      "username": "johndoe",
-                      "email": "exampl@mail.com",
+                      "name": "Iwan",
+                      "username": "sningrat123",
+                      "email": "iwansuryaningrat@students.undip.ac.id",
                       "image": {
-                        "imageName": "default-profile-picture.png",
-                        "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png"
+                        "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png"
                       },
                       "type": {
-                        "memberType": "Basic Member",
-                        "isAdmin": false
+                        "adminType": false
                       },
                       "referal": {
-                        "referalCode": "JOHNDOE",
-                        "referalCount": 1,
-                        "referalAccount": [{ "username": "johndoe" }]
+                        "referalCode": "SNINGRAT123",
+                        "referalCount": 0,
+                        "referalAccount": []
                       }
                     }
                   }
@@ -786,7 +834,7 @@
                     }
                   },
                   "example": {
-                    "message": "Id is required"
+                    "message": "User ID is required."
                   }
                 }
               }
@@ -845,6 +893,17 @@
               "type": "string",
               "nullable": false
             }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -857,10 +916,14 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
                     }
                   },
                   "example": {
-                    "message": "User Deleted Successfully"
+                    "message": "User deleted successfully.",
+                    "timestamp": "Wed Jun 08 2022 03:57:24 GMT+0700 (Western Indonesia Time)"
                   }
                 }
               }
@@ -878,7 +941,7 @@
                     }
                   },
                   "example": {
-                    "message": "Id is required"
+                    "message": "User ID is required"
                   }
                 }
               }
@@ -939,6 +1002,17 @@
               "type": "string",
               "nullable": false
             }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
           }
         ],
         "requestBody": {
@@ -973,10 +1047,14 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
                     }
                   },
                   "example": {
-                    "message": "User's password updated successfully."
+                    "message": "User's password updated successfully.",
+                    "timestamp": "Wed Jun 08 2022 04:32:13 GMT+0700 (Western Indonesia Time)"
                   }
                 }
               }
@@ -994,7 +1072,7 @@
                     }
                   },
                   "example": {
-                    "message": "Id, oldPassword and newPassword are required"
+                    "message": "User ID, Old Password, and New Password are required"
                   }
                 }
               }
@@ -1036,6 +1114,24 @@
               }
             }
           },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "New Password cannot be the same as Old Password"
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -1072,6 +1168,17 @@
             "schema": {
               "type": "string",
               "nullable": false
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
             }
           }
         ],
@@ -1210,6 +1317,17 @@
               "type": "string",
               "nullable": false
             }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1309,6 +1427,29 @@
         "summary": "Get All Message",
         "description": "Get All Message",
         "operationId": "getMessage",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1320,6 +1461,9 @@
                     "message": {
                       "type": "string"
                     },
+                    "timestamp": {
+                      "type": "string"
+                    },
                     "data": {
                       "type": "array",
                       "items": {
@@ -1328,16 +1472,28 @@
                           "id": {
                             "type": "string"
                           },
-                          "sender": {
+                          "firstName": {
                             "type": "string"
                           },
-                          "receiver": {
+                          "lastName": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "subject": {
                             "type": "string"
                           },
                           "message": {
                             "type": "string"
                           },
+                          "status": {
+                            "type": "string"
+                          },
                           "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
                             "type": "string"
                           }
                         }
@@ -1345,7 +1501,19 @@
                     }
                   },
                   "example": {
-                    "message": "Message sent successfully."
+                    "message": "Messages was successfully found",
+                    "timestamp": "Wed Jun 08 2022 00:29:13 GMT+0700 (Western Indonesia Time)",
+                    "data": [
+                      {
+                        "firstName": "Iwan",
+                        "lastName": "Suryaningrat",
+                        "email": "example@mail.com",
+                        "subject": "Subject Example",
+                        "message": "Message body example",
+                        "status": "Unreaded",
+                        "id": "629f89ca8e00f656340fc93f"
+                      }
+                    ]
                   }
                 }
               }
@@ -1376,6 +1544,19 @@
         "summary": "Send Message",
         "description": "Send Message",
         "operationId": "sendMessage",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1421,10 +1602,14 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
                     }
                   },
                   "example": {
-                    "message": "Message sent successfully."
+                    "message": "Message sent successfully.",
+                    "timestamp": "Wed Jun 08 2022 00:58:45 GMT+0700 (Western Indonesia Time)"
                   }
                 }
               }
@@ -1467,6 +1652,17 @@
               "type": "string",
               "nullable": false
             }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1480,29 +1676,59 @@
                     "message": {
                       "type": "string"
                     },
+                    "timestamp": {
+                      "type": "string"
+                    },
                     "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "sender": {
-                          "type": "string"
-                        },
-                        "receiver": {
-                          "type": "string"
-                        },
-                        "message": {
-                          "type": "string"
-                        },
-                        "createdAt": {
-                          "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "firstName": {
+                            "type": "string"
+                          },
+                          "lastName": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "subject": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   },
                   "example": {
-                    "message": "Message sent successfully."
+                    "message": "Messages was successfully found",
+                    "timestamp": "Wed Jun 08 2022 00:29:13 GMT+0700 (Western Indonesia Time)",
+                    "data": [
+                      {
+                        "firstName": "Iwan",
+                        "lastName": "Suryaningrat",
+                        "email": "example@mail.com",
+                        "subject": "Subject Example",
+                        "message": "Message body example",
+                        "status": "Unreaded",
+                        "id": "629f89ca8e00f656340fc93f"
+                      }
+                    ]
                   }
                 }
               }
@@ -1543,6 +1769,17 @@
               "type": "string",
               "nullable": false
             }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1555,10 +1792,14 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
                     }
                   },
                   "example": {
-                    "message": "Message deleted successfully."
+                    "message": "Message deleted successfully.",
+                    "timestamp": "Wed Jun 08 2022 00:29:13 GMT+0700 (Western Indonesia Time)"
                   }
                 }
               }
@@ -1619,6 +1860,17 @@
               "type": "string",
               "nullable": false
             }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1631,10 +1883,55 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "firstName": {
+                          "type": "string"
+                        },
+                        "lastName": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "subject": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      }
                     }
                   },
                   "example": {
-                    "message": "Message read successfully."
+                    "message": "Message read successfully.",
+                    "timestamp": "Wed Jun 08 2022 00:47:14 GMT+0700 (Western Indonesia Time)",
+                    "data": {
+                      "firstName": "Iwan",
+                      "lastName": "Suryaningrat",
+                      "email": "example@mail.com",
+                      "subject": "Subject Example",
+                      "message": "Message body example",
+                      "status": "Readed",
+                      "id": "629f89ca8e00f656340fc93f"
+                    }
                   }
                 }
               }
@@ -1661,21 +1958,32 @@
         }
       }
     },
-    "/messages/{status}": {
+    "/messages/{messageId}/reply": {
       "get": {
         "tags": ["Messages"],
-        "summary": "Get Messages by Status",
-        "description": "Get Messages by Status",
-        "operationId": "getMessages",
+        "summary": "Reply Message",
+        "description": "Reply Message",
+        "operationId": "replyMessage",
         "parameters": [
           {
-            "name": "status",
+            "name": "messageId",
             "in": "path",
-            "description": "Status",
+            "description": "Message Id",
             "required": true,
             "schema": {
               "type": "string",
               "nullable": false
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
             }
           }
         ],
@@ -1689,10 +1997,55 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "firstName": {
+                          "type": "string"
+                        },
+                        "lastName": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "subject": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      }
                     }
                   },
                   "example": {
-                    "message": "Message read successfully."
+                    "message": "Message status change successfully.",
+                    "timestamp": "Wed Jun 08 2022 00:47:14 GMT+0700 (Western Indonesia Time)",
+                    "data": {
+                      "firstName": "Iwan",
+                      "lastName": "Suryaningrat",
+                      "email": "example@mail.com",
+                      "subject": "Subject Example",
+                      "message": "Message body example",
+                      "status": "Replied",
+                      "id": "629f89ca8e00f656340fc93f"
+                    }
                   }
                 }
               }
@@ -1719,5 +2072,10 @@
         }
       }
     }
-  }
+  },
+  "security": [
+    {
+      "jwt": ["x-auth-token"]
+    }
+  ]
 }
