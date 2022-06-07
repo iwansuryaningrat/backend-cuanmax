@@ -1,6 +1,6 @@
 module.exports = (app) => {
   const coinmarketcap = require("../controllers/coinmarketcap/coinmarketcap.controller");
-  const auth = require("../middleware/auth");
+  const auth = require("../middlewares/auth");
   const router = require("express").Router();
 
   router.get("/map", auth.auth, coinmarketcap.map);
