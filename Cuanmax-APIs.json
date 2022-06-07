@@ -401,9 +401,12 @@
                   },
                   "example": {
                     "message": "Users fetched successfully!",
-                    "timestamp": "2022-06-06T19:04:16.110Z",
+                    "timestamp": "Wed Jun 08 2022 03:33:49 GMT+0700 (Western Indonesia Time)",
                     "data": [
                       {
+                        "image": {
+                          "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png"
+                        },
                         "type": {
                           "accountType": {
                             "member": "Basic Member",
@@ -422,7 +425,7 @@
                         "password": "$2b$10$/ZKn3oxFqBOGa1EDnRq3Quyli0F999AtJ6DZMSyJLUVI8c/zxql6e",
                         "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png",
                         "createdAt": "2022-06-06T19:00:30.621Z",
-                        "updatedAt": "2022-06-06T19:00:30.621Z",
+                        "updatedAt": "2022-06-06T20:05:37.721Z",
                         "id": "629e4ece20ede4b0e1e8a252"
                       }
                     ]
@@ -489,52 +492,57 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "name": {
+                    "message": {
                       "type": "string"
                     },
-                    "username": {
+                    "timestamp": {
                       "type": "string"
                     },
-                    "email": {
-                      "type": "string",
-                      "format": "email"
-                    },
-                    "image": {
+                    "data": {
                       "type": "object",
                       "properties": {
-                        "imageName": {
+                        "name": {
                           "type": "string"
                         },
-                        "imageLink": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "type": {
-                      "type": "object",
-                      "properties": {
-                        "memberType": {
+                        "username": {
                           "type": "string"
                         },
-                        "isAdmin": {
-                          "type": "boolean"
-                        }
-                      }
-                    },
-                    "referal": {
-                      "type": "object",
-                      "properties": {
-                        "referalCode": {
+                        "email": {
                           "type": "string"
                         },
-                        "referalCount": {
-                          "type": "integer"
-                        },
-                        "referalAccount": {
-                          "type": "array",
+                        "image": {
+                          "type": "object",
                           "properties": {
-                            "username": {
+                            "imageName": {
                               "type": "string"
+                            },
+                            "imageLink": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "type": {
+                          "type": "object",
+                          "properties": {
+                            "memberType": {
+                              "type": "string"
+                            },
+                            "isAdmin": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "referal": {
+                          "type": "object",
+                          "properties": {
+                            "referalCode": {
+                              "type": "string"
+                            },
+                            "referalCount": {
+                              "type": "number"
+                            },
+                            "referalAccount": {
+                              "type": "array"
                             }
                           }
                         }
@@ -542,21 +550,24 @@
                     }
                   },
                   "example": {
-                    "name": "John Doe",
-                    "username": "johndoe",
-                    "email": "exampl@mail.com",
-                    "image": {
-                      "imageName": "default-profile-picture.png",
-                      "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png"
-                    },
-                    "type": {
-                      "memberType": "Basic Member",
-                      "isAdmin": false
-                    },
-                    "referal": {
-                      "referalCode": "JOHNDOE",
-                      "referalCount": 1,
-                      "referalAccount": [{ "username": "johndoe" }]
+                    "message": "User fetched successfully!",
+                    "timestamp": "Wed Jun 08 2022 03:41:39 GMT+0700 (Western Indonesia Time)",
+                    "data": {
+                      "name": "Iwan",
+                      "username": "sningrat123",
+                      "email": "iwansuryaningrat@students.undip.ac.id",
+                      "image": {
+                        "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png"
+                      },
+                      "type": {
+                        "memberType": "Basic Member",
+                        "adminType": false
+                      },
+                      "referal": {
+                        "referalCode": "SNINGRAT123",
+                        "referalCount": 0,
+                        "referalAccount": []
+                      }
                     }
                   }
                 }
@@ -727,6 +738,9 @@
                     "message": {
                       "type": "string"
                     },
+                    "timestamp": {
+                      "type": "string"
+                    },
                     "data": {
                       "type": "object",
                       "properties": {
@@ -785,23 +799,22 @@
                     }
                   },
                   "example": {
-                    "message": "User Updated Successfully",
+                    "message": "User updated successfully.",
+                    "timestamp": "2020-04-20T12:00:00.000Z",
                     "data": {
-                      "name": "John Doe",
-                      "username": "johndoe",
-                      "email": "exampl@mail.com",
+                      "name": "Iwan",
+                      "username": "sningrat123",
+                      "email": "iwansuryaningrat@students.undip.ac.id",
                       "image": {
-                        "imageName": "default-profile-picture.png",
-                        "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1589788981/default-profile-picture_zqxqjy.png"
+                        "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png"
                       },
                       "type": {
-                        "memberType": "Basic Member",
-                        "isAdmin": false
+                        "adminType": false
                       },
                       "referal": {
-                        "referalCode": "JOHNDOE",
-                        "referalCount": 1,
-                        "referalAccount": [{ "username": "johndoe" }]
+                        "referalCode": "SNINGRAT123",
+                        "referalCount": 0,
+                        "referalAccount": []
                       }
                     }
                   }
@@ -821,7 +834,7 @@
                     }
                   },
                   "example": {
-                    "message": "Id is required"
+                    "message": "User ID is required."
                   }
                 }
               }
@@ -903,10 +916,14 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
                     }
                   },
                   "example": {
-                    "message": "User Deleted Successfully"
+                    "message": "User deleted successfully.",
+                    "timestamp": "Wed Jun 08 2022 03:57:24 GMT+0700 (Western Indonesia Time)"
                   }
                 }
               }
@@ -924,7 +941,7 @@
                     }
                   },
                   "example": {
-                    "message": "Id is required"
+                    "message": "User ID is required"
                   }
                 }
               }
@@ -1030,10 +1047,14 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
                     }
                   },
                   "example": {
-                    "message": "User's password updated successfully."
+                    "message": "User's password updated successfully.",
+                    "timestamp": "Wed Jun 08 2022 04:32:13 GMT+0700 (Western Indonesia Time)"
                   }
                 }
               }
@@ -1051,7 +1072,7 @@
                     }
                   },
                   "example": {
-                    "message": "Id, oldPassword and newPassword are required"
+                    "message": "User ID, Old Password, and New Password are required"
                   }
                 }
               }
@@ -1088,6 +1109,24 @@
                   },
                   "example": {
                     "message": "User not found"
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "New Password cannot be the same as Old Password"
                   }
                 }
               }
