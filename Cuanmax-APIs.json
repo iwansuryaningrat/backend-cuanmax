@@ -368,6 +368,19 @@
         "summary": "Get All Users",
         "description": "Get All Users",
         "operationId": "getAllUsers",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Operation",
@@ -454,6 +467,17 @@
             "schema": {
               "type": "string",
               "nullable": false
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
             }
           }
         ],
@@ -609,6 +633,17 @@
             "schema": {
               "type": "string",
               "nullable": false
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
             }
           }
         ],
@@ -845,6 +880,17 @@
               "type": "string",
               "nullable": false
             }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -938,6 +984,17 @@
             "schema": {
               "type": "string",
               "nullable": false
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
             }
           }
         ],
@@ -1072,6 +1129,17 @@
             "schema": {
               "type": "string",
               "nullable": false
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
             }
           }
         ],
@@ -1210,6 +1278,17 @@
               "type": "string",
               "nullable": false
             }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1309,6 +1388,19 @@
         "summary": "Get All Message",
         "description": "Get All Message",
         "operationId": "getMessage",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1376,6 +1468,19 @@
         "summary": "Send Message",
         "description": "Send Message",
         "operationId": "sendMessage",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1467,6 +1572,17 @@
               "type": "string",
               "nullable": false
             }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1542,6 +1658,17 @@
             "schema": {
               "type": "string",
               "nullable": false
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
             }
           }
         ],
@@ -1619,6 +1746,17 @@
               "type": "string",
               "nullable": false
             }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
@@ -1676,6 +1814,17 @@
             "schema": {
               "type": "string",
               "nullable": false
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
             }
           }
         ],
