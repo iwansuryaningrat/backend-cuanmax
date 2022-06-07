@@ -33,6 +33,7 @@ module.exports = (mongoose) => {
           member: String,
           startDate: Date,
           endDate: Date,
+          isNew: Boolean,
         },
         isAdmin: {
           type: Boolean,
