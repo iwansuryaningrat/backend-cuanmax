@@ -199,12 +199,87 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "token": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email"
+                        },
+                        "image": {
+                          "type": "object",
+                          "properties": {
+                            "imageName": {
+                              "type": "string"
+                            },
+                            "imageLink": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "type": {
+                          "type": "object",
+                          "properties": {
+                            "accountType": {
+                              "type": "object",
+                              "properties": {
+                                "member": {
+                                  "type": "string"
+                                },
+                                "startDate": {
+                                  "type": "string"
+                                },
+                                "isNew": {
+                                  "type": "boolean"
+                                }
+                              }
+                            },
+                            "isAdmin": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "referal": {
+                          "type": "object",
+                          "properties": {
+                            "referalCode": {
+                              "type": "string"
+                            },
+                            "referlCount": {
+                              "type": "number"
+                            },
+                            "referalAccount": {
+                              "type": "array"
+                            }
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      }
                     }
                   },
                   "example": {
                     "message": "User created successfully",
                     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTI4MzgxNzk5NjExY2NjNzQ4ZmI4YyIsImVtYWlsIjoiaXdhbi5zdXJ5YW5pbmdyYXRAc3R1ZGVudHMudW5kaXAuYWMuaWQiLCJuYW1lIjoiSXdhbiIsImFkbWluIjpmYWxzZSwicm9sZSI6IiBCYXNpYyBNZW1iZXIiLCJpYXQiOjE2NTQ0NDQ0MDIsImV4cCI6MTY1NDQ0ODAwMn0.s5nfB81F6X5E8wBD0DIRqmP5NNuCQFpGllXEMPfbyeY",
                     "data": {
+                      "id": "5d8f8f8f-d8f8-4f8f-8f8f-8f8f8f8f8f8f",
                       "name": "Joe Doe",
                       "username": "joe",
                       "email": "example@gmail.com",
@@ -212,6 +287,7 @@
                       "type": {
                         "accountType": {
                           "member": "Basic Member",
+                          "isNew": true,
                           "startDate": "2013-04-28T00:00:00.000Z"
                         },
                         "isAdmin": false
@@ -220,7 +296,9 @@
                         "referalCode": "JOEDOE",
                         "referalCount": 0,
                         "referalAccount": []
-                      }
+                      },
+                      "createdAt": "2020-04-28T00:00:00.000Z",
+                      "updatedAt": "2020-04-28T00:00:00.000Z"
                     }
                   }
                 }
@@ -305,38 +383,7 @@
                       "type": "string"
                     },
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string"
-                          },
-                          "username": {
-                            "type": "string"
-                          },
-                          "email": {
-                            "type": "string",
-                            "format": "email"
-                          },
-                          "password": {
-                            "type": "string",
-                            "format": "password"
-                          },
-                          "type": {
-                            "accountType": {
-                              "member": "Basic Member",
-                              "startDate": "2013-04-28T00:00:00.000Z"
-                            },
-                            "isAdmin": false
-                          },
-                          "referal": {
-                            "referalCode": "JOEDOE",
-                            "referalCount": 0,
-                            "referalAccount": []
-                          }
-                        }
-                      }
+                      "type": "array"
                     }
                   },
                   "example": {
