@@ -10,5 +10,5 @@ module.exports = (app) => {
   router.get("/:id/read", auth.auth, message.read);
   router.delete("/:id", auth.auth, message.delete);
 
-  app.use("/api/v1/message", router);
+  app.use("/api/v1/messages", router);
 };
