@@ -1450,6 +1450,274 @@
           }
         }
       }
+    },
+    "/messages/{messageId}": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Get Message",
+        "description": "Get Message",
+        "operationId": "getMessage",
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "Message Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "sender": {
+                          "type": "string"
+                        },
+                        "receiver": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Message sent successfully."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while getting the message."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Messages"],
+        "summary": "Delete Message",
+        "description": "Delete Message",
+        "operationId": "deleteMessage",
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "Message Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message deleted successfully."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message not found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while deleting the message."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messages/{messageId}/read": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Read Message",
+        "description": "Read Message",
+        "operationId": "readMessage",
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "Message Id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message read successfully."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while reading the message."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/messages/{status}": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Get Messages by Status",
+        "description": "Get Messages by Status",
+        "operationId": "getMessages",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "description": "Status",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message read successfully."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while reading the message."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
