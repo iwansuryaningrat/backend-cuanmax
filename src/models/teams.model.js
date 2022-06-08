@@ -5,6 +5,9 @@ module.exports = (mongoose) => {
         type: String,
         require: true,
       },
+      description: {
+        type: String,
+      },
       position: {
         type: String,
         require: true,
