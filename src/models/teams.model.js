@@ -22,9 +22,9 @@ module.exports = (mongoose) => {
       },
       contact: {
         instagram: String,
-        facebook: String,
         twitter: String,
         linkedin: String,
+        email: String,
       },
     },
     { timestamps: true }
