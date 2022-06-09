@@ -22,9 +22,25 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
+  if (!id) {
+    return res.status(400).send({
+      message: "Team ID is required.",
+    });
+  }
+
   Teams.findById(id)
     .then((result) => {
-      res.send(result);
+      if (!result) {
+        res.status(404).send({
+          message: "Team not found",
+        });
+      }
+
+      res.send({
+        message: "Team successfully retrieved.",
+        timestamp: new Date().toString(),
+        data: result,
+      });
     })
     .catch((err) => {
       res.status(500).send({
@@ -37,6 +53,12 @@ exports.findOne = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
+  if (!id) {
+    return res.status(400).send({
+      message: "Team ID is required.",
+    });
+  }
+
   Teams.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
@@ -46,7 +68,7 @@ exports.delete = (req, res) => {
       }
 
       res.send({
-        message: "Team was deleted",
+        message: "Team successfully deleted.",
         timestamp: new Date().toString(),
       });
     })
