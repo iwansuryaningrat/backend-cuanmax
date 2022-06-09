@@ -22,9 +22,25 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
+  if (!id) {
+    return res.status(400).send({
+      message: "Team ID is required.",
+    });
+  }
+
   Teams.findById(id)
     .then((result) => {
-      res.send(result);
+      if (!result) {
+        res.status(404).send({
+          message: "Team not found",
+        });
+      }
+
+      res.send({
+        message: "Team successfully retrieved.",
+        timestamp: new Date().toString(),
+        data: result,
+      });
     })
     .catch((err) => {
       res.status(500).send({
@@ -37,6 +53,12 @@ exports.findOne = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
+  if (!id) {
+    return res.status(400).send({
+      message: "Team ID is required.",
+    });
+  }
+
   Teams.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
@@ -46,7 +68,7 @@ exports.delete = (req, res) => {
       }
 
       res.send({
-        message: "Team was deleted",
+        message: "Team successfully deleted.",
         timestamp: new Date().toString(),
       });
     })
@@ -59,12 +81,21 @@ exports.delete = (req, res) => {
 
 // Done
 exports.create = (req, res) => {
+  const { name, description, position, email } = req.body;
+
+  if (!name || !description || !position || !email) {
+    return res.status(400).send({
+      message: "Please fill all required fields.",
+    });
+  }
+
   const team = new Teams({
-    name: req.body.name,
-    position: req.body.position,
+    name: name,
+    description: description,
+    position: position,
     contact: {
       instagram: req.body.instagram,
-      facebook: req.body.facebook,
+      email: email,
       twitter: req.body.twitter,
       linkedin: req.body.linkedin,
     },
@@ -80,7 +111,7 @@ exports.create = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      res.status(500).send({
         message: err.message || "Some error while creating team.",
         timestamp: new Date().toString(),
       });
@@ -130,7 +161,7 @@ exports.teamProfile = (req, res) => {
 
   if (!req.file) {
     return res.status(422).send({
-      message: "No file uploaded",
+      message: "Team profile photo is required.",
     });
   }
 
@@ -148,7 +179,7 @@ exports.teamProfile = (req, res) => {
       }
 
       res.send({
-        message: "Team's profile picture updated successfully.",
+        message: "Team profile photo successfully updated.",
         timestamp: new Date().toString(),
       });
     })

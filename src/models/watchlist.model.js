@@ -24,14 +24,8 @@ module.exports = (mongoose) => {
         require: true,
       },
       buyArea: {
-        buyLow: {
-          type: Number,
-          require: true,
-        },
-        buyHigh: {
-          type: Number,
-          require: true,
-        },
+        type: Number,
+        require: true,
       },
       stopLoss: {
         type: Number,
