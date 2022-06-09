@@ -61,6 +61,7 @@ exports.delete = (req, res) => {
 exports.create = (req, res) => {
   const team = new Teams({
     name: req.body.name,
+    description: req.body.description,
     position: req.body.position,
     contact: {
       instagram: req.body.instagram,
