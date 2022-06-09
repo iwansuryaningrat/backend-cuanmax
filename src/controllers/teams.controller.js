@@ -161,7 +161,7 @@ exports.teamProfile = (req, res) => {
 
   if (!req.file) {
     return res.status(422).send({
-      message: "No file uploaded",
+      message: "Team profile photo is required.",
     });
   }
 
@@ -179,7 +179,7 @@ exports.teamProfile = (req, res) => {
       }
 
       res.send({
-        message: "Team's profile picture updated successfully.",
+        message: "Team profile photo successfully updated.",
         timestamp: new Date().toString(),
       });
     })
