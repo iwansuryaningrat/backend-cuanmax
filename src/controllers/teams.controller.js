@@ -64,7 +64,7 @@ exports.create = (req, res) => {
     position: req.body.position,
     contact: {
       instagram: req.body.instagram,
-      facebook: req.body.facebook,
+      email: req.body.email,
       twitter: req.body.twitter,
       linkedin: req.body.linkedin,
     },
