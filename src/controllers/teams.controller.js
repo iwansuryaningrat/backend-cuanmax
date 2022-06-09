@@ -59,13 +59,21 @@ exports.delete = (req, res) => {
 
 // Done
 exports.create = (req, res) => {
+  const { name, description, position, email } = req.body;
+
+  if (!name || !description || !position || !email) {
+    return res.status(400).send({
+      message: "Please fill all required fields.",
+    });
+  }
+
   const team = new Teams({
-    name: req.body.name,
-    description: req.body.description,
-    position: req.body.position,
+    name: name,
+    description: description,
+    position: position,
     contact: {
       instagram: req.body.instagram,
-      email: req.body.email,
+      email: email,
       twitter: req.body.twitter,
       linkedin: req.body.linkedin,
     },
@@ -81,7 +89,7 @@ exports.create = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      res.status(500).send({
         message: err.message || "Some error while creating team.",
         timestamp: new Date().toString(),
       });
