@@ -1,10 +1,15 @@
 const db = require("../models/index");
 const Watchlist = db.watchlist;
 
+// Done
 exports.findAll = (req, res) => {
-  Watchlist.find()
+  Watchlist.find({ isActive: true })
     .then((result) => {
-      res.send(result);
+      res.send({
+        message: "Watchlist successfully fetched",
+        timestamp: new Date().toString(),
+        data: result,
+      });
     })
     .catch((err) => {
       res.status(500).send({
@@ -13,12 +18,29 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Done
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
+  if (!id) {
+    return res.status(400).send({
+      message: "Watchlist ID is required",
+    });
+  }
+
   Watchlist.findById(id)
     .then((result) => {
-      res.send(result);
+      if (!result) {
+        return res.status(404).send({
+          message: "Watchlist not found",
+        });
+      }
+
+      res.send({
+        message: "Watchlist successfully fetched",
+        timestamp: new Date().toString(),
+        data: result,
+      });
     })
     .catch((err) => {
       res.status(500).send({
@@ -27,8 +49,15 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Done
 exports.delete = (req, res) => {
   const id = req.params.id;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Watchlist ID is required",
+    });
+  }
 
   Watchlist.findByIdAndRemove(id)
     .then((result) => {
@@ -40,10 +69,11 @@ exports.delete = (req, res) => {
 
       res.send({
         message: "Watchlist was deleted",
+        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      res.status(500).send({
         message: err.message || "Some error while delete watchlist.",
       });
     });
