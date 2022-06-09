@@ -3116,16 +3116,6 @@
               "type": "string",
               "format": "int64"
             }
-          },
-          {
-            "name": "photo",
-            "in": "formData",
-            "description": "Team Profile Photo",
-            "required": true,
-            "allowEmptyValue": false,
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "requestBody": {
@@ -3134,7 +3124,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "photo": {
+                  "image": {
                     "type": "string",
                     "format": "binary"
                   }
