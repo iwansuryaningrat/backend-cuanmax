@@ -48,6 +48,10 @@
                     "format": "password"
                   }
                 },
+                "example": {
+                  "email": "example@mail.com",
+                  "password": "123456"
+                },
                 "required": ["email", "password"]
               }
             }
@@ -64,12 +68,17 @@
                     "message": {
                       "type": "string"
                     },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
                     "token": {
                       "type": "string"
                     }
                   },
                   "example": {
                     "message": "Login Success",
+                    "timestamp": "2020-01-01T00:00:00.000Z",
                     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTI4MzgxNzk5NjExY2NjNzQ4ZmI4YyIsImVtYWlsIjoiaXdhbi5zdXJ5YW5pbmdyYXRAc3R1ZGVudHMudW5kaXAuYWMuaWQiLCJuYW1lIjoiSXdhbiIsImFkbWluIjpmYWxzZSwicm9sZSI6IiBCYXNpYyBNZW1iZXIiLCJpYXQiOjE2NTQ0NDQ0MDIsImV4cCI6MTY1NDQ0ODAwMn0.s5nfB81F6X5E8wBD0DIRqmP5NNuCQFpGllXEMPfbyeY"
                   }
                 }
