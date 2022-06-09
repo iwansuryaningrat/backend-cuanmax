@@ -23,6 +23,12 @@ exports.findAll = (req, res) => {
   } else {
     Message.find({ status: status })
       .then((result) => {
+        if (!result) {
+          res.status(404).send({
+            message: "Messages not found",
+          });
+        }
+
         res.send({
           message: "Messages was successfully found",
           timestamp: new Date().toString(),
