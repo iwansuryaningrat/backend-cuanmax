@@ -5,6 +5,9 @@ module.exports = (mongoose) => {
         type: String,
         require: true,
       },
+      description: {
+        type: String,
+      },
       position: {
         type: String,
         require: true,
@@ -19,9 +22,9 @@ module.exports = (mongoose) => {
       },
       contact: {
         instagram: String,
-        facebook: String,
         twitter: String,
         linkedin: String,
+        email: String,
       },
     },
     { timestamps: true }
