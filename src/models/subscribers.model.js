@@ -6,7 +6,6 @@ module.exports = (mongoose) => {
         require: true,
       },
       startDate: Date,
-      endDate: Date,
       status: String,
     },
     { timestamps: true }
