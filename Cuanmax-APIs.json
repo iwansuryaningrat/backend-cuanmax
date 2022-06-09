@@ -2242,6 +2242,851 @@
           }
         }
       }
+    },
+    "/teams": {
+      "get": {
+        "tags": ["Teams"],
+        "summary": "Get Teams",
+        "description": "Get Teams",
+        "operationId": "getTeams",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "position": {
+                            "type": "string"
+                          },
+                          "photo": {
+                            "type": "object",
+                            "properties": {
+                              "photoName": {
+                                "type": "string"
+                              },
+                              "photoLink": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "contact": {
+                            "type": "object",
+                            "properties": {
+                              "instagram": {
+                                "type": "string"
+                              },
+                              "email": {
+                                "type": "string"
+                              },
+                              "twitter": {
+                                "type": "string"
+                              },
+                              "linkedin": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Subscribers successfully fetched.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)",
+                  "data": [
+                    {
+                      "email": "iwansuryaningrat@gmail.com",
+                      "startDate": "2022-06-09T18:44:31.000Z",
+                      "status": "active",
+                      "createdAt": "2022-06-09T18:44:31.370Z",
+                      "updatedAt": "2022-06-09T18:44:31.370Z",
+                      "id": "62a23f8f4ff12cd1bbe0f82b"
+                    },
+                    {
+                      "email": "iwansuryaningrat@gmail.com",
+                      "startDate": "2022-06-09T18:44:39.000Z",
+                      "status": "active",
+                      "createdAt": "2022-06-09T18:44:39.287Z",
+                      "updatedAt": "2022-06-09T18:44:39.287Z",
+                      "id": "62a23f974ff12cd1bbe0f82d"
+                    },
+                    {
+                      "email": "iwansuryaningrat@gmail.com",
+                      "startDate": "2022-06-09T18:44:40.000Z",
+                      "status": "active",
+                      "createdAt": "2022-06-09T18:44:40.197Z",
+                      "updatedAt": "2022-06-09T18:44:40.197Z",
+                      "id": "62a23f984ff12cd1bbe0f82f"
+                    },
+                    {
+                      "email": "iwansuryaningrat@gmail.com",
+                      "startDate": "2022-06-09T18:44:41.000Z",
+                      "status": "active",
+                      "createdAt": "2022-06-09T18:44:41.015Z",
+                      "updatedAt": "2022-06-09T18:44:41.015Z",
+                      "id": "62a23f994ff12cd1bbe0f831"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "message": "Some error occurred while fetching the subscribers."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Teams"],
+        "summary": "Create Team",
+        "description": "Create Team",
+        "operationId": "createTeam",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "string"
+                  },
+                  "instagram": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "twitter": {
+                    "type": "string"
+                  },
+                  "linkedin": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Iwan Suryaningrat",
+                  "description": "Iwan Suryaningrat",
+                  "position": "CEO",
+                  "instagram": "https://www.instagram.com/iwansuryaningrat",
+                  "email": "example@mail.com",
+                  "twitter": "https://www.twitter.com/iwansuryaningrat",
+                  "linkedin": "https://www.linkedin.com/iwansuryaningrat"
+                },
+                "required": [
+                  "name",
+                  "description",
+                  "position",
+                  "email",
+                  "linkedin"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "position": {
+                          "type": "string"
+                        },
+                        "photo": {
+                          "type": "object",
+                          "properties": {
+                            "photoName": {
+                              "type": "string"
+                            },
+                            "photoLink": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "contact": {
+                          "type": "object",
+                          "properties": {
+                            "instagram": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "twitter": {
+                              "type": "string"
+                            },
+                            "linkedin": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      },
+                      "updatedAt": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully created.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)",
+                  "data": {
+                    "id": "62a23f8f4ff12cd1bbe0f82b",
+                    "name": "Iwan Suryaningrat",
+                    "description": "Iwan Suryaningrat",
+                    "position": "CEO",
+                    "photo": {
+                      "photoName": "iwansuryaningrat.jpg",
+                      "photoLink": "https://s3-ap-southeast-1.amazonaws.com/suryaningrat-bucket/iwansuryaningrat.jpg"
+                    },
+                    "contact": {
+                      "instagram": "https://www.instagram.com/iwansuryaningrat",
+                      "email": "email@example.com",
+                      "twitter": "https://www.twitter.com/iwansuryaningrat",
+                      "linkedin": "https://www.linkedin.com/iwansuryaningrat"
+                    },
+                    "createdAt": "2022-06-09T18:44:39.287Z",
+                    "updatedAt": "2022-06-09T18:44:39.287Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Please fill all required fields."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while creating the team."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/{teamId}": {
+      "get": {
+        "tags": ["Teams"],
+        "summary": "Get Team",
+        "description": "Get Team",
+        "operationId": "getTeam",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "description": "Team ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "position": {
+                          "type": "string"
+                        },
+                        "photo": {
+                          "type": "object",
+                          "properties": {
+                            "photoName": {
+                              "type": "string"
+                            },
+                            "photoLink": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "contact": {
+                          "type": "object",
+                          "properties": {
+                            "instagram": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "twitter": {
+                              "type": "string"
+                            },
+                            "linkedin": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully retrieved.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)",
+                  "data": {
+                    "id": "62a23f8f4ff12cd1bbe0f82b",
+                    "name": "Iwan Suryaningrat",
+                    "description": "Iwan Suryaningrat",
+                    "position": "CEO",
+                    "photo": {
+                      "photoName": "iwansuryaningrat.jpg",
+                      "photoLink": "https://s3-ap-southeast-1.amazonaws.com/suryaningrat-bucket/iwansuryaningrat.jpg"
+                    },
+                    "contact": {
+                      "instagram": "https://www.instagram.com/iwansuryaningrat",
+                      "email": "email@example.com",
+                      "twitter": "https://www.twitter.com/iwansuryaningrat",
+                      "linkedin": "https://www.linkedin.com/iwansuryaningrat"
+                    },
+                    "createdAt": "2022-06-09T18:44:39.287Z",
+                    "updatedAt": "2022-06-09T18:44:39.287Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team not found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while retrieving the team."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Teams"],
+        "summary": "Update Team",
+        "description": "Update Team",
+        "operationId": "updateTeam",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "description": "Team ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "string"
+                  },
+                  "contact": {
+                    "type": "object",
+                    "properties": {
+                      "instagram": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "twitter": {
+                        "type": "string"
+                      },
+                      "linkedin": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "name": "Iwan Suryaningrat",
+                  "description": "Iwan Suryaningrat",
+                  "position": "CEO",
+                  "contact": {
+                    "instagram": "https://www.instagram.com/iwansuryaningrat",
+                    "email": "email@example.com",
+                    "twitter": "https://www.twitter.com/iwansuryaningrat",
+                    "linkedin": "https://www.linkedin.com/iwansuryaningrat"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "position": {
+                          "type": "string"
+                        },
+                        "photo": {
+                          "type": "object",
+                          "properties": {
+                            "photoName": {
+                              "type": "string"
+                            },
+                            "photoLink": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "contact": {
+                          "type": "object",
+                          "properties": {
+                            "instagram": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "twitter": {
+                              "type": "string"
+                            },
+                            "linkedin": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully updated.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)",
+                  "data": {
+                    "id": "62a23f8f4ff12cd1bbe0f82b",
+                    "name": "Iwan Suryaningrat",
+                    "description": "Iwan Suryaningrat",
+                    "position": "CEO",
+                    "photo": {
+                      "photoName": "iwansuryaningrat.jpg",
+                      "photoLink": "https://s3-ap-southeast-1.amazonaws.com/suryaningrat-bucket/iwansuryaningrat.jpg"
+                    },
+                    "contact": {
+                      "instagram": "https://www.instagram.com/iwansuryaningrat",
+                      "email": "email@example.com",
+                      "twitter": "https://www.twitter.com/iwansuryaningrat",
+                      "linkedin": "https://www.linkedin.com/iwansuryaningrat"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team not found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while updating the team."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Teams"],
+        "summary": "Delete Team",
+        "description": "Delete Team",
+        "operationId": "deleteTeam",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "description": "Team ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully deleted.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team not found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while deleting the team."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "security": [
