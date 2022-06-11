@@ -1,19 +1,19 @@
 {
   "_id": {
-    "$oid": "62a4b9dfa9253632245f79f0"
+    "$oid": "62a4c091a9253632245f79f2"
   },
-  "name": "PT. Bank Central Asia (Persero) Tbk",
-  "code": "BBCA",
+  "name": "PT. Bank Rakyat Indonesia (Persero) Tbk",
+  "code": "BBRI",
   "category": "Stock",
   "tags": [],
   "sector": "Financials",
-  "lastPrice": 7350,
-  "buyArea": 7000,
-  "stopLoss": 6800,
+  "lastPrice": 4400,
+  "buyArea": 4350,
+  "stopLoss": 4300,
   "takeProfit": {
-    "TP1": 7500,
-    "TP2": 7600,
-    "TP3": 7700
+    "TP1": 4500,
+    "TP2": 4600,
+    "TP3": 41700
   },
-  "isActive": true
+  "isActive": false
 }
