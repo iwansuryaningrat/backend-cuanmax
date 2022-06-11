@@ -1,0 +1,19 @@
+{
+  "_id": {
+    "$oid": "62a4b9dfa9253632245f79f0"
+  },
+  "name": "PT. Bank Central Asia (Persero) Tbk",
+  "code": "BBCA",
+  "category": "Stock",
+  "tags": [],
+  "sector": "Financials",
+  "lastPrice": 7350,
+  "buyArea": 7000,
+  "stopLoss": 6800,
+  "takeProfit": {
+    "TP1": 7500,
+    "TP2": 7600,
+    "TP3": 7700
+  },
+  "isActive": true
+}
