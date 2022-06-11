@@ -79,6 +79,7 @@ exports.delete = (req, res) => {
     });
 };
 
+// Done
 exports.nonActivate = (req, res) => {
   const id = req.params.id;
 
