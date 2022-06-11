@@ -59,6 +59,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Watchlist = mongoose.model("watchlist", schema);
+  const Watchlist = mongoose.model("watchlists", schema);
   return Watchlist;
 };

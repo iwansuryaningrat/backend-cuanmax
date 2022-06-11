@@ -1,0 +1,19 @@
+{
+  "_id": {
+    "$oid": "62a4c091a9253632245f79f2"
+  },
+  "name": "PT. Bank Rakyat Indonesia (Persero) Tbk",
+  "code": "BBRI",
+  "category": "Stock",
+  "tags": [],
+  "sector": "Financials",
+  "lastPrice": 4400,
+  "buyArea": 4350,
+  "stopLoss": 4300,
+  "takeProfit": {
+    "TP1": 4500,
+    "TP2": 4600,
+    "TP3": 41700
+  },
+  "isActive": false
+}
