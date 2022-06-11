@@ -188,3 +188,22 @@ exports.nonActivate = (req, res) => {
       });
     });
 };
+
+exports.create = (req, res) => {
+  const watchlist = new Watchlist(req.body);
+
+  watchlist
+    .save()
+    .then((result) => {
+      res.send({
+        message: "Watchlist was created successfully",
+        timestamp: new Date().toString(),
+        data: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while creating watchlist.",
+      });
+    });
+};
