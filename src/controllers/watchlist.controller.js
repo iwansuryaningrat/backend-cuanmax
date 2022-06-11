@@ -3,19 +3,52 @@ const Watchlist = db.watchlist;
 
 // Done
 exports.findAll = (req, res) => {
-  Watchlist.find({ isActive: true })
-    .then((result) => {
-      res.send({
-        message: "Watchlist successfully fetched",
-        timestamp: new Date().toString(),
-        data: result,
+  const category = req.query.category;
+  const tags = req.query.tags;
+
+  if (!category && !tags) {
+    Watchlist.find({ isActive: true })
+      .then((result) => {
+        res.send({
+          message: "Watchlist successfully fetched",
+          timestamp: new Date().toString(),
+          data: result,
+        });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Some error while retrieving watchlists.",
+        });
       });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error while retrieving watchlists.",
+  } else if (tags) {
+    Watchlist.find({ isActive: true, tags: { $in: tags.split(",") } })
+      .then((result) => {
+        res.send({
+          message: "Watchlist successfully fetched",
+          timestamp: new Date().toString(),
+          data: result,
+        });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Some error while retrieving watchlists.",
+        });
       });
-    });
+  } else {
+    Watchlist.find({ isActive: true, category: category })
+      .then((result) => {
+        res.send({
+          message: "Watchlist successfully fetched",
+          timestamp: new Date().toString(),
+          data: result,
+        });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Some error while retrieving watchlists.",
+        });
+      });
+  }
 };
 
 // Done
