@@ -189,6 +189,7 @@ exports.nonActivate = (req, res) => {
     });
 };
 
+// Done
 exports.create = (req, res) => {
   const {
     name,
@@ -264,6 +265,80 @@ exports.create = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: err.message || "Some error occurred while creating watchlist.",
+      });
+    });
+};
+
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Watchlist ID is required",
+    });
+  }
+
+  const {
+    name,
+    code,
+    category,
+    tags,
+    sector,
+    lastPrice,
+    buyArea,
+    stopLoss,
+    TP1,
+    TP2,
+    TP3,
+  } = req.body;
+
+  if (
+    !name ||
+    !code ||
+    !category ||
+    !sector ||
+    !lastPrice ||
+    !buyArea ||
+    !stopLoss ||
+    !TP1
+  ) {
+    return res.status(400).send({
+      message:
+        "Name, code, category, sector, lastPrice, buyArea, stopLoss, and TP1 are required",
+    });
+  }
+
+  Watchlist.findByIdAndUpdate(id, {
+    name: name,
+    code: code,
+    category: category,
+    tags: tags,
+    sector: sector,
+    lastPrice: lastPrice,
+    buyArea: buyArea,
+    stopLoss: stopLoss,
+    takeProfit: {
+      TP1: TP1,
+      TP2: TP2,
+      TP3: TP3,
+    },
+  })
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "Watchlist not found",
+        });
+      }
+
+      res.send({
+        message: "Watchlist was updated successfully",
+        timestamp: new Date().toString(),
+        data: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while updating watchlist.",
       });
     });
 };
