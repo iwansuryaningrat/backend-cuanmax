@@ -110,7 +110,7 @@ exports.info = async (req, res) => {
 
 // Done
 exports.price = async (req, res) => {
-  const symbol = req.body.symbol;
+  const symbol = req.query.symbol;
   const id = req.query.id;
   const slug = req.query.slug;
   let convert = req.query.convert;
