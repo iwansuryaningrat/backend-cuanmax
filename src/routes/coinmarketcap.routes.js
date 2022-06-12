@@ -1,13 +1,12 @@
 module.exports = (app) => {
   const coinmarketcap = require("../controllers/coinmarketcap/coinmarketcap.controller");
-  const auth = require("../middlewares/auth");
   const router = require("express").Router();
 
-  router.get("/map", auth.auth, coinmarketcap.map);
-  router.get("/latest", auth.auth, coinmarketcap.latest);
-  router.post("/info", auth.auth, coinmarketcap.info);
-  router.post("/price", auth.auth, coinmarketcap.price);
-  router.post("/convert", auth.auth, coinmarketcap.convert);
+  router.get("/map", coinmarketcap.map);
+  router.get("/latest", coinmarketcap.latest);
+  router.post("/info", coinmarketcap.info);
+  router.post("/price", coinmarketcap.price);
+  router.post("/convert", coinmarketcap.convert);
 
   app.use("/api/v1/cryptocurrency", router);
 };
