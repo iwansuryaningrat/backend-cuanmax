@@ -108,13 +108,28 @@ exports.info = async (req, res) => {
   }
 };
 
+// Done
 exports.price = async (req, res) => {
   const symbol = req.body.symbol;
+  const id = req.query.id;
+  const slug = req.query.slug;
+  let convert = req.query.convert;
+
+  if (!symbol && !id && !slug) {
+    // error
+    res.status(400).send({
+      message: "ID, Symbol, or Slug is required",
+    });
+  }
+
+  if (!convert) {
+    convert = "USD";
+  }
 
   try {
     response = await axios.get(
       process.env.COINMARKETCAP_ENDPOINT +
-        `v2/cryptocurrency/quotes/latest?symbol=${symbol}&convert=USD`,
+        `v2/cryptocurrency/quotes/latest?symbol=${symbol}&convert=${convert}`,
       {
         headers: {
           "X-CMC_PRO_API_KEY": process.env.COINMARKETCAP_API_KEY,
@@ -131,9 +146,13 @@ exports.price = async (req, res) => {
   }
   if (response) {
     // success
-    const json = response.data.data;
+    const result = response.data.data;
 
-    res.send(json);
+    res.send({
+      message: "Cryptocurrency price retrieved successfully",
+      timestamp: new Date().toString(),
+      data: result,
+    });
   }
 };
 
