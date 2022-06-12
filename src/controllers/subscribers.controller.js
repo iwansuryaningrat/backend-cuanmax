@@ -30,7 +30,7 @@ exports.create = (req, res) => {
   Subscribers.findOne({ email })
     .then((result) => {
       if (result) {
-        return res.status(400).send({
+        return res.status(422).send({
           message: "Email already exists.",
         });
       }
