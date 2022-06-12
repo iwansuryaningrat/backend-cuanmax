@@ -8,6 +8,7 @@ exports.findAll = (req, res) => {
 
   if (!status) {
     Message.find()
+      .sort({ createdAt: -1 })
       .then((result) => {
         res.send({
           message: "Messages was successfully found",
