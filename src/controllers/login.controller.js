@@ -38,6 +38,7 @@ exports.login = (req, res) => {
             );
             res.status(200).send({
               message: "Login Success",
+              timestamp: new Date().toString(),
               token: token,
             });
           } else {

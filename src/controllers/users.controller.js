@@ -5,6 +5,7 @@ const Users = db.users;
 // Done
 exports.findAll = (req, res) => {
   Users.find()
+    .sort({ createdAt: -1 })
     .then((result) => {
       res.send({
         message: "Users fetched successfully!",

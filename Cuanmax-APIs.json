@@ -48,6 +48,10 @@
                     "format": "password"
                   }
                 },
+                "example": {
+                  "email": "example@mail.com",
+                  "password": "123456"
+                },
                 "required": ["email", "password"]
               }
             }
@@ -64,12 +68,17 @@
                     "message": {
                       "type": "string"
                     },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
                     "token": {
                       "type": "string"
                     }
                   },
                   "example": {
                     "message": "Login Success",
+                    "timestamp": "2020-01-01T00:00:00.000Z",
                     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOTI4MzgxNzk5NjExY2NjNzQ4ZmI4YyIsImVtYWlsIjoiaXdhbi5zdXJ5YW5pbmdyYXRAc3R1ZGVudHMudW5kaXAuYWMuaWQiLCJuYW1lIjoiSXdhbiIsImFkbWluIjpmYWxzZSwicm9sZSI6IiBCYXNpYyBNZW1iZXIiLCJpYXQiOjE2NTQ0NDQ0MDIsImV4cCI6MTY1NDQ0ODAwMn0.s5nfB81F6X5E8wBD0DIRqmP5NNuCQFpGllXEMPfbyeY"
                   }
                 }
@@ -368,6 +377,11 @@
         "summary": "Get All Users",
         "description": "Get All Users",
         "operationId": "getAllUsers",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "x-auth-token",
@@ -1519,6 +1533,24 @@
               }
             }
           },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Messages not found"
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -1610,6 +1642,24 @@
                   "example": {
                     "message": "Message sent successfully.",
                     "timestamp": "Wed Jun 08 2022 00:58:45 GMT+0700 (Western Indonesia Time)"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "First name, subject, email and message are required."
                   }
                 }
               }
@@ -1734,6 +1784,42 @@
               }
             }
           },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message not found."
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -1800,6 +1886,24 @@
                   "example": {
                     "message": "Message deleted successfully.",
                     "timestamp": "Wed Jun 08 2022 00:29:13 GMT+0700 (Western Indonesia Time)"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message ID is required."
                   }
                 }
               }
@@ -1937,6 +2041,42 @@
               }
             }
           },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message not found."
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -2051,6 +2191,42 @@
               }
             }
           },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Message not found."
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -2071,11 +2247,1729 @@
           }
         }
       }
+    },
+    "/teams": {
+      "get": {
+        "tags": ["Teams"],
+        "summary": "Get Teams",
+        "description": "Get Teams",
+        "operationId": "getTeams",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "position": {
+                            "type": "string"
+                          },
+                          "photo": {
+                            "type": "object",
+                            "properties": {
+                              "photoName": {
+                                "type": "string"
+                              },
+                              "photoLink": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "contact": {
+                            "type": "object",
+                            "properties": {
+                              "instagram": {
+                                "type": "string"
+                              },
+                              "email": {
+                                "type": "string"
+                              },
+                              "twitter": {
+                                "type": "string"
+                              },
+                              "linkedin": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Subscribers successfully fetched.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)",
+                  "data": [
+                    {
+                      "email": "iwansuryaningrat@gmail.com",
+                      "startDate": "2022-06-09T18:44:31.000Z",
+                      "status": "active",
+                      "createdAt": "2022-06-09T18:44:31.370Z",
+                      "updatedAt": "2022-06-09T18:44:31.370Z",
+                      "id": "62a23f8f4ff12cd1bbe0f82b"
+                    },
+                    {
+                      "email": "iwansuryaningrat@gmail.com",
+                      "startDate": "2022-06-09T18:44:39.000Z",
+                      "status": "active",
+                      "createdAt": "2022-06-09T18:44:39.287Z",
+                      "updatedAt": "2022-06-09T18:44:39.287Z",
+                      "id": "62a23f974ff12cd1bbe0f82d"
+                    },
+                    {
+                      "email": "iwansuryaningrat@gmail.com",
+                      "startDate": "2022-06-09T18:44:40.000Z",
+                      "status": "active",
+                      "createdAt": "2022-06-09T18:44:40.197Z",
+                      "updatedAt": "2022-06-09T18:44:40.197Z",
+                      "id": "62a23f984ff12cd1bbe0f82f"
+                    },
+                    {
+                      "email": "iwansuryaningrat@gmail.com",
+                      "startDate": "2022-06-09T18:44:41.000Z",
+                      "status": "active",
+                      "createdAt": "2022-06-09T18:44:41.015Z",
+                      "updatedAt": "2022-06-09T18:44:41.015Z",
+                      "id": "62a23f994ff12cd1bbe0f831"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "message": "Some error occurred while fetching the subscribers."
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Teams"],
+        "summary": "Create Team",
+        "description": "Create Team",
+        "operationId": "createTeam",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "string"
+                  },
+                  "instagram": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "twitter": {
+                    "type": "string"
+                  },
+                  "linkedin": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Iwan Suryaningrat",
+                  "description": "Iwan Suryaningrat",
+                  "position": "CEO",
+                  "instagram": "https://www.instagram.com/iwansuryaningrat",
+                  "email": "example@mail.com",
+                  "twitter": "https://www.twitter.com/iwansuryaningrat",
+                  "linkedin": "https://www.linkedin.com/iwansuryaningrat"
+                },
+                "required": [
+                  "name",
+                  "description",
+                  "position",
+                  "email",
+                  "linkedin"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "position": {
+                          "type": "string"
+                        },
+                        "photo": {
+                          "type": "object",
+                          "properties": {
+                            "photoName": {
+                              "type": "string"
+                            },
+                            "photoLink": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "contact": {
+                          "type": "object",
+                          "properties": {
+                            "instagram": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "twitter": {
+                              "type": "string"
+                            },
+                            "linkedin": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      },
+                      "updatedAt": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully created.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)",
+                  "data": {
+                    "id": "62a23f8f4ff12cd1bbe0f82b",
+                    "name": "Iwan Suryaningrat",
+                    "description": "Iwan Suryaningrat",
+                    "position": "CEO",
+                    "photo": {
+                      "photoName": "iwansuryaningrat.jpg",
+                      "photoLink": "https://s3-ap-southeast-1.amazonaws.com/suryaningrat-bucket/iwansuryaningrat.jpg"
+                    },
+                    "contact": {
+                      "instagram": "https://www.instagram.com/iwansuryaningrat",
+                      "email": "email@example.com",
+                      "twitter": "https://www.twitter.com/iwansuryaningrat",
+                      "linkedin": "https://www.linkedin.com/iwansuryaningrat"
+                    },
+                    "createdAt": "2022-06-09T18:44:39.287Z",
+                    "updatedAt": "2022-06-09T18:44:39.287Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Please fill all required fields."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while creating the team."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/{teamId}": {
+      "get": {
+        "tags": ["Teams"],
+        "summary": "Get Team",
+        "description": "Get Team",
+        "operationId": "getTeam",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "description": "Team ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "position": {
+                          "type": "string"
+                        },
+                        "photo": {
+                          "type": "object",
+                          "properties": {
+                            "photoName": {
+                              "type": "string"
+                            },
+                            "photoLink": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "contact": {
+                          "type": "object",
+                          "properties": {
+                            "instagram": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "twitter": {
+                              "type": "string"
+                            },
+                            "linkedin": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully retrieved.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)",
+                  "data": {
+                    "id": "62a23f8f4ff12cd1bbe0f82b",
+                    "name": "Iwan Suryaningrat",
+                    "description": "Iwan Suryaningrat",
+                    "position": "CEO",
+                    "photo": {
+                      "photoName": "iwansuryaningrat.jpg",
+                      "photoLink": "https://s3-ap-southeast-1.amazonaws.com/suryaningrat-bucket/iwansuryaningrat.jpg"
+                    },
+                    "contact": {
+                      "instagram": "https://www.instagram.com/iwansuryaningrat",
+                      "email": "email@example.com",
+                      "twitter": "https://www.twitter.com/iwansuryaningrat",
+                      "linkedin": "https://www.linkedin.com/iwansuryaningrat"
+                    },
+                    "createdAt": "2022-06-09T18:44:39.287Z",
+                    "updatedAt": "2022-06-09T18:44:39.287Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team not found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while retrieving the team."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Teams"],
+        "summary": "Update Team",
+        "description": "Update Team",
+        "operationId": "updateTeam",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "description": "Team ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "string"
+                  },
+                  "contact": {
+                    "type": "object",
+                    "properties": {
+                      "instagram": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "twitter": {
+                        "type": "string"
+                      },
+                      "linkedin": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "name": "Iwan Suryaningrat",
+                  "description": "Iwan Suryaningrat",
+                  "position": "CEO",
+                  "contact": {
+                    "instagram": "https://www.instagram.com/iwansuryaningrat",
+                    "email": "email@example.com",
+                    "twitter": "https://www.twitter.com/iwansuryaningrat",
+                    "linkedin": "https://www.linkedin.com/iwansuryaningrat"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "position": {
+                          "type": "string"
+                        },
+                        "photo": {
+                          "type": "object",
+                          "properties": {
+                            "photoName": {
+                              "type": "string"
+                            },
+                            "photoLink": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "contact": {
+                          "type": "object",
+                          "properties": {
+                            "instagram": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "twitter": {
+                              "type": "string"
+                            },
+                            "linkedin": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully updated.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)",
+                  "data": {
+                    "id": "62a23f8f4ff12cd1bbe0f82b",
+                    "name": "Iwan Suryaningrat",
+                    "description": "Iwan Suryaningrat",
+                    "position": "CEO",
+                    "photo": {
+                      "photoName": "iwansuryaningrat.jpg",
+                      "photoLink": "https://s3-ap-southeast-1.amazonaws.com/suryaningrat-bucket/iwansuryaningrat.jpg"
+                    },
+                    "contact": {
+                      "instagram": "https://www.instagram.com/iwansuryaningrat",
+                      "email": "email@example.com",
+                      "twitter": "https://www.twitter.com/iwansuryaningrat",
+                      "linkedin": "https://www.linkedin.com/iwansuryaningrat"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team not found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while updating the team."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Teams"],
+        "summary": "Delete Team",
+        "description": "Delete Team",
+        "operationId": "deleteTeam",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "description": "Team ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully deleted.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team not found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while deleting the team."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/{teamId}/teamprofile": {
+      "put": {
+        "tags": ["Teams"],
+        "summary": "Update Team'd Profile Photo",
+        "description": "Update Team'd Profile Photo",
+        "operationId": "updateTeamProfilePhoto",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "description": "Team ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team profile photo successfully updated.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team not found."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Team profile photo is required."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while updating the team's profile photo."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscribers": {
+      "get": {
+        "tags": ["Subscribers"],
+        "summary": "Get All Subscribers",
+        "description": "Get All Subscribers",
+        "operationId": "getAllSubscribers",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "format": "int64"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "startDate": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "status": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Subscribers successfully fetched.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)",
+                  "data": [
+                    {
+                      "id": "62a23f8f4ff12cd1bbe0f82b",
+                      "email": "iwansuryaningrat@gmail.com",
+                      "startDate": "2022-06-09T18:44:31.000Z",
+                      "status": "active",
+                      "createdAt": "2022-06-09T18:44:31.370Z",
+                      "updatedAt": "2022-06-09T18:44:31.370Z"
+                    },
+                    {
+                      "id": "62a23f974ff12cd1bbe0f82d",
+                      "email": "iwansuryaningrat@gmail.com",
+                      "startDate": "2022-06-09T18:44:39.000Z",
+                      "status": "active",
+                      "createdAt": "2022-06-09T18:44:39.287Z",
+                      "updatedAt": "2022-06-09T18:44:39.287Z"
+                    },
+                    {
+                      "id": "62a23f984ff12cd1bbe0f82f",
+                      "email": "iwansuryaningrat@gmail.com",
+                      "startDate": "2022-06-09T18:44:40.000Z",
+                      "status": "active",
+                      "createdAt": "2022-06-09T18:44:40.197Z",
+                      "updatedAt": "2022-06-09T18:44:40.197Z"
+                    },
+                    {
+                      "id": "62a23f994ff12cd1bbe0f831",
+                      "email": "iwansuryaningrat@gmail.com",
+                      "startDate": "2022-06-09T18:44:41.000Z",
+                      "status": "active",
+                      "createdAt": "2022-06-09T18:44:41.015Z",
+                      "updatedAt": "2022-06-09T18:44:41.015Z"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while retrieving the subscribers."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Subscribers"],
+        "summary": "Create Subscriber",
+        "description": "Create Subscriber",
+        "operationId": "createSubscriber",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "email@example.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "int64"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "startDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Subscriber successfully created.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)",
+                  "data": {
+                    "id": "62a23f974ff12cd1bbe0f82d",
+                    "email": "email@example.com",
+                    "startDate": "2022-06-09T18:44:39.000Z",
+                    "status": "active",
+                    "createdAt": "2022-06-09T18:44:39.287Z",
+                    "updatedAt": "2022-06-09T18:44:39.287Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Email is required."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Email is already exists."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while creating the subscriber."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscribers/{subscriberId}": {
+      "get": {
+        "tags": ["Subscribers"],
+        "summary": "Get Subscriber",
+        "description": "Get Subscriber",
+        "operationId": "getSubscriber",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "subscriberId",
+            "in": "path",
+            "description": "Subscriber ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "int64"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "startDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Subscriber successfully retrieved.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)",
+                  "data": {
+                    "id": "62a23f974ff12cd1bbe0f82d",
+                    "email": "email@example.com",
+                    "startDate": "2022-06-09T18:44:39.000Z",
+                    "status": "active",
+                    "createdAt": "2022-06-09T18:44:39.287Z",
+                    "updatedAt": "2022-06-09T18:44:39.287Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Subscriber ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Subscriber not found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while retrieving the subscriber."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Subscribers"],
+        "summary": "Update Subscriber",
+        "description": "Update Subscriber",
+        "operationId": "updateSubscriber",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "subscriberId",
+            "in": "path",
+            "description": "Subscriber ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "email@example.com",
+                  "startDate": "2022-06-09T18:44:39.000Z",
+                  "status": "active"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "int64"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "startDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Subscriber successfully updated.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)",
+                  "data": {
+                    "id": "62a23f974ff12cd1bbe0f82d",
+                    "email": "email@example.com",
+                    "startDate": "2022-06-09T18:44:39.000Z",
+                    "status": "active",
+                    "createdAt": "2022-06-09T18:44:39.287Z",
+                    "updatedAt": "2022-06-09T18:44:39.287Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Subscriber ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Subscriber not found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while updating the subscriber."
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Subscribers"],
+        "summary": "Delete Subscriber",
+        "description": "Delete Subscriber",
+        "operationId": "deleteSubscriber",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "subscriberId",
+            "in": "path",
+            "description": "Subscriber ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Subscriber successfully deleted.",
+                  "timestamp": "Fri Jun 10 2022 01:44:44 GMT+0700 (Western Indonesia Time)"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Subscriber ID is required."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Subscriber not found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while deleting the subscriber."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
-  "security": [
-    {
-      "jwt": ["x-auth-token"]
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "in": "header"
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "message": "No token, authorization denied"
+                }
+              }
+            }
+          }
+        }
+      }
     }
-  ]
+  }
 }
