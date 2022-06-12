@@ -9,5 +9,5 @@ module.exports = (app) => {
   router.delete("/:id", auth.auth, watchlist.delete);
   router.put("/:id/nonactivate", auth.auth, watchlist.nonActivate);
 
-  app.use("/api/v1/watchlist", router);
+  app.use("/api/v1/watchlists", router);
 };
