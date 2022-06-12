@@ -1,6 +1,7 @@
 const axios = require("axios");
 require("dotenv").config();
 
+// Done
 exports.map = async (req, res) => {
   try {
     response = await axios.get(
@@ -22,9 +23,13 @@ exports.map = async (req, res) => {
   }
   if (response) {
     // success
-    const json = response.data.data;
+    const result = response.data.data;
 
-    res.send(json);
+    res.send({
+      message: "Cryptocurrency map retrieved successfully",
+      timestamp: new Date().toString(),
+      data: result,
+    });
   }
 };
 
@@ -55,6 +60,7 @@ exports.latest = async (req, res) => {
   }
 };
 
+// Done
 exports.info = async (req, res) => {
   const symbol = req.query.symbol;
 
