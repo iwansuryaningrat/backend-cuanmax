@@ -33,6 +33,7 @@ exports.map = async (req, res) => {
   }
 };
 
+// Done
 exports.latest = async (req, res) => {
   try {
     response = await axios.get(
@@ -54,9 +55,13 @@ exports.latest = async (req, res) => {
   }
   if (response) {
     // success
-    const json = response.data.data;
+    const result = response.data.data;
 
-    res.send(json);
+    res.send({
+      message: "Cryptocurrency latest retrieved successfully",
+      timestamp: new Date().toString(),
+      data: result,
+    });
   }
 };
 
