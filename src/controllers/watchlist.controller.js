@@ -190,7 +190,52 @@ exports.nonActivate = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  const watchlist = new Watchlist(req.body);
+  const {
+    name,
+    code,
+    category,
+    tags,
+    sector,
+    lastPrice,
+    buyArea,
+    stopLoss,
+    TP1,
+    TP2,
+    TP3,
+  } = req.body;
+
+  if (
+    !name ||
+    !code ||
+    !category ||
+    !sector ||
+    !lastPrice ||
+    !buyArea ||
+    !stopLoss ||
+    !TP1
+  ) {
+    return res.status(400).send({
+      message:
+        "Name, code, category, sector, lastPrice, buyArea, stopLoss, and TP1 are required",
+    });
+  }
+
+  const watchlist = new Watchlist({
+    name: name,
+    code: code,
+    category: category,
+    tags: tags,
+    sector: sector,
+    lastPrice: lastPrice,
+    buyArea: buyArea,
+    stopLoss: stopLoss,
+    takeProfit: {
+      TP1: TP1,
+      TP2: TP2,
+      TP3: TP3,
+    },
+    isActive: true,
+  });
 
   watchlist
     .save()
