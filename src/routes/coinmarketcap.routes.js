@@ -4,7 +4,7 @@ module.exports = (app) => {
 
   router.get("/map", coinmarketcap.map);
   router.get("/latest", coinmarketcap.latest);
-  router.post("/info", coinmarketcap.info);
+  router.get("/info", coinmarketcap.info);
   router.post("/price", coinmarketcap.price);
   router.post("/convert", coinmarketcap.convert);
 
