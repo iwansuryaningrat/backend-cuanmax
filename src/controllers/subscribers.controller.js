@@ -3,6 +3,7 @@ const Subscribers = db.subscribers;
 
 exports.findAll = (req, res) => {
   Subscribers.find()
+    .sort({ createdAt: -1 })
     .then((result) => {
       res.send({
         message: "Subscribers successfully fetched.",
