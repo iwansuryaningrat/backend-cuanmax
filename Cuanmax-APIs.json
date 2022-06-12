@@ -377,6 +377,11 @@
         "summary": "Get All Users",
         "description": "Get All Users",
         "operationId": "getAllUsers",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "x-auth-token",
@@ -3935,9 +3940,36 @@
       }
     }
   },
-  "security": [
-    {
-      "jwt": ["x-auth-token"]
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "in": "header"
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "401": {
+          "description": "Unauthorized",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "message": "No token, authorization denied"
+                }
+              }
+            }
+          }
+        }
+      }
     }
-  ]
+  }
 }
