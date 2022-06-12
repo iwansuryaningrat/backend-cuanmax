@@ -220,6 +220,21 @@ exports.create = (req, res) => {
     });
   }
 
+  Watchlist.findOne({ code: code, isActive: true })
+    .then((result) => {
+      if (result) {
+        return res.status(400).send({
+          message: "Watchlist already exists",
+          timestamp: new Date().toString(),
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error while creating watchlist.",
+      });
+    });
+
   const watchlist = new Watchlist({
     name: name,
     code: code,
