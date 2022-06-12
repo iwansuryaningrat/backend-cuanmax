@@ -156,6 +156,7 @@ exports.price = async (req, res) => {
   }
 };
 
+// Done
 exports.convert = async (req, res) => {
   const id = req.query.id;
   const symbol = req.query.symbol;
