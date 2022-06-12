@@ -157,9 +157,24 @@ exports.price = async (req, res) => {
 };
 
 exports.convert = async (req, res) => {
-  const symbol = req.body.symbol;
-  const amount = req.body.amount;
-  const convert = req.body.convert;
+  const id = req.query.id;
+  const symbol = req.query.symbol;
+  const amount = req.query.amount;
+  const convert = req.query.convert;
+
+  if (!id && !symbol) {
+    // error
+    res.status(400).send({
+      message: "ID or Symbol is required",
+    });
+  }
+
+  if (!amount || !convert) {
+    // error
+    res.status(400).send({
+      message: "Amount and Convert are required",
+    });
+  }
 
   try {
     response = await axios.get(
@@ -181,8 +196,12 @@ exports.convert = async (req, res) => {
   }
   if (response) {
     // success
-    const json = response.data.data;
+    const result = response.data.data;
 
-    res.send(json);
+    res.send({
+      message: "Cryptocurrency convert retrieved successfully",
+      timestamp: new Date().toString(),
+      data: result,
+    });
   }
 };
