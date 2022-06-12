@@ -68,6 +68,15 @@ exports.latest = async (req, res) => {
 // Done
 exports.info = async (req, res) => {
   const symbol = req.query.symbol;
+  const id = req.query.id;
+  const slug = req.query.slug;
+
+  if (!symbol && !id && !slug) {
+    // error
+    res.status(400).send({
+      message: "ID, Symbol, or Slug is required",
+    });
+  }
 
   try {
     response = await axios.get(
