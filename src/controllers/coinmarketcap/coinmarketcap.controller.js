@@ -56,7 +56,7 @@ exports.latest = async (req, res) => {
 };
 
 exports.info = async (req, res) => {
-  const symbol = req.body.symbol;
+  const symbol = req.query.symbol;
 
   try {
     response = await axios.get(
@@ -78,9 +78,13 @@ exports.info = async (req, res) => {
   }
   if (response) {
     // success
-    const json = response.data.data;
+    const data = response.data.data;
 
-    res.send(json);
+    res.send({
+      message: "Cryptocurrency info retrieved successfully",
+      timestamp: new Date().toString(),
+      data: data,
+    });
   }
 };
 
