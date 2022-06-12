@@ -3,6 +3,7 @@ const Subscribers = db.subscribers;
 
 exports.findAll = (req, res) => {
   Subscribers.find()
+    .sort({ createdAt: -1 })
     .then((result) => {
       res.send({
         message: "Subscribers successfully fetched.",
@@ -29,7 +30,7 @@ exports.create = (req, res) => {
   Subscribers.findOne({ email })
     .then((result) => {
       if (result) {
-        return res.status(400).send({
+        return res.status(422).send({
           message: "Email already exists.",
         });
       }
