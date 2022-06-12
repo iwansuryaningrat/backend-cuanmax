@@ -8,6 +8,7 @@ module.exports = (app) => {
   router.get("/:id", auth.auth, watchlist.findOne);
   router.delete("/:id", auth.auth, watchlist.delete);
   router.put("/:id/nonactivate", auth.auth, watchlist.nonActivate);
+  router.put("/:id", auth.auth, watchlist.update);
 
   app.use("/api/v1/watchlists", router);
 };
