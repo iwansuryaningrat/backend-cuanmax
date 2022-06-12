@@ -1,30 +1,39 @@
 module.exports = (mongoose) => {
   const schema = mongoose.Schema(
     {
-      name: {
+      title: {
         type: String,
         require: true,
       },
-      description: {
-        type: String,
-      },
-      position: {
+      author: {
         type: String,
         require: true,
       },
-      photo: {
+      category: {
+        type: String,
+        require: true,
+      },
+      tags: {
+        type: [String],
+      },
+      date: {
+        type: Date,
+        require: true,
+      },
+      cover: {
         photoName: {
           type: String,
+          require: true,
         },
         photoLink: {
           type: String,
+          require: true,
+          default: "https://via.placeholder.com/150",
         },
       },
-      contact: {
-        instagram: String,
-        twitter: String,
-        linkedin: String,
-        email: String,
+      content: {
+        type: String,
+        require: true,
       },
     },
     { timestamps: true }
@@ -36,6 +45,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Teams = mongoose.model("teams", schema);
-  return Teams;
+  const News = mongoose.model("news", schema);
+  return News;
 };

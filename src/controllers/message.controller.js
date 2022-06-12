@@ -8,6 +8,7 @@ exports.findAll = (req, res) => {
 
   if (!status) {
     Message.find()
+      .sort({ createdAt: -1 })
       .then((result) => {
         res.send({
           message: "Messages was successfully found",
@@ -23,6 +24,12 @@ exports.findAll = (req, res) => {
   } else {
     Message.find({ status: status })
       .then((result) => {
+        if (!result) {
+          res.status(404).send({
+            message: "Messages not found",
+          });
+        }
+
         res.send({
           message: "Messages was successfully found",
           timestamp: new Date().toString(),
@@ -39,12 +46,24 @@ exports.findAll = (req, res) => {
 
 // Done
 exports.create = (req, res) => {
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  const subject = req.body.subject;
+  const body = req.body.message;
+
+  if (!firstName || !subject || !email || !body) {
+    return res.status(400).send({
+      message: "First name, subject, email and message are required.",
+    });
+  }
+
   const message = new Message({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    subject: req.body.subject,
-    message: req.body.message,
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    subject: subject,
+    message: body,
     status: "Unreaded",
   });
 
@@ -67,8 +86,20 @@ exports.create = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
+  if (!id) {
+    return res.status(400).send({
+      message: "Message ID is required",
+    });
+  }
+
   Message.findById(id)
     .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "Message not found",
+        });
+      }
+
       res.send({
         message: "Message was successfully found",
         timestamp: new Date().toString(),
@@ -85,6 +116,12 @@ exports.findOne = (req, res) => {
 // Done
 exports.read = (req, res) => {
   const id = req.params.id;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Message ID is required",
+    });
+  }
 
   Message.findByIdAndUpdate(id, { status: "Readed" })
     .then((result) => {
@@ -113,6 +150,12 @@ exports.read = (req, res) => {
 exports.reply = (req, res) => {
   const id = req.params.id;
 
+  if (!id) {
+    return res.status(400).send({
+      message: "Message ID is required",
+    });
+  }
+
   Message.findByIdAndUpdate(id, { status: "Replied" })
     .then((result) => {
       if (!result) {
@@ -138,6 +181,12 @@ exports.reply = (req, res) => {
 
 exports.delete = (req, res) => {
   const id = req.params.id;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Message ID is required",
+    });
+  }
 
   Message.findByIdAndRemove(id)
     .then((result) => {
