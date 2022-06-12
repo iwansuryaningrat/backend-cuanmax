@@ -9,6 +9,7 @@ exports.findAll = (req, res) => {
 
   if (!category && !tags && !allData) {
     Watchlist.find({ isActive: true })
+      .sort({ createdAt: -1 })
       .then((result) => {
         res.send({
           message: "Watchlist successfully fetched",
@@ -27,6 +28,7 @@ exports.findAll = (req, res) => {
       category: category,
       tags: { $in: tags.split(",") },
     })
+      .sort({ createdAt: -1 })
       .then((result) => {
         res.send({
           message: "Watchlist successfully fetched",
@@ -41,6 +43,7 @@ exports.findAll = (req, res) => {
       });
   } else if (tags) {
     Watchlist.find({ isActive: true, tags: { $in: tags.split(",") } })
+      .sort({ createdAt: -1 })
       .then((result) => {
         res.send({
           message: "Watchlist successfully fetched",
@@ -55,6 +58,7 @@ exports.findAll = (req, res) => {
       });
   } else if (category) {
     Watchlist.find({ isActive: true, category: category })
+      .sort({ createdAt: -1 })
       .then((result) => {
         res.send({
           message: "Watchlist successfully fetched",
@@ -69,6 +73,7 @@ exports.findAll = (req, res) => {
       });
   } else if (allData) {
     Watchlist.find()
+      .sort({ createdAt: -1 })
       .then((result) => {
         res.send({
           message: "Watchlist successfully fetched",
@@ -83,6 +88,7 @@ exports.findAll = (req, res) => {
       });
   } else {
     Watchlist.find({ isActive: true })
+      .sort({ createdAt: -1 })
       .then((result) => {
         res.send({
           message: "Watchlist successfully fetched",
