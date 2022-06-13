@@ -3938,6 +3938,254 @@
           }
         }
       }
+    },
+    "/cryptocurrency/map": {
+      "get": {
+        "tags": ["Cryptocurrency"],
+        "summary": "Get Cryptocurrency Map",
+        "description": "Get Cryptocurrency Map",
+        "operationId": "getCryptocurrencyMap",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "symbol": {
+                            "type": "string"
+                          },
+                          "slug": {
+                            "type": "string"
+                          },
+                          "rank": {
+                            "type": "number"
+                          },
+                          "is_active": {
+                            "type": "boolean"
+                          },
+                          "first_historical_data": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "last_historical_data": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "platform": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "symbol": {
+                                "type": "string"
+                              },
+                              "slug": {
+                                "type": "string"
+                              },
+                              "token_address": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Cryptocurrency map retrieved successfully",
+                    "timestamp": "Tue Jun 14 2022 01:21:49 GMT+0700 (Western Indonesia Time)",
+                    "data": [
+                      {
+                        "id": 1,
+                        "name": "Bitcoin",
+                        "symbol": "BTC",
+                        "slug": "bitcoin",
+                        "rank": 1,
+                        "is_active": 1,
+                        "first_historical_data": "2013-04-28T18:47:21.000Z",
+                        "last_historical_data": "2022-06-13T18:19:00.000Z",
+                        "platform": null
+                      },
+                      {
+                        "id": 1027,
+                        "name": "Ethereum",
+                        "symbol": "ETH",
+                        "slug": "ethereum",
+                        "rank": 2,
+                        "is_active": 1,
+                        "first_historical_data": "2015-08-07T14:49:30.000Z",
+                        "last_historical_data": "2022-06-13T18:19:00.000Z",
+                        "platform": null
+                      },
+                      {
+                        "id": 825,
+                        "name": "Tether",
+                        "symbol": "USDT",
+                        "slug": "tether",
+                        "rank": 3,
+                        "is_active": 1,
+                        "first_historical_data": "2015-02-25T13:34:26.000Z",
+                        "last_historical_data": "2022-06-13T18:19:00.000Z",
+                        "platform": {
+                          "id": 1027,
+                          "name": "Ethereum",
+                          "symbol": "ETH",
+                          "slug": "ethereum",
+                          "token_address": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                        }
+                      },
+                      {
+                        "id": 3408,
+                        "name": "USD Coin",
+                        "symbol": "USDC",
+                        "slug": "usd-coin",
+                        "rank": 4,
+                        "is_active": 1,
+                        "first_historical_data": "2018-10-08T18:49:28.000Z",
+                        "last_historical_data": "2022-06-13T18:19:00.000Z",
+                        "platform": {
+                          "id": 1027,
+                          "name": "Ethereum",
+                          "symbol": "ETH",
+                          "slug": "ethereum",
+                          "token_address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+                        }
+                      },
+                      {
+                        "id": 1839,
+                        "name": "BNB",
+                        "symbol": "BNB",
+                        "slug": "bnb",
+                        "rank": 5,
+                        "is_active": 1,
+                        "first_historical_data": "2017-07-25T04:30:05.000Z",
+                        "last_historical_data": "2022-06-13T18:19:00.000Z",
+                        "platform": null
+                      },
+                      {
+                        "id": 4687,
+                        "name": "Binance USD",
+                        "symbol": "BUSD",
+                        "slug": "binance-usd",
+                        "rank": 6,
+                        "is_active": 1,
+                        "first_historical_data": "2019-09-20T08:34:14.000Z",
+                        "last_historical_data": "2022-06-13T18:19:00.000Z",
+                        "platform": {
+                          "id": 1839,
+                          "name": "BNB",
+                          "symbol": "BNB",
+                          "slug": "bnb",
+                          "token_address": "BUSD-BD1"
+                        }
+                      },
+                      {
+                        "id": 2010,
+                        "name": "Cardano",
+                        "symbol": "ADA",
+                        "slug": "cardano",
+                        "rank": 7,
+                        "is_active": 1,
+                        "first_historical_data": "2017-10-01T20:34:25.000Z",
+                        "last_historical_data": "2022-06-13T18:19:00.000Z",
+                        "platform": null
+                      },
+                      {
+                        "id": 52,
+                        "name": "XRP",
+                        "symbol": "XRP",
+                        "slug": "xrp",
+                        "rank": 8,
+                        "is_active": 1,
+                        "first_historical_data": "2013-08-04T18:51:05.000Z",
+                        "last_historical_data": "2022-06-13T18:19:00.000Z",
+                        "platform": null
+                      },
+                      {
+                        "id": 5426,
+                        "name": "Solana",
+                        "symbol": "SOL",
+                        "slug": "solana",
+                        "rank": 9,
+                        "is_active": 1,
+                        "first_historical_data": "2020-04-10T04:59:18.000Z",
+                        "last_historical_data": "2022-06-13T18:19:00.000Z",
+                        "platform": null
+                      },
+                      {
+                        "id": 74,
+                        "name": "Dogecoin",
+                        "symbol": "DOGE",
+                        "slug": "dogecoin",
+                        "rank": 10,
+                        "is_active": 1,
+                        "first_historical_data": "2013-12-15T14:42:34.000Z",
+                        "last_historical_data": "2022-06-13T18:19:00.000Z",
+                        "platform": null
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
