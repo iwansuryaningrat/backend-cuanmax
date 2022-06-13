@@ -4866,6 +4866,541 @@
           }
         }
       }
+    },
+    "cryptocurrency/info": {
+      "get": {
+        "tags": ["Cryptocurrency"],
+        "operationId": "getCryptocurrencyInfo",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "The cryptocurrency id (e.g. 1, , user comma-separated for multiple)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "slug",
+            "in": "query",
+            "description": "The cryptocurrency slug for alternative id (e.g. bitcoin, user comma-separated for multiple)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "description": "The cryptocurrency symbol for alternative id (e.g. BTC, user comma-separated for multiple)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "symbol": {
+                          "type": "array",
+                          "items": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "symbol": {
+                              "type": "string"
+                            },
+                            "category": {
+                              "type": "string"
+                            },
+                            "description": {
+                              "type": "string"
+                            },
+                            "slug": {
+                              "type": "string"
+                            },
+                            "logo": {
+                              "type": "string"
+                            },
+                            "subreddit": {
+                              "type": "string"
+                            },
+                            "notice": {
+                              "type": "string"
+                            },
+                            "tags": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "tag-names": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "tag-grups": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "urls": {
+                              "type": "object",
+                              "properties": {
+                                "website": {
+                                  "type": "string"
+                                },
+                                "twitter": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "message-board": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "chat": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "facebook": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "explorer": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "reddit": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "technical-doc": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "source-code": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "announcement": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            },
+                            "platform": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "integer"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "symbol": {
+                                  "type": "string"
+                                },
+                                "slug": {
+                                  "type": "string"
+                                },
+                                "logo": {
+                                  "type": "string"
+                                },
+                                "urls": {
+                                  "type": "object",
+                                  "properties": {
+                                    "website": {
+                                      "type": "string"
+                                    },
+                                    "twitter": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "message-board": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "chat": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "facebook": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "explorer": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "reddit": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "technical-doc": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "source-code": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "announcement": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "date_added": {
+                              "type": "string"
+                            },
+                            "twitter_username": {
+                              "type": "string"
+                            },
+                            "is_hidden": {
+                              "type": "boolean"
+                            },
+                            "date_launched": {
+                              "type": "string"
+                            },
+                            "contact_address": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "self_reported_circulating_supply": {
+                              "type": "string"
+                            },
+                            "self_reported_tags": {
+                              "type": "string"
+                            },
+                            "self_reported_market_cap": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Cryptocurrency info retrieved successfully",
+                    "timestamp": "Tue Jun 14 2022 01:49:36 GMT+0700 (Western Indonesia Time)",
+                    "data": {
+                      "BTC": [
+                        {
+                          "id": 1,
+                          "name": "Bitcoin",
+                          "symbol": "BTC",
+                          "category": "coin",
+                          "description": "Bitcoin (BTC) is a cryptocurrency . Users are able to generate BTC through the process of mining. Bitcoin has a current supply of 19,066,500. The last known price of Bitcoin is 23,625.06739305 USD and is down -15.53 over the last 24 hours. It is currently trading on 9530 active market(s) with $65,202,329,252.81 traded over the last 24 hours. More information can be found at https://bitcoin.org/.",
+                          "slug": "bitcoin",
+                          "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png",
+                          "subreddit": "bitcoin",
+                          "notice": "",
+                          "tags": [
+                            "mineable",
+                            "pow",
+                            "sha-256",
+                            "store-of-value",
+                            "state-channel",
+                            "coinbase-ventures-portfolio",
+                            "three-arrows-capital-portfolio",
+                            "polychain-capital-portfolio",
+                            "binance-labs-portfolio",
+                            "blockchain-capital-portfolio",
+                            "boostvc-portfolio",
+                            "cms-holdings-portfolio",
+                            "dcg-portfolio",
+                            "dragonfly-capital-portfolio",
+                            "electric-capital-portfolio",
+                            "fabric-ventures-portfolio",
+                            "framework-ventures-portfolio",
+                            "galaxy-digital-portfolio",
+                            "huobi-capital-portfolio",
+                            "alameda-research-portfolio",
+                            "a16z-portfolio",
+                            "1confirmation-portfolio",
+                            "winklevoss-capital-portfolio",
+                            "usv-portfolio",
+                            "placeholder-ventures-portfolio",
+                            "pantera-capital-portfolio",
+                            "multicoin-capital-portfolio",
+                            "paradigm-portfolio"
+                          ],
+                          "tag-names": [
+                            "Mineable",
+                            "PoW",
+                            "SHA-256",
+                            "Store Of Value",
+                            "State Channel",
+                            "Coinbase Ventures Portfolio",
+                            "Three Arrows Capital Portfolio",
+                            "Polychain Capital Portfolio",
+                            "Binance Labs Portfolio",
+                            "Blockchain Capital Portfolio",
+                            "BoostVC Portfolio",
+                            "CMS Holdings Portfolio",
+                            "DCG Portfolio",
+                            "DragonFly Capital Portfolio",
+                            "Electric Capital Portfolio",
+                            "Fabric Ventures Portfolio",
+                            "Framework Ventures Portfolio",
+                            "Galaxy Digital Portfolio",
+                            "Huobi Capital Portfolio",
+                            "Alameda Research Portfolio",
+                            "a16z Portfolio",
+                            "1Confirmation Portfolio",
+                            "Winklevoss Capital Portfolio",
+                            "USV Portfolio",
+                            "Placeholder Ventures Portfolio",
+                            "Pantera Capital Portfolio",
+                            "Multicoin Capital Portfolio",
+                            "Paradigm Portfolio"
+                          ],
+                          "tag-groups": [
+                            "OTHERS",
+                            "ALGORITHM",
+                            "ALGORITHM",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY"
+                          ],
+                          "urls": {
+                            "website": ["https://bitcoin.org/"],
+                            "twitter": [],
+                            "message_board": ["https://bitcointalk.org"],
+                            "chat": [],
+                            "facebook": [],
+                            "explorer": [
+                              "https://blockchain.coinmarketcap.com/chain/bitcoin",
+                              "https://blockchain.info/",
+                              "https://live.blockcypher.com/btc/",
+                              "https://blockchair.com/bitcoin",
+                              "https://explorer.viabtc.com/btc"
+                            ],
+                            "reddit": ["https://reddit.com/r/bitcoin"],
+                            "technical_doc": [
+                              "https://bitcoin.org/bitcoin.pdf"
+                            ],
+                            "source_code": [
+                              "https://github.com/bitcoin/bitcoin"
+                            ],
+                            "announcement": []
+                          },
+                          "platform": null,
+                          "date_added": "2013-04-28T00:00:00.000Z",
+                          "twitter_username": "",
+                          "is_hidden": 0,
+                          "date_launched": null,
+                          "contract_address": [],
+                          "self_reported_circulating_supply": null,
+                          "self_reported_tags": null,
+                          "self_reported_market_cap": null
+                        }
+                      ],
+                      "XRP": [
+                        {
+                          "id": 52,
+                          "name": "XRP",
+                          "symbol": "XRP",
+                          "category": "coin",
+                          "description": "XRP (XRP) is a cryptocurrency . XRP has a current supply of 99,989,535,142 with 48,343,101,197 in circulation. The last known price of XRP is 0.31870992 USD and is down -11.61 over the last 24 hours. It is currently trading on 737 active market(s) with $2,459,296,085.84 traded over the last 24 hours. More information can be found at https://xrpl.org/.",
+                          "slug": "xrp",
+                          "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/52.png",
+                          "subreddit": "ripple",
+                          "notice": "",
+                          "tags": [
+                            "medium-of-exchange",
+                            "enterprise-solutions",
+                            "binance-chain",
+                            "arrington-xrp-capital-portfolio",
+                            "galaxy-digital-portfolio",
+                            "a16z-portfolio",
+                            "pantera-capital-portfolio"
+                          ],
+                          "tag-names": [
+                            "Medium of Exchange",
+                            "Enterprise Solutions",
+                            "Binance Chain",
+                            "Arrington XRP Capital Portfolio",
+                            "Galaxy Digital Portfolio",
+                            "a16z Portfolio",
+                            "Pantera Capital Portfolio"
+                          ],
+                          "tag-groups": [
+                            "INDUSTRY",
+                            "INDUSTRY",
+                            "PLATFORM",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY",
+                            "CATEGORY"
+                          ],
+                          "urls": {
+                            "website": ["https://xrpl.org/"],
+                            "twitter": ["https://twitter.com/Ripple"],
+                            "message_board": ["http://www.xrpchat.com/"],
+                            "chat": [],
+                            "facebook": [],
+                            "explorer": [
+                              "https://xrpcharts.ripple.com/#/graph/",
+                              "https://bithomp.com/explorer/",
+                              "https://xrpscan.com/",
+                              "https://blockchair.com/ripple",
+                              "https://bscscan.com/token/0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe"
+                            ],
+                            "reddit": ["https://reddit.com/r/ripple"],
+                            "technical_doc": [
+                              "https://ripple.com/files/ripple_consensus_whitepaper.pdf"
+                            ],
+                            "source_code": [
+                              "https://github.com/ripple/rippled"
+                            ],
+                            "announcement": []
+                          },
+                          "platform": {
+                            "id": "1839",
+                            "name": "BNB",
+                            "slug": "bnb",
+                            "symbol": "BNB",
+                            "token_address": "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe"
+                          },
+                          "date_added": "2013-08-04T00:00:00.000Z",
+                          "twitter_username": "Ripple",
+                          "is_hidden": 0,
+                          "date_launched": null,
+                          "contract_address": [
+                            {
+                              "contract_address": "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
+                              "platform": {
+                                "name": "BNB Smart Chain (BEP20)",
+                                "coin": {
+                                  "id": "1839",
+                                  "name": "BNB",
+                                  "symbol": "BNB",
+                                  "slug": "bnb"
+                                }
+                              }
+                            },
+                            {
+                              "contract_address": "0x9eaefb09fe4aabfbe6b1ca316a3c36afc83a393f",
+                              "platform": {
+                                "name": "Klaytn",
+                                "coin": {
+                                  "id": "4256",
+                                  "name": "Klaytn",
+                                  "symbol": "KLAY",
+                                  "slug": "klaytn"
+                                }
+                              }
+                            }
+                          ],
+                          "self_reported_circulating_supply": null,
+                          "self_reported_tags": null,
+                          "self_reported_market_cap": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
