@@ -4867,7 +4867,7 @@
         }
       }
     },
-    "cryptocurrency/info": {
+    "/cryptocurrency/info": {
       "get": {
         "tags": ["Cryptocurrency"],
         "operationId": "getCryptocurrencyInfo",
@@ -4877,21 +4877,28 @@
             "in": "query",
             "description": "The cryptocurrency id (e.g. 1, , user comma-separated for multiple)",
             "required": false,
-            "type": "string"
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           },
           {
             "name": "slug",
             "in": "query",
             "description": "The cryptocurrency slug for alternative id (e.g. bitcoin, user comma-separated for multiple)",
             "required": false,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "symbol",
             "in": "query",
             "description": "The cryptocurrency symbol for alternative id (e.g. BTC, user comma-separated for multiple)",
             "required": false,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -5373,6 +5380,413 @@
                           "self_reported_circulating_supply": null,
                           "self_reported_tags": null,
                           "self_reported_market_cap": null
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cryptocurrency/price": {
+      "get": {
+        "tags": ["Cryptocurrency"],
+        "summary": "Get the price of a cryptocurrency",
+        "description": "Get the price of a cryptocurrency",
+        "operationId": "getCryptocurrencyPrice",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "The cryptocurrency id (e.g. 1, , user comma-separated for multiple)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "slug",
+            "in": "query",
+            "description": "The cryptocurrency slug for alternative id (e.g. bitcoin, user comma-separated for multiple)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "description": "The cryptocurrency symbol for alternative id (e.g. BTC, user comma-separated for multiple)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "convert",
+            "in": "query",
+            "description": "The cryptocurrency to convert to (e.g. USD, user comma-separated for multiple)",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "symbol": {
+                          "type": "string"
+                        },
+                        "slug": {
+                          "type": "string"
+                        },
+                        "num_market_pairs": {
+                          "type": "string"
+                        },
+                        "date_added": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "slug": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "category": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "max_supply": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "circulating_supply": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "total_supply": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "platform": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "format": "int64"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "symbol": {
+                              "type": "string"
+                            },
+                            "slug": {
+                              "type": "string"
+                            },
+                            "token_address": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "is_active": {
+                          "type": "boolean"
+                        },
+                        "cmc_rank": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "is_fiat": {
+                          "type": "boolean"
+                        },
+                        "self_reported_circulating_supply": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "self_reported_market_cap": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "last_updated": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "quote": {
+                          "type": "object",
+                          "properties": {
+                            "USD": {
+                              "type": "object",
+                              "properties": {
+                                "price": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "volume_24h": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "volume_change_24h": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "percent_change_1h": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "percent_change_24h": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "percent_change_7d": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "market_cap": {
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "last_updated": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Cryptocurrency price retrieved successfully",
+                    "timestamp": "Tue Jun 14 2022 02:12:27 GMT+0700 (Western Indonesia Time)",
+                    "data": {
+                      "USDT": [
+                        {
+                          "id": 825,
+                          "name": "Tether",
+                          "symbol": "USDT",
+                          "slug": "tether",
+                          "num_market_pairs": 34642,
+                          "date_added": "2015-02-25T00:00:00.000Z",
+                          "tags": [
+                            {
+                              "slug": "payments",
+                              "name": "Payments",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "stablecoin",
+                              "name": "Stablecoin",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "asset-backed-stablecoin",
+                              "name": "Asset-Backed Stablecoin",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "avalanche-ecosystem",
+                              "name": "Avalanche Ecosystem",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "solana-ecosystem",
+                              "name": "Solana Ecosystem",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "arbitrum-ecosytem",
+                              "name": "Arbitrum Ecosystem",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "moonriver-ecosystem",
+                              "name": "Moonriver Ecosystem",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "injective-ecosystem",
+                              "name": "Injective Ecosystem",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "bnb-chain",
+                              "name": "BNB Chain",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "usd-stablecoin",
+                              "name": "USD Stablecoin",
+                              "category": "PROPERTY"
+                            }
+                          ],
+                          "max_supply": null,
+                          "circulating_supply": 72293981300.94582,
+                          "total_supply": 79710622658.21005,
+                          "platform": {
+                            "id": 1027,
+                            "name": "Ethereum",
+                            "symbol": "ETH",
+                            "slug": "ethereum",
+                            "token_address": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+                          },
+                          "is_active": 1,
+                          "cmc_rank": 3,
+                          "is_fiat": 0,
+                          "self_reported_circulating_supply": null,
+                          "self_reported_market_cap": null,
+                          "last_updated": "2022-06-13T19:11:00.000Z",
+                          "quote": {
+                            "USD": {
+                              "price": 0.9988155410833373,
+                              "volume_24h": 104591272364.54575,
+                              "volume_change_24h": 91.3197,
+                              "percent_change_1h": -0.00112014,
+                              "percent_change_24h": -0.01664926,
+                              "percent_change_7d": -0.05805285,
+                              "percent_change_30d": 0.0018036,
+                              "percent_change_60d": -0.13557424,
+                              "percent_change_90d": -0.15415549,
+                              "market_cap": 72208352050.17287,
+                              "market_cap_dominance": 7.4514,
+                              "fully_diluted_market_cap": 79616208700.45,
+                              "last_updated": "2022-06-13T19:11:00.000Z"
+                            }
+                          }
+                        }
+                      ],
+                      "XRP": [
+                        {
+                          "id": 52,
+                          "name": "XRP",
+                          "symbol": "XRP",
+                          "slug": "xrp",
+                          "num_market_pairs": 737,
+                          "date_added": "2013-08-04T00:00:00.000Z",
+                          "tags": [
+                            {
+                              "slug": "medium-of-exchange",
+                              "name": "Medium of Exchange",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "enterprise-solutions",
+                              "name": "Enterprise Solutions",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "binance-chain",
+                              "name": "Binance Chain",
+                              "category": "PLATFORM"
+                            },
+                            {
+                              "slug": "arrington-xrp-capital-portfolio",
+                              "name": "Arrington XRP Capital Portfolio",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "galaxy-digital-portfolio",
+                              "name": "Galaxy Digital Portfolio",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "a16z-portfolio",
+                              "name": "a16z Portfolio",
+                              "category": "PROPERTY"
+                            },
+                            {
+                              "slug": "pantera-capital-portfolio",
+                              "name": "Pantera Capital Portfolio",
+                              "category": "PROPERTY"
+                            }
+                          ],
+                          "max_supply": 100000000000,
+                          "circulating_supply": 48343101197,
+                          "total_supply": 99989535142,
+                          "platform": {
+                            "id": 1839,
+                            "name": "BNB",
+                            "symbol": "BNB",
+                            "slug": "bnb",
+                            "token_address": "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe"
+                          },
+                          "is_active": 1,
+                          "cmc_rank": 8,
+                          "is_fiat": 0,
+                          "self_reported_circulating_supply": null,
+                          "self_reported_market_cap": null,
+                          "last_updated": "2022-06-13T19:12:00.000Z",
+                          "quote": {
+                            "USD": {
+                              "price": 0.3158741524831856,
+                              "volume_24h": 2451079615.8797135,
+                              "volume_change_24h": 84.6661,
+                              "percent_change_1h": -0.2659365,
+                              "percent_change_24h": -12.36792883,
+                              "percent_change_7d": -20.48259395,
+                              "percent_change_30d": -24.2105287,
+                              "percent_change_60d": -55.59378514,
+                              "percent_change_90d": -58.93000842,
+                              "market_cap": 15270336119.011251,
+                              "market_cap_dominance": 1.5758,
+                              "fully_diluted_market_cap": 31587415248.32,
+                              "last_updated": "2022-06-13T19:12:00.000Z"
+                            }
+                          }
                         }
                       ]
                     }
