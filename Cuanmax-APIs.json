@@ -5851,6 +5851,176 @@
           }
         }
       }
+    },
+    "/cryptocurrency/convert": {
+      "get": {
+        "tags": ["Cryptocurrency"],
+        "summary": "Convert Cryptocurrency",
+        "description": "Convert Cryptocurrency",
+        "operationId": "getConvertCryptocurrency",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of the cryptocurrency",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "symbol",
+            "in": "query",
+            "description": "Symbol of the cryptocurrency",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "convert",
+            "in": "query",
+            "description": "Convert to currency",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "amount",
+            "in": "query",
+            "description": "Amount of cryptocurrency to convert",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "timestamp": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "data": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "integer",
+                              "format": "int64"
+                            },
+                            "symbol": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "amount": {
+                              "type": "number",
+                              "format": "double"
+                            },
+                            "last_updated": {
+                              "type": "string",
+                              "format": "date-time"
+                            },
+                            "quote": {
+                              "type": "object",
+                              "properties": {
+                                "convert": {
+                                  "type": "object",
+                                  "properties": {
+                                    "price": {
+                                      "type": "number",
+                                      "format": "double"
+                                    },
+                                    "last_updated": {
+                                      "type": "string",
+                                      "format": "date-time"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "message": "Cryptocurrency convert retrieved successfully",
+                        "timestamp": "Tue Jun 14 2022 02:30:35 GMT+0700 (Western Indonesia Time)",
+                        "data": [
+                          {
+                            "id": 1,
+                            "symbol": "BTC",
+                            "name": "Bitcoin",
+                            "amount": 1,
+                            "last_updated": "2022-06-13T19:30:00.000Z",
+                            "quote": {
+                              "BNB": {
+                                "price": 103.3707657552617,
+                                "last_updated": "2022-06-13T19:30:00.000Z"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "ID, Symbol, or Slug is required"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
