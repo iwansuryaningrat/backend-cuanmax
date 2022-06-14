@@ -565,20 +565,22 @@
                   },
                   "example": {
                     "message": "User fetched successfully!",
-                    "timestamp": "Wed Jun 08 2022 03:41:39 GMT+0700 (Western Indonesia Time)",
+                    "timestamp": "Tue Jun 14 2022 23:30:40 GMT+0700 (Western Indonesia Time)",
                     "data": {
                       "name": "Iwan",
-                      "username": "sningrat123",
-                      "email": "iwansuryaningrat@students.undip.ac.id",
+                      "username": "wanss",
+                      "email": "iwan.suryaningrat28@gmail.com",
                       "image": {
-                        "imageLink": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png"
+                        "imageName": "1655224207814-My-Photo.jpg",
+                        "imageLink": "http://localhost:3000/assets/foto/1655224207814-My-Photo.jpg"
                       },
                       "type": {
                         "memberType": "Basic Member",
+                        "isNew": true,
                         "adminType": false
                       },
                       "referal": {
-                        "referalCode": "SNINGRAT123",
+                        "referalCode": "WANSS",
                         "referalCount": 0,
                         "referalAccount": []
                       }
@@ -2252,21 +2254,21 @@
                 }
               }
             }
-          }
-        },
-        "500": {
-          "description": "Internal Server Error",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "message": {
-                    "type": "string"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while fetching the subscribers."
                   }
-                },
-                "example": {
-                  "message": "Some error occurred while fetching the subscribers."
                 }
               }
             }
@@ -4796,221 +4798,224 @@
                         "symbol": {
                           "type": "array",
                           "items": {
-                            "id": {
-                              "type": "integer"
-                            },
-                            "name": {
-                              "type": "string"
-                            },
-                            "symbol": {
-                              "type": "string"
-                            },
-                            "category": {
-                              "type": "string"
-                            },
-                            "description": {
-                              "type": "string"
-                            },
-                            "slug": {
-                              "type": "string"
-                            },
-                            "logo": {
-                              "type": "string"
-                            },
-                            "subreddit": {
-                              "type": "string"
-                            },
-                            "notice": {
-                              "type": "string"
-                            },
-                            "tags": {
-                              "type": "array",
-                              "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "name": {
                                 "type": "string"
-                              }
-                            },
-                            "tag-names": {
-                              "type": "array",
-                              "items": {
+                              },
+                              "symbol": {
                                 "type": "string"
-                              }
-                            },
-                            "tag-grups": {
-                              "type": "array",
-                              "items": {
+                              },
+                              "category": {
                                 "type": "string"
-                              }
-                            },
-                            "urls": {
-                              "type": "object",
-                              "properties": {
-                                "website": {
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "slug": {
+                                "type": "string"
+                              },
+                              "logo": {
+                                "type": "string"
+                              },
+                              "subreddit": {
+                                "type": "string"
+                              },
+                              "notice": {
+                                "type": "string"
+                              },
+                              "tags": {
+                                "type": "array",
+                                "items": {
                                   "type": "string"
-                                },
-                                "twitter": {
-                                  "type": "array",
-                                  "items": {
+                                }
+                              },
+                              "tag-names": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "tag-grups": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "urls": {
+                                "type": "object",
+                                "properties": {
+                                  "website": {
                                     "type": "string"
-                                  }
-                                },
-                                "message-board": {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "string"
-                                  }
-                                },
-                                "chat": {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "string"
-                                  }
-                                },
-                                "facebook": {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "string"
-                                  }
-                                },
-                                "explorer": {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "string"
-                                  }
-                                },
-                                "reddit": {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "string"
-                                  }
-                                },
-                                "technical-doc": {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "string"
-                                  }
-                                },
-                                "source-code": {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "string"
-                                  }
-                                },
-                                "announcement": {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "string"
+                                  },
+                                  "twitter": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "message-board": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "chat": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "facebook": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "explorer": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "reddit": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "technical-doc": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "source-code": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "announcement": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string"
+                                    }
                                   }
                                 }
-                              }
-                            },
-                            "platform": {
-                              "type": "object",
-                              "properties": {
-                                "id": {
-                                  "type": "integer"
-                                },
-                                "name": {
-                                  "type": "string"
-                                },
-                                "symbol": {
-                                  "type": "string"
-                                },
-                                "slug": {
-                                  "type": "string"
-                                },
-                                "logo": {
-                                  "type": "string"
-                                },
-                                "urls": {
-                                  "type": "object",
-                                  "properties": {
-                                    "website": {
-                                      "type": "string"
-                                    },
-                                    "twitter": {
-                                      "type": "array",
-                                      "items": {
+                              },
+                              "platform": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "integer"
+                                  },
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "symbol": {
+                                    "type": "string"
+                                  },
+                                  "slug": {
+                                    "type": "string"
+                                  },
+                                  "logo": {
+                                    "type": "string"
+                                  },
+                                  "urls": {
+                                    "type": "object",
+                                    "properties": {
+                                      "website": {
                                         "type": "string"
-                                      }
-                                    },
-                                    "message-board": {
-                                      "type": "array",
-                                      "items": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "chat": {
-                                      "type": "array",
-                                      "items": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "facebook": {
-                                      "type": "array",
-                                      "items": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "explorer": {
-                                      "type": "array",
-                                      "items": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "reddit": {
-                                      "type": "array",
-                                      "items": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "technical-doc": {
-                                      "type": "array",
-                                      "items": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "source-code": {
-                                      "type": "array",
-                                      "items": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "announcement": {
-                                      "type": "array",
-                                      "items": {
-                                        "type": "string"
+                                      },
+                                      "twitter": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "message-board": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "chat": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "facebook": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "explorer": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "reddit": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "technical-doc": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "source-code": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "announcement": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
                                       }
                                     }
                                   }
                                 }
-                              }
-                            },
-                            "date_added": {
-                              "type": "string"
-                            },
-                            "twitter_username": {
-                              "type": "string"
-                            },
-                            "is_hidden": {
-                              "type": "boolean"
-                            },
-                            "date_launched": {
-                              "type": "string"
-                            },
-                            "contact_address": {
-                              "type": "array",
-                              "items": {
+                              },
+                              "date_added": {
+                                "type": "string"
+                              },
+                              "twitter_username": {
+                                "type": "string"
+                              },
+                              "is_hidden": {
+                                "type": "boolean"
+                              },
+                              "date_launched": {
+                                "type": "string"
+                              },
+                              "contact_address": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              },
+                              "self_reported_circulating_supply": {
+                                "type": "string"
+                              },
+                              "self_reported_tags": {
+                                "type": "string"
+                              },
+                              "self_reported_market_cap": {
                                 "type": "string"
                               }
-                            },
-                            "self_reported_circulating_supply": {
-                              "type": "string"
-                            },
-                            "self_reported_tags": {
-                              "type": "string"
-                            },
-                            "self_reported_market_cap": {
-                              "type": "string"
                             }
                           }
                         }
@@ -5890,38 +5895,6 @@
                   "example": {
                     "message": "Internal Server Error"
                   }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT",
-        "in": "header"
-      }
-    },
-    "responses": {
-      "UnauthorizedError": {
-        "401": {
-          "description": "Unauthorized",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "message": {
-                    "type": "string"
-                  }
-                },
-                "example": {
-                  "message": "No token, authorization denied"
                 }
               }
             }
