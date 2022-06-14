@@ -1200,10 +1200,11 @@
           "content": {
             "multypart/form-data": {
               "schema": {
-                "type": "file",
+                "type": "string",
                 "properties": {
                   "image": {
-                    "type": "file"
+                    "type": "string",
+                    "format": "binary"
                   }
                 }
               }
@@ -1221,10 +1222,14 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "timestamp": {
+                      "type": "string"
                     }
                   },
                   "example": {
-                    "message": "User's profile picture updated successfully."
+                    "message": "User's profile picture updated successfully.",
+                    "timestamp": "Wed Jun 08 2022 04:32:13 GMT+0700 (Western Indonesia Time)"
                   }
                 }
               }
