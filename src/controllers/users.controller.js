@@ -224,6 +224,7 @@ exports.changePassword = (req, res) => {
     });
 };
 
+// Done
 exports.changeProfilePicture = (req, res) => {
   const id = req.params.id;
 
@@ -249,7 +250,7 @@ exports.changeProfilePicture = (req, res) => {
   const imageName = req.file.filename;
   const imageLink = `${req.protocol}://${req.get(
     "host"
-  )}/assets/foto/${fileName}`;
+  )}/assets/foto/${imageName}`;
 
   Users.findByIdAndUpdate(id, {
     image: {
@@ -265,6 +266,7 @@ exports.changeProfilePicture = (req, res) => {
       }
       res.send({
         message: "User's profile picture updated successfully.",
+        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
