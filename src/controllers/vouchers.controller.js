@@ -18,34 +18,40 @@ exports.findAll = (req, res) => {
     });
 };
 
-exports.findOne = (req, res) => {
-  const id = req.params.id;
-
-  Vouchers.findById(id)
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error while showing voucher.",
-      });
-    });
-};
-
+// Done
 exports.create = (req, res) => {
+  const {
+    voucherCode,
+    voucherName,
+    voucherDescription,
+    voucherDiscount,
+    voucherQuota,
+    voucherType,
+  } = req.body;
+
+  if (!voucherCode || !voucherName || !voucherDiscount || !voucherQuota) {
+    return res.status(400).send({
+      message: "Voucher code, name, discount and quota are required.",
+    });
+  }
+
   const voucher = new Vouchers({
-    voucherCode: req.body.voucherCode,
-    voucherName: req.body.voucherName,
-    voucherDescription: req.body.voucherDescription,
-    voucherDiscount: req.body.voucherDiscount,
-    voucherType: req.body.voucherType,
-    voucherExpiry: req.body.voucherExpiry,
+    voucherCode,
+    voucherName,
+    voucherDescription,
+    voucherDiscount,
+    voucherQuota,
+    voucherType,
   });
 
   voucher
     .save()
     .then((result) => {
-      res.send(result);
+      res.send({
+        message: "Voucher was created",
+        timestamp: new Date().toString(),
+        data: result,
+      });
     })
     .catch((err) => {
       res.status(500).send({
