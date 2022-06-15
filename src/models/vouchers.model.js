@@ -21,9 +21,12 @@ module.exports = (mongoose) => {
       },
       voucherType: {
         type: String,
-        require: true,
       },
       isActive: {
+        type: Boolean,
+        default: true,
+      },
+      forNewUSer: {
         type: Boolean,
         default: true,
       },
