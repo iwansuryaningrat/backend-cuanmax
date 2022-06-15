@@ -60,8 +60,15 @@ exports.create = (req, res) => {
     });
 };
 
-exports.delete = (req, res) => {
+// Done
+exports.deleteVoucher = (req, res) => {
   const id = req.params.id;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Voucher ID is required.",
+    });
+  }
 
   Vouchers.findByIdAndRemove(id)
     .then((result) => {
@@ -73,10 +80,11 @@ exports.delete = (req, res) => {
 
       res.send({
         message: "Voucher was deleted",
+        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      res.status(500).send({
         message: err.message || "Some error while delete voucher.",
       });
     });
