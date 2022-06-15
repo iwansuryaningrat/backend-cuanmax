@@ -48,6 +48,10 @@ module.exports = (mongoose) => {
         },
         referalCount: Number,
         referalAccount: [{ username: String }],
+        referalAmount: {
+          type: Number,
+          default: 0,
+        },
       },
     },
     { timestamps: true }
