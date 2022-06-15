@@ -139,3 +139,33 @@ exports.update = (req, res) => {
       });
     });
 };
+
+exports.findOne = (req, res) => {
+  const id = req.params.id;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Voucher ID is required.",
+    });
+  }
+
+  Vouchers.findById(id)
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "Voucher not found",
+        });
+      }
+
+      res.send({
+        message: "Voucher was fetched",
+        timestamp: new Date().toString(),
+        data: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error while fetch voucher.",
+      });
+    });
+};
