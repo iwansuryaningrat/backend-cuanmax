@@ -31,10 +31,12 @@ module.exports = (mongoose) => {
           default: "https://via.placeholder.com/150",
         },
       },
-      content: {
-        type: String,
-        require: true,
-      },
+      body: [
+        {
+          type: String,
+          require: true,
+        },
+      ],
     },
     { timestamps: true }
   );
