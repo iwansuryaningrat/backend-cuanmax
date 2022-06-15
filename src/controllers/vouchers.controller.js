@@ -1,10 +1,15 @@
 const db = require("../models/index");
 const Vouchers = db.vouchers;
 
+// Done
 exports.findAll = (req, res) => {
   Vouchers.find()
     .then((result) => {
-      res.send(result);
+      res.send({
+        message: "Vouchers successfully fetched",
+        timestamp: new Date().toString(),
+        data: result,
+      });
     })
     .catch((err) => {
       res.status(500).send({
