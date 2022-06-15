@@ -23,7 +23,6 @@ module.exports = (mongoose) => {
       cover: {
         photoName: {
           type: String,
-          require: true,
         },
         photoLink: {
           type: String,
