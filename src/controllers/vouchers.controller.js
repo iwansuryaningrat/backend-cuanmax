@@ -89,3 +89,53 @@ exports.deleteVoucher = (req, res) => {
       });
     });
 };
+
+// Done
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Voucher ID is required.",
+    });
+  }
+
+  const {
+    voucherCode,
+    voucherName,
+    voucherDescription,
+    voucherDiscount,
+    voucherQuota,
+    voucherType,
+    isActive,
+    forNewUser,
+  } = req.body;
+
+  Vouchers.findByIdAndUpdate(id, {
+    voucherCode,
+    voucherName,
+    voucherDescription,
+    voucherDiscount,
+    voucherQuota,
+    voucherType,
+    isActive,
+    forNewUser,
+  })
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "Voucher not found",
+        });
+      }
+
+      res.send({
+        message: "Voucher was updated",
+        timestamp: new Date().toString(),
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error while update voucher.",
+      });
+    });
+};
