@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const Vouchers = db.vouchers;
+const Users = db.users;
 
 // Done
 exports.findAll = (req, res) => {
@@ -140,6 +141,7 @@ exports.update = (req, res) => {
     });
 };
 
+// Done
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -166,6 +168,69 @@ exports.findOne = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: err.message || "Some error while fetch voucher.",
+      });
+    });
+};
+
+exports.useVoucher = (req, res) => {
+  const username = req.params.username;
+  const voucherCode = req.params.voucherCode;
+
+  if (!username || !voucherCode) {
+    return res.status(400).send({
+      message: "Username and voucher code are required.",
+    });
+  }
+
+  Users.findOne({ referal: { referalCode: voucherCode } })
+    .then((result) => {
+      if (!result) {
+        Vouchers.findOne({ voucherCode })
+          .then((result) => {
+            if (!result) {
+              res.status(404).send({
+                message: "Voucher not found",
+              });
+            }
+
+            res.send({
+              message: "Voucher successfully used",
+              timestamp: new Date().toString(),
+              data: result,
+            });
+          })
+          .catch((err) => {
+            res.status(500).send({
+              message: err.message || "Some error while fetch voucher.",
+            });
+          });
+      }
+
+      const email = result.email;
+
+      Users.findOneAndUpdate(
+        { email },
+        {
+          referalCount: result.referal.referalCount + 1,
+          referalAccount: result.referal.referalAccount.push({ username }),
+        }
+      )
+        .then((result) => {
+          res.send({
+            message: "Voucher successfully used",
+            timestamp: new Date().toString(),
+            data: result,
+          });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message || "Some error while use voucher.",
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error while use voucher.",
       });
     });
 };

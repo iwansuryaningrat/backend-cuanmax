@@ -1,6 +1,5 @@
 const db = require("../models/index");
 const Users = db.users;
-const Vouchers = db.vouchers;
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
@@ -51,6 +50,7 @@ exports.signup = async (req, res) => {
       referalCode: username.toUpperCase(),
       referalCount: 0,
       referalAccount: [],
+      referalAmount: 0,
     },
   });
 
@@ -71,7 +71,7 @@ exports.signup = async (req, res) => {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: "1h",
+          expiresIn: "3h",
         }
       );
 

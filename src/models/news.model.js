@@ -23,7 +23,6 @@ module.exports = (mongoose) => {
       cover: {
         photoName: {
           type: String,
-          require: true,
         },
         photoLink: {
           type: String,
@@ -31,10 +30,12 @@ module.exports = (mongoose) => {
           default: "https://via.placeholder.com/150",
         },
       },
-      content: {
-        type: String,
-        require: true,
-      },
+      body: [
+        {
+          type: String,
+          require: true,
+        },
+      ],
     },
     { timestamps: true }
   );
