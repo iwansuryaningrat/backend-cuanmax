@@ -6,7 +6,7 @@ module.exports = (app) => {
     update,
     findOne,
   } = require("../controllers/vouchers.controller");
-  const { auth } = require("../middlewares/auth");
+  const { auth, admin, proMember } = require("../middlewares/auth");
   const router = require("express").Router();
 
   router.get("/", auth, findAll);
