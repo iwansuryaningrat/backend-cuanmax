@@ -1,6 +1,6 @@
 module.exports = (app) => {
   const message = require("../controllers/message.controller");
-  const { auth } = require("../middlewares/auth");
+  const { auth, admin, proMember } = require("../middlewares/auth");
   const router = require("express").Router();
 
   router.get("/", auth, message.findAll);
