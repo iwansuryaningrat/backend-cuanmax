@@ -4,10 +4,10 @@ module.exports = (app) => {
   const router = require("express").Router();
 
   router.get("/", auth, subscribers.findAll);
-  router.get("/:id", auth, subscribers.findOne);
-  router.post("/", auth, subscribers.create);
-  router.put("/:id", auth, subscribers.update);
-  router.delete("/:id", auth, subscribers.delete);
+  router.get("/:id", admin, subscribers.findOne);
+  router.post("/", admin, subscribers.create);
+  router.put("/:id", admin, subscribers.update);
+  router.delete("/:id", admin, subscribers.delete);
 
   app.use("/api/v1/subscribers", router);
 };
