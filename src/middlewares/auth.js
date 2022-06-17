@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 exports.auth = (req, res, next) => {
-  const token = req.body.token || req.query.token || req.header("x-auth-token");
+  const token = req.header("x-auth-token");
   if (!token) {
     return res.status(401).send({ message: "No token, authorization denied" });
   }
@@ -17,7 +17,7 @@ exports.auth = (req, res, next) => {
 };
 
 exports.admin = (req, res, next) => {
-  const token = req.body.token || req.query.token || req.header("x-auth-token");
+  const token = req.header("x-auth-token");
   if (!token) {
     return res.status(401).send({ message: "No token, authorization denied" });
   }
@@ -36,7 +36,7 @@ exports.admin = (req, res, next) => {
 };
 
 exports.proMember = (req, res, next) => {
-  const token = req.body.token || req.query.token || req.header("x-auth-token");
+  const token = req.header("x-auth-token");
   if (!token) {
     return res.status(401).send({ message: "No token, authorization denied" });
   }
