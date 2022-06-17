@@ -11,7 +11,7 @@ exports.findAll = (req, res) => {
       .then((message) => {
         res.send({
           message: "All message were fetched successfully",
-          timestamp: new Date().toISOString(),
+          timestamp: new Date().toString(),
           data: message,
         });
       })
@@ -27,7 +27,7 @@ exports.findAll = (req, res) => {
       .then((message) => {
         res.send({
           message: "All message were fetched successfully",
-          timestamp: new Date().toISOString(),
+          timestamp: new Date().toString(),
           data: message,
         });
       })
