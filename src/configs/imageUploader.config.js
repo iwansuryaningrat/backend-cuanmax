@@ -8,7 +8,7 @@ exports.imageStorage = multer.diskStorage({
   filename: (req, file, cb) => {
     cb(
       null,
-      new Date().getTime() + "-" + file.originalname.replace(/\s/g, "-")
+      file.originalname.replace(/\s/g, "-") + "-" + new Date().getTime()
     );
   },
 });
