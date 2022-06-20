@@ -17,7 +17,7 @@ db.teams = require("./teams.model")(mongoose);
 // db.testimoni = require("./testimoni.model")(mongoose);
 db.users = require("./users.model")(mongoose);
 // db.videos = require("./videos.model")(mongoose);
-// db.vouchers = require("./vouchers.model")(mongoose);
+db.vouchers = require("./vouchers.model")(mongoose);
 db.watchlist = require("./watchlist.model")(mongoose);
 
 module.exports = db;

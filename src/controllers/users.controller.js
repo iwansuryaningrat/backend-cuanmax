@@ -224,6 +224,7 @@ exports.changePassword = (req, res) => {
     });
 };
 
+// Done
 exports.changeProfilePicture = (req, res) => {
   const id = req.params.id;
 
@@ -249,7 +250,7 @@ exports.changeProfilePicture = (req, res) => {
   const imageName = req.file.filename;
   const imageLink = `${req.protocol}://${req.get(
     "host"
-  )}/assets/foto/${fileName}`;
+  )}/assets/foto/${imageName}`;
 
   Users.findByIdAndUpdate(id, {
     image: {
@@ -265,6 +266,7 @@ exports.changeProfilePicture = (req, res) => {
       }
       res.send({
         message: "User's profile picture updated successfully.",
+        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -272,67 +274,6 @@ exports.changeProfilePicture = (req, res) => {
         message:
           err.message ||
           "Some error occurred while changing the profile picture.",
-      });
-    });
-};
-
-exports.referal = (req, res) => {
-  const referal = req.params.referal;
-  const username = req.params.username;
-
-  const day = new Date().getDate() + 1;
-  const month = new Date().getMonth() + 1;
-  const year = new Date().getFullYear();
-  const date = `${day}/${month}/${year}`;
-
-  if (!referal || !username) {
-    return res.status(400).send({
-      message: "Referal code and username are required",
-    });
-  }
-
-  Users.findOne({ referal: { referalCode: referal } })
-    .then((result) => {
-      if (!result) {
-        res.status(404).send({
-          message: "Referal code not found",
-        });
-      }
-
-      Users.findByIdAndUpdate(result.id, {
-        referal: {
-          referalCode: referal,
-          referalCount: result.referal.referalCount + 1,
-          referalAccount: result.referal.referalAccount.push({
-            username: username,
-          }),
-        },
-      })
-        .then((result) => {
-          if (!result) {
-            res.status(404).send({
-              message: "User not found",
-            });
-          }
-          res.send({
-            message: "Referal code is successfully used.",
-            data: {
-              discountPercent: 10,
-              expiryDate: date,
-            },
-          });
-        })
-        .catch((err) => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while checking the referal.",
-          });
-        });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving the user.",
       });
     });
 };
