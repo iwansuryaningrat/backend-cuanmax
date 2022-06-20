@@ -1,44 +1,40 @@
-const { message } = require("../models/index");
 const db = require("../models/index");
 const Message = db.message;
 
 // Done
 exports.findAll = (req, res) => {
-  const status = req.params.status;
+  const { status } = req.query;
 
-  if (!status) {
-    Message.find()
+  if (status) {
+    Message.find({ status: status })
       .sort({ createdAt: -1 })
-      .then((result) => {
+      .then((message) => {
         res.send({
-          message: "Messages was successfully found",
+          message: "All message were fetched successfully",
           timestamp: new Date().toString(),
-          data: result,
+          data: message,
         });
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || "Some error while retrieving message.",
+          message:
+            err.message || "Some error occurred while retrieving message.",
         });
       });
   } else {
-    Message.find({ status: status })
-      .then((result) => {
-        if (!result) {
-          res.status(404).send({
-            message: "Messages not found",
-          });
-        }
-
+    Message.find()
+      .sort({ createdAt: -1 })
+      .then((message) => {
         res.send({
-          message: "Messages was successfully found",
+          message: "All message were fetched successfully",
           timestamp: new Date().toString(),
-          data: result,
+          data: message,
         });
       })
       .catch((err) => {
         res.status(500).send({
-          message: err.message || "Some error while retrieving message.",
+          message:
+            err.message || "Some error occurred while retrieving message.",
         });
       });
   }

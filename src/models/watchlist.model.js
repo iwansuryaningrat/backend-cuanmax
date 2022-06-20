@@ -8,6 +8,7 @@ module.exports = (mongoose) => {
       code: {
         type: String,
         require: true,
+        unique: true,
       },
       category: {
         type: String,
