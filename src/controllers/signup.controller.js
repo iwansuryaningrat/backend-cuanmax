@@ -77,7 +77,6 @@ exports.signup = async (req, res) => {
 
       res.send({
         message: "User created successfully. Please Login to continue.",
-        token: token,
       });
     })
     .catch((err) => {
