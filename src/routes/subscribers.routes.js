@@ -5,7 +5,7 @@ module.exports = (app) => {
 
   router.get("/", auth, subscribers.findAll);
   router.get("/:id", admin, subscribers.findOne);
-  router.post("/", admin, subscribers.create);
+  router.post("/", subscribers.create);
   router.put("/:id", admin, subscribers.update);
   router.delete("/:id", admin, subscribers.delete);
 
