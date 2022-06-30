@@ -58,23 +58,6 @@ exports.signup = async (req, res) => {
   newUser
     .save()
     .then((data) => {
-      // Create token
-      const token = jwt.sign(
-        {
-          user: {
-            id: newUser._id,
-            email: newUser.email,
-            name: newUser.name,
-            admin: newUser.type.isAdmin,
-            role: newUser.type.accountType.member,
-          },
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "3h",
-        }
-      );
-
       res.send({
         message: "User created successfully. Please Login to continue.",
       });
