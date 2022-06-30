@@ -10,8 +10,14 @@ const path = require("path");
 require("dotenv").config();
 
 // Load File Configuration
-const imageConfig = require("./src/configs/imageUploader.config");
-const videoConfig = require("./src/configs/videoUploader.config");
+const {
+  imageStorage,
+  imageFilter,
+} = require("./src/configs/imageUploader.config");
+const {
+  videoStorage,
+  videoFilter,
+} = require("./src/configs/videoUploader.config");
 
 const app = express();
 
@@ -28,15 +34,15 @@ app.use(
 
 app.use(
   multer({
-    storage: imageConfig.imageStorage,
-    fileFilter: imageConfig.imageFilter,
+    storage: imageStorage,
+    fileFilter: imageFilter,
   }).single("image")
 );
 
 app.use(
   multer({
-    storage: videoConfig.videoStorage,
-    fileFilter: videoConfig.videoFilter,
+    storage: videoStorage,
+    fileFilter: videoFilter,
   }).single("video")
 );
 
