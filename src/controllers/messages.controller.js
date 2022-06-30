@@ -1,12 +1,12 @@
 const db = require("../models/index");
-const Message = db.message;
+const Messages = db.messages;
 
 // Done
 exports.findAll = (req, res) => {
   const { status } = req.query;
 
   if (status) {
-    Message.find({ status: status })
+    Messages.find({ status: status })
       .sort({ createdAt: -1 })
       .then((message) => {
         res.send({
@@ -22,7 +22,7 @@ exports.findAll = (req, res) => {
         });
       });
   } else {
-    Message.find()
+    Messages.find()
       .sort({ createdAt: -1 })
       .then((message) => {
         res.send({
@@ -88,7 +88,7 @@ exports.findOne = (req, res) => {
     });
   }
 
-  Message.findById(id)
+  Messages.findById(id)
     .then((result) => {
       if (!result) {
         res.status(404).send({
@@ -119,7 +119,7 @@ exports.read = (req, res) => {
     });
   }
 
-  Message.findByIdAndUpdate(id, { status: "Readed" })
+  Messages.findByIdAndUpdate(id, { status: "Readed" })
     .then((result) => {
       if (!result) {
         res.status(404).send({
@@ -152,7 +152,7 @@ exports.reply = (req, res) => {
     });
   }
 
-  Message.findByIdAndUpdate(id, { status: "Replied" })
+  Messages.findByIdAndUpdate(id, { status: "Replied" })
     .then((result) => {
       if (!result) {
         res.status(404).send({
@@ -175,7 +175,7 @@ exports.reply = (req, res) => {
     });
 };
 
-exports.delete = (req, res) => {
+exports.deleteMsg = (req, res) => {
   const id = req.params.id;
 
   if (!id) {
@@ -184,7 +184,7 @@ exports.delete = (req, res) => {
     });
   }
 
-  Message.findByIdAndRemove(id)
+  Messages.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
         res.status(404).send({
