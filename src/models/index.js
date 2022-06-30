@@ -7,7 +7,7 @@ const db = {};
 
 db.mongoose = mongoose;
 db.url = dbConfig.url;
-db.message = require("./message.model")(mongoose);
+db.messages = require("./messages.model")(mongoose);
 db.news = require("./news.model")(mongoose);
 // db.playlists = require("./playlists.model")(mongoose);
 // db.pricing = require("./pricing.model")(mongoose);

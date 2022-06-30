@@ -32,6 +32,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Message = mongoose.model("message", schema);
-  return Message;
+  const Messages = mongoose.model("messages", schema);
+  return Messages;
 };
