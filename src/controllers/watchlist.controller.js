@@ -136,7 +136,7 @@ exports.findOne = (req, res) => {
 };
 
 // Done
-exports.delete = (req, res) => {
+exports.deleteWl = (req, res) => {
   const id = req.params.id;
 
   if (!id) {
