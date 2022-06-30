@@ -50,7 +50,7 @@ exports.findOne = (req, res) => {
 };
 
 // Done
-exports.delete = (req, res) => {
+exports.deleteTeam = (req, res) => {
   const id = req.params.id;
 
   if (!id) {
