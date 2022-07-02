@@ -7,6 +7,7 @@ const db = {};
 
 db.mongoose = mongoose;
 db.url = dbConfig.url;
+db.liveclass = require("./liveclass.model");
 db.messages = require("./messages.model")(mongoose);
 db.news = require("./news.model")(mongoose);
 // db.playlists = require("./playlists.model")(mongoose);
