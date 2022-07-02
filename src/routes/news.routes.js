@@ -1,9 +1,10 @@
 module.exports = (app) => {
-  const { findAll } = require("../controllers/news.controller");
-  const { auth, admin, proMember } = require("../middlewares/auth");
+  const { findAll, deleteNews } = require("../controllers/news.controller");
+  const { login, admin, proMember } = require("../middlewares/auth");
   const router = require("express").Router();
 
-  router.get("/", auth, findAll);
+  router.get("/", findAll);
+  router.delete("/:id", login, admin, deleteNews);
 
   app.use("/api/v1/news", router);
 };
