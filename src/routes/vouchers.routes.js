@@ -6,14 +6,14 @@ module.exports = (app) => {
     update,
     findOne,
   } = require("../controllers/vouchers.controller");
-  const { auth, admin } = require("../middlewares/auth");
+  const { login, admin } = require("../middlewares/auth");
   const router = require("express").Router();
 
-  router.get("/", auth, findAll);
-  router.post("/", admin, create);
-  router.get("/:id", auth, findOne);
-  router.delete("/:id", admin, deleteVoucher);
-  router.put("/:id", admin, update);
+  router.get("/", login, findAll);
+  router.post("/", login, admin, create);
+  router.get("/:id", login, findOne);
+  router.delete("/:id", login, admin, deleteVoucher);
+  router.put("/:id", login, admin, update);
 
   app.use("/api/v1/vouchers", router);
 };
