@@ -7,15 +7,15 @@ module.exports = (app) => {
     changeProfilePicture,
     deleteUSer,
   } = require("../controllers/users.controller");
-  const { auth, admin } = require("../middlewares/auth");
+  const { login, admin } = require("../middlewares/auth");
   const router = require("express").Router();
 
   router.get("/", admin, findAll);
-  router.get("/:id", auth, findOne);
-  router.put("/:id", auth, update);
-  router.put("/:id/changepassword", auth, changePassword);
-  router.put("/:id/changepicture", auth, changeProfilePicture);
-  router.delete("/:id", admin, deleteUSer);
+  router.get("/:id", login, findOne);
+  router.put("/:id", login, update);
+  router.put("/:id/changepassword", login, changePassword);
+  router.put("/:id/changepicture", login, changeProfilePicture);
+  router.delete("/:id", login, admin, deleteUSer);
 
   app.use("/api/v1/users", router);
 };
