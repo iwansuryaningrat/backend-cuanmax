@@ -29,3 +29,21 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+// Delete Function
+exports.deleteNews = (req, res) => {
+  const { id } = req.params;
+
+  News.findByIdAndDelete(id)
+    .then((news) => {
+      res.send({
+        message: "News was deleted successfully",
+        timestamp: new Date().toString(),
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: err.message || "Some error occurred while deleting news.",
+      });
+    });
+};
