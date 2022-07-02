@@ -32,8 +32,10 @@ module.exports = (mongoose) => {
       },
       body: [
         {
-          type: String,
-          require: true,
+          paragraph: {
+            type: String,
+            require: true,
+          },
         },
       ],
     },
