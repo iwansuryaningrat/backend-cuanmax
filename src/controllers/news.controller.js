@@ -126,3 +126,52 @@ exports.findById = (req, res) => {
       });
     });
 };
+
+// Update News
+exports.update = (req, res) => {
+  const { id } = req.params;
+  const { title, author, category, tags, date, cover, body } = req.body;
+
+  if (!id) {
+    return res.status(400).json({
+      message: "News Id is required",
+    });
+  }
+
+  News.findById(id)
+    .then((news) => {
+      if (!news) {
+        res.status(404).send({
+          message: `News with id ${id} not found.`,
+        });
+      }
+
+      news.title = title;
+      news.author = author;
+      news.category = category;
+      news.tags = tags;
+      news.date = date;
+      news.cover = cover;
+      news.body = body;
+
+      news
+        .save()
+        .then((news) => {
+          res.send({
+            message: "News was updated successfully",
+            timestamp: new Date().toString(),
+            data: news,
+          });
+        })
+        .catch((err) => {
+          res.status(500).json({
+            message: err.message || "Some error occurred while updating news.",
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: err.message || "Some error occurred while updating news.",
+      });
+    });
+};
