@@ -3,11 +3,11 @@ const News = db.news;
 
 // Find All News (Done)
 exports.findAll = (req, res) => {
-  const { tag, category } = req.query;
+  const { tags, category } = req.query;
   const query = {};
 
-  if (tag) {
-    query.tags = tag;
+  if (tags) {
+    query.tags = { $in: tags.split(",") };
   }
 
   if (category) {
