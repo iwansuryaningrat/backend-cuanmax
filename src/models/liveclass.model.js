@@ -9,6 +9,16 @@ module.exports = (mongoose) => {
         type: String,
         require: true,
       },
+      category: {
+        type: String,
+        require: true,
+      },
+      tags: [
+        {
+          type: String,
+          require: true,
+        },
+      ],
       date: {
         type: Date,
         require: true,
