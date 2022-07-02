@@ -35,6 +35,12 @@ module.exports = (mongoose) => {
           default: "",
         },
       },
+      benefits: [
+        {
+          type: String,
+          require: true,
+        },
+      ],
       participants: [
         {
           email: {
