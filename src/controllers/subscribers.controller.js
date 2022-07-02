@@ -19,7 +19,7 @@ exports.findAll = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  const email = req.body.email;
+  const { email } = req.body;
 
   if (!email) {
     return res.status(400).send({
@@ -64,7 +64,7 @@ exports.create = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -95,7 +95,7 @@ exports.findOne = (req, res) => {
 };
 
 exports.deleteSubs = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -124,7 +124,7 @@ exports.deleteSubs = (req, res) => {
 };
 
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({

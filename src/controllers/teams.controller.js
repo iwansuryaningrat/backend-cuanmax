@@ -20,7 +20,7 @@ exports.findAll = (req, res) => {
 
 // Done
 exports.findOne = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -51,7 +51,7 @@ exports.findOne = (req, res) => {
 
 // Done
 exports.deleteTeam = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -120,7 +120,7 @@ exports.create = (req, res) => {
 
 // Done
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     res.status(400).send({
@@ -151,7 +151,7 @@ exports.update = (req, res) => {
 
 // Done
 exports.teamProfile = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     res.status(400).send({

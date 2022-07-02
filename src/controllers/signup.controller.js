@@ -6,9 +6,7 @@ const bcrypt = require("bcrypt");
 
 // Belum Selesai
 exports.signup = async (req, res) => {
-  const name = req.body.name;
-  const username = req.body.username;
-  const email = req.body.email;
+  const { name, email, username } = req.body;
   let password = req.body.password;
   const admin = req.body.admin ? req.body.admin : false;
 

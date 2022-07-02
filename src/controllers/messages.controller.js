@@ -4,49 +4,31 @@ const Messages = db.messages;
 // Done
 exports.findAll = (req, res) => {
   const { status } = req.query;
+  const query = {};
 
   if (status) {
-    Messages.find({ status: status })
-      .sort({ createdAt: -1 })
-      .then((message) => {
-        res.send({
-          message: "All message were fetched successfully",
-          timestamp: new Date().toString(),
-          data: message,
-        });
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving message.",
-        });
-      });
-  } else {
-    Messages.find()
-      .sort({ createdAt: -1 })
-      .then((message) => {
-        res.send({
-          message: "All message were fetched successfully",
-          timestamp: new Date().toString(),
-          data: message,
-        });
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving message.",
-        });
-      });
+    query.status = status;
   }
+
+  Messages.find(query)
+    .sort({ createdAt: -1 })
+    .then((message) => {
+      res.send({
+        message: "All message were fetched successfully",
+        timestamp: new Date().toString(),
+        data: message,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving message.",
+      });
+    });
 };
 
 // Done
 exports.create = (req, res) => {
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const subject = req.body.subject;
-  const body = req.body.message;
+  const { firstName, lastName, email, subject, body } = req.body;
 
   if (!firstName || !subject || !email || !body) {
     return res.status(400).send({
@@ -80,7 +62,7 @@ exports.create = (req, res) => {
 
 // Done
 exports.findOne = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -111,7 +93,7 @@ exports.findOne = (req, res) => {
 
 // Done
 exports.read = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -144,7 +126,7 @@ exports.read = (req, res) => {
 
 // Done
 exports.reply = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -176,7 +158,7 @@ exports.reply = (req, res) => {
 };
 
 exports.deleteMsg = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({

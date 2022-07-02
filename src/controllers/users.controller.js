@@ -22,7 +22,7 @@ exports.findAll = (req, res) => {
 
 // Done
 exports.findOne = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -71,7 +71,7 @@ exports.findOne = (req, res) => {
 
 // Done
 exports.deleteUSer = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -100,7 +100,7 @@ exports.deleteUSer = (req, res) => {
 
 // Done
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -148,8 +148,8 @@ exports.update = (req, res) => {
 
 // Done
 exports.changePassword = (req, res) => {
-  const id = req.params.id;
-  const oldPassword = req.body.oldPassword;
+  const { id } = req.params;
+  const { oldPassword } = req.body;
   let newPassword = req.body.newPassword;
 
   if (!id || !oldPassword || !newPassword) {
@@ -226,7 +226,7 @@ exports.changePassword = (req, res) => {
 
 // Done
 exports.changeProfilePicture = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
