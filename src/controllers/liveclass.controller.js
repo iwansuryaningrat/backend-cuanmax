@@ -22,3 +22,33 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+// Find liveclass by id (Done)
+exports.findOne = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Live class Id is required",
+    });
+  }
+
+  Liveclass.findById(id)
+    .then((liveclass) => {
+      if (!liveclass) {
+        return res.status(404).send({
+          message: "Liveclass not found with id " + id,
+        });
+      }
+      res.send({
+        message: "Liveclass was fetched successfully",
+        timestamp: new Date().toString(),
+        data: liveclass,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Error while retrieving liveclass",
+      });
+    });
+};
