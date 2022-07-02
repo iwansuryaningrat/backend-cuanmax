@@ -1,7 +1,7 @@
 const db = require("../models/index");
 const News = db.news;
 
-// Done
+// Find All News (Done)
 exports.findAll = (req, res) => {
   const { tag, category } = req.query;
   const query = {};
@@ -30,7 +30,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Delete Function
+// Delete Function (Done)
 exports.deleteNews = (req, res) => {
   const { id } = req.params;
 
@@ -56,6 +56,42 @@ exports.deleteNews = (req, res) => {
     .catch((err) => {
       res.status(500).json({
         message: err.message || "Some error occurred while deleting news.",
+      });
+    });
+};
+
+// Create News (Need Testing)
+exports.createNews = (req, res) => {
+  const { title, author, category, tags, date, cover, body } = req.body;
+
+  if (!title || !author || !category || !tags || !date || !cover || !body) {
+    return res.status(400).json({
+      message: "All fields are required",
+    });
+  }
+
+  const news = new News({
+    title,
+    author,
+    category,
+    tags,
+    date,
+    cover,
+    body,
+  });
+
+  news
+    .save()
+    .then((news) => {
+      res.send({
+        message: "News was created successfully",
+        timestamp: new Date().toString(),
+        data: news,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: err.message || "Some error occurred while creating news.",
       });
     });
 };
