@@ -7,15 +7,15 @@ module.exports = (app) => {
     nonActivate,
     update,
   } = require("../controllers/watchlist.controller");
-  const { admin, proMember } = require("../middlewares/auth");
+  const { login, admin, proMember } = require("../middlewares/auth");
   const router = require("express").Router();
 
-  router.get("/", proMember, findAll);
-  router.post("/", admin, create);
-  router.get("/:id", proMember, findOne);
-  router.delete("/:id", admin, deleteWl);
-  router.put("/:id/nonactivate", admin, nonActivate);
-  router.put("/:id", admin, update);
+  router.get("/", login, proMember, findAll);
+  router.post("/", login, admin, create);
+  router.get("/:id", login, proMember, findOne);
+  router.delete("/:id", login, admin, deleteWl);
+  router.put("/:id/nonactivate", login, admin, nonActivate);
+  router.put("/:id", login, admin, update);
 
   app.use("/api/v1/watchlists", router);
 };
