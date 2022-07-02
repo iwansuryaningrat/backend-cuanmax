@@ -34,8 +34,20 @@ exports.findAll = (req, res) => {
 exports.deleteNews = (req, res) => {
   const { id } = req.params;
 
+  if (!id) {
+    return res.status(400).json({
+      message: "News Id is required",
+    });
+  }
+
   News.findByIdAndDelete(id)
     .then((news) => {
+      if (!news) {
+        res.status(404).send({
+          message: `News with id ${id} not found.`,
+        });
+      }
+
       res.send({
         message: "News was deleted successfully",
         timestamp: new Date().toString(),
