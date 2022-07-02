@@ -95,3 +95,34 @@ exports.createNews = (req, res) => {
       });
     });
 };
+
+// Find News by Id (Done)
+exports.findById = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({
+      message: "News Id is required",
+    });
+  }
+
+  News.findById(id)
+    .then((news) => {
+      if (!news) {
+        res.status(404).send({
+          message: `News with id ${id} not found.`,
+        });
+      }
+
+      res.send({
+        message: "News was fetched successfully",
+        timestamp: new Date().toString(),
+        data: news,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: err.message || "Some error occurred while retrieving news.",
+      });
+    });
+};
