@@ -25,10 +25,15 @@ module.exports = (mongoose) => {
         imageLink: {
           type: String,
           require: true,
-          default: 'https://via.placeholder.com/150',
+          default: "https://via.placeholder.com/150",
         },
       },
       videoCount: Number,
+      status: {
+        type: String,
+        require: true,
+        default: "active",
+      },
     },
     { timestamps: true }
   );
