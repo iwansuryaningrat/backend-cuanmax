@@ -12,14 +12,14 @@ module.exports = (mongoose) => {
       },
       thumbnail: {
         type: String,
-        default: "",
+        require: true,
       },
       playlist: {
-        playlistId: {
-          type: schema.Types.ObjectId,
-          ref: "Playlists",
-          require: true,
-        },
+        // playlistId: {
+        //   type: schema.Types.ObjectId,
+        //   ref: "Playlists",
+        //   require: true,
+        // },
         playlistTitle: {
           type: String,
           require: true,
