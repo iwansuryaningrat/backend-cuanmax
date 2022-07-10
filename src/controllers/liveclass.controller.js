@@ -89,3 +89,33 @@ exports.deleteClass = (req, res) => {
       });
     });
 };
+
+exports.update = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    res.status(400).send({
+      message: "Live Class ID is required.",
+    });
+  }
+
+  Liveclass.findByIdAndupdate(id, req.body)
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "Live Class not found",
+        });
+      }
+
+      res.send({
+        message: "Live Class was updated",
+        timestamp: new Date().toString(),
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error while updating team.",
+        timestamp: new Date().toString(),
+      });
+    });
+};
