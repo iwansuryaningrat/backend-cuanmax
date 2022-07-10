@@ -11,7 +11,7 @@ module.exports = (app) => {
 
   router.get("/", login, proMember, findAll);
   router.get("/:id", login, proMember, findOne);
-  router.get("/playlistId", login, proMember, findByPlaylist);
+  router.get("/:playlistId", login, proMember, findByPlaylist);
   router.put("/:id", login, admin, update);
   router.delete("/:id", login, admin, deleteVideo);
 
