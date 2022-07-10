@@ -114,7 +114,7 @@ exports.update = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error while updating team.",
+        message: err.message || "Some error while updating live class.",
         timestamp: new Date().toString(),
       });
     });
