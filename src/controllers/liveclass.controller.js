@@ -4,7 +4,7 @@ const Liveclass = db.liveclass;
 // Find all liveclasses (Done)
 exports.findAll = (req, res) => {
   const { status, category, tags } = req.query;
-  const query = status ? { status } : {};
+  const query = status ? { status: status } : {};
 
   if (category) {
     query.category = category;
@@ -90,6 +90,7 @@ exports.deleteClass = (req, res) => {
     });
 };
 
+// Done
 exports.update = (req, res) => {
   const { id } = req.params;
 
@@ -115,6 +116,48 @@ exports.update = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: err.message || "Some error while updating live class.",
+        timestamp: new Date().toString(),
+      });
+    });
+};
+
+// Create liveclass (Done)
+exports.create = (req, res) => {
+  const photoName = req.file.filename;
+  const photoLink = `${req.protocol}://${req.get(
+    "host"
+  )}/assets/foto/${photoName}`;
+
+  const liveclass = new Liveclass({
+    title: req.body.title,
+    category: req.body.category,
+    description: req.body.description,
+    tags: req.body.tags,
+    date: req.body.date,
+    time: req.body.time,
+    location: req.body.location,
+    status: req.body.status,
+    cover: {
+      imageName: photoName,
+      imagePath: photoLink,
+    },
+    benefits: req.body.benefits,
+    participants: [],
+  });
+
+  liveclass
+    .save()
+    .then((result) => {
+      res.send({
+        message: "Live Class was created",
+        timestamp: new Date().toString(),
+        data: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating Live Class.",
         timestamp: new Date().toString(),
       });
     });
