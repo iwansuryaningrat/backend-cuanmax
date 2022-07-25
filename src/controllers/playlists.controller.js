@@ -1,11 +1,34 @@
 const db = require("../models/index");
 const Playlists = db.playlists;
 
+// Done
 exports.findAll = (req, res) => {
-  Playlists.find()
+  const { category, videoLevel } = req.params;
+
+  const query = {};
+
+  if (category) {
+    query.category = category;
+  }
+
+  if (videoLevel) {
+    query.videoLevel = videoLevel;
+  }
+
+  Playlists.find(query)
     .sort({ createdAt: -1 })
     .then((result) => {
-      res.send(result);
+      if (!result) {
+        res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      res.send({
+        message: "All playlist were fetched successfully",
+        timestamp: new Date().toString(),
+        data: result,
+      });
     })
     .catch((err) => {
       res.status(500).send({
@@ -14,35 +37,63 @@ exports.findAll = (req, res) => {
     });
 };
 
-// exports.create = (req, res) => {
-//   const playlists = new Playlists({
-//     name: req.body.name,
-//     category: req.body.category,
-//     description: req.body.description,
-//     image: req.file.path,
-//     videoCount: 0,
-//   });
+// Done
+exports.create = (req, res) => {
+  const photoName = req.file.filename;
+  const photoLink = `${req.protocol}://${req.get(
+    "host"
+  )}/assets/foto/${photoName}`;
 
-//   playlists
-//     .save(playlists)
-//     .then((result) => {
-//       res.status(200).send({
-//         message: "Playlist successfully added.",
-//       });
-//     })
-//     .catch((err) => {
-//       res.status(409).send({
-//         message: err.message || "Some error while creating playlists.",
-//       });
-//     });
-// };
+  const playlists = new Playlists({
+    name: req.body.name,
+    category: req.body.category,
+    description: req.body.description,
+    image: {
+      imageName: photoName,
+      imageLink: photoLink,
+    },
+    videoCount: 0,
+    status: "active",
+  });
 
+  playlists
+    .save(playlists)
+    .then((result) => {
+      res.status(200).send({
+        message: "Playlist successfully added.",
+        timestamp: new Date().toString(),
+      });
+    })
+    .catch((err) => {
+      res.status(409).send({
+        message: err.message || "Some error while creating playlists.",
+      });
+    });
+};
+
+// Done
 exports.findOne = (req, res) => {
   const { id } = req.params;
 
+  if (!id) {
+    return res.status(400).send({
+      message: "Playlist ID is required",
+    });
+  }
+
   Playlists.findById(id)
     .then((result) => {
-      res.send(result);
+      if (!result) {
+        res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      res.send({
+        message: "Playlist was fetched successfully",
+        timestamp: new Date().toString(),
+        data: result,
+      });
     })
     .catch((err) => {
       res.status(500).send({
@@ -51,8 +102,15 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Done
 exports.update = (req, res) => {
   const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Playlist ID is required",
+    });
+  }
 
   Playlists.findByIdAndUpdate(id, req.body)
     .then((result) => {
@@ -64,6 +122,7 @@ exports.update = (req, res) => {
 
       res.send({
         message: "Playlist was updated",
+        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -73,8 +132,15 @@ exports.update = (req, res) => {
     });
 };
 
+// Done
 exports.deletePlaylist = (req, res) => {
   const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Playlist ID is required",
+    });
+  }
 
   Playlists.findByIdAndRemove(id)
     .then((result) => {
@@ -86,6 +152,7 @@ exports.deletePlaylist = (req, res) => {
 
       res.send({
         message: "Playlist was deleted",
+        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
