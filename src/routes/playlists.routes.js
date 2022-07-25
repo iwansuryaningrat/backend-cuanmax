@@ -2,6 +2,7 @@ module.exports = (app) => {
   const {
     findAll,
     findOne,
+    create,
     update,
     deletePlaylist,
   } = require("../controllers/playlists.controller");
@@ -9,7 +10,7 @@ module.exports = (app) => {
   const router = require("express").Router();
 
   router.get("/", login, findAll);
-  // router.post("/", playlists.create);
+  router.post("/", login, admin, create);
   router.get("/:id", login, proMember, findOne);
   router.put("/:id", login, admin, update);
   router.delete("/:id", login, admin, deletePlaylist);
