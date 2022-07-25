@@ -2,6 +2,7 @@ module.exports = (app) => {
   const {
     findAll,
     findOne,
+    create,
     deleteClass,
     update,
   } = require("../controllers/liveclass.controller");
@@ -10,6 +11,7 @@ module.exports = (app) => {
 
   router.get("/", findAll);
   router.get("/:id", findOne);
+  router.post("/", login, admin, create);
   router.delete("/:id", login, admin, deleteClass);
   router.put("/:id", login, admin, update);
 
