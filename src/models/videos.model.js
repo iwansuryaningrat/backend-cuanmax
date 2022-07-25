@@ -1,5 +1,6 @@
 module.exports = (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const schema = new Schema(
     {
       title: {
         type: String,
@@ -15,11 +16,11 @@ module.exports = (mongoose) => {
         require: true,
       },
       playlist: {
-        // playlistId: {
-        //   type: schema.Types.ObjectId,
-        //   ref: "Playlists",
-        //   require: true,
-        // },
+        playlistId: {
+          type: Schema.Types.ObjectId,
+          ref: "Playlists",
+          require: true,
+        },
         playlistTitle: {
           type: String,
           require: true,
