@@ -38,6 +38,9 @@ exports.login = (req, res) => {
                 expiresIn: "3h",
               }
             );
+
+            res.setHeader("Content-Type", "Application/json");
+
             res.status(200).send({
               message: "Login Success",
               timestamp: new Date().toString(),
