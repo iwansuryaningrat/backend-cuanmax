@@ -250,7 +250,7 @@ exports.changeProfilePicture = (req, res) => {
   const imageName = req.file.filename;
   const imageLink = `${req.protocol}://${req.get(
     "host"
-  )}/assets/foto/${imageName}`;
+  )}/assets/images/${imageName}`;
 
   Users.findByIdAndUpdate(id, {
     image: {
