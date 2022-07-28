@@ -1,9 +1,9 @@
 const multer = require("multer");
 
 // Video Uploader Setup
-exports.videoStorage = multer.diskStorage({
+exports.coursesStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./assets/videos");
+    cb(null, "./assets/courses");
   },
   filename: (req, file, cb) => {
     cb(
@@ -13,13 +13,16 @@ exports.videoStorage = multer.diskStorage({
   },
 });
 
-exports.videoFilter = (req, file, cb) => {
+exports.coursesFilter = (req, file, cb) => {
   if (
     file.mimetype === "video/mpeg" ||
     file.mimetype === "video/x-msvideo" ||
     file.mimetype === "video/3gpp" ||
     file.mimetype === "video/mp4" ||
-    file.mimetype === "video/webm"
+    file.mimetype === "video/webm" ||
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
   ) {
     cb(null, true);
   } else {
