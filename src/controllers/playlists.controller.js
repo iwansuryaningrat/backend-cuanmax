@@ -42,7 +42,7 @@ exports.create = (req, res) => {
   const photoName = req.file.filename;
   const photoLink = `${req.protocol}://${req.get(
     "host"
-  )}/assets/foto/${photoName}`;
+  )}/assets/images/${photoName}`;
 
   const playlists = new Playlists({
     name: req.body.name,
