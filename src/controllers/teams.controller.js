@@ -168,7 +168,7 @@ exports.teamProfile = (req, res) => {
   const photoName = req.file.filename;
   const photoLink = `${req.protocol}://${req.get(
     "host"
-  )}/assets/foto/${photoName}`;
+  )}/assets/images/${photoName}`;
 
   Teams.findByIdAndUpdate(id, { photo: { photoName, photoLink } })
     .then((result) => {
