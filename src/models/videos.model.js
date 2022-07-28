@@ -1,5 +1,6 @@
 module.exports = (mongoose) => {
   const Schema = mongoose.Schema;
+
   const schema = new Schema(
     {
       title: {
@@ -12,8 +13,14 @@ module.exports = (mongoose) => {
         require: true,
       },
       thumbnail: {
-        type: String,
-        require: true,
+        thumbnailName: {
+          type: String,
+          require: true,
+        },
+        thumbnailLink: {
+          type: String,
+          require: true,
+        },
       },
       playlist: {
         playlistId: {
