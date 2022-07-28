@@ -3,7 +3,7 @@ const multer = require("multer");
 // Image Uploader Setup
 exports.imageStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./assets/foto");
+    cb(null, "./assets/images");
   },
   filename: (req, file, cb) => {
     cb(
