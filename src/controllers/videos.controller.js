@@ -17,6 +17,7 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Done
 exports.findOne = (req, res) => {
   const { id } = req.params;
 
@@ -47,6 +48,7 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Done
 exports.update = (req, res) => {
   const { id } = req.params;
 
@@ -76,6 +78,7 @@ exports.update = (req, res) => {
     });
 };
 
+// Done
 exports.deleteVideo = (req, res) => {
   const { id } = req.params;
 
@@ -105,6 +108,7 @@ exports.deleteVideo = (req, res) => {
     });
 };
 
+// Done
 exports.findByPlaylist = (req, res) => {
   const { playlistId } = req.params;
 
@@ -134,4 +138,67 @@ exports.findByPlaylist = (req, res) => {
         message: err.message || "Some error while showing videos.",
       });
     });
+};
+
+// exports.create = (req, res) => {
+//   const {
+//     title,
+//     description,
+//     url,
+//     playlist,
+//     tags,
+//     views,
+//     likes,
+//     dislikes,
+//     duration,
+//     category,
+//     date,
+//     status,
+//   } = req.body;
+
+//   const video = new Videos({
+//     title,
+//     description,
+//     url,
+//     thumbnail,
+//     playlist,
+//     tags,
+//     views,
+//     likes,
+//     dislikes,
+//     duration,
+//     category,
+//     date,
+//     status,
+//   });
+
+//   video
+//     .save()
+//     .then((result) => {
+//       res.send({
+//         message: "Video was created",
+//         timestamp: new Date().toString(),
+//         data: result,
+//       });
+//     })
+//     .catch((err) => {
+//       res.status(500).send({
+//         message: err.message || "Some error while creating video.",
+//       });
+//     });
+// };
+
+exports.create = (req, res) => {
+  // const thumbnailName = req.file.filename;
+  // const thumbnail = `${req.protocol}://${req.get(
+  //   "host"
+  // )}/images/${thumbnailName}`;
+  // const videoName = req.file.filename;
+  // const video = `${req.protocol}://${req.get("host")}/videos/${videoName}`;
+  // res.send({
+  //   thumbnailName,
+  //   thumbnail,
+  //   videoName,
+  //   video,
+  // });
 };
