@@ -47,7 +47,7 @@ app.use(
     fileFilter: coursesFilter,
   }).fields([
     { name: "video", maxCount: 1 },
-    { name: "thumnail", maxCount: 1 },
+    { name: "thumbnail", maxCount: 1 },
   ])
 );
 
