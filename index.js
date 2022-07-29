@@ -32,6 +32,7 @@ app.use(
   })
 );
 
+// Configuration for All Image Files
 app.use(
   multer({
     storage: imageStorage,
@@ -39,6 +40,7 @@ app.use(
   }).single("image")
 );
 
+// Configuration for All Video Courses Files
 app.use(
   multer({
     storage: coursesStorage,
