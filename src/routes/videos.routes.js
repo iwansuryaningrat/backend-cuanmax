@@ -7,6 +7,7 @@ module.exports = (app) => {
     update,
     deleteVideo,
     uploadThumbnail,
+    uploadVideo,
   } = require("../controllers/videos.controller");
   const { login, admin, proMember } = require("../middlewares/auth");
   const router = require("express").Router();
@@ -18,6 +19,7 @@ module.exports = (app) => {
   router.delete("/:id", login, admin, deleteVideo);
   router.post("/", login, admin, create);
   router.post("/:id/thumbnail", login, admin, uploadThumbnail);
+  router.post("/:id/video", login, admin, uploadVideo);
 
   app.use("/api/v1/videos", router);
 };
