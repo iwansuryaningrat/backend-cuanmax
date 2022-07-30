@@ -9,7 +9,7 @@ module.exports = (app) => {
   const { login, admin } = require("../middlewares/auth");
   const router = require("express").Router();
 
-  router.get("/", login, findAll);
+  router.get("/", login, admin, findAll);
   router.post("/", login, admin, create);
   router.get("/:id", login, findOne);
   router.delete("/:id", login, admin, deleteVoucher);
