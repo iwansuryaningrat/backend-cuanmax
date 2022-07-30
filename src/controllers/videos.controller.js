@@ -204,6 +204,7 @@ exports.create = (req, res) => {
     });
 };
 
+// Done
 exports.uploadThumbnail = (req, res) => {
   const thumbnailName = req.file.filename;
   const thumbnailLink = `${req.protocol}://${req.get(
@@ -225,6 +226,47 @@ exports.uploadThumbnail = (req, res) => {
   }
 
   Videos.findByIdAndUpdate(id, { thumbnail: { thumbnailName, thumbnailLink } })
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "Video not found",
+        });
+      }
+
+      res.send({
+        message: "Video was updated",
+        timestamp: new Date().toString(),
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error while update video.",
+      });
+    });
+};
+
+// Done
+exports.uploadVideo = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
+
+  const videoName = req.file.filename;
+  const videoLink = `${req.protocol}://${req.get(
+    "host"
+  )}/assets/videos/${videoName}`;
+
+  if (!req.file) {
+    return res.status(400).send({
+      message: "Video file is required",
+    });
+  }
+
+  Videos.findByIdAndUpdate(id, { url: videoLink })
     .then((result) => {
       if (!result) {
         res.status(404).send({
