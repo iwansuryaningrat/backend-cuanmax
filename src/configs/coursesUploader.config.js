@@ -8,7 +8,7 @@ exports.coursesStorage = multer.diskStorage({
   filename: (req, file, cb) => {
     cb(
       null,
-      file.originalname.replace(/\s/g, "-") + "-" + new Date().getTime()
+      new Date().getTime() + "-" + file.originalname.replace(/\s/g, "-")
     );
   },
 });
