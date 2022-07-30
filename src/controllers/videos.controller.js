@@ -141,6 +141,7 @@ exports.findByPlaylist = (req, res) => {
     });
 };
 
+// Done
 exports.create = (req, res) => {
   const {
     title,
@@ -199,6 +200,46 @@ exports.create = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message: err.message || "Some error while showing videos.",
+      });
+    });
+};
+
+exports.uploadThumbnail = (req, res) => {
+  const thumbnailName = req.file.filename;
+  const thumbnailLink = `${req.protocol}://${req.get(
+    "host"
+  )}/assets/images/${thumbnailName}`;
+
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
+
+  if (!req.file) {
+    return res.status(400).send({
+      message: "Thumbnail file is required",
+    });
+  }
+
+  Videos.findByIdAndUpdate(id, { thumbnail: { thumbnailName, thumbnailLink } })
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "Video not found",
+        });
+      }
+
+      res.send({
+        message: "Video was updated",
+        timestamp: new Date().toString(),
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error while update video.",
       });
     });
 };
