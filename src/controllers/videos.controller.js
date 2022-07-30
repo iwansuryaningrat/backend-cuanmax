@@ -168,11 +168,33 @@ exports.create = (req, res) => {
         });
       }
 
-      res.send({
-        message: "Playlist was successfully retrieved",
-        timestamp: new Date().toString(),
-        data: result,
+      const playlistTitle = result.name;
+
+      const video = new Videos({
+        title,
+        description,
+        playlist: { playlistId, playlistTitle },
+        tags,
+        category,
+        date,
+        duration,
+        status,
       });
+
+      video
+        .save()
+        .then((result) => {
+          res.send({
+            message: "Video was successfully created",
+            timestamp: new Date().toString(),
+            data: result,
+          });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message || "Some error while creating video.",
+          });
+        });
     })
     .catch((err) => {
       res.status(500).send({
