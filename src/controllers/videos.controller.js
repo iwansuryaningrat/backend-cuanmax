@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const Videos = db.videos;
+const Playlist = db.playlists;
 
 exports.findAll = (req, res) => {
   Videos.find()
@@ -129,6 +130,46 @@ exports.findByPlaylist = (req, res) => {
 
       res.send({
         message: "Videos was successfully retrieved",
+        timestamp: new Date().toString(),
+        data: result,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error while showing videos.",
+      });
+    });
+};
+
+exports.create = (req, res) => {
+  const {
+    title,
+    description,
+    playlistId,
+    tags,
+    category,
+    date,
+    duration,
+    status,
+  } = req.body;
+
+  if (!title || !description || !playlistId || !category || !status) {
+    return res.status(400).send({
+      message:
+        "Title, description, playlistId, category, and status is required",
+    });
+  }
+
+  Playlist.findById(playlistId)
+    .then((result) => {
+      if (!result) {
+        res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      res.send({
+        message: "Playlist was successfully retrieved",
         timestamp: new Date().toString(),
         data: result,
       });
