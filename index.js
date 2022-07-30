@@ -14,10 +14,7 @@ const {
   imageStorage,
   imageFilter,
 } = require("./src/configs/imageUploader.config");
-const {
-  coursesStorage,
-  coursesFilter,
-} = require("./src/configs/coursesUploader.config");
+const { videosStorage, videosFilter } = require("./src/configs/videosUploader");
 
 const app = express();
 
@@ -40,15 +37,12 @@ app.use(
   }).single("image")
 );
 
-// Configuration for All Video Courses Files
+// Configuration for All Video Files
 app.use(
   multer({
-    storage: coursesStorage,
-    fileFilter: coursesFilter,
-  }).fields([
-    { name: "video", maxCount: 1 },
-    { name: "thumbnail", maxCount: 1 },
-  ])
+    storage: videosStorage,
+    fileFilter: videosFilter,
+  }).single("video")
 );
 
 // MongoDB Connection
