@@ -66,7 +66,7 @@ require("./src/routes/liveclass.routes")(app); // Liveclass Router
 require("./src/routes/messages.routes")(app); // Message Router
 require("./src/routes/news.routes")(app); // News Router
 require("./src/routes/playlists.routes")(app); // Playlist Router
-// require("./src/routes/pricing.routes")(app); // Pricing Router
+require("./src/routes/pricing.routes")(app); // Pricing Router
 require("./src/routes/services.routes")(app); // Services Router
 require("./src/routes/subscribers.routes")(app); // Subscribers Router
 require("./src/routes/teams.routes")(app); // Teams Router
