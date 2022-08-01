@@ -1,27 +1,35 @@
 module.exports = (mongoose) => {
   const schema = mongoose.Schema(
     {
-      firstName: {
+      memberName: {
         type: String,
         require: true,
       },
-      lastName: String,
-      email: {
+      duration: {
         type: String,
         require: true,
       },
-      subject: {
+      price: Number,
+      discountPrice: {
+        type: Number,
+        require: true,
+      },
+      currency: {
         type: String,
         require: true,
       },
-      message: {
-        type: String,
-        require: true,
-      },
-      status: {
-        type: String,
-        require: true,
-      },
+      feature: [
+        {
+          name: {
+            type: String,
+            require: true,
+          },
+          status: {
+            type: Boolean,
+            require: true,
+          },
+        },
+      ],
     },
     { timestamps: true }
   );
@@ -32,6 +40,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Message = mongoose.model("message", schema);
-  return Message;
+  const Pricing = mongoose.model("pricing", schema);
+  return Pricing;
 };

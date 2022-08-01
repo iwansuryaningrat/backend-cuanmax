@@ -5,7 +5,7 @@ module.exports = (mongoose) => {
         type: String,
         require: true,
       },
-      author: {
+      description: {
         type: String,
         require: true,
       },
@@ -13,28 +13,48 @@ module.exports = (mongoose) => {
         type: String,
         require: true,
       },
-      tags: {
-        type: [String],
-      },
+      tags: [
+        {
+          type: String,
+          require: true,
+        },
+      ],
       date: {
         type: Date,
         require: true,
       },
+      time: {
+        type: String,
+        require: true,
+      },
+      location: {
+        type: String,
+        require: true,
+      },
+      status: {
+        type: String,
+        require: true,
+      },
       cover: {
-        photoName: {
+        imageName: {
           type: String,
         },
-        photoLink: {
+        imagePath: {
           type: String,
           require: true,
-          default: "https://via.placeholder.com/150",
+          default: "",
         },
       },
-      body: [
+      benefits: [
         {
-          paragraph: {
+          type: String,
+          require: true,
+        },
+      ],
+      participants: [
+        {
+          email: {
             type: String,
-            require: true,
           },
         },
       ],
@@ -48,6 +68,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const News = mongoose.model("news", schema);
-  return News;
+  const Liveclass = mongoose.model("liveclass", schema);
+  return Liveclass;
 };

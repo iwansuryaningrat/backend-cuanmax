@@ -4,16 +4,16 @@ module.exports = (app) => {
     findOne,
     create,
     update,
-    deleteSubs,
-  } = require("../controllers/subscribers.controller");
+    deletePlaylist,
+  } = require("../controllers/playlists.controller");
   const { login, admin, proMember } = require("../middlewares/auth");
   const router = require("express").Router();
 
   router.get("/", login, findAll);
-  router.get("/:id", login, admin, findOne);
-  router.post("/", login, create);
+  router.post("/", login, admin, create);
+  router.get("/:id", login, proMember, findOne);
   router.put("/:id", login, admin, update);
-  router.delete("/:id", login, admin, deleteSubs);
+  router.delete("/:id", login, admin, deletePlaylist);
 
-  app.use("/api/v1/subscribers", router);
+  app.use("/api/v1/playlists", router);
 };

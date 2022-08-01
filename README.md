@@ -44,7 +44,7 @@ This project is used by the following companies:
 
 ## Authors
 
-- [iwansuryaningrat](https://github.com/iwansuryaningrat)
+- [Iwan Suryaningrat](https://github.com/iwansuryaningrat)
 
 ## Support
 
