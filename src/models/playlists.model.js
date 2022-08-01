@@ -1,11 +1,7 @@
 module.exports = (mongoose) => {
   const schema = mongoose.Schema(
     {
-      title: {
-        type: String,
-        require: true,
-      },
-      author: {
+      name: {
         type: String,
         require: true,
       },
@@ -13,31 +9,31 @@ module.exports = (mongoose) => {
         type: String,
         require: true,
       },
-      tags: {
-        type: [String],
-      },
-      date: {
-        type: Date,
+      description: String,
+      instructor: {
+        type: String,
         require: true,
       },
-      cover: {
-        photoName: {
+      videoLevel: {
+        type: String,
+        require: true,
+      },
+      image: {
+        imageName: {
           type: String,
         },
-        photoLink: {
+        imageLink: {
           type: String,
           require: true,
           default: "https://via.placeholder.com/150",
         },
       },
-      body: [
-        {
-          paragraph: {
-            type: String,
-            require: true,
-          },
-        },
-      ],
+      videoCount: Number,
+      status: {
+        type: String,
+        require: true,
+        default: "active",
+      },
     },
     { timestamps: true }
   );
@@ -48,6 +44,6 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const News = mongoose.model("news", schema);
-  return News;
+  const Playlists = mongoose.model("playlists", schema);
+  return Playlists;
 };

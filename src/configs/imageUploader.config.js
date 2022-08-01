@@ -3,12 +3,12 @@ const multer = require("multer");
 // Image Uploader Setup
 exports.imageStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./assets/foto");
+    cb(null, "./assets/images");
   },
   filename: (req, file, cb) => {
     cb(
       null,
-      file.originalname.replace(/\s/g, "-") + "-" + new Date().getTime()
+      new Date().getTime() + "-" + file.originalname.replace(/\s/g, "-")
     );
   },
 });

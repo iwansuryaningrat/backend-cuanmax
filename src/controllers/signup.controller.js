@@ -6,9 +6,7 @@ const bcrypt = require("bcrypt");
 
 // Belum Selesai
 exports.signup = async (req, res) => {
-  const name = req.body.name;
-  const username = req.body.username;
-  const email = req.body.email;
+  const { name, email, username } = req.body;
   let password = req.body.password;
   const admin = req.body.admin ? req.body.admin : false;
 
@@ -58,27 +56,8 @@ exports.signup = async (req, res) => {
   newUser
     .save()
     .then((data) => {
-      // Create token
-      const token = jwt.sign(
-        {
-          user: {
-            id: newUser._id,
-            email: newUser.email,
-            name: newUser.name,
-            admin: newUser.type.isAdmin,
-            role: newUser.type.accountType.member,
-          },
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "3h",
-        }
-      );
-
       res.send({
-        message: "User created successfully",
-        token: token,
-        data: data,
+        message: "User created successfully. Please Login to continue.",
       });
     })
     .catch((err) => {

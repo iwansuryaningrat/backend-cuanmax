@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-exports.auth = (req, res, next) => {
+exports.login = (req, res, next) => {
   const token = req.header("x-auth-token");
   if (!token) {
     return res.status(401).send({
@@ -61,7 +61,7 @@ exports.proMember = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if (decoded.role === "Pro Member") {
+    if (decoded.role === "Pro Member" || decoded.admin) {
       req.user = decoded.user;
       next();
     } else {
