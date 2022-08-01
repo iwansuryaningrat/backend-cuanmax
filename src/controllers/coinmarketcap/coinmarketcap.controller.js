@@ -67,9 +67,7 @@ exports.latest = async (req, res) => {
 
 // Done
 exports.info = async (req, res) => {
-  const symbol = req.query.symbol;
-  const id = req.query.id;
-  const slug = req.query.slug;
+  const { symbol, id, slug } = req.query;
 
   if (!symbol && !id && !slug) {
     // error
@@ -110,9 +108,7 @@ exports.info = async (req, res) => {
 
 // Done
 exports.price = async (req, res) => {
-  const symbol = req.query.symbol;
-  const id = req.query.id;
-  const slug = req.query.slug;
+  const { symbol, id, slug } = req.query;
   let convert = req.query.convert;
 
   if (!symbol && !id && !slug) {
@@ -158,10 +154,7 @@ exports.price = async (req, res) => {
 
 // Done
 exports.convert = async (req, res) => {
-  const id = req.query.id;
-  const symbol = req.query.symbol;
-  const amount = req.query.amount;
-  const convert = req.query.convert;
+  const { id, symbol, amount, convert } = req.query;
 
   if (!id && !symbol) {
     // error

@@ -63,7 +63,7 @@ exports.create = (req, res) => {
 
 // Done
 exports.deleteVoucher = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -93,7 +93,7 @@ exports.deleteVoucher = (req, res) => {
 
 // Done
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -143,7 +143,7 @@ exports.update = (req, res) => {
 
 // Done
 exports.findOne = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -173,8 +173,7 @@ exports.findOne = (req, res) => {
 };
 
 exports.useVoucher = (req, res) => {
-  const username = req.params.username;
-  const voucherCode = req.params.voucherCode;
+  const { username, voucherCode } = req.params;
 
   if (!username || !voucherCode) {
     return res.status(400).send({

@@ -10,8 +10,11 @@ const path = require("path");
 require("dotenv").config();
 
 // Load File Configuration
-const imageConfig = require("./src/configs/imageUploader.config");
-const videoConfig = require("./src/configs/videoUploader.config");
+const {
+  imageStorage,
+  imageFilter,
+} = require("./src/configs/imageUploader.config");
+const { videosStorage, videosFilter } = require("./src/configs/videosUploader");
 
 const app = express();
 
@@ -26,17 +29,19 @@ app.use(
   })
 );
 
+// Configuration for All Image Files
 app.use(
   multer({
-    storage: imageConfig.imageStorage,
-    fileFilter: imageConfig.imageFilter,
+    storage: imageStorage,
+    fileFilter: imageFilter,
   }).single("image")
 );
 
+// Configuration for All Video Files
 app.use(
   multer({
-    storage: videoConfig.videoStorage,
-    fileFilter: videoConfig.videoFilter,
+    storage: videosStorage,
+    fileFilter: videosFilter,
   }).single("video")
 );
 
@@ -51,21 +56,22 @@ app.get("/", (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server started on port http//localhost:${process.env.PORT}`);
+  console.log(`Server started on port http://localhost:${process.env.PORT}`);
 });
 
 // Routers
 require("./src/routes/auth.routes")(app); // Auth Router
 require("./src/routes/coinmarketcap.routes")(app); // Coinmarketcap Router
-require("./src/routes/message.routes")(app); // Message Router
+require("./src/routes/liveclass.routes")(app); // Liveclass Router
+require("./src/routes/messages.routes")(app); // Message Router
 require("./src/routes/news.routes")(app); // News Router
-// require("./src/routes/playlists.routes")(app); // Playlist Router
-// require("./src/routes/pricing.routes")(app); // Pricing Router
-// require("./src/routes/services.routes")(app); // Services Router
+require("./src/routes/playlists.routes")(app); // Playlist Router
+require("./src/routes/pricing.routes")(app); // Pricing Router
+require("./src/routes/services.routes")(app); // Services Router
 require("./src/routes/subscribers.routes")(app); // Subscribers Router
 require("./src/routes/teams.routes")(app); // Teams Router
 // require("./src/routes/testimoni.routes")(app); // Testimoni Router
 require("./src/routes/users.routes")(app); // Users Router
-// require("./src/routes/videos.routes")(app); // Videos Router
+require("./src/routes/videos.routes")(app); // Videos Router
 require("./src/routes/vouchers.routes")(app); // Vouchers Router
 require("./src/routes/watchlist.routes")(app); // Watchlist Router

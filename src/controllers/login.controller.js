@@ -5,15 +5,17 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 
 exports.login = (req, res) => {
+  const { email, password } = req.body;
+
   // Validate request
-  if (!req.body.email && !req.body.password) {
+  if (!email && !password) {
     res.status(400).send({
       message: "Invalid Email or Password!",
     });
   }
 
   Users.findOne({
-    email: req.body.email,
+    email: email,
   })
     .then((user) => {
       if (!user) {
@@ -21,7 +23,7 @@ exports.login = (req, res) => {
           message: "User not found!",
         });
       } else {
-        bcrypt.compare(req.body.password, user.password, (err, result) => {
+        bcrypt.compare(password, user.password, (err, result) => {
           if (result) {
             const token = jwt.sign(
               {
@@ -36,6 +38,9 @@ exports.login = (req, res) => {
                 expiresIn: "3h",
               }
             );
+
+            res.setHeader("Content-Type", "Application/json");
+
             res.status(200).send({
               message: "Login Success",
               timestamp: new Date().toString(),
