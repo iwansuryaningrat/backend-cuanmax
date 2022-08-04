@@ -70,7 +70,7 @@ require("./src/routes/pricing.routes")(app); // Pricing Router
 require("./src/routes/services.routes")(app); // Services Router
 require("./src/routes/subscribers.routes")(app); // Subscribers Router
 require("./src/routes/teams.routes")(app); // Teams Router
-// require("./src/routes/testimoni.routes")(app); // Testimoni Router
+require("./src/routes/testimoni.routes")(app); // Testimoni Router
 require("./src/routes/users.routes")(app); // Users Router
 require("./src/routes/videos.routes")(app); // Videos Router
 require("./src/routes/vouchers.routes")(app); // Vouchers Router
