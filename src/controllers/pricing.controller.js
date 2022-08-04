@@ -27,7 +27,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.delete = (req, res) => {
+exports.deletePrice = (req, res) => {
   const id = req.params.id;
 
   Pricing.findByIdAndRemove(id)
