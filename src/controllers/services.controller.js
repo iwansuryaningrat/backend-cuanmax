@@ -40,11 +40,26 @@ exports.create = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
 
   Services.findById(id)
     .then((result) => {
-      res.send(result);
+      if (!result) {
+        return res.status(404).send({
+          message: "Service not found",
+        });
+      }
+
+      res.send({
+        message: "Service was found",
+        result,
+      });
     })
     .catch((err) => {
       res.status(500).send({
@@ -54,7 +69,13 @@ exports.findOne = (req, res) => {
 };
 
 exports.deleteService = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
 
   Services.findByIdAndRemove(id)
     .then((result) => {
@@ -76,7 +97,13 @@ exports.deleteService = (req, res) => {
 };
 
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
 
   Services.findByIdAndUpdate(id, req.body)
     .then((result) => {
