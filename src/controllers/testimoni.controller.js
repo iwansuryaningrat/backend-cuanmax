@@ -48,7 +48,7 @@ exports.create = (req, res) => {
     });
 };
 
-exports.delete = (req, res) => {
+exports.deleteTest = (req, res) => {
   const id = req.params.id;
 
   Testimoni.findByIdAndRemove(id)
