@@ -53,7 +53,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.delete = (req, res) => {
+exports.deleteService = (req, res) => {
   const id = req.params.id;
 
   Services.findByIdAndRemove(id)
