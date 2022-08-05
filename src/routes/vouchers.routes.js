@@ -1,14 +1,15 @@
-module.exports = (app) => {
-  const {
-    findAll,
-    create,
-    deleteVoucher,
-    update,
-    findOne,
-  } = require("../controllers/vouchers.controller");
-  const { login, admin } = require("../middlewares/auth");
-  const router = require("express").Router();
+import {
+  findAll,
+  create,
+  deleteVoucher,
+  update,
+  findOne,
+} from "../controllers/vouchers.controller.js";
+import { login, admin, proMember } from "../middlewares/auth.js";
+import Express from "express";
+const router = Express.Router();
 
+const vouchersRouter = (app) => {
   router.get("/", login, admin, findAll);
   router.post("/", login, admin, create);
   router.get("/:id", login, findOne);
@@ -17,3 +18,5 @@ module.exports = (app) => {
 
   app.use("/api/v1/vouchers", router);
 };
+
+export default vouchersRouter;
