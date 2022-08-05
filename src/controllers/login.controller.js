@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   // Validate request
@@ -14,7 +14,7 @@ exports.login = (req, res) => {
     });
   }
 
-  Users.findOne({
+  await Users.findOne({
     email: email,
   })
     .then((user) => {
