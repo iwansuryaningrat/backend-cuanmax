@@ -1,10 +1,10 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Users = db.users;
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const bcrypt = require("bcrypt");
+import jwt from "jsonwebtoken";
+import "dotenv/config";
+import bcrypt from "bcrypt";
 
-exports.login = async (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
 
   // Validate request
@@ -60,3 +60,5 @@ exports.login = async (req, res) => {
       });
     });
 };
+
+export default login;
