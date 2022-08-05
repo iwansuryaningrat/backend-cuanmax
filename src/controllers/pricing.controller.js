@@ -1,7 +1,7 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Pricing = db.pricing;
 
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   Pricing.find()
     .then((result) => {
       res.send(result);
@@ -13,7 +13,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const id = req.params.id;
 
   Pricing.findById(id)
@@ -27,7 +27,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.deletePrice = (req, res) => {
+const deletePrice = (req, res) => {
   const id = req.params.id;
 
   Pricing.findByIdAndRemove(id)
@@ -48,3 +48,5 @@ exports.deletePrice = (req, res) => {
       });
     });
 };
+
+export { findAll, findOne, deletePrice };
