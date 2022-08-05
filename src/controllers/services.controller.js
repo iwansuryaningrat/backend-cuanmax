@@ -1,7 +1,7 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Services = db.services;
 
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   Services.find()
     .then((result) => {
       res.send(result);
@@ -13,7 +13,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   const services = new Services({
     serviceName: req.body.serviceName,
     description: req.body.description,
@@ -39,7 +39,7 @@ exports.create = (req, res) => {
     });
 };
 
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -68,7 +68,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.deleteService = (req, res) => {
+const deleteService = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -96,7 +96,7 @@ exports.deleteService = (req, res) => {
     });
 };
 
-exports.update = (req, res) => {
+const update = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -123,3 +123,5 @@ exports.update = (req, res) => {
       });
     });
 };
+
+export { findAll, create, findOne, deleteService, update };
