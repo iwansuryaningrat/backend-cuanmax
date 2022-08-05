@@ -1,18 +1,22 @@
-module.exports = (app) => {
-  const {
-    findAll,
-    findOne,
-    create,
-    update,
-    deleteService,
-  } = require("../controllers/services.controller");
-  const router = require("express").Router();
+import {
+  findAll,
+  findOne,
+  create,
+  update,
+  deleteService,
+} from "../controllers/services.controller.js";
+import { login, admin, proMember } from "../middlewares/auth.js";
+import Express from "express";
+const router = Express.Router();
 
+const servicesRouter = (app) => {
   router.get("/", findAll);
-  router.post("/", create);
+  router.post("/", login, admin, create);
   router.get("/:id", findOne);
-  router.put("/:id", update);
-  router.delete("/:id", deleteService);
+  router.put("/:id", login, admin, update);
+  router.delete("/:id", login, admin, deleteService);
 
   app.use("/api/v1/services", router);
 };
+
+export default servicesRouter;
