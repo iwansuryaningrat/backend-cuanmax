@@ -1,8 +1,8 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Liveclass = db.liveclass;
 
 // Find all liveclasses (Done)
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   const { status, category, tags } = req.query;
   const query = status ? { status: status } : {};
 
@@ -32,7 +32,7 @@ exports.findAll = (req, res) => {
 };
 
 // Find liveclass by id (Done)
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -62,7 +62,7 @@ exports.findOne = (req, res) => {
 };
 
 // Delete liveclass (Done)
-exports.deleteClass = (req, res) => {
+const deleteClass = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -91,7 +91,7 @@ exports.deleteClass = (req, res) => {
 };
 
 // Done
-exports.update = (req, res) => {
+const update = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -122,7 +122,7 @@ exports.update = (req, res) => {
 };
 
 // Create liveclass (Done)
-exports.create = (req, res) => {
+const create = (req, res) => {
   const photoName = req.file.filename;
   const photoLink = `${req.protocol}://${req.get(
     "host"
@@ -162,3 +162,5 @@ exports.create = (req, res) => {
       });
     });
 };
+
+export { findAll, findOne, deleteClass, update, create };
