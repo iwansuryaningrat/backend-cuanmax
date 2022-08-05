@@ -1,10 +1,14 @@
-module.exports = (app) => {
-  const { login } = require("../controllers/login.controller");
-  const { signup } = require("../controllers/signup.controller");
-  const router = require("express").Router();
+import login from "../controllers/login.controller.js";
+import signup from "../controllers/signup.controller.js";
+import Express from "express";
+
+const authRouter = (app) => {
+  const router = Express.Router();
 
   router.post("/login", login);
   router.post("/signup", signup);
 
   app.use("/api/v1", router);
 };
+
+export default authRouter;
