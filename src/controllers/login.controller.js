@@ -15,7 +15,7 @@ exports.login = async (req, res) => {
   }
 
   await Users.findOne({
-    email: email,
+    email,
   })
     .then((user) => {
       if (!user) {
