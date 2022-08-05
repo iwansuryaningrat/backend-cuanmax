@@ -1,14 +1,15 @@
-module.exports = (app) => {
-  const {
-    findAll,
-    findOne,
-    create,
-    update,
-    deleteSubs,
-  } = require("../controllers/subscribers.controller");
-  const { login, admin, proMember } = require("../middlewares/auth");
-  const router = require("express").Router();
+import {
+  findAll,
+  findOne,
+  create,
+  update,
+  deleteSubs,
+} from "../controllers/subscribers.controller.js";
+import { login, admin, proMember } from "../middlewares/auth.js";
+import Express from "express";
+const router = Express.Router();
 
+const subscribersRouter = (app) => {
   router.get("/", login, findAll);
   router.get("/:id", login, admin, findOne);
   router.post("/", login, create);
@@ -17,3 +18,5 @@ module.exports = (app) => {
 
   app.use("/api/v1/subscribers", router);
 };
+
+export default subscribersRouter;
