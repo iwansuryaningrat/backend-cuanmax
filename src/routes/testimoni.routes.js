@@ -1,14 +1,15 @@
-module.exports = (app) => {
-  const {
-    findAll,
-    findOne,
-    create,
-    deleteTest,
-    update,
-  } = require("../controllers/testimoni.controller");
-  const { login, admin } = require("../middlewares/auth");
-  const router = require("express").Router();
+import {
+  findAll,
+  findOne,
+  create,
+  deleteTest,
+  update,
+} from "../controllers/testimoni.controller.js";
+import { login, admin, proMember } from "../middlewares/auth.js";
+import Express from "express";
+const router = Express.Router();
 
+const testimoniRouter = (app) => {
   router.get("/", findAll);
   router.get("/:id", findOne);
   router.post("/", login, admin, create);
@@ -17,3 +18,5 @@ module.exports = (app) => {
 
   app.use("/api/v1/testimoni", router);
 };
+
+export default testimoniRouter;
