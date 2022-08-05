@@ -1,14 +1,15 @@
-module.exports = (app) => {
-  const {
-    findAll,
-    deleteNews,
-    createNews,
-    findById,
-    update,
-  } = require("../controllers/news.controller");
-  const { login, admin } = require("../middlewares/auth");
-  const router = require("express").Router();
+import {
+  findAll,
+  deleteNews,
+  createNews,
+  findById,
+  update,
+} from "../controllers/news.controller.js";
+import { login, admin } from "../middlewares/auth.js";
+import Express from "express";
+const router = Express.Router();
 
+const newsRouter = (app) => {
   router.get("/", findAll);
   router.post("/", login, admin, createNews);
   router.delete("/:id", login, admin, deleteNews);
@@ -17,3 +18,5 @@ module.exports = (app) => {
 
   app.use("/api/v1/news", router);
 };
+
+export default newsRouter;
