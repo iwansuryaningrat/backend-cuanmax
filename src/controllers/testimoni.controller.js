@@ -1,7 +1,7 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Testimoni = db.testimoni;
 
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   Testimoni.find()
     .then((result) => {
       res.send(result);
@@ -13,7 +13,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const id = req.params.id;
 
   Testimoni.findById(id)
@@ -27,7 +27,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   const testimoni = new Testimoni({
     name: req.body.name,
     position: req.body.position,
@@ -48,7 +48,7 @@ exports.create = (req, res) => {
     });
 };
 
-exports.deleteTest = (req, res) => {
+const deleteTest = (req, res) => {
   const id = req.params.id;
 
   Testimoni.findByIdAndRemove(id)
@@ -70,7 +70,7 @@ exports.deleteTest = (req, res) => {
     });
 };
 
-exports.update = (req, res) => {
+const update = (req, res) => {
   const id = req.params.id;
 
   Testimoni.findByIdAndUpdate(id, req.body)
@@ -91,3 +91,5 @@ exports.update = (req, res) => {
       });
     });
 };
+
+export { findAll, findOne, create, deleteTest, update };
