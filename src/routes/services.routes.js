@@ -5,7 +5,7 @@ import {
   update,
   deleteService,
 } from "../controllers/services.controller.js";
-import { login, admin, proMember } from "../middlewares/auth.js";
+import { login, admin } from "../middlewares/auth.js";
 import Express from "express";
 const router = Express.Router();
 

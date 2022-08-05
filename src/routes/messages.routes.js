@@ -6,17 +6,17 @@ import {
   reply,
   deleteMsg,
 } from "../controllers/messages.controller.js";
-import { admin } from "../middlewares/auth.js";
+import { login, admin } from "../middlewares/auth.js";
 import Express from "express";
 const router = Express.Router();
 
 const messagesRouter = (app) => {
-  router.get("/", admin, findAll);
-  router.post("/", create);
-  router.get("/:id", admin, findOne);
-  router.get("/:id/read", admin, read);
-  router.get("/:id/reply", admin, reply);
-  router.delete("/:id", admin, deleteMsg);
+  router.get("/", login, admin, findAll);
+  router.post("/", login, admin, create);
+  router.get("/:id", login, admin, findOne);
+  router.get("/:id/read", login, admin, read);
+  router.get("/:id/reply", login, admin, reply);
+  router.delete("/:id", login, admin, deleteMsg);
 
   app.use("/api/v1/messages", router);
 };

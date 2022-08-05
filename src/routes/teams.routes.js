@@ -6,13 +6,13 @@ import {
   teamProfile,
   deleteTeam,
 } from "../controllers/teams.controller.js";
-import { login, admin, proMember } from "../middlewares/auth.js";
+import { login, admin } from "../middlewares/auth.js";
 import Express from "express";
 const router = Express.Router();
 
 const teamsRouter = (app) => {
   router.get("/", findAll);
-  router.post("/", admin, create);
+  router.post("/", login, admin, create);
   router.get("/:id", login, admin, findOne);
   router.put("/:id", login, admin, update);
   router.put("/:id/teamprofile", login, admin, teamProfile);
