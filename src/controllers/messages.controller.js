@@ -1,8 +1,8 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Messages = db.messages;
 
 // Done
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   const { status } = req.query;
   const query = {};
 
@@ -27,7 +27,7 @@ exports.findAll = (req, res) => {
 };
 
 // Done
-exports.create = (req, res) => {
+const create = (req, res) => {
   const { firstName, lastName, email, subject, body } = req.body;
 
   if (!firstName || !subject || !email || !body) {
@@ -61,7 +61,7 @@ exports.create = (req, res) => {
 };
 
 // Done
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -92,7 +92,7 @@ exports.findOne = (req, res) => {
 };
 
 // Done
-exports.read = (req, res) => {
+const read = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -125,7 +125,7 @@ exports.read = (req, res) => {
 };
 
 // Done
-exports.reply = (req, res) => {
+const reply = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -157,7 +157,7 @@ exports.reply = (req, res) => {
     });
 };
 
-exports.deleteMsg = (req, res) => {
+const deleteMsg = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -185,3 +185,5 @@ exports.deleteMsg = (req, res) => {
       });
     });
 };
+
+export { findAll, create, findOne, read, reply, deleteMsg };
