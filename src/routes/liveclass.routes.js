@@ -1,14 +1,15 @@
-module.exports = (app) => {
-  const {
-    findAll,
-    findOne,
-    create,
-    deleteClass,
-    update,
-  } = require("../controllers/liveclass.controller");
-  const { login, admin, proMember } = require("../middlewares/auth");
-  const router = require("express").Router();
+import {
+  findAll,
+  findOne,
+  create,
+  deleteClass,
+  update,
+} from "../controllers/liveclass.controller.js";
+import { login, admin, proMember } from "../middlewares/auth.js";
+import Express from "express";
+const router = Express.Router();
 
+const liveClassRouter = (app) => {
   router.get("/", findAll);
   router.get("/:id", findOne);
   router.post("/", login, admin, create);
@@ -17,3 +18,5 @@ module.exports = (app) => {
 
   app.use("/api/v1/liveclass", router);
 };
+
+export default liveClassRouter;
