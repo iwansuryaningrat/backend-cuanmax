@@ -1,8 +1,8 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Watchlist = db.watchlist;
 
 // Done
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   const { category, tags, allData } = req.query;
   const query = {};
 
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
 };
 
 // Done
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -73,7 +73,7 @@ exports.findOne = (req, res) => {
 };
 
 // Done
-exports.deleteWl = (req, res) => {
+const deleteWl = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -103,7 +103,7 @@ exports.deleteWl = (req, res) => {
 };
 
 // Done
-exports.nonActivate = (req, res) => {
+const nonActivate = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -133,7 +133,7 @@ exports.nonActivate = (req, res) => {
 };
 
 // Done
-exports.create = (req, res) => {
+const create = (req, res) => {
   const {
     name,
     code,
@@ -212,7 +212,7 @@ exports.create = (req, res) => {
     });
 };
 
-exports.update = (req, res) => {
+const update = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -285,3 +285,5 @@ exports.update = (req, res) => {
       });
     });
 };
+
+export { findAll, findOne, deleteWl, nonActivate, create, update };
