@@ -1,11 +1,11 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Users = db.users;
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const bcrypt = require("bcrypt");
+import jwt from "jsonwebtoken";
+import "dotenv/config";
+import bcrypt from "bcrypt";
 
-// Belum Selesai
-exports.signup = async (req, res) => {
+// belum selesai
+const signup = async (req, res) => {
   const { name, email, username } = req.body;
   let password = req.body.password;
   const admin = req.body.admin ? req.body.admin : false;
@@ -67,3 +67,5 @@ exports.signup = async (req, res) => {
       });
     });
 };
+
+export default signup;
