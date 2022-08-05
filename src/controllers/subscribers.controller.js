@@ -1,7 +1,7 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Subscribers = db.subscribers;
 
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   Subscribers.find()
     .sort({ createdAt: -1 })
     .then((result) => {
@@ -18,7 +18,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   const { email } = req.body;
 
   if (!email) {
@@ -63,7 +63,7 @@ exports.create = (req, res) => {
     });
 };
 
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -94,7 +94,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.deleteSubs = (req, res) => {
+const deleteSubs = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -123,7 +123,7 @@ exports.deleteSubs = (req, res) => {
     });
 };
 
-exports.update = (req, res) => {
+const update = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -152,3 +152,5 @@ exports.update = (req, res) => {
       });
     });
 };
+
+export { findAll, create, findOne, deleteSubs, update };
