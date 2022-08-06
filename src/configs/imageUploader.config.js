@@ -1,7 +1,7 @@
-const multer = require("multer");
+import multer from "multer";
 
 // Image Uploader Setup
-exports.imageStorage = multer.diskStorage({
+const imageStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./assets/images");
   },
@@ -13,7 +13,7 @@ exports.imageStorage = multer.diskStorage({
   },
 });
 
-exports.imageFilter = (req, file, cb) => {
+const imageFileFilter = (req, file, cb) => {
   if (
     file.mimetype === "image/png" ||
     file.mimetype === "image/jpg" ||
@@ -24,3 +24,7 @@ exports.imageFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
+
+export { imageStorage, imageFileFilter };
+
+// export default { imageStorage, imageFilter };

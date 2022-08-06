@@ -1,9 +1,9 @@
-const db = require("../models/index");
-const bcrypt = require("bcrypt");
+import db from "../models/index.js";
 const Users = db.users;
+import bcrypt from "bcrypt";
 
 // Done
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   Users.find()
     .sort({ createdAt: -1 })
     .then((result) => {
@@ -21,7 +21,7 @@ exports.findAll = (req, res) => {
 };
 
 // Done
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -70,7 +70,7 @@ exports.findOne = (req, res) => {
 };
 
 // Done
-exports.deleteUSer = (req, res) => {
+const deleteUSer = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -99,7 +99,7 @@ exports.deleteUSer = (req, res) => {
 };
 
 // Done
-exports.update = (req, res) => {
+const update = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -147,7 +147,7 @@ exports.update = (req, res) => {
 };
 
 // Done
-exports.changePassword = (req, res) => {
+const changePassword = (req, res) => {
   const { id } = req.params;
   const { oldPassword } = req.body;
   let newPassword = req.body.newPassword;
@@ -225,7 +225,7 @@ exports.changePassword = (req, res) => {
 };
 
 // Done
-exports.changeProfilePicture = (req, res) => {
+const changeProfilePicture = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -276,4 +276,13 @@ exports.changeProfilePicture = (req, res) => {
           "Some error occurred while changing the profile picture.",
       });
     });
+};
+
+export {
+  findAll,
+  findOne,
+  deleteUSer,
+  update,
+  changePassword,
+  changeProfilePicture,
 };

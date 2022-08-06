@@ -1,8 +1,8 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const News = db.news;
 
 // Find All News (Done)
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   const { tags, category } = req.query;
   const query = {};
 
@@ -31,7 +31,7 @@ exports.findAll = (req, res) => {
 };
 
 // Delete Function (Done)
-exports.deleteNews = (req, res) => {
+const deleteNews = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -61,7 +61,7 @@ exports.deleteNews = (req, res) => {
 };
 
 // Create News (Need Testing)
-exports.createNews = (req, res) => {
+const createNews = (req, res) => {
   const { title, author, category, tags, date, cover, body } = req.body;
 
   if (!title || !author || !category || !tags || !date || !cover || !body) {
@@ -97,7 +97,7 @@ exports.createNews = (req, res) => {
 };
 
 // Find News by Id (Done)
-exports.findById = (req, res) => {
+const findById = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -128,7 +128,7 @@ exports.findById = (req, res) => {
 };
 
 // Update News
-exports.update = (req, res) => {
+const update = (req, res) => {
   const { id } = req.params;
   const { title, author, category, tags, date, cover, body } = req.body;
 
@@ -175,3 +175,5 @@ exports.update = (req, res) => {
       });
     });
 };
+
+export { findAll, deleteNews, createNews, findById, update };

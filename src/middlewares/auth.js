@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
+import jwt from "jsonwebtoken";
+import * as dotenv from "dotenv";
 
-exports.login = (req, res, next) => {
+const login = (req, res, next) => {
   const token = req.header("x-auth-token");
   if (!token) {
     return res.status(401).send({
@@ -22,7 +22,7 @@ exports.login = (req, res, next) => {
   }
 };
 
-exports.admin = (req, res, next) => {
+const admin = (req, res, next) => {
   const token = req.header("x-auth-token");
   if (!token) {
     return res.status(401).send({
@@ -50,7 +50,7 @@ exports.admin = (req, res, next) => {
   }
 };
 
-exports.proMember = (req, res, next) => {
+const proMember = (req, res, next) => {
   const token = req.header("x-auth-token");
   if (!token) {
     return res.status(401).send({
@@ -78,3 +78,5 @@ exports.proMember = (req, res, next) => {
     });
   }
 };
+
+export { login, admin, proMember };
