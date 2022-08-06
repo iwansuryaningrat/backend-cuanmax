@@ -1,8 +1,8 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Teams = db.teams;
 
 // Done
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   Teams.find()
     .then((result) => {
       res.send({
@@ -19,7 +19,7 @@ exports.findAll = (req, res) => {
 };
 
 // Done
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -50,7 +50,7 @@ exports.findOne = (req, res) => {
 };
 
 // Done
-exports.deleteTeam = (req, res) => {
+const deleteTeam = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -80,7 +80,7 @@ exports.deleteTeam = (req, res) => {
 };
 
 // Done
-exports.create = (req, res) => {
+const create = (req, res) => {
   const { name, description, position, email } = req.body;
 
   if (!name || !description || !position || !email) {
@@ -119,7 +119,7 @@ exports.create = (req, res) => {
 };
 
 // Done
-exports.update = (req, res) => {
+const update = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -150,7 +150,7 @@ exports.update = (req, res) => {
 };
 
 // Done
-exports.teamProfile = (req, res) => {
+const teamProfile = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -192,3 +192,5 @@ exports.teamProfile = (req, res) => {
       });
     });
 };
+
+export { findAll, findOne, deleteTeam, create, update, teamProfile };

@@ -1,7 +1,7 @@
-const multer = require("multer");
+import multer from "multer";
 
 // Video Uploader Setup
-exports.videosStorage = multer.diskStorage({
+const videosStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./assets/videos");
   },
@@ -13,7 +13,7 @@ exports.videosStorage = multer.diskStorage({
   },
 });
 
-exports.videosFilter = (req, file, cb) => {
+const videosFilter = (req, file, cb) => {
   if (
     file.mimetype === "video/mpeg" ||
     file.mimetype === "video/x-msvideo" ||
@@ -29,3 +29,5 @@ exports.videosFilter = (req, file, cb) => {
     cb(null, false);
   }
 };
+
+export { videosStorage, videosFilter };

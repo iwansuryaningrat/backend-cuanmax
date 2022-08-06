@@ -5,34 +5,22 @@ export default (mongoose) => {
         type: String,
         require: true,
       },
-      category: {
+      position: {
         type: String,
         require: true,
       },
-      description: String,
-      instructor: {
+      company: {
         type: String,
         require: true,
       },
-      videoLevel: {
+      body: {
         type: String,
         require: true,
       },
-      image: {
-        imageName: {
-          type: String,
-        },
-        imageLink: {
-          type: String,
-          require: true,
-          default: "https://via.placeholder.com/150",
-        },
-      },
-      videoCount: Number,
-      status: {
+      photosUrl: {
         type: String,
         require: true,
-        default: "active",
+        default: "",
       },
     },
     { timestamps: true }
@@ -44,6 +32,6 @@ export default (mongoose) => {
     return object;
   });
 
-  const Playlists = mongoose.model("playlists", schema);
-  return Playlists;
+  const Testimoni = mongoose.model("testimoni", schema);
+  return Testimoni;
 };

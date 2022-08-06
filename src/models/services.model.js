@@ -1,4 +1,4 @@
-module.exports = (mongoose) => {
+export default (mongoose) => {
   const schema = mongoose.Schema(
     {
       serviceName: {

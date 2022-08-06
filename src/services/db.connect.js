@@ -1,6 +1,6 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 
-exports.connect = () => {
+export default function connect() {
   db.mongoose
     .connect(db.url, {
       useNewUrlParser: true,
@@ -13,4 +13,6 @@ exports.connect = () => {
       console.log(`Cannot connect to database!`, err);
       process.exit();
     });
-};
+}
+
+// export default connect;

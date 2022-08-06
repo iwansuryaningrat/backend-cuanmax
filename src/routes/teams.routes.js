@@ -1,17 +1,18 @@
-module.exports = (app) => {
-  const {
-    findAll,
-    findOne,
-    create,
-    update,
-    teamProfile,
-    deleteTeam,
-  } = require("../controllers/teams.controller");
-  const { login, admin } = require("../middlewares/auth");
-  const router = require("express").Router();
+import {
+  findAll,
+  findOne,
+  create,
+  update,
+  teamProfile,
+  deleteTeam,
+} from "../controllers/teams.controller.js";
+import { login, admin } from "../middlewares/auth.js";
+import Express from "express";
+const router = Express.Router();
 
+const teamsRouter = (app) => {
   router.get("/", findAll);
-  router.post("/", admin, create);
+  router.post("/", login, admin, create);
   router.get("/:id", login, admin, findOne);
   router.put("/:id", login, admin, update);
   router.put("/:id/teamprofile", login, admin, teamProfile);
@@ -19,3 +20,5 @@ module.exports = (app) => {
 
   app.use("/api/v1/teams", router);
 };
+
+export default teamsRouter;

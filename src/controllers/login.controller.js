@@ -1,10 +1,10 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Users = db.users;
-const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const bcrypt = require("bcrypt");
+import jwt from "jsonwebtoken";
+import "dotenv/config";
+import bcrypt from "bcrypt";
 
-exports.login = (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
 
   // Validate request
@@ -14,8 +14,8 @@ exports.login = (req, res) => {
     });
   }
 
-  Users.findOne({
-    email: email,
+  await Users.findOne({
+    email,
   })
     .then((user) => {
       if (!user) {
@@ -60,3 +60,5 @@ exports.login = (req, res) => {
       });
     });
 };
+
+export default login;

@@ -1,8 +1,8 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Videos = db.videos;
 const Playlist = db.playlists;
 
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   Videos.find()
     .then((result) => {
       res.send({
@@ -19,7 +19,7 @@ exports.findAll = (req, res) => {
 };
 
 // Done
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -50,7 +50,7 @@ exports.findOne = (req, res) => {
 };
 
 // Done
-exports.update = (req, res) => {
+const update = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -80,7 +80,7 @@ exports.update = (req, res) => {
 };
 
 // Done
-exports.deleteVideo = (req, res) => {
+const deleteVideo = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -110,7 +110,7 @@ exports.deleteVideo = (req, res) => {
 };
 
 // Done
-exports.findByPlaylist = (req, res) => {
+const findByPlaylist = (req, res) => {
   const { playlistId } = req.params;
 
   if (!playlistId) {
@@ -142,7 +142,7 @@ exports.findByPlaylist = (req, res) => {
 };
 
 // Done
-exports.create = (req, res) => {
+const create = (req, res) => {
   const {
     title,
     description,
@@ -205,7 +205,7 @@ exports.create = (req, res) => {
 };
 
 // Done
-exports.uploadThumbnail = (req, res) => {
+const uploadThumbnail = (req, res) => {
   const thumbnailName = req.file.filename;
   const thumbnailLink = `${req.protocol}://${req.get(
     "host"
@@ -246,7 +246,7 @@ exports.uploadThumbnail = (req, res) => {
 };
 
 // Done
-exports.uploadVideo = (req, res) => {
+const uploadVideo = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -284,4 +284,15 @@ exports.uploadVideo = (req, res) => {
         message: err.message || "Some error while update video.",
       });
     });
+};
+
+export {
+  findAll,
+  findOne,
+  update,
+  deleteVideo,
+  findByPlaylist,
+  create,
+  uploadThumbnail,
+  uploadVideo,
 };

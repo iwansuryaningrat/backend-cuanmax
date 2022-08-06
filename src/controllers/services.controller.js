@@ -1,7 +1,7 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Services = db.services;
 
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   Services.find()
     .then((result) => {
       res.send(result);
@@ -13,7 +13,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-exports.create = (req, res) => {
+const create = (req, res) => {
   const services = new Services({
     serviceName: req.body.serviceName,
     description: req.body.description,
@@ -39,12 +39,27 @@ exports.create = (req, res) => {
     });
 };
 
-exports.findOne = (req, res) => {
-  const id = req.params.id;
+const findOne = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
 
   Services.findById(id)
     .then((result) => {
-      res.send(result);
+      if (!result) {
+        return res.status(404).send({
+          message: "Service not found",
+        });
+      }
+
+      res.send({
+        message: "Service was found",
+        result,
+      });
     })
     .catch((err) => {
       res.status(500).send({
@@ -53,8 +68,14 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.delete = (req, res) => {
-  const id = req.params.id;
+const deleteService = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
 
   Services.findByIdAndRemove(id)
     .then((result) => {
@@ -75,8 +96,14 @@ exports.delete = (req, res) => {
     });
 };
 
-exports.update = (req, res) => {
-  const id = req.params.id;
+const update = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
 
   Services.findByIdAndUpdate(id, req.body)
     .then((result) => {
@@ -96,3 +123,5 @@ exports.update = (req, res) => {
       });
     });
 };
+
+export { findAll, create, findOne, deleteService, update };
