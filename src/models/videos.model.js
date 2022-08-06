@@ -1,4 +1,4 @@
-module.exports = (mongoose) => {
+export default (mongoose) => {
   const Schema = mongoose.Schema;
 
   const schema = new Schema(

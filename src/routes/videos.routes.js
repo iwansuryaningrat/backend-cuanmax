@@ -1,17 +1,18 @@
-module.exports = (app) => {
-  const {
-    create,
-    findAll,
-    findOne,
-    findByPlaylist,
-    update,
-    deleteVideo,
-    uploadThumbnail,
-    uploadVideo,
-  } = require("../controllers/videos.controller");
-  const { login, admin, proMember } = require("../middlewares/auth");
-  const router = require("express").Router();
+import {
+  create,
+  findAll,
+  findOne,
+  findByPlaylist,
+  update,
+  deleteVideo,
+  uploadThumbnail,
+  uploadVideo,
+} from "../controllers/videos.controller.js";
+import { login, admin, proMember } from "../middlewares/auth.js";
+import Express from "express";
+const router = Express.Router();
 
+const videosRouter = (app) => {
   router.get("/", login, proMember, findAll);
   router.get("/:id", login, proMember, findOne);
   router.get("/:playlistId", login, proMember, findByPlaylist);
@@ -23,3 +24,5 @@ module.exports = (app) => {
 
   app.use("/api/v1/videos", router);
 };
+
+export default videosRouter;

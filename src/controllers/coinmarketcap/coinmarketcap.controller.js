@@ -1,8 +1,8 @@
-const axios = require("axios");
-require("dotenv").config();
+import axios from "axios";
+import "dotenv/config";
 
 // Done
-exports.map = async (req, res) => {
+const map = async (req, res) => {
   try {
     response = await axios.get(
       process.env.COINMARKETCAP_ENDPOINT +
@@ -34,7 +34,7 @@ exports.map = async (req, res) => {
 };
 
 // Done
-exports.latest = async (req, res) => {
+const latest = async (req, res) => {
   try {
     response = await axios.get(
       process.env.COINMARKETCAP_ENDPOINT +
@@ -66,7 +66,7 @@ exports.latest = async (req, res) => {
 };
 
 // Done
-exports.info = async (req, res) => {
+const info = async (req, res) => {
   const { symbol, id, slug } = req.query;
 
   if (!symbol && !id && !slug) {
@@ -107,7 +107,7 @@ exports.info = async (req, res) => {
 };
 
 // Done
-exports.price = async (req, res) => {
+const price = async (req, res) => {
   const { symbol, id, slug } = req.query;
   let convert = req.query.convert;
 
@@ -153,7 +153,7 @@ exports.price = async (req, res) => {
 };
 
 // Done
-exports.convert = async (req, res) => {
+const convertCoin = async (req, res) => {
   const { id, symbol, amount, convert } = req.query;
 
   if (!id && !symbol) {
@@ -199,3 +199,5 @@ exports.convert = async (req, res) => {
     });
   }
 };
+
+export { map, latest, info, price, convertCoin };

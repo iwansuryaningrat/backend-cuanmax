@@ -1,7 +1,10 @@
 // Load .env file
-require("dotenv").config();
+
+import "dotenv/config";
 
 // MongoDB configuration
-module.exports = {
+const dbConfig = {
   url: process.env.MONGODB_URI,
 };
+
+export default dbConfig;

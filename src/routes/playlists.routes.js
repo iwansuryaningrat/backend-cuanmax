@@ -1,14 +1,15 @@
-module.exports = (app) => {
-  const {
-    findAll,
-    findOne,
-    create,
-    update,
-    deletePlaylist,
-  } = require("../controllers/playlists.controller");
-  const { login, admin, proMember } = require("../middlewares/auth");
-  const router = require("express").Router();
+import {
+  findAll,
+  findOne,
+  create,
+  update,
+  deletePlaylist,
+} from "../controllers/playlists.controller.js";
+import { login, admin, proMember } from "../middlewares/auth.js";
+import Express from "express";
+const router = Express.Router();
 
+const playlistsRouter = (app) => {
   router.get("/", login, findAll);
   router.post("/", login, admin, create);
   router.get("/:id", login, proMember, findOne);
@@ -17,3 +18,5 @@ module.exports = (app) => {
 
   app.use("/api/v1/playlists", router);
 };
+
+export default playlistsRouter;

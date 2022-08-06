@@ -1,8 +1,9 @@
-const db = require("../models/index");
+import e from "express";
+import db from "../models/index.js";
 const Playlists = db.playlists;
 
 // Done
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   const { category, videoLevel } = req.params;
 
   const query = {};
@@ -38,7 +39,7 @@ exports.findAll = (req, res) => {
 };
 
 // Done
-exports.create = (req, res) => {
+const create = (req, res) => {
   const photoName = req.file.filename;
   const photoLink = `${req.protocol}://${req.get(
     "host"
@@ -72,7 +73,7 @@ exports.create = (req, res) => {
 };
 
 // Done
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -103,7 +104,7 @@ exports.findOne = (req, res) => {
 };
 
 // Done
-exports.update = (req, res) => {
+const update = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -133,7 +134,7 @@ exports.update = (req, res) => {
 };
 
 // Done
-exports.deletePlaylist = (req, res) => {
+const deletePlaylist = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -161,3 +162,5 @@ exports.deletePlaylist = (req, res) => {
       });
     });
 };
+
+export { findAll, create, findOne, update, deletePlaylist };

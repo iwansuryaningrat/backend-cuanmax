@@ -1,9 +1,9 @@
-const db = require("../models/index");
+import db from "../models/index.js";
 const Vouchers = db.vouchers;
 const Users = db.users;
 
 // Done
-exports.findAll = (req, res) => {
+const findAll = (req, res) => {
   Vouchers.find()
     .then((result) => {
       res.send({
@@ -20,7 +20,7 @@ exports.findAll = (req, res) => {
 };
 
 // Done
-exports.create = (req, res) => {
+const create = (req, res) => {
   const {
     voucherCode,
     voucherName,
@@ -62,7 +62,7 @@ exports.create = (req, res) => {
 };
 
 // Done
-exports.deleteVoucher = (req, res) => {
+const deleteVoucher = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -92,7 +92,7 @@ exports.deleteVoucher = (req, res) => {
 };
 
 // Done
-exports.update = (req, res) => {
+const update = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -142,7 +142,7 @@ exports.update = (req, res) => {
 };
 
 // Done
-exports.findOne = (req, res) => {
+const findOne = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -172,7 +172,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.useVoucher = (req, res) => {
+const useVoucher = (req, res) => {
   const { username, voucherCode } = req.params;
 
   if (!username || !voucherCode) {
@@ -233,3 +233,5 @@ exports.useVoucher = (req, res) => {
       });
     });
 };
+
+export { findAll, create, deleteVoucher, update, findOne, useVoucher };

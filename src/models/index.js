@@ -1,5 +1,18 @@
-const dbConfig = require("../configs/db.config");
-const mongoose = require("mongoose");
+import dbConfig from "../configs/db.config.js";
+import mongoose from "mongoose";
+import Liveclass from "../models/liveclass.model.js";
+import Messages from "../models/messages.model.js";
+import News from "../models/news.model.js";
+import Playlists from "../models/playlists.model.js";
+import Pricing from "../models/pricing.model.js";
+import Services from "../models/services.model.js";
+import Subscribers from "../models/subscribers.model.js";
+import Teams from "../models/teams.model.js";
+import Testimoni from "../models/testimoni.model.js";
+import Users from "../models/users.model.js";
+import Videos from "../models/videos.model.js";
+import Vouchers from "../models/vouchers.model.js";
+import Watchlist from "../models/watchlist.model.js";
 
 mongoose.Promise = global.Promise;
 
@@ -7,18 +20,18 @@ const db = {};
 
 db.mongoose = mongoose;
 db.url = dbConfig.url;
-db.liveclass = require("./liveclass.model");
-db.messages = require("./messages.model")(mongoose);
-db.news = require("./news.model")(mongoose);
-db.playlists = require("./playlists.model")(mongoose);
-db.pricing = require("./pricing.model")(mongoose);
-db.services = require("./services.model")(mongoose);
-db.subscribers = require("./subscribers.model")(mongoose);
-db.teams = require("./teams.model")(mongoose);
-// db.testimoni = require("./testimoni.model")(mongoose);
-db.users = require("./users.model")(mongoose);
-db.videos = require("./videos.model")(mongoose);
-db.vouchers = require("./vouchers.model")(mongoose);
-db.watchlist = require("./watchlist.model")(mongoose);
+db.liveclass = Liveclass(mongoose);
+db.messages = Messages(mongoose);
+db.news = News(mongoose);
+db.playlists = Playlists(mongoose);
+db.pricing = Pricing(mongoose);
+db.services = Services(mongoose);
+db.subscribers = Subscribers(mongoose);
+db.teams = Teams(mongoose);
+db.testimoni = Testimoni(mongoose);
+db.users = Users(mongoose);
+db.videos = Videos(mongoose);
+db.vouchers = Vouchers(mongoose);
+db.watchlist = Watchlist(mongoose);
 
-module.exports = db;
+export default db;
