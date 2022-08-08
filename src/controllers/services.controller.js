@@ -7,7 +7,7 @@ const findAll = (req, res) => {
       res.send(result);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while retrieving services.",
       });
     });
@@ -33,7 +33,7 @@ const create = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      return res.status(409).send({
         message: err.message || "Some error while creating service.",
       });
     });
@@ -62,7 +62,7 @@ const findOne = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while showing service.",
       });
     });
@@ -80,7 +80,7 @@ const deleteService = (req, res) => {
   Services.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Service not found",
         });
       }
@@ -90,7 +90,7 @@ const deleteService = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      return res.status(409).send({
         message: err.message || "Some error while delete service.",
       });
     });
@@ -108,7 +108,7 @@ const update = (req, res) => {
   Services.findByIdAndUpdate(id, req.body)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Service not found",
         });
       }
@@ -118,7 +118,7 @@ const update = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      return res.status(409).send({
         message: err.message || "Some error while update service.",
       });
     });
