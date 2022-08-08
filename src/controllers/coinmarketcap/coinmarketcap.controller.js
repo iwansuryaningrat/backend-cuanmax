@@ -16,8 +16,9 @@ const map = async (req, res) => {
     );
   } catch (err) {
     response = null;
+
     // error
-    res.status(500).send({
+    return res.status(500).send({
       message: err.message,
     });
   }
@@ -48,8 +49,9 @@ const latest = async (req, res) => {
     );
   } catch (err) {
     response = null;
+
     // error
-    res.status(500).send({
+    return res.status(500).send({
       message: err.message,
     });
   }
@@ -71,7 +73,7 @@ const info = async (req, res) => {
 
   if (!symbol && !id && !slug) {
     // error
-    res.status(400).send({
+    return res.status(400).send({
       message: "ID, Symbol, or Slug is required",
     });
   }
@@ -89,8 +91,9 @@ const info = async (req, res) => {
     );
   } catch (err) {
     response = null;
+
     // error
-    res.status(500).send({
+    return res.status(500).send({
       message: err.message,
     });
   }
@@ -113,7 +116,7 @@ const price = async (req, res) => {
 
   if (!symbol && !id && !slug) {
     // error
-    res.status(400).send({
+    return res.status(400).send({
       message: "ID, Symbol, or Slug is required",
     });
   }
@@ -135,8 +138,9 @@ const price = async (req, res) => {
     );
   } catch (err) {
     response = null;
+
     // error
-    res.status(500).send({
+    return res.status(500).send({
       message: err.message,
     });
   }
@@ -158,14 +162,14 @@ const convertCoin = async (req, res) => {
 
   if (!id && !symbol) {
     // error
-    res.status(400).send({
+    return res.status(400).send({
       message: "ID or Symbol is required",
     });
   }
 
   if (!amount || !convert) {
     // error
-    res.status(400).send({
+    return res.status(400).send({
       message: "Amount and Convert are required",
     });
   }
@@ -183,8 +187,9 @@ const convertCoin = async (req, res) => {
     );
   } catch (err) {
     response = null;
+
     // error
-    res.status(500).send({
+    return res.status(500).send({
       message: err.message,
     });
   }
