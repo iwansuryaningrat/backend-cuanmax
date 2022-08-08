@@ -7,7 +7,7 @@ const findAll = (req, res) => {
       res.send(result);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while retrieving pricing.",
       });
     });
@@ -16,12 +16,24 @@ const findAll = (req, res) => {
 const findOne = (req, res) => {
   const id = req.params.id;
 
+  if (!id) {
+    return res.status(400).send({
+      message: "Pricing Id is required",
+    });
+  }
+
   Pricing.findById(id)
     .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Pricing not found",
+        });
+      }
+
       res.send(result);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while showing pricing.",
       });
     });
@@ -30,10 +42,16 @@ const findOne = (req, res) => {
 const deletePrice = (req, res) => {
   const id = req.params.id;
 
+  if (!id) {
+    return res.status(400).send({
+      message: "Pricing ID is required",
+    });
+  }
+
   Pricing.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Pricing not found",
         });
       }
@@ -43,7 +61,7 @@ const deletePrice = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      return res.status(409).send({
         message: err.message || "Some error while delete pricing.",
       });
     });
