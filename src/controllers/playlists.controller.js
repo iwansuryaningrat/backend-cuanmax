@@ -1,4 +1,3 @@
-import e from "express";
 import db from "../models/index.js";
 const Playlists = db.playlists;
 
@@ -20,7 +19,7 @@ const findAll = (req, res) => {
     .sort({ createdAt: -1 })
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Playlist not found",
         });
       }
@@ -32,7 +31,7 @@ const findAll = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while retrieving playlists.",
       });
     });
@@ -66,7 +65,7 @@ const create = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      return res.status(409).send({
         message: err.message || "Some error while creating playlists.",
       });
     });
@@ -85,7 +84,7 @@ const findOne = (req, res) => {
   Playlists.findById(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Playlist not found",
         });
       }
@@ -97,7 +96,7 @@ const findOne = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while showing playlists.",
       });
     });
@@ -116,7 +115,7 @@ const update = (req, res) => {
   Playlists.findByIdAndUpdate(id, req.body)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Playlist not found",
         });
       }
@@ -127,7 +126,7 @@ const update = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      return res.status(409).send({
         message: err.message || "Some error while update playlist.",
       });
     });
@@ -146,7 +145,7 @@ const deletePlaylist = (req, res) => {
   Playlists.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Playlist not found",
         });
       }
@@ -157,7 +156,7 @@ const deletePlaylist = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      return res.status(409).send({
         message: err.message || "Some error while delete playlist.",
       });
     });
