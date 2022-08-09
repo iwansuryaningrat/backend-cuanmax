@@ -5,7 +5,16 @@
 // const date = `${day}/${month}/${year}`;
 
 // console.log(date);
-const date = new Date("2020-01-01 10:00:00").toString();
+// const date = new Date("2020-01-01 10:00:00").toString();
 // const date = new Date("2020-01-01 10:00:00").toISOString();
 
-console.log(date);
+// console.log(date);
+
+import "dotenv/config";
+import base64 from "base-64";
+
+const AUTH_STRING = base64.encode(
+  process.env.SANDBOX_MIDTRANS_SERVER_KEY + ":"
+);
+
+console.log(AUTH_STRING);
