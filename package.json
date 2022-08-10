@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "test": "mocha ./test/**/*.js --exit",
     "start": "nodemon index.js"
   },
   "repository": {
@@ -39,5 +40,9 @@
     "multer": "^1.4.4",
     "nodemailer": "^6.7.3",
     "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0",
+    "supertest": "^6.2.4"
   }
 }
