@@ -3,8 +3,9 @@ import app from "../../index.js";
 // import describe from "mocha";
 import mocha from "mocha";
 var describe = mocha.describe;
+import assert from "assert";
 
-describe("Teams", () => {
+describe(" Get Teams Endpoint Test", () => {
   it("responds with json", function (done) {
     request(app)
       .get("/api/v1/teams/")
@@ -12,22 +13,3 @@ describe("Teams", () => {
       .expect(200, done);
   });
 });
-
-// console.log(describe);
-
-// describe("GET /", () => {
-//   it("should return a list of teams", async () => {
-//     const response = await request(app).get("/teams");
-//     expect(response.status).toBe(200);
-//   }).timeout(10000);
-// });
-
-// describe("GET /", function () {
-//   it("responds with json", function (done) {
-//     request(app)
-//       .get("/")
-//       .set("Accept", "application/json")
-//       .expect("Content-Type", /json/)
-//       .expect(200, done);
-//   });
-// });
