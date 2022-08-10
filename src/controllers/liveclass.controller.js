@@ -130,6 +130,8 @@ const create = (req, res) => {
 
   const liveclass = new Liveclass({
     title: req.body.title,
+    liveclassCode: req.body.liveclassCode,
+    price: req.body.price,
     category: req.body.category,
     description: req.body.description,
     tags: req.body.tags,
