@@ -24,7 +24,7 @@ const findAll = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving liveclasses.",
       });
@@ -95,7 +95,7 @@ const update = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
-    res.status(400).send({
+    return res.status(400).send({
       message: "Live Class ID is required.",
     });
   }
@@ -103,7 +103,7 @@ const update = (req, res) => {
   Liveclass.findByIdAndupdate(id, req.body)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Live Class not found",
         });
       }
@@ -114,7 +114,7 @@ const update = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while updating live class.",
         timestamp: new Date().toString(),
       });
@@ -130,6 +130,8 @@ const create = (req, res) => {
 
   const liveclass = new Liveclass({
     title: req.body.title,
+    liveclassCode: req.body.liveclassCode,
+    price: req.body.price,
     category: req.body.category,
     description: req.body.description,
     tags: req.body.tags,
@@ -155,7 +157,7 @@ const create = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message:
           err.message || "Some error occurred while creating Live Class.",
         timestamp: new Date().toString(),

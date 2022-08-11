@@ -7,7 +7,7 @@ const findAll = (req, res) => {
       res.send(result);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while retrieving testimoni.",
       });
     });
@@ -16,12 +16,18 @@ const findAll = (req, res) => {
 const findOne = (req, res) => {
   const id = req.params.id;
 
+  if (!id) {
+    return res.status(400).send({
+      message: "Testimoni ID is required",
+    });
+  }
+
   Testimoni.findById(id)
     .then((result) => {
       res.send(result);
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while showing testimoni.",
       });
     });
@@ -39,10 +45,13 @@ const create = (req, res) => {
   testimoni
     .save()
     .then((result) => {
-      res.send(result);
+      res.send({
+        message: "Testimoni was successfully created",
+        timestamp: new Date().toString(),
+      });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while creating testimoni.",
       });
     });
@@ -51,20 +60,27 @@ const create = (req, res) => {
 const deleteTest = (req, res) => {
   const id = req.params.id;
 
+  if (!id) {
+    return res.status(400).send({
+      message: "Testimoni ID is required",
+    });
+  }
+
   Testimoni.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Testimoni not found",
         });
       }
 
       res.send({
         message: "Testimoni was deleted",
+        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      return res.status(409).send({
         message: err.message || "Some error while delete testimoni.",
       });
     });
@@ -73,20 +89,27 @@ const deleteTest = (req, res) => {
 const update = (req, res) => {
   const id = req.params.id;
 
+  if (!id) {
+    return res.status(400).send({
+      message: "Testimoni ID is required",
+    });
+  }
+
   Testimoni.findByIdAndUpdate(id, req.body)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Testimoni not found",
         });
       }
 
       res.send({
         message: "Testimoni was updated",
+        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      return res.status(409).send({
         message: err.message || "Some error while update testimoni.",
       });
     });

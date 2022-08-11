@@ -58,10 +58,12 @@ const signup = async (req, res) => {
     .then((data) => {
       res.send({
         message: "User created successfully. Please Login to continue.",
+        timestamp: new Date().toString(),
+        username: data.username,
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message:
           err.message || "Some error occurred while Signing up the User.",
       });

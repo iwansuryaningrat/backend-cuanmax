@@ -12,7 +12,7 @@ const findAll = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while retrieving teams.",
       });
     });
@@ -31,7 +31,7 @@ const findOne = (req, res) => {
   Teams.findById(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Team not found",
         });
       }
@@ -43,7 +43,7 @@ const findOne = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while showing teams.",
       });
     });
@@ -62,7 +62,7 @@ const deleteTeam = (req, res) => {
   Teams.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Team not found",
         });
       }
@@ -73,7 +73,7 @@ const deleteTeam = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      return res.status(409).send({
         message: err.message || "Some error while delete team.",
       });
     });
@@ -111,7 +111,7 @@ const create = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while creating team.",
         timestamp: new Date().toString(),
       });
@@ -123,7 +123,7 @@ const update = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
-    res.status(400).send({
+    return res.status(400).send({
       message: "Teams ID is required",
     });
   }
@@ -131,7 +131,7 @@ const update = (req, res) => {
   Teams.findByIdAndUpdate(id, req.body)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Team not found",
         });
       }
@@ -142,7 +142,7 @@ const update = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while updating team.",
         timestamp: new Date().toString(),
       });
@@ -154,7 +154,7 @@ const teamProfile = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
-    res.status(400).send({
+    return res.status(400).send({
       message: "Teams ID is required",
     });
   }
@@ -173,7 +173,7 @@ const teamProfile = (req, res) => {
   Teams.findByIdAndUpdate(id, { photo: { photoName, photoLink } })
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Team not found",
         });
       }
@@ -184,7 +184,7 @@ const teamProfile = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message:
           err.message ||
           "Some error occurred while changing the profile picture.",

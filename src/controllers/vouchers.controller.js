@@ -6,14 +6,14 @@ const Users = db.users;
 const findAll = (req, res) => {
   Vouchers.find()
     .then((result) => {
-      res.send({
+      return res.send({
         message: "Vouchers successfully fetched",
         timestamp: new Date().toString(),
         data: result,
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while retrieving vouchers.",
       });
     });
@@ -55,7 +55,7 @@ const create = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while creating voucher.",
       });
     });
@@ -74,7 +74,7 @@ const deleteVoucher = (req, res) => {
   Vouchers.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Voucher not found",
         });
       }
@@ -85,7 +85,7 @@ const deleteVoucher = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while delete voucher.",
       });
     });
@@ -124,7 +124,7 @@ const update = (req, res) => {
   })
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Voucher not found",
         });
       }
@@ -135,7 +135,7 @@ const update = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while update voucher.",
       });
     });
@@ -154,7 +154,7 @@ const findOne = (req, res) => {
   Vouchers.findById(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Voucher not found",
         });
       }
@@ -166,7 +166,7 @@ const findOne = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while fetch voucher.",
       });
     });
@@ -187,7 +187,7 @@ const useVoucher = (req, res) => {
         Vouchers.findOne({ voucherCode })
           .then((result) => {
             if (!result) {
-              res.status(404).send({
+              return res.status(404).send({
                 message: "Voucher not found",
               });
             }
@@ -199,7 +199,7 @@ const useVoucher = (req, res) => {
             });
           })
           .catch((err) => {
-            res.status(500).send({
+            return res.status(500).send({
               message: err.message || "Some error while fetch voucher.",
             });
           });
@@ -222,13 +222,13 @@ const useVoucher = (req, res) => {
           });
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message || "Some error while use voucher.",
           });
         });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while use voucher.",
       });
     });

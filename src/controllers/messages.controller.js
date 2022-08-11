@@ -20,7 +20,7 @@ const findAll = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error occurred while retrieving message.",
       });
     });
@@ -54,7 +54,7 @@ const create = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while creating message.",
       });
     });
@@ -73,7 +73,7 @@ const findOne = (req, res) => {
   Messages.findById(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Message not found",
         });
       }
@@ -85,7 +85,7 @@ const findOne = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while showing message.",
       });
     });
@@ -104,7 +104,7 @@ const read = (req, res) => {
   Messages.findByIdAndUpdate(id, { status: "Readed" })
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Message not found",
         });
       }
@@ -118,7 +118,7 @@ const read = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while update message.",
       });
     });
@@ -137,7 +137,7 @@ const reply = (req, res) => {
   Messages.findByIdAndUpdate(id, { status: "Replied" })
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Message not found",
         });
       }
@@ -151,7 +151,7 @@ const reply = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while update message.",
       });
     });
@@ -169,7 +169,7 @@ const deleteMsg = (req, res) => {
   Messages.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Message not found",
         });
       }
@@ -180,7 +180,7 @@ const deleteMsg = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while delete message.",
       });
     });
