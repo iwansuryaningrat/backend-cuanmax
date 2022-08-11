@@ -12,7 +12,7 @@ const findAll = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while retrieving Subscribers.",
       });
     });
@@ -51,7 +51,7 @@ const create = (req, res) => {
           });
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message || "Some error while creating Subscribers.",
           });
         });
@@ -75,7 +75,7 @@ const findOne = (req, res) => {
   Subscribers.findById(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Subscriber not found",
         });
       }
@@ -87,7 +87,7 @@ const findOne = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while showing Subscribers.",
         timestamp: new Date().toString(),
       });
@@ -106,7 +106,7 @@ const deleteSubs = (req, res) => {
   Subscribers.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Playlist not found",
         });
       }
@@ -117,7 +117,7 @@ const deleteSubs = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while delete playlist.",
       });
     });
@@ -135,7 +135,7 @@ const update = (req, res) => {
   Subscribers.findByIdAndUpdate(id, req.body)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Subscriber not found",
         });
       }
@@ -147,7 +147,7 @@ const update = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while updating Subscribers.",
       });
     });

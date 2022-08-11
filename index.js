@@ -85,6 +85,8 @@ import teamsRouter from "./src/routes/teams.routes.js"; // Teams Router
 teamsRouter(app); // Teams Router
 import testimoniRouter from "./src/routes/testimoni.routes.js"; // Testimoni Router
 testimoniRouter(app); // Testimoni Router
+import transactionsRouter from "./src/routes/transactions.routes.js";
+transactionsRouter(app); // Transactions Router
 import usersRouter from "./src/routes/users.routes.js"; // Users Router
 usersRouter(app); // Users Router
 import videosRouter from "./src/routes/videos.routes.js"; // Videos Router
@@ -93,3 +95,5 @@ import vouchersRouter from "./src/routes/vouchers.routes.js"; // Vouchers Router
 vouchersRouter(app); // Vouchers Router
 import watchlistRouter from "./src/routes/watchlist.routes.js"; // Watchlist Router
 watchlistRouter(app); // Watchlist Router
+
+export default app;

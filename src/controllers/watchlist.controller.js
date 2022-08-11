@@ -22,7 +22,7 @@ const findAll = (req, res) => {
     .sort({ createdAt: -1 })
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Watchlist not found",
         });
       }
@@ -34,7 +34,7 @@ const findAll = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).json({
+      return res.status(500).json({
         message:
           err.message || "Some error occurred while retrieving watchlist.",
       });
@@ -66,7 +66,7 @@ const findOne = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while showing watchlist.",
       });
     });
@@ -85,7 +85,7 @@ const deleteWl = (req, res) => {
   Watchlist.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Watchlist not found",
         });
       }
@@ -96,7 +96,7 @@ const deleteWl = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while delete watchlist.",
       });
     });
@@ -115,7 +115,7 @@ const nonActivate = (req, res) => {
   Watchlist.findByIdAndUpdate(id, { isActive: false })
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Watchlist not found",
         });
       }
@@ -126,7 +126,7 @@ const nonActivate = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while delete watchlist.",
       });
     });
@@ -174,7 +174,7 @@ const create = (req, res) => {
       }
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while creating watchlist.",
       });
     });
@@ -206,7 +206,7 @@ const create = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error occurred while creating watchlist.",
       });
     });
@@ -268,7 +268,7 @@ const update = (req, res) => {
   })
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Watchlist not found",
         });
       }
@@ -280,7 +280,7 @@ const update = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error occurred while updating watchlist.",
       });
     });

@@ -14,7 +14,7 @@ const findAll = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error occurred while fetching the Users.",
       });
     });
@@ -33,7 +33,7 @@ const findOne = (req, res) => {
   Users.findById(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "User not found",
         });
       }
@@ -63,7 +63,7 @@ const findOne = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while retrieving the user.",
       });
     });
@@ -82,7 +82,7 @@ const deleteUSer = (req, res) => {
   Users.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "User not found",
         });
       }
@@ -92,7 +92,7 @@ const deleteUSer = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while deleting the user.",
       });
     });
@@ -167,7 +167,7 @@ const changePassword = (req, res) => {
   const user = Users.findById(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "User not found",
         });
       }
@@ -196,7 +196,7 @@ const changePassword = (req, res) => {
             Users.findByIdAndUpdate(id, { password: newPassword })
               .then((result) => {
                 if (!result) {
-                  res.status(404).send({
+                  return res.status(404).send({
                     message: "User not found",
                   });
                 }
@@ -206,7 +206,7 @@ const changePassword = (req, res) => {
                 });
               })
               .catch((err) => {
-                res.status(500).send({
+                return res.status(500).send({
                   message:
                     err.message ||
                     "Some error occurred while changing the password.",
@@ -217,7 +217,7 @@ const changePassword = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving the user.",
       });
@@ -260,7 +260,7 @@ const changeProfilePicture = (req, res) => {
   })
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "User not found",
         });
       }
@@ -270,7 +270,7 @@ const changeProfilePicture = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message:
           err.message ||
           "Some error occurred while changing the profile picture.",

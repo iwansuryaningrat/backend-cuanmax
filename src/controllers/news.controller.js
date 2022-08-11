@@ -24,7 +24,7 @@ const findAll = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).json({
+      return res.status(500).json({
         message: err.message || "Some error occurred while retrieving news.",
       });
     });
@@ -43,7 +43,7 @@ const deleteNews = (req, res) => {
   News.findByIdAndDelete(id)
     .then((news) => {
       if (!news) {
-        res.status(404).send({
+        return res.status(404).send({
           message: `News with id ${id} not found.`,
         });
       }
@@ -54,7 +54,7 @@ const deleteNews = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).json({
+      return res.status(500).json({
         message: err.message || "Some error occurred while deleting news.",
       });
     });
@@ -83,14 +83,14 @@ const createNews = (req, res) => {
   news
     .save()
     .then((news) => {
-      res.send({
+      return res.send({
         message: "News was created successfully",
         timestamp: new Date().toString(),
         data: news,
       });
     })
     .catch((err) => {
-      res.status(500).json({
+      return res.status(500).json({
         message: err.message || "Some error occurred while creating news.",
       });
     });
@@ -109,7 +109,7 @@ const findById = (req, res) => {
   News.findById(id)
     .then((news) => {
       if (!news) {
-        res.status(404).send({
+        return res.status(404).send({
           message: `News with id ${id} not found.`,
         });
       }
@@ -121,7 +121,7 @@ const findById = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).json({
+      return res.status(500).json({
         message: err.message || "Some error occurred while retrieving news.",
       });
     });
@@ -141,7 +141,7 @@ const update = (req, res) => {
   News.findById(id)
     .then((news) => {
       if (!news) {
-        res.status(404).send({
+        return res.status(404).send({
           message: `News with id ${id} not found.`,
         });
       }
@@ -164,13 +164,13 @@ const update = (req, res) => {
           });
         })
         .catch((err) => {
-          res.status(500).json({
+          return res.status(500).json({
             message: err.message || "Some error occurred while updating news.",
           });
         });
     })
     .catch((err) => {
-      res.status(500).json({
+      return res.status(500).json({
         message: err.message || "Some error occurred while updating news.",
       });
     });

@@ -12,7 +12,7 @@ const findAll = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while retrieving videos.",
       });
     });
@@ -31,7 +31,7 @@ const findOne = (req, res) => {
   Videos.findById(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Video not found",
         });
       }
@@ -43,7 +43,7 @@ const findOne = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while showing videos.",
       });
     });
@@ -62,7 +62,7 @@ const update = (req, res) => {
   Videos.findByIdAndUpdate(id, req.body)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Video not found",
         });
       }
@@ -73,7 +73,7 @@ const update = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      return res.status(409).send({
         message: err.message || "Some error while update video.",
       });
     });
@@ -92,7 +92,7 @@ const deleteVideo = (req, res) => {
   Videos.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Video not found",
         });
       }
@@ -103,7 +103,7 @@ const deleteVideo = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(409).send({
+      return res.status(409).send({
         message: err.message || "Some error while delete video.",
       });
     });
@@ -123,7 +123,7 @@ const findByPlaylist = (req, res) => {
     .sort({ createdAt: 1 })
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Video not found",
         });
       }
@@ -135,7 +135,7 @@ const findByPlaylist = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while showing videos.",
       });
     });
@@ -164,7 +164,7 @@ const create = (req, res) => {
   Playlist.findById(playlistId)
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Playlist not found",
         });
       }
@@ -192,13 +192,13 @@ const create = (req, res) => {
           });
         })
         .catch((err) => {
-          res.status(500).send({
+          return res.status(500).send({
             message: err.message || "Some error while creating video.",
           });
         });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while showing videos.",
       });
     });
@@ -228,7 +228,7 @@ const uploadThumbnail = (req, res) => {
   Videos.findByIdAndUpdate(id, { thumbnail: { thumbnailName, thumbnailLink } })
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Video not found",
         });
       }
@@ -239,7 +239,7 @@ const uploadThumbnail = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while update video.",
       });
     });
@@ -269,7 +269,7 @@ const uploadVideo = (req, res) => {
   Videos.findByIdAndUpdate(id, { url: videoLink })
     .then((result) => {
       if (!result) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "Video not found",
         });
       }
@@ -280,7 +280,7 @@ const uploadVideo = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error while update video.",
       });
     });
