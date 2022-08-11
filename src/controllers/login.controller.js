@@ -9,7 +9,7 @@ const login = async (req, res) => {
 
   // Validate request
   if (!email && !password) {
-    res.status(400).send({
+    return res.status(400).send({
       message: "Invalid Email or Password!",
     });
   }
@@ -19,7 +19,7 @@ const login = async (req, res) => {
   })
     .then((user) => {
       if (!user) {
-        res.status(404).send({
+        return res.status(404).send({
           message: "User not found!",
         });
       } else {
@@ -41,13 +41,13 @@ const login = async (req, res) => {
 
             res.setHeader("Content-Type", "Application/json");
 
-            res.status(200).send({
+            return res.status(200).send({
               message: "Login Success",
               timestamp: new Date().toString(),
               token: token,
             });
           } else {
-            res.status(401).send({
+            return res.status(401).send({
               message: "Password incorrect!",
             });
           }
@@ -55,7 +55,7 @@ const login = async (req, res) => {
       }
     })
     .catch((err) => {
-      res.status(500).send({
+      return res.status(500).send({
         message: err.message || "Some error occurred while loging in the User.",
       });
     });
