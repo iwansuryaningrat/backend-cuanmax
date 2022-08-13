@@ -4,6 +4,7 @@ import {
   create,
   deleteClass,
   update,
+  uploadThumbnail,
 } from "../controllers/liveclass.controller.js";
 import { login, admin } from "../middlewares/auth.js";
 import Express from "express";
@@ -15,6 +16,7 @@ const liveClassRouter = (app) => {
   router.post("/", login, admin, create);
   router.delete("/:id", login, admin, deleteClass);
   router.put("/:id", login, admin, update);
+  router.post("/:id/thumbnail", login, admin, uploadThumbnail);
 
   app.use("/api/v1/liveclass", router);
 };
