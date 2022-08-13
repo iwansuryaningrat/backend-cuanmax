@@ -123,11 +123,6 @@ const update = (req, res) => {
 
 // Create liveclass (Done)
 const create = (req, res) => {
-  const photoName = req.file.filename;
-  const photoLink = `${req.protocol}://${req.get(
-    "host"
-  )}/assets/images/${photoName}`;
-
   const liveclass = new Liveclass({
     title: req.body.title,
     liveclassCode: req.body.liveclassCode,
@@ -139,10 +134,6 @@ const create = (req, res) => {
     time: req.body.time,
     location: req.body.location,
     status: req.body.status,
-    cover: {
-      imageName: photoName,
-      imagePath: photoLink,
-    },
     benefits: req.body.benefits,
     participants: [],
   });
@@ -165,4 +156,39 @@ const create = (req, res) => {
     });
 };
 
-export { findAll, findOne, deleteClass, update, create };
+const uploadThumbnail = (req, res) => {
+  const photoName = req.file.filename;
+  const photoLink = `${req.protocol}://${req.get(
+    "host"
+  )}/assets/images/${photoName}`;
+
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Live Class ID is required.",
+    });
+  }
+
+  Liveclass.findByIdAndUpdate(id, { thumbnail: photoLink })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Live Class not found",
+        });
+      }
+
+      return res.status(200).send({
+        message: "Live Class was updated",
+        timestamp: new Date().toString(),
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while updating live class.",
+        timestamp: new Date().toString(),
+      });
+    });
+};
+
+export { findAll, findOne, deleteClass, update, create, uploadThumbnail };
