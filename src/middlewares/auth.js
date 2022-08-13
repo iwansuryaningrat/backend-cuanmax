@@ -15,7 +15,7 @@ const login = (req, res, next) => {
     req.user = decoded.user;
     next();
   } catch (err) {
-    res.status(401).send({
+    return res.status(401).send({
       message: "Token is not valid",
       timestamp: new Date().toString(),
     });
@@ -43,7 +43,7 @@ const admin = (req, res, next) => {
       });
     }
   } catch (err) {
-    res.status(401).send({
+    return res.status(401).send({
       message: "Token is not valid",
       timestamp: new Date().toString(),
     });
