@@ -156,6 +156,7 @@ const create = (req, res) => {
     });
 };
 
+// Need Testing
 const uploadThumbnail = (req, res) => {
   const photoName = req.file.filename;
   const photoLink = `${req.protocol}://${req.get(
