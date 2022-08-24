@@ -59,7 +59,7 @@ const update = (req, res) => {
     });
   }
 
-  Videos.findByIdAndUpdate(id, req.body)
+  Videos.findByIdAndUpdate(id, req.body, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -225,7 +225,11 @@ const uploadThumbnail = (req, res) => {
     });
   }
 
-  Videos.findByIdAndUpdate(id, { thumbnail: { thumbnailName, thumbnailLink } })
+  Videos.findByIdAndUpdate(
+    id,
+    { thumbnail: { thumbnailName, thumbnailLink } },
+    { new: true }
+  )
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -266,7 +270,7 @@ const uploadVideo = (req, res) => {
     });
   }
 
-  Videos.findByIdAndUpdate(id, { url: videoLink })
+  Videos.findByIdAndUpdate(id, { url: videoLink }, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
