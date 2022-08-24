@@ -7,8 +7,14 @@ export default (mongoose) => {
       },
       description: String,
       image: {
-        type: String,
-        default: "",
+        imageName: {
+          type: String,
+        },
+        imagePath: {
+          type: String,
+          require: true,
+          default: "",
+        },
       },
       benefits: [
         {
