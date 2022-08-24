@@ -1,5 +1,6 @@
 import db from "../models/index.js";
 const Transactions = db.transactions;
+const Users = db.users;
 
 const transactionsTest = (req, res) => {
   const body = req.body;
@@ -69,4 +70,4 @@ const createTransaction = (req, res) => {
     });
 };
 
-export { transactionsTest, createTransaction };
+export { transactionsTest, createTransaction, createTransaction };
