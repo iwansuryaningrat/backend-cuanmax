@@ -95,7 +95,7 @@ const update = (req, res) => {
     });
   }
 
-  Testimoni.findByIdAndUpdate(id, req.body)
+  Testimoni.findByIdAndUpdate(id, req.body, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({

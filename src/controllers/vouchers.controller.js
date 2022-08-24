@@ -112,16 +112,20 @@ const update = (req, res) => {
     forNewUser,
   } = req.body;
 
-  Vouchers.findByIdAndUpdate(id, {
-    voucherCode,
-    voucherName,
-    voucherDescription,
-    voucherDiscount,
-    voucherQuota,
-    voucherType,
-    isActive,
-    forNewUser,
-  })
+  Vouchers.findByIdAndUpdate(
+    id,
+    {
+      voucherCode,
+      voucherName,
+      voucherDescription,
+      voucherDiscount,
+      voucherQuota,
+      voucherType,
+      isActive,
+      forNewUser,
+    },
+    { new: true }
+  )
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -212,7 +216,8 @@ const useVoucher = (req, res) => {
         {
           referalCount: result.referal.referalCount + 1,
           referalAccount: result.referal.referalAccount.push({ username }),
-        }
+        },
+        { new: true }
       )
         .then((result) => {
           res.send({

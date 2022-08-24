@@ -9,10 +9,12 @@ export default (mongoose) => {
         type: String,
         require: true,
       },
-      price: Number,
-      discountPrice: {
+      price: {
         type: Number,
         require: true,
+      },
+      discountPrice: {
+        type: Number,
       },
       currency: {
         type: String,

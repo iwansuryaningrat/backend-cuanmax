@@ -128,7 +128,7 @@ const update = (req, res) => {
     });
   }
 
-  Teams.findByIdAndUpdate(id, req.body)
+  Teams.findByIdAndUpdate(id, req.body, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({

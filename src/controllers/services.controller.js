@@ -1,10 +1,15 @@
 import db from "../models/index.js";
 const Services = db.services;
 
+// Done
 const findAll = (req, res) => {
   Services.find()
     .then((result) => {
-      res.send(result);
+      res.send({
+        message: "Services was found",
+        timestamp: new Date().toString(),
+        data: result,
+      });
     })
     .catch((err) => {
       return res.status(500).send({
@@ -13,16 +18,14 @@ const findAll = (req, res) => {
     });
 };
 
+// Done
 const create = (req, res) => {
+  const { serviceName, description, benefits } = req.body;
+
   const services = new Services({
-    serviceName: req.body.serviceName,
-    description: req.body.description,
-    image: req.file.path,
-    benefit: [
-      {
-        benefitName: req.body.benefitName,
-      },
-    ],
+    serviceName,
+    description,
+    benefits,
   });
 
   services
@@ -30,15 +33,64 @@ const create = (req, res) => {
     .then((result) => {
       res.status(200).send({
         message: "Service successfully added.",
+        timestamp: new Date().toString(),
+        data: result,
       });
     })
     .catch((err) => {
-      return res.status(409).send({
+      return res.status(500).send({
         message: err.message || "Some error while creating service.",
       });
     });
 };
 
+// Done
+const uploadImage = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
+
+  if (!req.files) {
+    return res.status(400).send({
+      message: "No files were uploaded.",
+    });
+  }
+
+  const photoName = req.file.filename;
+  const photoLink = `${req.protocol}://${req.get(
+    "host"
+  )}/assets/images/${photoName}`;
+
+  Services.findByIdAndUpdate(
+    id,
+    { image: { imageName: photoName, imagePath: photoLink } },
+    { new: true }
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Service not found",
+        });
+      }
+
+      res.status(200).send({
+        message: "Image successfully uploaded.",
+        timestamp: new Date().toString(),
+        data: result,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while uploading image.",
+      });
+    });
+};
+
+// Done
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -58,7 +110,8 @@ const findOne = (req, res) => {
 
       res.send({
         message: "Service was found",
-        result,
+        timestamp: new Date().toString(),
+        data: result,
       });
     })
     .catch((err) => {
@@ -68,6 +121,7 @@ const findOne = (req, res) => {
     });
 };
 
+// Done
 const deleteService = (req, res) => {
   const { id } = req.params;
 
@@ -87,17 +141,20 @@ const deleteService = (req, res) => {
 
       res.send({
         message: "Service was deleted",
+        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
-      return res.status(409).send({
+      return res.status(500).send({
         message: err.message || "Some error while delete service.",
       });
     });
 };
 
+// Done
 const update = (req, res) => {
   const { id } = req.params;
+  const { serviceName, description, benefits } = req.body;
 
   if (!id) {
     return res.status(400).send({
@@ -105,7 +162,11 @@ const update = (req, res) => {
     });
   }
 
-  Services.findByIdAndUpdate(id, req.body)
+  Services.findByIdAndUpdate(
+    id,
+    { serviceName, description, benefits },
+    { new: true }
+  )
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -115,13 +176,14 @@ const update = (req, res) => {
 
       res.send({
         message: "Service was updated",
+        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
-      return res.status(409).send({
+      return res.status(500).send({
         message: err.message || "Some error while update service.",
       });
     });
 };
 
-export { findAll, create, findOne, deleteService, update };
+export { findAll, create, uploadImage, findOne, deleteService, update };

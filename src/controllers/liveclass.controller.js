@@ -100,7 +100,7 @@ const update = (req, res) => {
     });
   }
 
-  Liveclass.findByIdAndupdate(id, req.body)
+  Liveclass.findByIdAndupdate(id, req.body, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -171,7 +171,7 @@ const uploadThumbnail = (req, res) => {
     });
   }
 
-  Liveclass.findByIdAndUpdate(id, { thumbnail: photoLink })
+  Liveclass.findByIdAndUpdate(id, { thumbnail: photoLink }, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({

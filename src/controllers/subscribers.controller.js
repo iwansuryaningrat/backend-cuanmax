@@ -132,7 +132,7 @@ const update = (req, res) => {
     });
   }
 
-  Subscribers.findByIdAndUpdate(id, req.body)
+  Subscribers.findByIdAndUpdate(id, req.body, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
