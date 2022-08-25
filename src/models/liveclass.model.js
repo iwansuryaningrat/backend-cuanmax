@@ -50,7 +50,7 @@ export default (mongoose) => {
         imagePath: {
           type: String,
           require: true,
-          default: "",
+          default: "example.jpg",
         },
       },
       benefits: [

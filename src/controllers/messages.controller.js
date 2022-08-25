@@ -101,7 +101,7 @@ const read = (req, res) => {
     });
   }
 
-  Messages.findByIdAndUpdate(id, { status: "Readed" })
+  Messages.findByIdAndUpdate(id, { status: "Readed" }, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -134,7 +134,7 @@ const reply = (req, res) => {
     });
   }
 
-  Messages.findByIdAndUpdate(id, { status: "Replied" })
+  Messages.findByIdAndUpdate(id, { status: "Replied" }, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({

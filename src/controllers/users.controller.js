@@ -108,7 +108,7 @@ const update = (req, res) => {
     });
   }
 
-  Users.findByIdAndUpdate(id, req.body)
+  Users.findByIdAndUpdate(id, req.body, { new: true })
     .then((result) => {
       if (!result) {
         res.status(404).send({
@@ -252,12 +252,16 @@ const changeProfilePicture = (req, res) => {
     "host"
   )}/assets/images/${imageName}`;
 
-  Users.findByIdAndUpdate(id, {
-    image: {
-      imageName: imageName,
-      imageLink: imageLink,
+  Users.findByIdAndUpdate(
+    id,
+    {
+      image: {
+        imageName: imageName,
+        imageLink: imageLink,
+      },
     },
-  })
+    { new: true }
+  )
     .then((result) => {
       if (!result) {
         return res.status(404).send({

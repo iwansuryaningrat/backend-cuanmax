@@ -112,7 +112,7 @@ const nonActivate = (req, res) => {
     });
   }
 
-  Watchlist.findByIdAndUpdate(id, { isActive: false })
+  Watchlist.findByIdAndUpdate(id, { isActive: false }, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -251,21 +251,25 @@ const update = (req, res) => {
     });
   }
 
-  Watchlist.findByIdAndUpdate(id, {
-    name: name,
-    code: code,
-    category: category,
-    tags: tags,
-    sector: sector,
-    lastPrice: lastPrice,
-    buyArea: buyArea,
-    stopLoss: stopLoss,
-    takeProfit: {
-      TP1: TP1,
-      TP2: TP2,
-      TP3: TP3,
+  Watchlist.findByIdAndUpdate(
+    id,
+    {
+      name: name,
+      code: code,
+      category: category,
+      tags: tags,
+      sector: sector,
+      lastPrice: lastPrice,
+      buyArea: buyArea,
+      stopLoss: stopLoss,
+      takeProfit: {
+        TP1: TP1,
+        TP2: TP2,
+        TP3: TP3,
+      },
     },
-  })
+    { new: true }
+  )
     .then((result) => {
       if (!result) {
         return res.status(404).send({

@@ -1,21 +1,10 @@
-import headers from "../../services/midtrans";
+import headers from "../../services/midtrans.js";
 import axios from "axios";
 import "dotenv/config";
 
-const body = {
-  transaction_details: {
-    order_id: "ORDER-101",
-    gross_amount: 10000,
-  },
-};
-
-export default async (req, res) => {
-  try {
-    const response = await axios.post(process.env.SANDBOX_SNAP_ENDPOINT, body, {
-      headers,
-    });
-    res.send(response.data);
-  } catch (err) {
-    res.send(err.response.data);
-  }
-};
+// Import Schemas
+import db from "../../models/index.js";
+const Transactions = db.transactions;
+const Liveclass = db.liveclass;
+const Pricing = db.pricing;
+const Users = db.users;

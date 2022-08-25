@@ -112,7 +112,7 @@ const update = (req, res) => {
     });
   }
 
-  Playlists.findByIdAndUpdate(id, req.body)
+  Playlists.findByIdAndUpdate(id, req.body, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
