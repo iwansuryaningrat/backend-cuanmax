@@ -7,8 +7,12 @@ router.use("/api-docs", swaggerUi.serve);
 router.get("/api-docs", swaggerUi.setup(swaggerDocument));
 
 const apiDocsRouter = (app) => {
+  const options = {
+    explorer: true,
+  };
+
   router.use("/", swaggerUi.serve);
-  router.get("/", swaggerUi.setup(swaggerDocument));
+  router.get("/", swaggerUi.setup(swaggerDocument, options));
   app.use("/api-docs", router);
 };
 
