@@ -9,8 +9,11 @@ import {
 import { login, admin } from "../middlewares/auth.js";
 import Express from "express";
 const router = Express.Router();
+import headers from "../services/headers.js";
 
 const messagesRouter = (app) => {
+  app.use(headers);
+
   router.get("/", login, admin, findAll);
   router.post("/", login, admin, create);
   router.get("/:id", login, admin, findOne);

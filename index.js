@@ -95,5 +95,7 @@ import vouchersRouter from "./src/routes/vouchers.routes.js"; // Vouchers Router
 vouchersRouter(app); // Vouchers Router
 import watchlistRouter from "./src/routes/watchlist.routes.js"; // Watchlist Router
 watchlistRouter(app); // Watchlist Router
+import apiDocsRouter from "./src/routes/api-docs.routes.js"; // API Docs Router
+apiDocsRouter(app); // API Docs Router
 
 export default app;
