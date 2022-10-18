@@ -5,8 +5,6 @@ import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// const bodyParser = require("body-parser");
-
 // Load .env file
 import "dotenv/config";
 
