@@ -14,6 +14,15 @@ export default (mongoose) => {
         require: true,
         unique: true,
       },
+      phone: {
+        type: String,
+      },
+      address: {
+        type: String,
+      },
+      gender: {
+        type: String,
+      },
       password: {
         type: String,
         require: true,
