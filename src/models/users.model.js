@@ -33,7 +33,10 @@ export default (mongoose) => {
           member: String,
           startDate: Date,
           endDate: Date,
-          isNew: Boolean,
+          isNew: {
+            type: Boolean,
+            default: false,
+          },
         },
         isAdmin: {
           type: Boolean,
