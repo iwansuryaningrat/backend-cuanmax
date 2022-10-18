@@ -40,6 +40,11 @@ export default (mongoose) => {
           default: false,
           require: true,
         },
+        isActivated: {
+          type: Boolean,
+          default: false,
+          require: true,
+        },
       },
       referal: {
         referalCode: {
