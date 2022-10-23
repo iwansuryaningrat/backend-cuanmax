@@ -71,6 +71,7 @@ Users (Data Table)
 Add User (Form)
 Edit User (Form)
 Deactivated Users (Data Table)
+Deactivated Membership (Data Table)
 
 # Profile
 Profile (Form)
