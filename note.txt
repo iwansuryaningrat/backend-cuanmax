@@ -1,1 +1,81 @@
-db.products.find().sort({"created_at": 1}) --- 1 for asc and -1 for desc
+ADMIN DASHBOARD FEATURES
+
+# DASHBOARD
+Total Income (Pie Chart)
+Total Basic Members (Pie Chart)
+Total Pro Members (Pie Chart)
+
+(in One Chart)
+Monthly Basic Members
+Monthly Pro Members
+Monthly Income
+
+# MEMBERS
+Basic Members (Data Table)
+Pro Members (Data Table)
+Subscribers (Data Table)
+Deactivated Members (Data Table)
+
+# INCOME
+Monthly Income (Data Table)
+Yearly Income (Data Table)
+
+# Services
+Services (Data Table)
+Add Service (Form)
+Edit Service (Form)
+
+# Content
+Playlists (Data Table)
+Add Playlist (Form)
+Edit Playlist (Form)
+Videos (Data Table)
+Add Video (Form)
+Edit Video (Form)
+Watchlists (Data Table)
+Add Watchlist (Form)
+Edit Watchlist (Form)
+
+# Email
+Broadcast Email (Form)
+
+# Profile
+Profile (Form)
+Change Password (Form)
+Change Profile Picture (Form)
+
+
+SUPER ADMIN DASHBOARD FEATURES
+
+# DASHBOARD
+Total Income (Pie Chart)
+Total Basic Members (Pie Chart)
+Total Pro Members (Pie Chart)
+
+(in One Chart)
+Monthly Basic Members
+Monthly Pro Members
+Monthly Income
+
+# MEMBERS
+Basic Members (Data Table)
+Pro Members (Data Table)
+Subscribers (Data Table)
+
+# INCOME
+Monthly Income (Data Table)
+Yearly Income (Data Table)
+
+# Users (Admin)
+Users (Data Table)
+Add User (Form)
+Edit User (Form)
+Deactivated Users (Data Table)
+Deactivated Membership (Data Table)
+
+# Profile
+Profile (Form)
+Change Password (Form)
+Change Profile Picture (Form)
+
+

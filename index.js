@@ -1,11 +1,10 @@
 // Express REST server
 import express from "express";
 import cors from "cors";
+import cookieSession from "cookie-session";
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
-
-// const bodyParser = require("body-parser");
 
 // Load .env file
 import "dotenv/config";
@@ -25,10 +24,28 @@ const __dirname = path.dirname(__filename);
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 app.use(cors());
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 app.use(express.json());
 app.use(
   express.urlencoded({
     extended: true,
+  })
+);
+app.use(
+  cookieSession({
+    name: "Simpelmen",
+    secret: "COOKIE_SECRET",
+    httpOnly: true,
+    sameSite: "strict",
   })
 );
 
@@ -58,8 +75,10 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server started on port http://localhost:${process.env.PORT}`);
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
+  console.log(`Server started on port http://localhost:${PORT}`);
 });
 
 // Routers
@@ -95,5 +114,7 @@ import vouchersRouter from "./src/routes/vouchers.routes.js"; // Vouchers Router
 vouchersRouter(app); // Vouchers Router
 import watchlistRouter from "./src/routes/watchlist.routes.js"; // Watchlist Router
 watchlistRouter(app); // Watchlist Router
+import apiDocsRouter from "./src/routes/api-docs.routes.js"; // API Docs Router
+apiDocsRouter(app); // API Docs Router
 
 export default app;
