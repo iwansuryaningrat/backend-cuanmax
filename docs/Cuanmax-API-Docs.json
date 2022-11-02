@@ -16,14 +16,7 @@
   "servers": [
     {
       "description": "Cuanmax RESTful API Server",
-      "url": "https://{environment}.cuanmax.id/api/v1",
-      "variables": {
-        "environment": {
-          "description": "Server Environment",
-          "default": "prod",
-          "enum": ["dev", "stag", "prod"]
-        }
-      }
+      "url": "http://159.223.84.116/api/v1"
     }
   ],
   "paths": {
