@@ -14,6 +14,15 @@ export default (mongoose) => {
         require: true,
         unique: true,
       },
+      phone: {
+        type: String,
+      },
+      address: {
+        type: String,
+      },
+      gender: {
+        type: String,
+      },
       password: {
         type: String,
         require: true,
@@ -33,9 +42,17 @@ export default (mongoose) => {
           member: String,
           startDate: Date,
           endDate: Date,
-          isNew: Boolean,
+          isNew: {
+            type: Boolean,
+            default: false,
+          },
         },
         isAdmin: {
+          type: Boolean,
+          default: false,
+          require: true,
+        },
+        isActivated: {
           type: Boolean,
           default: false,
           require: true,

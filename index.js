@@ -1,11 +1,10 @@
 // Express REST server
 import express from "express";
 import cors from "cors";
+import cookieSession from "cookie-session";
 import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
-
-// const bodyParser = require("body-parser");
 
 // Load .env file
 import "dotenv/config";
@@ -25,10 +24,28 @@ const __dirname = path.dirname(__filename);
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
 app.use(cors());
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 app.use(express.json());
 app.use(
   express.urlencoded({
     extended: true,
+  })
+);
+app.use(
+  cookieSession({
+    name: "Simpelmen",
+    secret: "COOKIE_SECRET",
+    httpOnly: true,
+    sameSite: "strict",
   })
 );
 
