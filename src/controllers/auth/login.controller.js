@@ -45,6 +45,7 @@ const login = async (req, res) => {
               message: "Login Success",
               timestamp: new Date().toString(),
               token: token,
+              role: user.type.accountType.member,
             });
           } else {
             return res.status(401).send({
