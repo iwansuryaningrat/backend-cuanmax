@@ -11,7 +11,7 @@ const authRouter = (app) => {
   router.post("/login", login);
   router.post("/signup", signup);
 
-  app.use("/api/v1", router);
+  app.use("/v1/auth", router);
 };
 
 export default authRouter;
