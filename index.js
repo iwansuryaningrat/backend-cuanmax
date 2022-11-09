@@ -81,19 +81,11 @@ app.listen(PORT, () => {
   console.log(`Server started on port http://localhost:${PORT}`);
 });
 
-// Routers
+// General Routers
 import authRouter from "./src/routes/auth.routes.js"; // Auth Router
 authRouter(app);
 import coinmarketcapRouter from "./src/routes/coinmarketcap.routes.js"; // Coinmarketcap Router
 coinmarketcapRouter(app); // Coinmarketcap Router
-import liveclassRouter from "./src/routes/liveclass.routes.js"; // Liveclass Router
-liveclassRouter(app); // Liveclass Router
-import messagesRouter from "./src/routes/messages.routes.js"; // Messages Router
-messagesRouter(app); // Messages Router
-import newsRouter from "./src/routes/news.routes.js"; // News Router
-newsRouter(app); // News Router
-import playlistsRouter from "./src/routes/playlists.routes.js"; // Playlists Router
-playlistsRouter(app); // Playlists Router
 import pricingRouter from "./src/routes/pricing.routes.js"; // Pricing Router
 pricingRouter(app); // Pricing Router
 import servicesRouter from "./src/routes/services.routes.js"; // Services Router
@@ -104,17 +96,28 @@ import teamsRouter from "./src/routes/teams.routes.js"; // Teams Router
 teamsRouter(app); // Teams Router
 import testimoniRouter from "./src/routes/testimoni.routes.js"; // Testimoni Router
 testimoniRouter(app); // Testimoni Router
-import transactionsRouter from "./src/routes/transactions.routes.js";
-transactionsRouter(app); // Transactions Router
-import usersRouter from "./src/routes/users.routes.js"; // Users Router
-usersRouter(app); // Users Router
-import videosRouter from "./src/routes/videos.routes.js"; // Videos Router
-videosRouter(app); // Videos Router
-import vouchersRouter from "./src/routes/vouchers.routes.js"; // Vouchers Router
-vouchersRouter(app); // Vouchers Router
-import watchlistRouter from "./src/routes/watchlist.routes.js"; // Watchlist Router
-watchlistRouter(app); // Watchlist Router
 import apiDocsRouter from "./src/routes/api-docs.routes.js"; // API Docs Router
 apiDocsRouter(app); // API Docs Router
+
+// * Admin Routers
+// Auth Router
+// Liveclass Router
+// Messages Router
+// News Router
+// Playlists Router
+// Pricing Router
+// Services Router
+// Subscribers Router
+// Teams Router
+// Testimoni Router
+// Transactions Router
+// Users Router
+// Videos Router
+// Vouchers Router
+// Watchlists Router
+
+// * Pro Users Routers
+
+// * Basic Users Routers
 
 export default app;
