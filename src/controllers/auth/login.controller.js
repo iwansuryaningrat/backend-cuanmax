@@ -5,13 +5,19 @@ import "dotenv/config";
 import bcrypt from "bcrypt";
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, rememberMe } = req.body;
 
   // Validate request
   if (!email && !password) {
     return res.status(400).send({
       message: "Invalid Email or Password!",
     });
+  }
+
+  if (rememberMe) {
+    const timeExpire = "24h";
+  } else {
+    const timeExpire = "12h";
   }
 
   await Users.findOne({
@@ -35,7 +41,7 @@ const login = async (req, res) => {
               },
               process.env.JWT_SECRET,
               {
-                expiresIn: "3h",
+                expiresIn: timeExpire,
               }
             );
 
