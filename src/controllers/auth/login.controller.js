@@ -5,7 +5,7 @@ import "dotenv/config";
 import bcrypt from "bcrypt";
 
 // Login Controller Function (DONE)
-const login = async (req, res) => {
+const loggingin = async (req, res) => {
   const { email, password, rememberMe } = req.body;
 
   // Validate request
@@ -68,4 +68,4 @@ const login = async (req, res) => {
     });
 };
 
-export default login;
+export default loggingin;
