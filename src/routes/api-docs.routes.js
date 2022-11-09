@@ -10,7 +10,7 @@ const apiDocsRouter = (app) => {
 
   router.use("/", swaggerUi.serve);
   router.get("/", swaggerUi.setup(swaggerDocument, options));
-  app.use("/api-docs", router);
+  app.use("/dev/api-docs", router);
 };
 
 export default apiDocsRouter;
