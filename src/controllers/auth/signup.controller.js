@@ -29,6 +29,8 @@ const signup = async (req, res) => {
   // now we set user password to hashed password
   const encryptedPassword = await bcrypt.hash(password, salt);
 
+  var member = admin ? "Admin" : "Basic Member";
+
   // Create new user
   const newUser = new Users({
     name: name,
@@ -37,7 +39,7 @@ const signup = async (req, res) => {
     password: encryptedPassword,
     type: {
       accountType: {
-        member: "Basic Member",
+        member: member,
         startDate: new Date().toString(),
         isNew: true,
       },
