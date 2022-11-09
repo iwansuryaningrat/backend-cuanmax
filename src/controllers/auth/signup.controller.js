@@ -1,10 +1,9 @@
 import db from "../../models/index.js";
 const Users = db.users;
-import jwt from "jsonwebtoken";
 import "dotenv/config";
 import bcrypt from "bcrypt";
 
-// belum selesai
+// Sign Up (DONE)
 const signup = async (req, res) => {
   const { name, email, username } = req.body;
   let password = req.body.password;
@@ -12,7 +11,7 @@ const signup = async (req, res) => {
 
   if (!name || !username || !email || !password) {
     return res.status(400).send({
-      message: "Name, username, email and password are required.",
+      message: "Name, username, email, and password are required.",
     });
   }
 
@@ -28,7 +27,7 @@ const signup = async (req, res) => {
   // generate salt to hash password
   const salt = await bcrypt.genSalt(10);
   // now we set user password to hashed password
-  encryptedPassword = await bcrypt.hash(password, salt);
+  const encryptedPassword = await bcrypt.hash(password, salt);
 
   // Create new user
   const newUser = new Users({
@@ -56,10 +55,8 @@ const signup = async (req, res) => {
   newUser
     .save()
     .then((data) => {
-      res.send({
+      res.status(200).send({
         message: "User created successfully. Please Login to continue.",
-        timestamp: new Date().toString(),
-        username: data.username,
       });
     })
     .catch((err) => {
