@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 import bcrypt from "bcrypt";
 
+// Login Controller Function (DONE)
 const login = async (req, res) => {
   const { email, password, rememberMe } = req.body;
 
@@ -15,9 +16,9 @@ const login = async (req, res) => {
   }
 
   if (rememberMe) {
-    const timeExpire = "24h";
+    var timeExpire = "24h";
   } else {
-    const timeExpire = "12h";
+    var timeExpire = "12h";
   }
 
   await Users.findOne({
@@ -48,10 +49,9 @@ const login = async (req, res) => {
             res.setHeader("Content-Type", "Application/json");
 
             return res.status(200).send({
-              message: "Login Success",
-              timestamp: new Date().toString(),
-              token: token,
+              message: "Login Success!",
               role: user.type.accountType.member,
+              token: token,
             });
           } else {
             return res.status(401).send({
