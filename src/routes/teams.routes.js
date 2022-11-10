@@ -9,11 +9,8 @@ import {
 import { login, admin } from "../middlewares/auth.js";
 import Express from "express";
 const router = Express.Router();
-import headers from "../services/headers.js";
 
 const teamsRouter = (app) => {
-  app.use(headers);
-
   router.get("/", findAll);
   router.post("/", login, admin, create);
   router.get("/:id", login, admin, findOne);

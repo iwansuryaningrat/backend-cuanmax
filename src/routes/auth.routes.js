@@ -7,12 +7,9 @@ import {
 } from "../controllers/auth/resetPassword.controller.js";
 import { login } from "../middlewares/auth.js";
 import Express from "express";
-import headers from "../services/headers.js";
 
 const authRouter = (app) => {
   const router = Express.Router();
-
-  app.use(headers);
 
   router.post("/login", loggingin);
   router.post("/signup", signup);

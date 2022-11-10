@@ -8,11 +8,8 @@ import {
 import { login, admin } from "../middlewares/auth.js";
 import Express from "express";
 const router = Express.Router();
-import headers from "../services/headers.js";
 
 const testimoniRouter = (app) => {
-  app.use(headers);
-
   router.get("/", findAll);
   router.get("/:id", findOne);
   router.post("/", login, admin, create);

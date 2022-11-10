@@ -3,11 +3,8 @@
 import { login, admin } from "../middlewares/auth.js";
 import Express from "express";
 const router = Express.Router();
-import headers from "../services/headers.js";
 
 const transactionsRouter = (app) => {
-  app.use(headers);
-
   // router.post("/:liveclassCode", liveclassTransactions);
   // router.post("/", transactionsTest);
 
