@@ -1,12 +1,13 @@
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 
+// Basic Membership Middleware (Done)
 const login = (req, res, next) => {
   const token = req.header("x-auth-token");
+
   if (!token) {
     return res.status(401).send({
       message: "No token, authorization denied",
-      timestamp: new Date().toString(),
     });
   }
 
@@ -17,17 +18,17 @@ const login = (req, res, next) => {
   } catch (err) {
     return res.status(401).send({
       message: "Token is not valid",
-      timestamp: new Date().toString(),
     });
   }
 };
 
+// Admin Middleware (Done)
 const admin = (req, res, next) => {
   const token = req.header("x-auth-token");
+
   if (!token) {
     return res.status(401).send({
       message: "No token, authorization denied",
-      timestamp: new Date().toString(),
     });
   }
 
@@ -38,24 +39,23 @@ const admin = (req, res, next) => {
       next();
     } else {
       return res.status(403).send({
-        message: "You are not an admin",
-        timestamp: new Date().toString(),
+        message: "Require Admin Role!",
       });
     }
   } catch (err) {
     return res.status(401).send({
       message: "Token is not valid",
-      timestamp: new Date().toString(),
     });
   }
 };
 
+// Pro Membership Middleware (Done)
 const proMember = (req, res, next) => {
   const token = req.header("x-auth-token");
+
   if (!token) {
     return res.status(401).send({
       message: "No token, authorization denied",
-      timestamp: new Date().toString(),
     });
   }
 
@@ -68,13 +68,11 @@ const proMember = (req, res, next) => {
       return res.status(403).send({
         message:
           "You are not a pro member. Please upgrade member type to pro member",
-        timestamp: new Date().toString(),
       });
     }
   } catch (err) {
     res.status(401).send({
       message: "Token is not valid",
-      timestamp: new Date().toString(),
     });
   }
 };
