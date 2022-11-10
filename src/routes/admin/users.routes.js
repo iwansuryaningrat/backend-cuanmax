@@ -5,12 +5,12 @@ import {
   changePassword,
   changeProfilePicture,
   deleteUSer,
-} from "../controllers/users.controller.js";
-import { login, admin } from "../middlewares/auth.js";
+} from "../../controllers/users.controller.js";
+import { login, admin } from "../../middlewares/auth.js";
 import Express from "express";
 const router = Express.Router();
 
-const usersRouter = (app) => {
+const usersAdminRouter = (app) => {
   router.get("/", admin, findAll);
   router.get("/:id", login, findOne);
   router.put("/:id", login, update);
@@ -18,7 +18,7 @@ const usersRouter = (app) => {
   router.put("/:id/changepicture", login, changeProfilePicture);
   router.delete("/:id", login, admin, deleteUSer);
 
-  app.use("/api/v1/users", router);
+  app.use("/v1/admin/users", router);
 };
 
-export default usersRouter;
+export default usersAdminRouter;
