@@ -2,15 +2,31 @@ import db from "../models/index.js";
 const Users = db.users;
 import bcrypt from "bcrypt";
 
-// Done
+// Fetch all users - Admin Only (Done)
 const findAll = (req, res) => {
   Users.find()
     .sort({ createdAt: -1 })
     .then((result) => {
-      res.send({
+      const data = result.map((item) => {
+        const { _id, name, username, email, phone, address, type } = item;
+        return {
+          id: _id,
+          name,
+          username,
+          email,
+          phone,
+          address,
+          memberType: type.accountType.member,
+          startDate: type.accountType.startDate.toString(),
+          isNew: type.accountType.isNew,
+          adminType: type.isAdmin,
+          isActivated: type.isActivated,
+        };
+      });
+
+      res.status(200).send({
         message: "Users fetched successfully!",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -20,7 +36,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Done
+// Find a single user with an id
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -69,7 +85,7 @@ const findOne = (req, res) => {
     });
 };
 
-// Done
+// Delete a user with the specified id in the request - Admin Only
 const deleteUSer = (req, res) => {
   const { id } = req.params;
 
@@ -98,7 +114,7 @@ const deleteUSer = (req, res) => {
     });
 };
 
-// Done
+// Update a user by the id in the request
 const update = (req, res) => {
   const { id } = req.params;
 
@@ -146,7 +162,7 @@ const update = (req, res) => {
     });
 };
 
-// Done
+// Change password
 const changePassword = (req, res) => {
   const { id } = req.params;
   const { oldPassword } = req.body;
@@ -224,7 +240,7 @@ const changePassword = (req, res) => {
     });
 };
 
-// Done
+// Change user's image
 const changeProfilePicture = (req, res) => {
   const { id } = req.params;
 
