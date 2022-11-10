@@ -633,6 +633,162 @@
           }
         }
       }
+    },
+    "/admin/users/": {
+      "get": {
+        "tags": ["Users - Admin"],
+        "summary": "Get All Users",
+        "description": "Get All Users for Admin",
+        "operationId": "getUsers",
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "username": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "phone": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "memberType": {
+                            "type": "string"
+                          },
+                          "startDate": {
+                            "type": "string"
+                          },
+                          "isNew": {
+                            "type": "boolean"
+                          },
+                          "adminType": {
+                            "type": "string"
+                          },
+                          "isActivated": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Users fetched successfully!",
+                    "data": [
+                      {
+                        "id": "5f9f1b9b9b9b9b9b9b9b9b9b",
+                        "name": "Admin",
+                        "username": "admin",
+                        "email": "example@mail.com",
+                        "phone": "081234567890",
+                        "address": "Jl. Jalan",
+                        "memberType": "Admin",
+                        "startDate": "2020-10-29T00:00:00.000Z",
+                        "isNew": false,
+                        "adminType": "Super Admin",
+                        "isActivated": true
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "No token, authorization denied!"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Require Admin Role!"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "No users found!"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while fetching the Users."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
