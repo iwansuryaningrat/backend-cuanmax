@@ -124,5 +124,8 @@ usersAdminRouter(app);
 // * Pro Users Routers
 
 // * Basic Users Routers
+// Users Router
+import usersRouter from "./src/routes/users/users.routes.js";
+usersRouter(app);
 
 export default app;
