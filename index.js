@@ -104,7 +104,6 @@ import apiDocsRouter from "./src/routes/api-docs.routes.js"; // API Docs Router
 apiDocsRouter(app); // API Docs Router
 
 // * Admin Routers
-// Auth Router
 // Liveclass Router
 // Messages Router
 // News Router
@@ -116,6 +115,8 @@ apiDocsRouter(app); // API Docs Router
 // Testimoni Router
 // Transactions Router
 // Users Router
+import usersAdminRouter from "./src/routes/admin/users.routes.js";
+usersAdminRouter(app);
 // Videos Router
 // Vouchers Router
 // Watchlists Router
