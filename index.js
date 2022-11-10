@@ -32,17 +32,21 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
+  res.setHeader("Access-Control-Allow-Credentials", true);
+
   next();
 });
+
 app.use(express.json());
 app.use(
   express.urlencoded({
     extended: true,
   })
 );
+
 app.use(
   cookieSession({
-    name: "Simpelmen",
+    name: "Cuanmax",
     secret: "COOKIE_SECRET",
     httpOnly: true,
     sameSite: "strict",
