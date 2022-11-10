@@ -42,13 +42,13 @@ const findAll = (req, res) => {
     });
 };
 
-// Find a single user with an id
+// Find a single user with an id (Done)
 const findOne = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
-      message: "User ID is required.",
+      message: "User ID is required!",
     });
   }
 
@@ -56,37 +56,57 @@ const findOne = (req, res) => {
     .then((result) => {
       if (!result) {
         return res.status(404).send({
-          message: "User not found",
+          message: "User not found!",
         });
       }
 
-      res.send({
-        message: "User fetched successfully!",
-        timestamp: new Date().toString(),
-        data: {
-          name: result.name,
-          username: result.username,
-          email: result.email,
-          image: {
-            imageName: result.image.imageName,
-            imageLink: result.image.imageLink,
-          },
-          type: {
-            memberType: result.type.accountType.member,
-            isNew: result.type.accountType.isNew,
-            adminType: result.type.isAdmin,
-          },
-          referal: {
-            referalCode: result.referal.referalCode,
-            referalCount: result.referal.referalCount,
-            referalAccount: result.referal.referalAccount,
-          },
+      const {
+        _id,
+        name,
+        username,
+        email,
+        phone,
+        address,
+        gender,
+        image,
+        type,
+        referal,
+      } = result;
+
+      const data = {
+        id: _id,
+        name,
+        username,
+        email,
+        phone,
+        address,
+        gender,
+        image: image.imageLink,
+        type: {
+          memberType: type.accountType.member,
+          startDate: type.accountType.startDate.toString(),
+          endDate: type.accountType.endDate
+            ? type.accountType.endDate.toString()
+            : null,
+          isNew: type.accountType.isNew,
+          isAdmin: type.isAdmin,
+          isActivated: type.isActivated,
         },
+        referal: {
+          referalCode: referal.referalCode,
+          referalCount: referal.referalCount,
+          referalAccount: referal.referalAccount,
+        },
+      };
+
+      res.status(200).send({
+        message: "User fetched successfully!",
+        data,
       });
     })
     .catch((err) => {
       return res.status(500).send({
-        message: err.message || "Some error while retrieving the user.",
+        message: err.message || "Some error while retrieving the user!",
       });
     });
 };
