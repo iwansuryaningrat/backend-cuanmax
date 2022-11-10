@@ -7,6 +7,12 @@ const findAll = (req, res) => {
   Users.find()
     .sort({ createdAt: -1 })
     .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "No users found!",
+        });
+      }
+
       const data = result.map((item) => {
         const { _id, name, username, email, phone, address, type } = item;
         return {
