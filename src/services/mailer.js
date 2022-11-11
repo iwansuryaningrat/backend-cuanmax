@@ -1,38 +1,147 @@
-"use strict";
-import nodemailer from "nodemailer";
+import mailgun from "mailgun-js";
 
-// async..await is not allowed in global scope, must use a wrapper
-async function main() {
-  // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
-  //   let testAccount = await nodemailer.createTestAccount();
+const signupMailer = (email, token) => {
+  const DOMAIN = process.env.MAILGUN_DOMAIN;
+  const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN });
+  const data = {
+    from: "No Reply <noreply@gmail.com>",
+    to: email,
+    subject: "Email Verification",
+    html: `
+    <html>
+    <head>
+    <style>
+    .container {
+      width: 100%;
+      height: 100%;
+      background-color: orange;
+      padding: 20px;
+    }
+    .card {
+      width: 400px;
+      height: 400px;
+      background-color: white;
+      margin: 0 auto;
+      margin-top: 100px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .card h1 {
+      text-align: center;
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+    .card p {
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .card a {
+      text-decoration: none;
+      background-color: #000;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      display: block;
+      width: 100px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    </style>
+    </head>
+    <body>
+    <div class="container">
+    <div class="card">
+    <h1>Verify Email</h1>
+    <p>Click the button below to verify your email address.</p>
+    <a href="http://localhost:3000/auth/activate/${token}">Verify</a>
+    </div>
+    </div>
+    </body>
+    </html>
+    `,
+  };
 
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    host: "mail.cuanmax.id",
-    port: 456,
-    secure: true, // true for 465, false for other ports
-    auth: {
-      user: "test", // generated ethereal user
-      pass: "C!xO@q8F%wL^", // generated ethereal password
-    },
+  mg.messages().send(data, function (error, body) {
+    if (error) {
+      return error.message;
+    }
+
+    return "Email sent";
   });
+};
 
-  // send mail with defined transport object
-  let info = await transporter.sendMail({
-    from: '"Cuanmax Support" <test@cuanmax.id>', // sender address
-    to: "iwan.suryaningrat28@gmail.com", // list of receivers
-    subject: "Hello ✔", // Subject line
-    text: "Hello world?", // plain text body
-    html: "<b>Hello world?</b>", // html body
+const forgotPasswordMailer = (email, token) => {
+  const DOMAIN = process.env.MAILGUN_DOMAIN;
+  const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN });
+  const data = {
+    from: "No Reply <noreply@gmail.com>",
+    to: email,
+    subject: "Reset Password",
+    html: `
+    <html>
+    <head>
+    <style>
+    .container {
+      width: 100%;
+      height: 100%;
+      background-color: orange;
+      padding: 20px;
+    }
+    .card {
+      width: 400px;
+      height: 400px;
+      background-color: white;
+      margin: 0 auto;
+      margin-top: 100px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .card h1 {
+      text-align: center;
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+    .card p {
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .card a {
+      text-decoration: none;
+      background-color: #000;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      display: block;
+      width: 100px;
+      text-align: center;
+      margin: 0 auto;
+    }
+    </style>
+    </head>
+    <body>
+    <div class="container">
+    <div class="card">
+    <h1>Reset Password</h1>
+    <p>Click the button below to reset your password.</p>
+    <a href="http://localhost:3000/auth/reset-password/${token}">Reset</a>
+    </div>
+    </div>
+    </body>
+    </html>
+    `,
+  };
+
+  mg.messages().send(data, function (error, body) {
+    if (error) {
+      return error.message;
+    }
+
+    return "Email sent";
   });
+};
 
-  console.log("Message sent: %s", info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-  // Preview only available when sending through an Ethereal account
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-}
-
-main().catch(console.error);
+export { signupMailer, forgotPasswordMailer };
