@@ -2,6 +2,8 @@ import db from "../../models/index.js";
 const Users = db.users;
 import "dotenv/config";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { signupMailer } from "../../services/mailer.js";
 
 // Sign Up (DONE)
 const signup = async (req, res) => {
@@ -54,12 +56,10 @@ const signup = async (req, res) => {
   });
 
   // Save new user
-  newUser
+  const result = await newUser
     .save()
     .then((data) => {
-      res.status(200).send({
-        message: "User created successfully. Please Login to continue.",
-      });
+      return data;
     })
     .catch((err) => {
       return res.status(500).send({
@@ -67,6 +67,35 @@ const signup = async (req, res) => {
           err.message || "Some error occurred while Signing up the User.",
       });
     });
+
+  if (result) {
+    // Generate token
+    const token = jwt.sign(
+      {
+        id: result._id,
+        name: result.name,
+        username: result.username,
+        email: result.email,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "10m",
+      }
+    );
+
+    // Send email
+    const response = await signupMailer(result.email, token);
+
+    if (response == "Email sent") {
+      res.status(200).send({
+        message: "User registered successfully! Please check your email.",
+      });
+    } else {
+      return res.status(500).send({
+        message: "Failed to send email.",
+      });
+    }
+  }
 };
 
 export default signup;
