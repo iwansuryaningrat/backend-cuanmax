@@ -75,7 +75,7 @@
                     }
                   },
                   "example": {
-                    "message": "User created successfully"
+                    "message": "User registered successfully! Please check your email."
                   }
                 }
               }
@@ -130,6 +130,121 @@
                   },
                   "example": {
                     "message": "Some error occurred while Signing up the User."
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/verifyAccount/{token}": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Verify Account",
+        "description": "Verify Account to Cuanmax",
+        "operationId": "verifyAccount",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "description": "Token for verify account",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User was verified successfully!",
+                    "email": "example@mail.com"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Token is required."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Invalid Token"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User Not Found."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while verifying account!"
                   }
                 }
               }
