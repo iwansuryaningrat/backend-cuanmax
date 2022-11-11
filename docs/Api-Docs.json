@@ -2,7 +2,7 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Cuanmax RESTful API",
-    "version": "1.0.0",
+    "version": "1.1.2",
     "description": "RESTful API for Cuanmax Application",
     "contact": {
       "name": "Iwan Suryaningrat",
