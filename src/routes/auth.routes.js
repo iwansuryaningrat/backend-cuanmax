@@ -5,6 +5,7 @@ import {
   forgotPassword,
   resetPasswordWithToken,
 } from "../controllers/auth/resetPassword.controller.js";
+import verifyAccount from "../controllers/auth/verifyAccount.controller.js";
 import { login } from "../middlewares/auth.js";
 import Express from "express";
 
@@ -16,6 +17,7 @@ const authRouter = (app) => {
   router.put("/resetPassword", login, resetPassword);
   router.post("/forgotPassword", forgotPassword);
   router.put("/resetPassword/:token", resetPasswordWithToken);
+  router.get("/verifyAccount/:token", verifyAccount);
 
   app.use("/v1/auth", router);
 };
