@@ -39,6 +39,7 @@ const loggingin = async (req, res) => {
                 name: user.name,
                 admin: user.type.isAdmin,
                 role: user.type.accountType.member,
+                isActivated: user.type.isActivated,
               },
               process.env.JWT_SECRET,
               {
