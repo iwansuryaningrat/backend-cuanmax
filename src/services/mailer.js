@@ -5,10 +5,12 @@ import "dotenv/config";
 
 const signupMailer = async (email, token) => {
   const DOMAIN = process.env.MAILGUN_DOMAIN;
-  const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN });
+  const testMail = process.env.TEST_MAIL;
+  const API_KEY = process.env.MAILGUN_API_KEY;
+  const mg = mailgun({ apiKey: API_KEY, domain: DOMAIN });
   const data = {
-    from: "No Reply <noreply@gmail.com>",
-    to: email,
+    from: "Admin <admin@cuanmax.id>",
+    to: testMail,
     subject: "Email Verification",
     html: `
     <html>
@@ -66,16 +68,6 @@ const signupMailer = async (email, token) => {
     `,
   };
 
-  // const response = mg.messages().send(data, (error, body) => {
-  //   if (error) {
-  //     return error.message;
-  //   }
-
-  //   return "Email sent";
-  // });
-
-  // return response;
-
   const response = await mg
     .messages()
     .send(data)
@@ -91,10 +83,12 @@ const signupMailer = async (email, token) => {
 
 const forgotPasswordMailer = async (email, token) => {
   const DOMAIN = process.env.MAILGUN_DOMAIN;
-  const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN });
+  const testMail = process.env.TEST_MAIL;
+  const API_KEY = process.env.MAILGUN_API_KEY;
+  const mg = mailgun({ apiKey: API_KEY, domain: DOMAIN });
   const data = {
-    from: "No Reply <noreply@gmail.com>",
-    to: email,
+    from: "Admin <admin@cuanmax.id>",
+    to: testMail,
     subject: "Reset Password",
     html: `
     <html>
