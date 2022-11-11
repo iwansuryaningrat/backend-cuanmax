@@ -22,11 +22,20 @@ const verifyAccount = async (req, res) => {
       });
     }
     user.type.isActivated = true;
-    await user.save();
-    return res.status(200).send({
-      message: "Account verified successfully",
-      email: user.email,
-    });
+    await user
+      .save()
+      .then((data) => {
+        return res.status(200).send({
+          message: "Account verified successfully",
+          email: user.email,
+        });
+      })
+      .catch((err) => {
+        return res.status(500).send({
+          message:
+            err.message || "Some error occurred while verifying account!",
+        });
+      });
   } catch (error) {
     return res.status(401).send({
       message: "Invalid Token",
