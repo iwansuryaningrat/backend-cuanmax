@@ -1,6 +1,9 @@
 import mailgun from "mailgun-js";
 
-const signupMailer = (email, token) => {
+// Import dotenv
+import "dotenv/config";
+
+const signupMailer = async (email, token) => {
   const DOMAIN = process.env.MAILGUN_DOMAIN;
   const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN });
   const data = {
@@ -63,16 +66,30 @@ const signupMailer = (email, token) => {
     `,
   };
 
-  mg.messages().send(data, function (error, body) {
-    if (error) {
-      return error.message;
-    }
+  // const response = mg.messages().send(data, (error, body) => {
+  //   if (error) {
+  //     return error.message;
+  //   }
 
-    return "Email sent";
-  });
+  //   return "Email sent";
+  // });
+
+  // return response;
+
+  const response = await mg
+    .messages()
+    .send(data)
+    .then((body) => {
+      return "Email sent";
+    })
+    .catch((error) => {
+      return error.message;
+    });
+
+  return response;
 };
 
-const forgotPasswordMailer = (email, token) => {
+const forgotPasswordMailer = async (email, token) => {
   const DOMAIN = process.env.MAILGUN_DOMAIN;
   const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN });
   const data = {
@@ -135,13 +152,17 @@ const forgotPasswordMailer = (email, token) => {
     `,
   };
 
-  mg.messages().send(data, function (error, body) {
-    if (error) {
+  const response = await mg
+    .messages()
+    .send(data)
+    .then((body) => {
+      return "Email sent";
+    })
+    .catch((error) => {
       return error.message;
-    }
+    });
 
-    return "Email sent";
-  });
+  return response;
 };
 
 export { signupMailer, forgotPasswordMailer };
