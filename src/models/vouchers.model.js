@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const vouchersSchema = new Schema(
     {
       voucherCode: {
         type: String,
@@ -34,12 +35,13 @@ export default (mongoose) => {
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  vouchersSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Vouchers = mongoose.model("vouchers", schema);
+  const Vouchers = mongoose.model("Vouchers", vouchersSchema);
+
   return Vouchers;
 };
