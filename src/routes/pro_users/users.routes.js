@@ -1,22 +1,31 @@
 import {
-  findAll,
   findOne,
   update,
   changePassword,
   changeProfilePicture,
-  deleteUSer,
 } from "../controllers/users.controller.js";
-import { login, admin } from "../middlewares/auth.js";
+import { login, proMember } from "../middlewares/auth.js";
+import userFinder from "../../middlewares/usersfinder.js";
 import Express from "express";
 const router = Express.Router();
 
 const usersRouter = (app) => {
-  router.get("/", admin, findAll);
-  router.get("/:id", login, findOne);
-  router.put("/:id", login, update);
-  router.put("/:id/changepassword", login, changePassword);
-  router.put("/:id/changepicture", login, changeProfilePicture);
-  router.delete("/:id", login, admin, deleteUSer);
+  router.get("/:id", login, proMember, userFinder, findOne);
+  router.put("/:id", login, proMember, userFinder, update);
+  router.put(
+    "/:id/changepassword",
+    login,
+    proMember,
+    userFinder,
+    changePassword
+  );
+  router.put(
+    "/:id/changepicture",
+    login,
+    proMember,
+    userFinder,
+    changeProfilePicture
+  );
 
   app.use("/api/v1/users", router);
 };
