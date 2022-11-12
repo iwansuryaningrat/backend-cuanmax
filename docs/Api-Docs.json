@@ -963,7 +963,7 @@
         "tags": ["Users - Admin"],
         "summary": "Get User by ID",
         "description": "Get User by ID for Admin",
-        "operationId": "getUser",
+        "operationId": "getUserAdmin",
         "parameters": [
           {
             "name": "x-auth-token",
@@ -1089,7 +1089,7 @@
                         "isActivated": false
                       },
                       "referal": {
-                        "referalCode": "ADMIN",
+                        "referalCode": "123456",
                         "referalCount": 0,
                         "referalAccount": []
                       }
@@ -1148,6 +1148,474 @@
                   },
                   "example": {
                     "message": "Require Admin Role!"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User not found!"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while fetching the User!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pro/users/{User ID}": {
+      "get": {
+        "tags": ["Users - Pro Member"],
+        "summary": "Get User by ID",
+        "description": "Get User by ID for Pro Member",
+        "operationId": "getUserPro",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "User ID",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "phone": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "gender": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "object",
+                          "properties": {
+                            "memberType": {
+                              "type": "string"
+                            },
+                            "startDate": {
+                              "type": "string"
+                            },
+                            "endDate": {
+                              "type": "string"
+                            },
+                            "isNew": {
+                              "type": "boolean"
+                            },
+                            "isAdmin": {
+                              "type": "boolean"
+                            },
+                            "isActivated": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "referal": {
+                          "type": "object",
+                          "properties": {
+                            "referalCode": {
+                              "type": "string"
+                            },
+                            "referalCount": {
+                              "type": "number"
+                            },
+                            "referalAccount": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "username": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "User fetched successfully!",
+                    "data": {
+                      "name": "Example Name",
+                      "username": "username",
+                      "email": "example@mail.com",
+                      "image": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
+                      "type": {
+                        "memberType": "Pro Member",
+                        "startDate": "Thu Nov 10 2022 02:25:30 GMT+0700 (Western Indonesia Time)",
+                        "endDate": "Thu Nov 10 2022 02:25:30 GMT+0700 (Western Indonesia Time)",
+                        "isNew": true,
+                        "isAdmin": false,
+                        "isActivated": false
+                      },
+                      "referal": {
+                        "referalCode": "123456",
+                        "referalCount": 0,
+                        "referalAccount": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User ID is required!"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "No token, authorization denied!"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Require Pro Member Role!"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User not found!"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Some error occurred while fetching the User!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{User ID}": {
+      "get": {
+        "tags": ["Users - Basic Member"],
+        "summary": "Get User by ID",
+        "description": "Get User by ID for Basic Member",
+        "operationId": "getUserBasic",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "User ID",
+            "in": "path",
+            "description": "User ID",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "username": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "phone": {
+                          "type": "string"
+                        },
+                        "address": {
+                          "type": "string"
+                        },
+                        "gender": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "object",
+                          "properties": {
+                            "memberType": {
+                              "type": "string"
+                            },
+                            "startDate": {
+                              "type": "string"
+                            },
+                            "endDate": {
+                              "type": "string"
+                            },
+                            "isNew": {
+                              "type": "boolean"
+                            },
+                            "isAdmin": {
+                              "type": "boolean"
+                            },
+                            "isActivated": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "referal": {
+                          "type": "object",
+                          "properties": {
+                            "referalCode": {
+                              "type": "string"
+                            },
+                            "referalCount": {
+                              "type": "number"
+                            },
+                            "referalAccount": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "username": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "User fetched successfully!",
+                    "data": {
+                      "name": "Example Name",
+                      "username": "username",
+                      "email": "example@mail.com",
+                      "image": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
+                      "type": {
+                        "memberType": "Basic Member",
+                        "startDate": "Thu Nov 10 2022 02:25:30 GMT+0700 (Western Indonesia Time)",
+                        "endDate": "Thu Nov 10 2022 02:25:30 GMT+0700 (Western Indonesia Time)",
+                        "isNew": true,
+                        "isAdmin": false,
+                        "isActivated": false
+                      },
+                      "referal": {
+                        "referalCode": "123456",
+                        "referalCount": 0,
+                        "referalAccount": []
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "User ID is required!"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "No token, authorization denied!"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "You are not authorized to do this action!"
                   }
                 }
               }
