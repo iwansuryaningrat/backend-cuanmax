@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const TestimoniSchema = new Schema(
     {
       name: {
         type: String,
@@ -26,12 +27,13 @@ export default (mongoose) => {
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  TestimoniSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Testimoni = mongoose.model("testimoni", schema);
+  const Testimoni = mongoose.model("Testimoni", TestimoniSchema);
+
   return Testimoni;
 };
