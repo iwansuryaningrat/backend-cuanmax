@@ -391,6 +391,19 @@
         "summary": "Reset Password",
         "description": "Reset Password",
         "operationId": "resetPassword",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -757,6 +770,17 @@
         "operationId": "getUsers",
         "parameters": [
           {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
             "name": "admin",
             "in": "query",
             "description": "Parameter for Admin Filter",
@@ -942,10 +966,22 @@
         "operationId": "getUser",
         "parameters": [
           {
+            "name": "x-auth-token",
+            "in": "header",
+            "description": "JWT Token",
+            "required": true,
+            "allowEmptyValue": false,
+            "schema": {
+              "type": "string",
+              "format": "int64"
+            }
+          },
+          {
             "name": "User ID",
             "in": "path",
             "description": "User ID",
             "required": true,
+            "allowEmptyValue": false,
             "schema": {
               "type": "string"
             }
