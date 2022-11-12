@@ -1,8 +1,10 @@
 import db from "../../src/models/index.js";
 const Users = db.users;
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const test = async () => {
-  const response = await Users.find({ "type.accountType.member": "basic" })
+const test = async (id) => {
+  const response = await Users.findById(id)
     .then((result) => {
       return result;
     })
@@ -10,9 +12,24 @@ const test = async () => {
       return err;
     });
 
-  return response;
+  const user = new Users({
+    _id: Schema.Types.ObjectId,
+    username: "test",
+    email: "example@mail.com",
+    password: "password",
+  });
+
+  const result = {
+    response,
+    user,
+  };
+
+  return result;
 };
 
-const test2 = await test();
+// const result = test();
+// console.log(result);
 
-console.log(test2);
+test("636fec47ed082a65c9e094be").then((result) => {
+  console.log(result);
+});
