@@ -3,13 +3,13 @@ import {
   update,
   changePassword,
   changeProfilePicture,
-} from "../controllers/users.controller.js";
-import { login, proMember } from "../middlewares/auth.js";
+} from "../../controllers/users.controller.js";
+import { login, proMember } from "../../middlewares/auth.js";
 import userFinder from "../../middlewares/usersfinder.js";
 import Express from "express";
 const router = Express.Router();
 
-const usersRouter = (app) => {
+const usersProRouter = (app) => {
   router.get("/:id", login, proMember, userFinder, findOne);
   router.put("/:id", login, proMember, userFinder, update);
   router.put(
@@ -27,7 +27,7 @@ const usersRouter = (app) => {
     changeProfilePicture
   );
 
-  app.use("/api/v1/users", router);
+  app.use("/v1/pro/users", router);
 };
 
-export default usersRouter;
+export default usersProRouter;
