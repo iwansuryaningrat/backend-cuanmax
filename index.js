@@ -122,6 +122,9 @@ usersAdminRouter(app);
 // Watchlists Router
 
 // * Pro Users Routers
+// Users Router
+import usersProRouter from "./src/routes/pro_users/users.routes.js";
+usersProRouter(app);
 
 // * Basic Users Routers
 // Users Router
