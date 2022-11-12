@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const usersSchema = new Schema(
     {
       name: {
         type: String,
@@ -74,12 +75,13 @@ export default (mongoose) => {
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  usersSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Users = mongoose.model("users", schema);
+  const Users = mongoose.model("Users", usersSchema);
+
   return Users;
 };
