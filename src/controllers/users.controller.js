@@ -123,7 +123,7 @@ const findOne = (req, res) => {
     });
 };
 
-// Delete a user with the specified id in the request - Admin Only
+// Delete a user with the specified id in the request - Admin Only (Done)
 const deleteUSer = (req, res) => {
   const { id } = req.params;
 
@@ -140,9 +140,9 @@ const deleteUSer = (req, res) => {
           message: "User not found",
         });
       }
+
       res.send({
-        message: "User deleted successfully.",
-        timestamp: new Date().toString(),
+        message: "User deleted successfully!",
       });
     })
     .catch((err) => {
