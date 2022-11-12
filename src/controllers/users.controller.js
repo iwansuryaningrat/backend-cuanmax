@@ -4,7 +4,19 @@ import bcrypt from "bcrypt";
 
 // Fetch all users - Admin Only (Done)
 const findAll = (req, res) => {
-  Users.find()
+  const { admin, basic, pro } = req.query;
+
+  var condition = {};
+
+  if (admin) {
+    condition = { "type.isAdmin": true };
+  } else if (basic) {
+    condition = { "type.accountType.member": "Basic Member" };
+  } else if (pro) {
+    condition = { "type.accountType.member": "Pro Member" };
+  }
+
+  Users.find(condition)
     .sort({ createdAt: -1 })
     .then((result) => {
       if (!result) {
