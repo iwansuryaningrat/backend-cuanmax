@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const watchlistSchema = new Schema(
     {
       name: {
         type: String,
@@ -53,12 +54,13 @@ export default (mongoose) => {
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  watchlistSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Watchlist = mongoose.model("watchlists", schema);
+  const Watchlist = mongoose.model("Watchlists", watchlistSchema);
+
   return Watchlist;
 };
