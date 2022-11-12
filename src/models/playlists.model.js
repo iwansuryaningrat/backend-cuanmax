@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const playlistSchema = new Schema(
     {
       name: {
         type: String,
@@ -38,12 +39,13 @@ export default (mongoose) => {
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  playlistSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Playlists = mongoose.model("playlists", schema);
+  const Playlists = mongoose.model("Playlists", playlistSchema);
+
   return Playlists;
 };
