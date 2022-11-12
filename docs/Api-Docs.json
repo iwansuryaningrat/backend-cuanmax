@@ -556,7 +556,7 @@
                     }
                   },
                   "example": {
-                    "message": "Email sent!"
+                    "message": "Email has been sent!"
                   }
                 }
               }
