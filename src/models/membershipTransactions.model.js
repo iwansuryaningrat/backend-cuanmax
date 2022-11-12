@@ -1,11 +1,17 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const membershipTransactionsSchema = new Schema(
     {
-      transactionId: {
+      paymentCode: {
         type: String,
         require: true,
       },
-      transactionType: {
+      transactionName: {
+        type: String,
+        require: true,
+        default: "Cuanmax Pro Membership",
+      },
+      membershipDuration: {
         type: String,
         require: true,
       },
@@ -27,34 +33,29 @@ export default (mongoose) => {
       },
       transactionReference: {
         type: String,
-        require: true,
       },
       transactionUser: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: "users",
         require: true,
       },
-      transactionUserId: {
+      voucherCode: {
         type: String,
-        require: true,
-      },
-      transactionUserName: {
-        type: String,
-        require: true,
-      },
-      transactionUserEmail: {
-        type: String,
-        require: true,
       },
     },
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  membershipTransactionsSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Transactions = mongoose.model("transactions", schema);
-  return Transactions;
+  const MembershipTransactions = mongoose.model(
+    "MembershipTransactions",
+    membershipTransactionsSchema
+  );
+
+  return MembershipTransactions;
 };
