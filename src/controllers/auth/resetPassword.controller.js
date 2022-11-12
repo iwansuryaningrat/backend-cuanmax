@@ -3,6 +3,7 @@ const Users = db.users;
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import bcrypt from "bcrypt";
+import { forgotPasswordMailer } from "../../services/mailer.js";
 
 // Reset Password Controller Function (DONE)
 const resetPassword = async (req, res) => {
@@ -82,7 +83,7 @@ const resetPassword = async (req, res) => {
     });
 };
 
-// Request Reset Password Link Controller Function (Mail feature not done yet)
+// Request Reset Password Link Controller Function (DONE)
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
@@ -93,7 +94,7 @@ const forgotPassword = async (req, res) => {
     });
   }
 
-  await Users.findOne({
+  const user = await Users.findOne({
     email,
   })
     .then((user) => {
@@ -102,59 +103,43 @@ const forgotPassword = async (req, res) => {
           message: "User not found!",
         });
       } else {
-        const token = jwt.sign(
-          {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            admin: user.type.isAdmin,
-            role: user.type.accountType.member,
-          },
-          process.env.JWT_SECRET,
-          {
-            expiresIn: "10m",
-          }
-        );
-
-        // Send email to user
-        const transporter = nodemailer.createTransport({
-          service: "gmail",
-          auth: {
-            user: process.env.EMAIL,
-            pass: process.env.PASSWORD,
-          },
-        });
-
-        const mailOptions = {
-          from: process.env.EMAIL,
-          to: email,
-          subject: "Reset Password",
-          html: `<h1>Reset Password</h1>
-                    <p>Click the link below to reset your password</p>
-                    <a href="http://localhost:3000/reset-password/${token}">Reset Password</a>`,
-        };
-
-        transporter.sendMail(mailOptions, (err, info) => {
-          if (err) {
-            return res.status(500).send({
-              message: "Error when sending email!",
-            });
-          } else {
-            return res.status(200).send({
-              message: "Email sent!",
-            });
-          }
-        });
+        return user;
       }
     })
     .catch((err) => {
       return res.status(500).send({
-        message: "Error when sending email!",
+        message: "Error when finding user!",
       });
     });
+
+  const token = jwt.sign(
+    {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      username: user.username,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "10m", // 10 minutes
+    }
+  );
+
+  // Send email to user with reset password link
+  const response = await forgotPasswordMailer(user, token);
+
+  if (response === "Email sent") {
+    return res.status(200).send({
+      message: "Email has been sent!",
+    });
+  } else {
+    return res.status(500).send({
+      message: "Error when sending email!",
+    });
+  }
 };
 
-// Reset Password With Token Controller Function (Not done yet - need to test it)
+// Reset Password With Token Controller Function (DONE)
 const resetPasswordWithToken = async (req, res) => {
   const { password } = req.body;
 
@@ -166,6 +151,12 @@ const resetPasswordWithToken = async (req, res) => {
   }
 
   const token = req.params.token;
+
+  if (!token) {
+    return res.status(401).send({
+      message: "Unauthorized!",
+    });
+  }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
