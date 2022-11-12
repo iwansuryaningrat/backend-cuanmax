@@ -88,18 +88,18 @@ app.listen(PORT, () => {
 // General Routers
 import authRouter from "./src/routes/auth.routes.js"; // Auth Router
 authRouter(app);
-import coinmarketcapRouter from "./src/routes/coinmarketcap.routes.js"; // Coinmarketcap Router
-coinmarketcapRouter(app); // Coinmarketcap Router
-import pricingRouter from "./src/routes/pricing.routes.js"; // Pricing Router
-pricingRouter(app); // Pricing Router
-import servicesRouter from "./src/routes/services.routes.js"; // Services Router
-servicesRouter(app); // Services Router
-import subscribersRouter from "./src/routes/subscribers.routes.js"; // Subscribers Router
-subscribersRouter(app); // Subscribers Router
-import teamsRouter from "./src/routes/teams.routes.js"; // Teams Router
-teamsRouter(app); // Teams Router
-import testimoniRouter from "./src/routes/testimoni.routes.js"; // Testimoni Router
-testimoniRouter(app); // Testimoni Router
+// import coinmarketcapRouter from "./src/routes/coinmarketcap.routes.js"; // Coinmarketcap Router
+// coinmarketcapRouter(app); // Coinmarketcap Router
+// import pricingRouter from "./src/routes/pricing.routes.js"; // Pricing Router
+// pricingRouter(app); // Pricing Router
+// import servicesRouter from "./src/routes/services.routes.js"; // Services Router
+// servicesRouter(app); // Services Router
+// import subscribersRouter from "./src/routes/subscribers.routes.js"; // Subscribers Router
+// subscribersRouter(app); // Subscribers Router
+// import teamsRouter from "./src/routes/teams.routes.js"; // Teams Router
+// teamsRouter(app); // Teams Router
+// import testimoniRouter from "./src/routes/testimoni.routes.js"; // Testimoni Router
+// testimoniRouter(app); // Testimoni Router
 import apiDocsRouter from "./src/routes/api-docs.routes.js"; // API Docs Router
 apiDocsRouter(app); // API Docs Router
 
