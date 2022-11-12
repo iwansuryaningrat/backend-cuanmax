@@ -386,7 +386,7 @@
       }
     },
     "/auth/resetPassword": {
-      "post": {
+      "put": {
         "tags": ["Authentication"],
         "summary": "Reset Password",
         "description": "Reset Password",
@@ -412,9 +412,9 @@
                 },
                 "required": ["email", "oldPassword", "newPassword"],
                 "example": {
-                  "email": "iwanadmin@gmail.com",
-                  "oldPassword": "iwan1234",
-                  "newPassword": "Undip.jaya123"
+                  "email": "example@mail.com",
+                  "oldPassword": "123456",
+                  "newPassword": "new123456"
                 }
               }
             }
@@ -537,7 +537,7 @@
                 },
                 "required": ["email"],
                 "example": {
-                  "email": "iwansuryaningrat@gmail.com"
+                  "email": "example@mail.com"
                 }
               }
             }
@@ -620,11 +620,11 @@
       }
     },
     "/auth/resetPassword/{token}": {
-      "post": {
+      "put": {
         "tags": ["Authentication"],
         "summary": "Reset Password with Token",
         "description": "Reset Password with Token",
-        "operationId": "resetPassword",
+        "operationId": "resetPasswordwithToken",
         "parameters": [
           {
             "name": "token",
@@ -649,7 +649,7 @@
                 },
                 "required": ["password"],
                 "example": {
-                  "password": "Undip.jaya123"
+                  "password": "123456"
                 }
               }
             }
@@ -1013,7 +1013,7 @@
                     "data": {
                       "name": "Admin",
                       "username": "admin",
-                      "email": "admin@mail.com",
+                      "email": "example@mail.com",
                       "image": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
                       "type": {
                         "memberType": "Admin",
