@@ -755,6 +755,35 @@
         "summary": "Get All Users",
         "description": "Get All Users for Admin",
         "operationId": "getUsers",
+        "parameters": [
+          {
+            "name": "admin",
+            "in": "query",
+            "description": "Parameter for Admin Filter",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "basic",
+            "in": "query",
+            "description": "Parameter for Basic Member Filter",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "pro",
+            "in": "query",
+            "description": "Parameter for Pro Member Filter",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Operation",
