@@ -78,7 +78,7 @@ export default (mongoose) => {
     return object;
   });
 
-  const Liveclass = mongoose.model("liveclass", liveclassSchema);
+  const Liveclass = mongoose.model("Liveclasses", liveclassSchema);
 
   return Liveclass;
 };
