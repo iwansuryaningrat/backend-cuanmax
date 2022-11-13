@@ -7,7 +7,13 @@ export default (mongoose) => {
         require: true,
       },
       startDate: Date,
-      status: String,
+      endDate: Date,
+      status: {
+        type: String,
+        require: true,
+        enum: ["Active", "Inactive"],
+        default: "Active",
+      },
     },
     { timestamps: true }
   );
