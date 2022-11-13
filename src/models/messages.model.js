@@ -22,7 +22,10 @@ export default (mongoose) => {
       status: {
         type: String,
         require: true,
-        enum: ["Unread", "Read", "Replied"],
+        enum: {
+          value: ["Unread", "Read", "Replied"],
+          message: "Status must be Unread, Read, or Replied",
+        },
         default: "Unread",
       },
     },
