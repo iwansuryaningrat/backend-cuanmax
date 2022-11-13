@@ -45,7 +45,7 @@ export default (mongoose) => {
           endDate: Date,
           isNew: {
             type: Boolean,
-            default: false,
+            default: true,
           },
         },
         isAdmin: {
