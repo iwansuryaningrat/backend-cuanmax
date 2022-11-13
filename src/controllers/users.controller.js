@@ -152,7 +152,7 @@ const deleteUSer = (req, res) => {
     });
 };
 
-// Update a user by the id in the request
+// Update a user by the id in the request (Done)
 const update = (req, res) => {
   const { id } = req.params;
 
@@ -169,27 +169,19 @@ const update = (req, res) => {
           message: "User not found",
         });
       }
+
       res.send({
         message: "User updated successfully.",
-        timestamp: new Date().toString(),
         data: {
           name: result.name,
           username: result.username,
           email: result.email,
-          image: {
-            imageName: result.image.imageName,
-            imageLink: result.image.imageLink,
-          },
-          type: {
-            memberType: result.type.accountType.member,
-            isNew: result.type.accountType.isNew,
-            adminType: result.type.isAdmin,
-          },
-          referal: {
-            referalCode: result.referal.referalCode,
-            referalCount: result.referal.referalCount,
-            referalAccount: result.referal.referalAccount,
-          },
+          phone: result.phone,
+          address: result.address,
+          gender: result.gender,
+          image: result.image,
+          type: result.type,
+          referal: result.referal,
         },
       });
     })
