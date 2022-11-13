@@ -23,7 +23,7 @@ export default (mongoose) => {
         type: String,
         require: true,
         enum: {
-          value: ["Pending", "Success", "Failed"],
+          values: ["Pending", "Success", "Failed"],
           message: "Status must be Pending, Success or Failed",
         },
         default: "Pending",
