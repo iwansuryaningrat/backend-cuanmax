@@ -633,6 +633,7 @@
             "in": "query",
             "description": "Parameter for Admin Filter",
             "required": false,
+            "allowEmptyValue": true,
             "schema": {
               "type": "boolean"
             }
@@ -642,6 +643,7 @@
             "in": "query",
             "description": "Parameter for Basic Member Filter",
             "required": false,
+            "allowEmptyValue": true,
             "schema": {
               "type": "boolean"
             }
@@ -651,6 +653,7 @@
             "in": "query",
             "description": "Parameter for Pro Member Filter",
             "required": false,
+            "allowEmptyValue": true,
             "schema": {
               "type": "boolean"
             }
