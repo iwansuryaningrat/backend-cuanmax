@@ -23,9 +23,11 @@ export default (mongoose) => {
       voucherType: {
         type: String,
       },
-      isActive: {
-        type: Boolean,
-        default: true,
+      status: {
+        type: String,
+        require: true,
+        enum: ["Active", "Inactive"],
+        default: "Active",
       },
       forNewUSer: {
         type: Boolean,
