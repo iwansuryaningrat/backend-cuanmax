@@ -22,6 +22,8 @@ export default (mongoose) => {
       transactionStatus: {
         type: String,
         require: true,
+        enum: ["Pending", "Success", "Failed"],
+        default: "Pending",
       },
       transactionDescription: {
         type: String,
