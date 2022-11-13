@@ -63,8 +63,13 @@ export default (mongoose) => {
         referalCode: {
           type: String,
           unique: true,
+          minLength: [6, "Referal code must be 6 characters"],
+          maxLength: [6, "Referal code must be 6 characters"],
         },
-        referalCount: Number,
+        referalCount: {
+          type: Number,
+          default: 0,
+        },
         referalAccount: [{ username: String }],
         referalAmount: {
           type: Number,
