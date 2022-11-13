@@ -16,13 +16,13 @@ const usersAdminRouter = (app) => {
   router.get("/:id", login, admin, findOne);
   router.put("/:id", login, admin, userFinder, update);
   router.put("/:id/changepassword", login, admin, userFinder, changePassword);
-  // router.put(
-  //   "/:id/changepicture",
-  //   login,
-  //   admin,
-  //   userFinder,
-  //   changeProfilePicture
-  // );
+  router.put(
+    "/:id/changepicture",
+    login,
+    admin,
+    userFinder,
+    changeProfilePicture
+  );
   router.delete("/:id", login, admin, deleteUSer);
 
   app.use("/v1/admin/users", router);
