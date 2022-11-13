@@ -190,7 +190,7 @@ const update = (req, res) => {
     });
 };
 
-// Change password
+// Change password (Done)
 const changePassword = (req, res) => {
   const { id } = req.params;
   const { oldPassword } = req.body;
@@ -204,7 +204,7 @@ const changePassword = (req, res) => {
 
   if (newPassword === oldPassword) {
     return res.status(409).send({
-      message: "New Password cannot be the same as Old Password",
+      message: "New Password cannot be the same as Old Password!",
     });
   }
 
@@ -244,9 +244,9 @@ const changePassword = (req, res) => {
                     message: "User not found",
                   });
                 }
+
                 res.send({
                   message: "User's password updated successfully.",
-                  timestamp: new Date().toString(),
                 });
               })
               .catch((err) => {
