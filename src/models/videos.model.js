@@ -32,9 +32,13 @@ export default (mongoose) => {
       likes: Number,
       dislikes: Number,
       duration: Number,
-      category: String,
       date: Date,
-      status: String,
+      status: {
+        type: String,
+        require: true,
+        enum: ["Draft", "Published", "Archived"],
+        default: "Draft",
+      },
     },
     { timestamps: true }
   );
