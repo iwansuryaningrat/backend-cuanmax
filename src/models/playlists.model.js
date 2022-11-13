@@ -9,7 +9,11 @@ export default (mongoose) => {
       category: {
         type: String,
         require: true,
-        enum: ["Stock", "Crypto", "Money Management", "Trading Psychology"],
+        enum: {
+          value: ["Stock", "Crypto", "Money Management", "Trading Psychology"],
+          message:
+            "Category must be Stock, Crypto, Money Management, or Trading Psychology",
+        },
       },
       description: String,
       instructor: {
@@ -19,7 +23,10 @@ export default (mongoose) => {
       videoLevel: {
         type: String,
         require: true,
-        enum: ["Beginner", "Intermediate", "Advanced"],
+        enum: {
+          value: ["Beginner", "Intermediate", "Advanced"],
+          message: "Level must be Beginner, Intermediate, or Advanced",
+        },
       },
       image: {
         imageName: {
@@ -35,7 +42,10 @@ export default (mongoose) => {
       status: {
         type: String,
         require: true,
-        enum: ["Draft", "Published", "Archived"],
+        enum: {
+          value: ["Draft", "Published", "Archived"],
+          message: "Status must be Draft, Published or Archived",
+        },
         default: "Draft",
       },
     },
