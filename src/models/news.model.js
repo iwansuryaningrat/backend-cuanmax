@@ -39,6 +39,12 @@ export default (mongoose) => {
           },
         },
       ],
+      status: {
+        type: String,
+        require: true,
+        enum: ["Draft", "Published", "Archived"],
+        default: "Draft",
+      },
     },
     { timestamps: true }
   );
