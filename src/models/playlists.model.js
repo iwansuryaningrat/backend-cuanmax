@@ -10,7 +10,7 @@ export default (mongoose) => {
         type: String,
         require: true,
         enum: {
-          value: ["Stock", "Crypto", "Money Management", "Trading Psychology"],
+          values: ["Stock", "Crypto", "Money Management", "Trading Psychology"],
           message:
             "Category must be Stock, Crypto, Money Management, or Trading Psychology",
         },
@@ -24,7 +24,7 @@ export default (mongoose) => {
         type: String,
         require: true,
         enum: {
-          value: ["Beginner", "Intermediate", "Advanced"],
+          values: ["Beginner", "Intermediate", "Advanced"],
           message: "Level must be Beginner, Intermediate, or Advanced",
         },
       },
@@ -43,7 +43,7 @@ export default (mongoose) => {
         type: String,
         require: true,
         enum: {
-          value: ["Draft", "Published", "Archived"],
+          values: ["Draft", "Published", "Archived"],
           message: "Status must be Draft, Published or Archived",
         },
         default: "Draft",
