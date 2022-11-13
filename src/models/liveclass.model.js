@@ -44,7 +44,7 @@ export default (mongoose) => {
         type: String,
         require: true,
         enum: {
-          value: ["Upcoming", "Closed", "Cancelled", "Ongoing", "Completed"],
+          values: ["Upcoming", "Closed", "Cancelled", "Ongoing", "Completed"],
           message:
             "Status must be Upcoming, Closed, Cancelled, Ongoing or Completed",
         },
