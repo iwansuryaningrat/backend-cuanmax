@@ -27,7 +27,7 @@ export default (mongoose) => {
         type: String,
         require: true,
         enum: {
-          value: ["Active", "Inactive"],
+          values: ["Active", "Inactive"],
           message: "Status must be Active or Inactive",
         },
         default: "Active",
