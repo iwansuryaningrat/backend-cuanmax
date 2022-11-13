@@ -33,21 +33,31 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of user",
+                    "example": "Name User"
                   },
                   "username": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Username of user",
+                    "example": "username"
                   },
                   "email": {
                     "type": "string",
-                    "format": "email"
+                    "format": "email",
+                    "description": "Email of user",
+                    "example": "example@mail.com"
                   },
                   "password": {
                     "type": "string",
                     "format": "password"
                   },
                   "admin": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Is admin or not",
+                    "example": false,
+                    "default": false,
+                    "nullable": true
                   }
                 },
                 "required": ["name", "email", "password"],
@@ -118,22 +128,7 @@
             }
           },
           "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Some error occurred while Signing up the User."
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Internal Server Error"
           }
         }
       }
@@ -146,13 +141,7 @@
         "operationId": "verifyAccount",
         "parameters": [
           {
-            "name": "token",
-            "in": "path",
-            "description": "Token for verify account",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -197,22 +186,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Invalid Token"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Unauthorized"
           },
           "404": {
             "description": "Not Found",
@@ -233,22 +207,7 @@
             }
           },
           "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Some error occurred while verifying account!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Internal Server Error"
           }
         }
       }
@@ -329,22 +288,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Password incorrect!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Unauthorized"
           },
           "404": {
             "description": "Not Found",
@@ -365,22 +309,7 @@
             }
           },
           "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Some error occurred while loging in the User."
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Internal Server Error"
           }
         }
       }
@@ -475,22 +404,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Old Password incorrect!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Unauthorized"
           },
           "404": {
             "description": "Not Found",
@@ -511,22 +425,7 @@
             }
           },
           "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Some error occurred while loging in the User."
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Internal Server Error"
           }
         }
       }
@@ -612,22 +511,7 @@
             }
           },
           "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Error when sending email!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Internal Server Error"
           }
         }
       }
@@ -640,13 +524,7 @@
         "operationId": "resetPasswordwithToken",
         "parameters": [
           {
-            "name": "token",
-            "in": "path",
-            "description": "Token",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/token"
           }
         ],
         "requestBody": {
@@ -706,22 +584,7 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Invalid Token!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Unauthorized"
           },
           "404": {
             "description": "Not Found",
@@ -742,22 +605,7 @@
             }
           },
           "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Error when updating password!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Internal Server Error"
           }
         }
       }
@@ -884,40 +732,10 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "No token, authorization denied!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Unauthorized"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Require Admin Role!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Forbidden"
           },
           "404": {
             "description": "Not Found",
@@ -938,22 +756,7 @@
             }
           },
           "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Some error occurred while fetching the Users."
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Internal Server Error"
           }
         }
       }
@@ -966,25 +769,10 @@
         "operationId": "getUserAdmin",
         "parameters": [
           {
-            "name": "x-auth-token",
-            "in": "header",
-            "description": "JWT Token",
-            "required": true,
-            "allowEmptyValue": false,
-            "schema": {
-              "type": "string",
-              "format": "int64"
-            }
+            "$ref": "#/components/parameters/x-auth-token"
           },
           {
-            "name": "User ID",
-            "in": "path",
-            "description": "User ID",
-            "required": true,
-            "allowEmptyValue": false,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/User ID"
           }
         ],
         "responses": {
@@ -1118,40 +906,10 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "No token, authorization denied!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Unauthorized"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Require Admin Role!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Forbidden"
           },
           "404": {
             "description": "Not Found",
@@ -1172,22 +930,7 @@
             }
           },
           "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Some error occurred while fetching the User!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Internal Server Error"
           }
         }
       },
@@ -1198,25 +941,10 @@
         "operationId": "deleteUserAdmin",
         "parameters": [
           {
-            "name": "x-auth-token",
-            "in": "header",
-            "description": "JWT Token",
-            "required": true,
-            "allowEmptyValue": false,
-            "schema": {
-              "type": "string",
-              "format": "int64"
-            }
+            "$ref": "#/components/parameters/x-auth-token"
           },
           {
-            "name": "User ID",
-            "in": "path",
-            "description": "User ID",
-            "required": true,
-            "allowEmptyValue": false,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/User ID"
           }
         ],
         "responses": {
@@ -1257,40 +985,10 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "No token, authorization denied!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Unauthorized"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Require Admin Role!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Forbidden"
           },
           "404": {
             "description": "Not Found",
@@ -1311,22 +1009,7 @@
             }
           },
           "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Some error occurred while deleting the User!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Internal Server Error"
           }
         }
       }
@@ -1339,25 +1022,10 @@
         "operationId": "getUserPro",
         "parameters": [
           {
-            "name": "x-auth-token",
-            "in": "header",
-            "description": "JWT Token",
-            "required": true,
-            "allowEmptyValue": false,
-            "schema": {
-              "type": "string",
-              "format": "int64"
-            }
+            "$ref": "#/components/parameters/x-auth-token"
           },
           {
-            "name": "User ID",
-            "in": "path",
-            "description": "User ID",
-            "required": true,
-            "allowEmptyValue": false,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/User ID"
           }
         ],
         "responses": {
@@ -1491,40 +1159,10 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "No token, authorization denied!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Unauthorized"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Require Pro Member Role!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Forbidden"
           },
           "404": {
             "description": "Not Found",
@@ -1545,22 +1183,7 @@
             }
           },
           "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Some error occurred while fetching the User!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Internal Server Error"
           }
         }
       }
@@ -1573,25 +1196,10 @@
         "operationId": "getUserBasic",
         "parameters": [
           {
-            "name": "x-auth-token",
-            "in": "header",
-            "description": "JWT Token",
-            "required": true,
-            "allowEmptyValue": false,
-            "schema": {
-              "type": "string",
-              "format": "int64"
-            }
+            "$ref": "#/components/parameters/x-auth-token"
           },
           {
-            "name": "User ID",
-            "in": "path",
-            "description": "User ID",
-            "required": true,
-            "allowEmptyValue": false,
-            "schema": {
-              "type": "string"
-            }
+            "$ref": "#/components/parameters/User ID"
           }
         ],
         "responses": {
@@ -1725,40 +1333,10 @@
             }
           },
           "401": {
-            "description": "Unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "No token, authorization denied!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Unauthorized"
           },
           "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "You are not authorized to do this action!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Forbidden"
           },
           "404": {
             "description": "Not Found",
@@ -1779,20 +1357,95 @@
             }
           },
           "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Some error occurred while fetching the User!"
-                  }
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "x-auth-token": {
+        "name": "x-auth-token",
+        "in": "header",
+        "description": "JWT Token",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string",
+          "format": "int64"
+        }
+      },
+      "User ID": {
+        "name": "User ID",
+        "in": "path",
+        "description": "User ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "token": {
+        "name": "token",
+        "in": "path",
+        "description": "Token",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
                 }
+              },
+              "example": {
+                "message": "No token, authorization denied!"
+              }
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "You are not authorized to do this action!"
+              }
+            }
+          }
+        }
+      },
+      "Internal Server Error": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "Some error occurred while fetching data!"
               }
             }
           }
