@@ -174,22 +174,7 @@
             "$ref": "#/components/responses/Unauthorized"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User Not Found."
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Not Found"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -303,22 +288,7 @@
             "$ref": "#/components/responses/Unauthorized"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User not found!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Not Found"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -419,22 +389,7 @@
             "$ref": "#/components/responses/Unauthorized"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User not found!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Not Found"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -505,22 +460,7 @@
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User not found!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Not Found"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -599,22 +539,7 @@
             "$ref": "#/components/responses/Unauthorized"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User not found!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Not Found"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -753,22 +678,7 @@
             "$ref": "#/components/responses/Forbidden"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "No users found!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Not Found"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -903,22 +813,7 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User ID is required!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Bad Request"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -927,22 +822,7 @@
             "$ref": "#/components/responses/Forbidden"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User not found!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Not Found"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -982,22 +862,7 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User ID is required!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Bad Request"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -1006,22 +871,7 @@
             "$ref": "#/components/responses/Forbidden"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User not found!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Not Found"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -1145,22 +995,7 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User ID is required!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Bad Request"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -1169,22 +1004,7 @@
             "$ref": "#/components/responses/Forbidden"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User not found!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Not Found"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -1229,22 +1049,7 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User ID is required!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Bad Request"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -1253,7 +1058,37 @@
             "$ref": "#/components/responses/Forbidden"
           },
           "404": {
-            "description": "Not Found",
+            "$ref": "#/components/responses/Not Found"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/users/{User ID}/changepicture": {
+      "put": {
+        "tags": ["Users - Admin"],
+        "summary": "Change Picture by ID",
+        "description": "Change Picture by ID for Admin",
+        "operationId": "changePictureAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/User ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Change Profile Picture"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
             "content": {
               "application/json": {
                 "schema": {
@@ -1261,17 +1096,51 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "image": {
+                          "type": "object",
+                          "properties": {
+                            "imageName": {
+                              "type": "string"
+                            },
+                            "imageLink": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
                     }
-                  },
-                  "example": {
-                    "message": "User not found!"
+                  }
+                },
+                "example": {
+                  "message": "Picture changed successfully!",
+                  "data": {
+                    "image": {
+                      "imageName": "image.jpg",
+                      "imageLink": "https://example.com/image.jpg"
+                    }
                   }
                 }
               }
             }
           },
-          "409": {
-            "$ref": "#/components/responses/Conflict"
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable Entity"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -1406,22 +1275,7 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User ID is required!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Bad Request"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -1430,22 +1284,7 @@
             "$ref": "#/components/responses/Forbidden"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User not found!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Not Found"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -1569,22 +1408,7 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User ID is required!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Bad Request"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -1593,22 +1417,7 @@
             "$ref": "#/components/responses/Forbidden"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User not found!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Not Found"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -1653,22 +1462,7 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User ID is required!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Bad Request"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -1677,7 +1471,37 @@
             "$ref": "#/components/responses/Forbidden"
           },
           "404": {
-            "description": "Not Found",
+            "$ref": "#/components/responses/Not Found"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/pro/users/{User ID}/changepicture": {
+      "put": {
+        "tags": ["Users - Pro Member"],
+        "summary": "Change Picture by ID",
+        "description": "Change Picture by ID for Pro Member",
+        "operationId": "changePictureProMember",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/User ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Change Profile Picture"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
             "content": {
               "application/json": {
                 "schema": {
@@ -1685,17 +1509,51 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "image": {
+                          "type": "object",
+                          "properties": {
+                            "imageName": {
+                              "type": "string"
+                            },
+                            "imageLink": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
                     }
-                  },
-                  "example": {
-                    "message": "User not found!"
+                  }
+                },
+                "example": {
+                  "message": "Picture changed successfully!",
+                  "data": {
+                    "image": {
+                      "imageName": "image.jpg",
+                      "imageLink": "https://example.com/image.jpg"
+                    }
                   }
                 }
               }
             }
           },
-          "409": {
-            "$ref": "#/components/responses/Conflict"
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable Entity"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -1830,22 +1688,7 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User ID is required!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Bad Request"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -1854,22 +1697,7 @@
             "$ref": "#/components/responses/Forbidden"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User not found!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Not Found"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -1993,22 +1821,7 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User ID is required!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Bad Request"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -2017,22 +1830,7 @@
             "$ref": "#/components/responses/Forbidden"
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User not found!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Not Found"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -2077,22 +1875,7 @@
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "User ID is required!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Bad Request"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -2101,7 +1884,37 @@
             "$ref": "#/components/responses/Forbidden"
           },
           "404": {
-            "description": "Not Found",
+            "$ref": "#/components/responses/Not Found"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/users/{User ID}/changepicture": {
+      "put": {
+        "tags": ["Users - Basic Member"],
+        "summary": "Change Picture by ID",
+        "description": "Change Picture by ID for Basic Member",
+        "operationId": "changePictureBasicMember",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/User ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Change Profile Picture"
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
             "content": {
               "application/json": {
                 "schema": {
@@ -2109,17 +1922,51 @@
                   "properties": {
                     "message": {
                       "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "image": {
+                          "type": "object",
+                          "properties": {
+                            "imageName": {
+                              "type": "string"
+                            },
+                            "imageLink": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
                     }
-                  },
-                  "example": {
-                    "message": "User not found!"
+                  }
+                },
+                "example": {
+                  "message": "Picture changed successfully!",
+                  "data": {
+                    "image": {
+                      "imageName": "image.jpg",
+                      "imageLink": "https://example.com/image.jpg"
+                    }
                   }
                 }
               }
             }
           },
-          "409": {
-            "$ref": "#/components/responses/Conflict"
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable Entity"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -2162,6 +2009,24 @@
       }
     },
     "responses": {
+      "Bad Request": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "User ID is Required!"
+              }
+            }
+          }
+        }
+      },
       "Unauthorized": {
         "description": "Unauthorized",
         "content": {
@@ -2198,6 +2063,24 @@
           }
         }
       },
+      "Not Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "User not found!"
+              }
+            }
+          }
+        }
+      },
       "Conflict": {
         "description": "Conflict",
         "content": {
@@ -2211,6 +2094,24 @@
               },
               "example": {
                 "message": "User Already Exist. Please Login"
+              }
+            }
+          }
+        }
+      },
+      "Unprocessable Entity": {
+        "description": "Unprocessable Entity",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "No file uploaded"
               }
             }
           }
@@ -2284,6 +2185,25 @@
             "example": {
               "oldPassword": "123456",
               "newPassword": "1234567"
+            }
+          }
+        }
+      },
+      "Change Profile Picture": {
+        "description": "Change Profile Picture",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "example": {
+              "image": "file"
             }
           }
         }
