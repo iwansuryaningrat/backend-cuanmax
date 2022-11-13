@@ -14,7 +14,7 @@ const router = Express.Router();
 const usersAdminRouter = (app) => {
   router.get("/", admin, findAll);
   router.get("/:id", login, admin, findOne);
-  // router.put("/:id", login, admin, userFinder, update);
+  router.put("/:id", login, admin, userFinder, update);
   // router.put("/:id/changepassword", login, admin, userFinder, changePassword);
   // router.put(
   //   "/:id/changepicture",
