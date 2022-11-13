@@ -19,13 +19,13 @@ const usersProRouter = (app) => {
     userFinder,
     changePassword
   );
-  // router.put(
-  //   "/:id/changepicture",
-  //   login,
-  //   proMember,
-  //   userFinder,
-  //   changeProfilePicture
-  // );
+  router.put(
+    "/:id/changepicture",
+    login,
+    proMember,
+    userFinder,
+    changeProfilePicture
+  );
 
   app.use("/v1/pro/users", router);
 };
