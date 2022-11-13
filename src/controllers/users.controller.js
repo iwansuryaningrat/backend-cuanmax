@@ -93,22 +93,20 @@ const findOne = (req, res) => {
         phone,
         address,
         gender,
-        image: image.imageLink,
+        image,
         type: {
-          memberType: type.accountType.member,
-          startDate: type.accountType.startDate.toString(),
-          endDate: type.accountType.endDate
-            ? type.accountType.endDate.toString()
-            : null,
-          isNew: type.accountType.isNew,
           isAdmin: type.isAdmin,
           isActivated: type.isActivated,
+          accountType: {
+            member: type.accountType.member,
+            startDate: type.accountType.startDate.toString(),
+            endDate: type.accountType.endDate
+              ? type.accountType.endDate.toString()
+              : null,
+            isNew: type.accountType.isNew,
+          },
         },
-        referal: {
-          referalCode: referal.referalCode,
-          referalCount: referal.referalCount,
-          referalAccount: referal.referalAccount,
-        },
+        referal,
       };
 
       res.status(200).send({
