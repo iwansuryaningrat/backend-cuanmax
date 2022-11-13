@@ -23,6 +23,12 @@ export default (mongoose) => {
         require: true,
         default: "",
       },
+      status: {
+        type: String,
+        require: true,
+        enum: ["Active", "Inactive"],
+        default: "Active",
+      },
     },
     { timestamps: true }
   );
