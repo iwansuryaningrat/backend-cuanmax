@@ -268,7 +268,7 @@ const changePassword = (req, res) => {
     });
 };
 
-// Change user's image
+// Change user's image (Done)
 const changeProfilePicture = (req, res) => {
   const { id } = req.params;
 
@@ -314,7 +314,9 @@ const changeProfilePicture = (req, res) => {
       }
       res.send({
         message: "User's profile picture updated successfully.",
-        timestamp: new Date().toString(),
+        data: {
+          image: result.image,
+        },
       });
     })
     .catch((err) => {
