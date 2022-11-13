@@ -36,7 +36,10 @@ export default (mongoose) => {
       status: {
         type: String,
         require: true,
-        enum: ["Draft", "Published", "Archived"],
+        enum: {
+          value: ["Draft", "Published", "Archived"],
+          message: "Status must be Draft, Published or Archived",
+        },
         default: "Draft",
       },
     },
