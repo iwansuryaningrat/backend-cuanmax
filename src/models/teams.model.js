@@ -27,6 +27,12 @@ export default (mongoose) => {
         linkedin: String,
         email: String,
       },
+      status: {
+        type: String,
+        require: true,
+        enum: ["Active", "Inactive"],
+        default: "Active",
+      },
     },
     { timestamps: true }
   );
