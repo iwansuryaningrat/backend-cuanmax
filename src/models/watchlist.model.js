@@ -19,6 +19,7 @@ export default (mongoose) => {
       },
       sector: {
         type: String,
+        require: true,
       },
       lastPrice: {
         type: Number,
@@ -46,9 +47,11 @@ export default (mongoose) => {
           require: true,
         },
       },
-      isActive: {
-        type: Boolean,
-        default: true,
+      status: {
+        type: String,
+        require: true,
+        enum: ["Active", "Inactive"],
+        default: "Active",
       },
     },
     { timestamps: true }
