@@ -37,6 +37,7 @@ const loggingin = async (req, res) => {
                 id: user.id,
                 email: user.email,
                 name: user.name,
+                username: user.username,
                 admin: user.type.isAdmin,
                 role: user.type.accountType.member,
                 isActivated: user.type.isActivated,
@@ -51,8 +52,15 @@ const loggingin = async (req, res) => {
 
             return res.status(200).send({
               message: "Login Success!",
-              role: user.type.accountType.member,
               token: token,
+              user: {
+                id: user.id,
+                name: user.name,
+                username: user.username,
+                email: user.email,
+                image: user.image.imageLink,
+                role: user.type.accountType.member,
+              },
             });
           } else {
             return res.status(401).send({
