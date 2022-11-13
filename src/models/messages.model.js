@@ -22,6 +22,8 @@ export default (mongoose) => {
       status: {
         type: String,
         require: true,
+        enum: ["Unread", "Read", "Replied"],
+        default: "Unread",
       },
     },
     { timestamps: true }
