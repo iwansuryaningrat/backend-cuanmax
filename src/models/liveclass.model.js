@@ -43,6 +43,8 @@ export default (mongoose) => {
       status: {
         type: String,
         require: true,
+        enum: ["Upcoming", "Closed", "Cancelled", "Ongoing", "Completed"],
+        default: "Upcoming",
       },
       cover: {
         imageName: {
