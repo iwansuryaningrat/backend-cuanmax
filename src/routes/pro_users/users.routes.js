@@ -11,7 +11,7 @@ const router = Express.Router();
 
 const usersProRouter = (app) => {
   router.get("/:id", login, proMember, userFinder, findOne);
-  // router.put("/:id", login, proMember, userFinder, update);
+  router.put("/:id", login, proMember, userFinder, update);
   // router.put(
   //   "/:id/changepassword",
   //   login,
