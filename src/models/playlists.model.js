@@ -9,6 +9,7 @@ export default (mongoose) => {
       category: {
         type: String,
         require: true,
+        enum: ["Stock", "Crypto", "Money Management", "Trading Psychology"],
       },
       description: String,
       instructor: {
@@ -18,6 +19,7 @@ export default (mongoose) => {
       videoLevel: {
         type: String,
         require: true,
+        enum: ["Beginner", "Intermediate", "Advanced"],
       },
       image: {
         imageName: {
@@ -33,7 +35,8 @@ export default (mongoose) => {
       status: {
         type: String,
         require: true,
-        default: "active",
+        enum: ["Draft", "Published", "Archived"],
+        default: "Draft",
       },
     },
     { timestamps: true }
