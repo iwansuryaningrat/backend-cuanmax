@@ -42,12 +42,12 @@ export default (mongoose) => {
         accountType: {
           member: String,
           startDate: {
-            type: Date,
-            default: Date.now,
+            type: Number,
+            default: 0,
           },
           endDate: {
-            type: Date,
-            default: null,
+            type: Number,
+            default: 0,
           },
           isNew: {
             type: Boolean,
