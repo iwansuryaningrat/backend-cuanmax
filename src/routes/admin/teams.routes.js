@@ -1,7 +1,7 @@
 import {
+  create,
   findAll,
   findOne,
-  create,
   update,
   teamProfilePicture,
   deleteTeam,
