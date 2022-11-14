@@ -328,6 +328,66 @@ const changeProfilePicture = (req, res) => {
     });
 };
 
+// Create Referal Code (Done)
+const createReferalCode = (req, res) => {
+  const { id } = req.params;
+  var { referalCode } = req.body;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "User ID is required",
+    });
+  }
+
+  if (!referalCode)
+    // Generate random referal code with 8 characters
+    referalCode = Math.random().toString(36).substring(2, 10);
+
+  if (referalCode.length > 8) {
+    return res.status(400).send({
+      message: "Referal Code must be 8 characters or less",
+    });
+  }
+
+  const user = Users.findOne({ referal: referalCode })
+    .then((result) => {
+      if (result) {
+        return res.status(409).send({
+          message: "Referal Code already exists",
+        });
+      }
+
+      Users.findByIdAndUpdate(id, { referal: { referalCode } }, { new: true })
+        .then((result) => {
+          if (!result) {
+            return res.status(404).send({
+              message: "User not found",
+            });
+          }
+
+          res.send({
+            message: "User's referal code created successfully.",
+            data: {
+              referal: result.referal,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.status(500).send({
+            message:
+              err.message ||
+              "Some error occurred while creating the referal code.",
+          });
+        });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the referal code.",
+      });
+    });
+};
+
 export {
   findAll,
   findOne,
@@ -335,4 +395,5 @@ export {
   update,
   changePassword,
   changeProfilePicture,
+  createReferalCode,
 };
