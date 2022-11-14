@@ -27,6 +27,7 @@ const findAll = (req, res) => {
 
       const data = result.map((item) => {
         const { _id, name, username, email, phone, address, type } = item;
+
         return {
           id: _id,
           name,
@@ -35,7 +36,12 @@ const findAll = (req, res) => {
           phone,
           address,
           memberType: type.accountType.member,
-          startDate: type.accountType.startDate.toString(),
+          subscription: {
+            startAt: new Date(type.accountType.subscription.startAt).toString(),
+            expiredAt: new Date(
+              type.accountType.subscription.expiredAt
+            ).toString(),
+          },
           isNew: type.accountType.isNew,
           adminType: type.isAdmin,
           isActivated: type.isActivated,
@@ -85,6 +91,14 @@ const findOne = (req, res) => {
         referal,
       } = result;
 
+      if (type.accountType.subscription.expiredAt == 0) {
+        type.accountType.subscription.expiredAt = null;
+      } else {
+        type.accountType.subscription.expiredAt = new Date(
+          type.accountType.subscription.expiredAt
+        ).toString();
+      }
+
       const data = {
         id: _id,
         name,
@@ -99,10 +113,12 @@ const findOne = (req, res) => {
           isActivated: type.isActivated,
           accountType: {
             member: type.accountType.member,
-            startDate: type.accountType.startDate.toString(),
-            endDate: type.accountType.endDate
-              ? type.accountType.endDate.toString()
-              : null,
+            subscription: {
+              startat: new Date(
+                type.accountType.subscription.startAt
+              ).toString(),
+              expiredAt: type.accountType.subscription.expiredAt,
+            },
             isNew: type.accountType.isNew,
           },
         },
@@ -178,7 +194,6 @@ const update = (req, res) => {
           address: result.address,
           gender: result.gender,
           image: result.image,
-          type: result.type,
           referal: result.referal,
         },
       });
@@ -387,6 +402,13 @@ const createReferalCode = (req, res) => {
       });
     });
 };
+
+// Change Pro Member into Basic Member While Pro Member's Subscription is Expired (Done)
+// const changeProMemberToBasicMember = async (req, res) => {
+//   const date = new Date().getTime();
+
+//   await Users.updateMany(
+//     { ""subscription.expiredAt"": { $lt: date } },
 
 export {
   findAll,
