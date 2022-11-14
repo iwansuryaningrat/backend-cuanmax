@@ -40,14 +40,19 @@ export default (mongoose) => {
       },
       type: {
         accountType: {
-          member: String,
-          startDate: {
-            type: Number,
-            default: 0,
+          member: {
+            type: String,
+            default: "Basic Member",
           },
-          endDate: {
-            type: Number,
-            default: 0,
+          subscription: {
+            startAt: {
+              type: Number,
+              default: 0,
+            },
+            expiredAt: {
+              type: Number,
+              default: 0,
+            },
           },
           isNew: {
             type: Boolean,
@@ -70,7 +75,6 @@ export default (mongoose) => {
           type: String,
           unique: true,
           maxLength: [8, "Referal code must be 8 characters"],
-          default: "",
         },
         referalCount: {
           type: Number,
