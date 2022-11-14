@@ -79,7 +79,7 @@ const deleteTeam = (req, res) => {
     });
 };
 
-// Create and Save a new Team
+// Create and Save a new Team data (Done)
 const create = (req, res) => {
   const { name, description, position, email } = req.body;
 
@@ -102,18 +102,15 @@ const create = (req, res) => {
   });
 
   team
-    .save(team)
+    .save()
     .then((result) => {
       res.status(200).send({
-        message: "Team successfully added.",
-        timestamp: new Date().toString(),
-        data: result,
+        message: "Team successfully created.",
       });
     })
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Some error while creating team.",
-        timestamp: new Date().toString(),
       });
     });
 };
