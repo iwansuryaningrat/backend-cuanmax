@@ -1319,6 +1319,93 @@
           }
         }
       }
+    },
+    "/admin/teams": {
+      "post": {
+        "tags": ["Teams - Admin"],
+        "summary": "Create Team",
+        "description": "Create Team for Admin",
+        "operationId": "createTeam",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "position": {
+                    "type": "string"
+                  },
+                  "instagram": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "twitter": {
+                    "type": "string"
+                  },
+                  "linkedin": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "Name",
+                  "description": "description",
+                  "position": "CEO",
+                  "instagram": "https://www.instagram.com/username/",
+                  "email": "example@mail.com",
+                  "twitter": "https://www.twitter.com/username/",
+                  "linkedin": "https://www.linkedin.com/username/"
+                },
+                "required": ["name", "description", "position"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully created."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
