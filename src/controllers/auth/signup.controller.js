@@ -48,7 +48,7 @@ const signup = async (req, res) => {
       isAdmin: admin,
     },
     referal: {
-      referalCode: username.toUpperCase(),
+      referalCode: "",
       referalCount: 0,
       referalAccount: [],
       referalAmount: 0,
@@ -87,7 +87,7 @@ const signup = async (req, res) => {
     const response = await signupMailer(result.email, token);
 
     if (response == "Email sent") {
-      res.status(200).send({
+      return res.status(200).send({
         message: "User registered successfully! Please check your email.",
       });
     } else {
