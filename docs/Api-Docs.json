@@ -1561,6 +1561,109 @@
         }
       }
     },
+    "/pro/users/{User ID}/createreferalcode": {
+      "put": {
+        "tags": ["Users - Pro Member"],
+        "summary": "Create Referal Code by ID",
+        "description": "Create Referal Code by ID for Pro Member",
+        "operationId": "createReferalCodeProMember",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/User ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "referalCode": {
+                    "type": "string",
+                    "description": "Referal Code with max 8 characters",
+                    "nullable": true,
+                    "maxLength": 8
+                  }
+                }
+              },
+              "example": {
+                "referalCode": "123456"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "referal": {
+                          "type": "object",
+                          "properties": {
+                            "referalCode": {
+                              "type": "string"
+                            },
+                            "referalCount": {
+                              "type": "integer"
+                            },
+                            "referalAccount": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Referal code created successfully!",
+                  "data": {
+                    "referal": {
+                      "referalCode": "123456",
+                      "referalCount": 0,
+                      "referalAccount": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
     "/users/{User ID}": {
       "get": {
         "tags": ["Users - Basic Member"],
