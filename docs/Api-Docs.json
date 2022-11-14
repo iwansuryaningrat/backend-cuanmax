@@ -633,8 +633,16 @@
                           "memberType": {
                             "type": "string"
                           },
-                          "startDate": {
-                            "type": "string"
+                          "subscription": {
+                            "type": "object",
+                            "properties": {
+                              "startAt": {
+                                "type": "number"
+                              },
+                              "expiredAt": {
+                                "type": "number"
+                              }
+                            }
                           },
                           "isNew": {
                             "type": "boolean"
@@ -660,7 +668,10 @@
                         "phone": "081234567890",
                         "address": "Jl. Jalan",
                         "memberType": "Admin",
-                        "startDate": "Thu Nov 10 2022 02:25:30 GMT+0700 (Western Indonesia Time)",
+                        "subscription": {
+                          "startat": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
+                          "expiredAt": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)"
+                        },
                         "isNew": false,
                         "adminType": "Super Admin",
                         "isActivated": true
@@ -702,115 +713,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful Operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "username": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        },
-                        "phone": {
-                          "type": "string"
-                        },
-                        "address": {
-                          "type": "string"
-                        },
-                        "gender": {
-                          "type": "string"
-                        },
-                        "image": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "object",
-                          "properties": {
-                            "memberType": {
-                              "type": "string"
-                            },
-                            "startDate": {
-                              "type": "string"
-                            },
-                            "endDate": {
-                              "type": "string"
-                            },
-                            "isNew": {
-                              "type": "boolean"
-                            },
-                            "isAdmin": {
-                              "type": "boolean"
-                            },
-                            "isActivated": {
-                              "type": "boolean"
-                            }
-                          }
-                        },
-                        "referal": {
-                          "type": "object",
-                          "properties": {
-                            "referalCode": {
-                              "type": "string"
-                            },
-                            "referalCount": {
-                              "type": "number"
-                            },
-                            "referalAccount": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "username": {
-                                    "type": "string"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "example": {
-                    "message": "User fetched successfully!",
-                    "data": {
-                      "name": "Admin",
-                      "username": "admin",
-                      "email": "example@mail.com",
-                      "image": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
-                      "type": {
-                        "memberType": "Admin",
-                        "startDate": "Thu Nov 10 2022 02:25:30 GMT+0700 (Western Indonesia Time)",
-                        "endDate": "Thu Nov 10 2022 02:25:30 GMT+0700 (Western Indonesia Time)",
-                        "isNew": true,
-                        "isAdmin": true,
-                        "isActivated": false
-                      },
-                      "referal": {
-                        "referalCode": "123456",
-                        "referalCount": 0,
-                        "referalAccount": []
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Show Profile Success"
           },
           "400": {
             "$ref": "#/components/responses/Bad Request"
@@ -896,103 +799,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful Operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "username": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        },
-                        "image": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "object",
-                          "properties": {
-                            "memberType": {
-                              "type": "string"
-                            },
-                            "startDate": {
-                              "type": "string"
-                            },
-                            "endDate": {
-                              "type": "string"
-                            },
-                            "isNew": {
-                              "type": "boolean"
-                            },
-                            "isAdmin": {
-                              "type": "boolean"
-                            },
-                            "isActivated": {
-                              "type": "boolean"
-                            }
-                          }
-                        },
-                        "referal": {
-                          "type": "object",
-                          "properties": {
-                            "referalCode": {
-                              "type": "string"
-                            },
-                            "referalCount": {
-                              "type": "number"
-                            },
-                            "referalAccount": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "username": {
-                                    "type": "string"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "message": "User updated successfully!",
-                  "data": {
-                    "name": "John Doe",
-                    "username": "johndoe",
-                    "email": "example@mail.com",
-                    "image": "https://example.com/image.jpg",
-                    "type": {
-                      "memberType": "Free",
-                      "startDate": "2020-01-01",
-                      "endDate": "2020-01-31",
-                      "isNew": true,
-                      "isAdmin": false,
-                      "isActivated": true
-                    },
-                    "referal": {
-                      "referalCode": "123456",
-                      "referalCount": 0,
-                      "referalAccount": []
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Update Profile Success"
           },
           "400": {
             "$ref": "#/components/responses/Bad Request"
@@ -1031,22 +838,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful Operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Password changed successfully!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Change Password Success"
           },
           "400": {
             "$ref": "#/components/responses/Bad Request"
@@ -1088,44 +880,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful Operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "image": {
-                          "type": "object",
-                          "properties": {
-                            "imageName": {
-                              "type": "string"
-                            },
-                            "imageLink": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "message": "Picture changed successfully!",
-                  "data": {
-                    "image": {
-                      "imageName": "image.jpg",
-                      "imageLink": "https://example.com/image.jpg"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Change Profile Picture Success"
           },
           "400": {
             "$ref": "#/components/responses/Bad Request"
@@ -1164,115 +919,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful Operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "username": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        },
-                        "phone": {
-                          "type": "string"
-                        },
-                        "address": {
-                          "type": "string"
-                        },
-                        "gender": {
-                          "type": "string"
-                        },
-                        "image": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "object",
-                          "properties": {
-                            "memberType": {
-                              "type": "string"
-                            },
-                            "startDate": {
-                              "type": "string"
-                            },
-                            "endDate": {
-                              "type": "string"
-                            },
-                            "isNew": {
-                              "type": "boolean"
-                            },
-                            "isAdmin": {
-                              "type": "boolean"
-                            },
-                            "isActivated": {
-                              "type": "boolean"
-                            }
-                          }
-                        },
-                        "referal": {
-                          "type": "object",
-                          "properties": {
-                            "referalCode": {
-                              "type": "string"
-                            },
-                            "referalCount": {
-                              "type": "number"
-                            },
-                            "referalAccount": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "username": {
-                                    "type": "string"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "example": {
-                    "message": "User fetched successfully!",
-                    "data": {
-                      "name": "Example Name",
-                      "username": "username",
-                      "email": "example@mail.com",
-                      "image": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
-                      "type": {
-                        "memberType": "Pro Member",
-                        "startDate": "Thu Nov 10 2022 02:25:30 GMT+0700 (Western Indonesia Time)",
-                        "endDate": "Thu Nov 10 2022 02:25:30 GMT+0700 (Western Indonesia Time)",
-                        "isNew": true,
-                        "isAdmin": false,
-                        "isActivated": false
-                      },
-                      "referal": {
-                        "referalCode": "123456",
-                        "referalCount": 0,
-                        "referalAccount": []
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Show Profile Success"
           },
           "400": {
             "$ref": "#/components/responses/Bad Request"
@@ -1309,103 +956,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful Operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "username": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        },
-                        "image": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "object",
-                          "properties": {
-                            "memberType": {
-                              "type": "string"
-                            },
-                            "startDate": {
-                              "type": "string"
-                            },
-                            "endDate": {
-                              "type": "string"
-                            },
-                            "isNew": {
-                              "type": "boolean"
-                            },
-                            "isAdmin": {
-                              "type": "boolean"
-                            },
-                            "isActivated": {
-                              "type": "boolean"
-                            }
-                          }
-                        },
-                        "referal": {
-                          "type": "object",
-                          "properties": {
-                            "referalCode": {
-                              "type": "string"
-                            },
-                            "referalCount": {
-                              "type": "number"
-                            },
-                            "referalAccount": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "username": {
-                                    "type": "string"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "message": "User updated successfully!",
-                  "data": {
-                    "name": "John Doe",
-                    "username": "johndoe",
-                    "email": "example@mail.com",
-                    "image": "https://example.com/image.jpg",
-                    "type": {
-                      "memberType": "Free",
-                      "startDate": "2020-01-01",
-                      "endDate": "2020-01-31",
-                      "isNew": true,
-                      "isAdmin": false,
-                      "isActivated": true
-                    },
-                    "referal": {
-                      "referalCode": "123456",
-                      "referalCount": 0,
-                      "referalAccount": []
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Update Profile Success"
           },
           "400": {
             "$ref": "#/components/responses/Bad Request"
@@ -1444,22 +995,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful Operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Password changed successfully!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Change Password Success"
           },
           "400": {
             "$ref": "#/components/responses/Bad Request"
@@ -1501,44 +1037,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful Operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "image": {
-                          "type": "object",
-                          "properties": {
-                            "imageName": {
-                              "type": "string"
-                            },
-                            "imageLink": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "message": "Picture changed successfully!",
-                  "data": {
-                    "image": {
-                      "imageName": "image.jpg",
-                      "imageLink": "https://example.com/image.jpg"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Change Profile Picture Success"
           },
           "400": {
             "$ref": "#/components/responses/Bad Request"
@@ -1680,115 +1179,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful Operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "username": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        },
-                        "phone": {
-                          "type": "string"
-                        },
-                        "address": {
-                          "type": "string"
-                        },
-                        "gender": {
-                          "type": "string"
-                        },
-                        "image": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "object",
-                          "properties": {
-                            "memberType": {
-                              "type": "string"
-                            },
-                            "startDate": {
-                              "type": "string"
-                            },
-                            "endDate": {
-                              "type": "string"
-                            },
-                            "isNew": {
-                              "type": "boolean"
-                            },
-                            "isAdmin": {
-                              "type": "boolean"
-                            },
-                            "isActivated": {
-                              "type": "boolean"
-                            }
-                          }
-                        },
-                        "referal": {
-                          "type": "object",
-                          "properties": {
-                            "referalCode": {
-                              "type": "string"
-                            },
-                            "referalCount": {
-                              "type": "number"
-                            },
-                            "referalAccount": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "username": {
-                                    "type": "string"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "example": {
-                    "message": "User fetched successfully!",
-                    "data": {
-                      "name": "Example Name",
-                      "username": "username",
-                      "email": "example@mail.com",
-                      "image": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
-                      "type": {
-                        "memberType": "Basic Member",
-                        "startDate": "Thu Nov 10 2022 02:25:30 GMT+0700 (Western Indonesia Time)",
-                        "endDate": "Thu Nov 10 2022 02:25:30 GMT+0700 (Western Indonesia Time)",
-                        "isNew": true,
-                        "isAdmin": false,
-                        "isActivated": false
-                      },
-                      "referal": {
-                        "referalCode": "123456",
-                        "referalCount": 0,
-                        "referalAccount": []
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Show Profile Success"
           },
           "400": {
             "$ref": "#/components/responses/Bad Request"
@@ -1825,103 +1216,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful Operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "username": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        },
-                        "image": {
-                          "type": "string"
-                        },
-                        "type": {
-                          "type": "object",
-                          "properties": {
-                            "memberType": {
-                              "type": "string"
-                            },
-                            "startDate": {
-                              "type": "string"
-                            },
-                            "endDate": {
-                              "type": "string"
-                            },
-                            "isNew": {
-                              "type": "boolean"
-                            },
-                            "isAdmin": {
-                              "type": "boolean"
-                            },
-                            "isActivated": {
-                              "type": "boolean"
-                            }
-                          }
-                        },
-                        "referal": {
-                          "type": "object",
-                          "properties": {
-                            "referalCode": {
-                              "type": "string"
-                            },
-                            "referalCount": {
-                              "type": "number"
-                            },
-                            "referalAccount": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "username": {
-                                    "type": "string"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "message": "User updated successfully!",
-                  "data": {
-                    "name": "John Doe",
-                    "username": "johndoe",
-                    "email": "example@mail.com",
-                    "image": "https://example.com/image.jpg",
-                    "type": {
-                      "memberType": "Free",
-                      "startDate": "2020-01-01",
-                      "endDate": "2020-01-31",
-                      "isNew": true,
-                      "isAdmin": false,
-                      "isActivated": true
-                    },
-                    "referal": {
-                      "referalCode": "123456",
-                      "referalCount": 0,
-                      "referalAccount": []
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Update Profile Success"
           },
           "400": {
             "$ref": "#/components/responses/Bad Request"
@@ -1960,22 +1255,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful Operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  },
-                  "example": {
-                    "message": "Password changed successfully!"
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Change Password Success"
           },
           "400": {
             "$ref": "#/components/responses/Bad Request"
@@ -2017,44 +1297,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful Operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "image": {
-                          "type": "object",
-                          "properties": {
-                            "imageName": {
-                              "type": "string"
-                            },
-                            "imageLink": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "message": "Picture changed successfully!",
-                  "data": {
-                    "image": {
-                      "imageName": "image.jpg",
-                      "imageLink": "https://example.com/image.jpg"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/Change Profile Picture Success"
           },
           "400": {
             "$ref": "#/components/responses/Bad Request"
@@ -2233,6 +1476,250 @@
               },
               "example": {
                 "message": "Some error occurred while fetching data!"
+              }
+            }
+          }
+        }
+      },
+      "Show Profile Success": {
+        "description": "Successful Operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "gender": {
+                      "type": "string"
+                    },
+                    "image": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "object",
+                      "properties": {
+                        "memberType": {
+                          "type": "string"
+                        },
+                        "subscription": {
+                          "type": "object",
+                          "properties": {
+                            "startAt": {
+                              "type": "number"
+                            },
+                            "expiredAt": {
+                              "type": "number"
+                            }
+                          }
+                        },
+                        "isNew": {
+                          "type": "boolean"
+                        },
+                        "isAdmin": {
+                          "type": "boolean"
+                        },
+                        "isActivated": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "referal": {
+                      "type": "object",
+                      "properties": {
+                        "referalCode": {
+                          "type": "string"
+                        },
+                        "referalCount": {
+                          "type": "number"
+                        },
+                        "referalAccount": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "username": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "example": {
+                "message": "User fetched successfully!",
+                "data": {
+                  "name": "Example Name",
+                  "username": "username",
+                  "email": "example@mail.com",
+                  "image": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
+                  "type": {
+                    "memberType": "Pro Member",
+                    "subscription": {
+                      "startat": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
+                      "expiredAt": null
+                    },
+                    "isNew": true,
+                    "isAdmin": false,
+                    "isActivated": false
+                  },
+                  "referal": {
+                    "referalCode": "123456",
+                    "referalCount": 0,
+                    "referalAccount": []
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Update Profile Success": {
+        "description": "Successful Operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "image": {
+                      "type": "string"
+                    },
+                    "referal": {
+                      "type": "object",
+                      "properties": {
+                        "referalCode": {
+                          "type": "string"
+                        },
+                        "referalCount": {
+                          "type": "number"
+                        },
+                        "referalAccount": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "username": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "example": {
+              "message": "User updated successfully!",
+              "data": {
+                "name": "John Doe",
+                "username": "johndoe",
+                "email": "example@mail.com",
+                "image": "https://example.com/image.jpg",
+                "referal": {
+                  "referalCode": "123456",
+                  "referalCount": 0,
+                  "referalAccount": []
+                }
+              }
+            }
+          }
+        }
+      },
+      "Change Password Success": {
+        "description": "Successful Operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "Password changed successfully!"
+              }
+            }
+          }
+        }
+      },
+      "Change Profile Picture Success": {
+        "description": "Successful Operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "image": {
+                      "type": "object",
+                      "properties": {
+                        "imageName": {
+                          "type": "string"
+                        },
+                        "imageLink": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "example": {
+              "message": "Picture changed successfully!",
+              "data": {
+                "image": {
+                  "imageName": "image.jpg",
+                  "imageLink": "https://example.com/image.jpg"
+                }
               }
             }
           }
