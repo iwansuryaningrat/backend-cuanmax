@@ -96,8 +96,8 @@ authRouter(app);
 // servicesRouter(app); // Services Router
 // import subscribersRouter from "./src/routes/subscribers.routes.js"; // Subscribers Router
 // subscribersRouter(app); // Subscribers Router
-// import teamsRouter from "./src/routes/teams.routes.js"; // Teams Router
-// teamsRouter(app); // Teams Router
+import teamsRouter from "./src/routes/teams.routes.js"; // Teams Router
+teamsRouter(app); // Teams Router
 // import testimoniRouter from "./src/routes/testimoni.routes.js"; // Testimoni Router
 // testimoniRouter(app); // Testimoni Router
 import apiDocsRouter from "./src/routes/api-docs.routes.js"; // API Docs Router
@@ -111,12 +111,12 @@ apiDocsRouter(app); // API Docs Router
 // Pricing Router
 // Services Router
 // Subscribers Router
-// Teams Router
+import teamsRouterAdmin from "./src/routes/admin/teams.routes.js"; // Teams Router
+teamsRouterAdmin(app); // Teams Router
 // Testimoni Router
 // Transactions Router
-// Users Router
-import usersAdminRouter from "./src/routes/admin/users.routes.js";
-usersAdminRouter(app);
+import usersAdminRouter from "./src/routes/admin/users.routes.js"; // Users Router
+usersAdminRouter(app); // Users Router
 // Videos Router
 // Vouchers Router
 // Watchlists Router
