@@ -22,10 +22,22 @@ export default (mongoose) => {
         },
       },
       contact: {
-        instagram: String,
-        twitter: String,
-        linkedin: String,
-        email: String,
+        instagram: {
+          type: String,
+          default: "",
+        },
+        twitter: {
+          type: String,
+          default: "",
+        },
+        linkedin: {
+          type: String,
+          default: "",
+        },
+        email: {
+          type: String,
+          default: "",
+        },
       },
       status: {
         type: String,
