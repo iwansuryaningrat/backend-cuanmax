@@ -42,6 +42,7 @@ const signup = async (req, res) => {
     type: {
       accountType: {
         member: member,
+        startDate: Date.now().getTime(),
         isNew: true,
       },
       isAdmin: admin,
