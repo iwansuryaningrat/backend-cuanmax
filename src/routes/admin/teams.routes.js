@@ -14,9 +14,9 @@ const teamsRouterAdmin = (app) => {
   router.get("/", login, admin, findAll);
   router.post("/", login, admin, create);
   router.get("/:id", login, admin, findOne);
+  router.delete("/:id", login, admin, deleteTeam);
   router.put("/:id", login, admin, update);
   router.put("/:id/teamprofile", login, admin, teamProfilePicture);
-  router.delete("/:id", login, admin, deleteTeam);
 
   app.use("/v1/admin/teams", router);
 };
