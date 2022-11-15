@@ -147,7 +147,7 @@ const create = (req, res) => {
     });
 };
 
-// Update a Team by the id in the request
+// Update a Team by the id in the request (DONE)
 const update = (req, res) => {
   const { id } = req.params;
 
@@ -157,7 +157,23 @@ const update = (req, res) => {
     });
   }
 
-  Teams.findByIdAndUpdate(id, req.body, { new: true })
+  const data = req.body.map((item) => {
+    const { name, description, position, email, instagram, twitter, linkedin } =
+      item;
+    return {
+      name,
+      description,
+      position,
+      contact: {
+        email,
+        instagram: instagram === null ? "" : instagram,
+        twitter: twitter === null ? "" : twitter,
+        linkedin: linkedin === null ? "" : linkedin,
+      },
+    };
+  });
+
+  Teams.findByIdAndUpdate(id, data, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -166,7 +182,7 @@ const update = (req, res) => {
       }
 
       res.send({
-        message: "Team was updated",
+        message: "Team data successfully updated.",
       });
     })
     .catch((err) => {
@@ -176,7 +192,7 @@ const update = (req, res) => {
     });
 };
 
-// Upload photo
+// Upload photo (DONE)
 const teamProfilePicture = (req, res) => {
   const { id } = req.params;
 
