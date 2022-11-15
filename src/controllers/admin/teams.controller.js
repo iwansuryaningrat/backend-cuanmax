@@ -234,4 +234,41 @@ const teamProfilePicture = (req, res) => {
     });
 };
 
-export { findAll, findOne, deleteTeam, create, update, teamProfilePicture };
+// Deactivate Team (DONE)
+const deactivate = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Teams ID is required",
+    });
+  }
+
+  Teams.findByIdAndUpdate(id, { status: "Inactive" })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Team not found",
+        });
+      }
+
+      res.send({
+        message: "Team successfully deactivated.",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while deactivating team.",
+      });
+    });
+};
+
+export {
+  findAll,
+  findOne,
+  deleteTeam,
+  create,
+  update,
+  teamProfilePicture,
+  deactivate,
+};
