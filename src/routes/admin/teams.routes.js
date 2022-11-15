@@ -5,6 +5,7 @@ import {
   update,
   teamProfilePicture,
   deleteTeam,
+  deactivate,
 } from "../../controllers/admin/teams.controller.js";
 import { login, admin } from "../../middlewares/auth.js";
 import Express from "express";
@@ -17,6 +18,7 @@ const teamsRouterAdmin = (app) => {
   router.delete("/:id", login, admin, deleteTeam);
   router.put("/:id", login, admin, update);
   router.put("/:id/teamprofile", login, admin, teamProfilePicture);
+  router.put("/:id/deactivate", login, admin, deactivate);
 
   app.use("/v1/admin/teams", router);
 };
