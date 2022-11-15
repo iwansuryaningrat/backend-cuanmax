@@ -40,7 +40,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Fetch one team data
+// Fetch one team data (DONE)
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -82,7 +82,7 @@ const findOne = (req, res) => {
     });
 };
 
-// Delete team
+// Delete team data (DONE)
 const deleteTeam = (req, res) => {
   const { id } = req.params;
 
