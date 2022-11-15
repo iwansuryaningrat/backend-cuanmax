@@ -11,7 +11,7 @@ import Express from "express";
 const router = Express.Router();
 
 const teamsRouterAdmin = (app) => {
-  router.get("/", findAll);
+  router.get("/", login, admin, findAll);
   router.post("/", login, admin, create);
   router.get("/:id", login, admin, findOne);
   router.put("/:id", login, admin, update);
