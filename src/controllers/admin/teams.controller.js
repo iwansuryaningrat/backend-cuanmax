@@ -58,10 +58,21 @@ const findOne = (req, res) => {
         });
       }
 
+      const data = result.map((item) => {
+        const { _id, name, description, position, photo, contact } = item;
+        return {
+          id: _id,
+          name,
+          description,
+          position,
+          photo,
+          contact,
+        };
+      });
+
       res.send({
         message: "Team successfully retrieved.",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -91,11 +102,10 @@ const deleteTeam = (req, res) => {
 
       res.send({
         message: "Team successfully deleted.",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
-      return res.status(409).send({
+      return res.status(500).send({
         message: err.message || "Some error while delete team.",
       });
     });
@@ -157,13 +167,11 @@ const update = (req, res) => {
 
       res.send({
         message: "Team was updated",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Some error while updating team.",
-        timestamp: new Date().toString(),
       });
     });
 };
@@ -199,7 +207,6 @@ const teamProfilePicture = (req, res) => {
 
       res.send({
         message: "Team profile photo successfully updated.",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -207,7 +214,6 @@ const teamProfilePicture = (req, res) => {
         message:
           err.message ||
           "Some error occurred while changing the profile picture.",
-        timestamp: new Date().toString(),
       });
     });
 };
