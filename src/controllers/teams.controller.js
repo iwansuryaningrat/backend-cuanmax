@@ -1,14 +1,29 @@
 import db from "../models/index.js";
 const Teams = db.teams;
 
-// Fetch all teams data
+// Fetch all teams data (DONE)
 const findAll = (req, res) => {
-  Teams.find()
+  const { status } = req.query;
+
+  let condition = status ? {} : { status: "Active" };
+
+  Teams.find(condition)
     .then((result) => {
+      const data = result.map((item) => {
+        const { _id, name, description, position, photo, contact } = item;
+        return {
+          id: _id,
+          name,
+          description,
+          position,
+          photo,
+          contact,
+        };
+      });
+
       res.send({
         message: "Teams successfully fetched.",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
