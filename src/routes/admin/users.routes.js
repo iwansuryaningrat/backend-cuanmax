@@ -5,6 +5,7 @@ import {
   changePassword,
   changeProfilePicture,
   deleteUSer,
+  changeProMemberToBasicMember,
 } from "../../controllers/users.controller.js";
 import { login, admin } from "../../middlewares/auth.js";
 import userFinder from "../../middlewares/usersfinder.js";
@@ -24,6 +25,7 @@ const usersAdminRouter = (app) => {
     changeProfilePicture
   );
   router.delete("/:id", login, admin, deleteUSer);
+  router.put("/subsdeactivate", login, admin, changeProMemberToBasicMember);
 
   app.use("/v1/admin/users", router);
 };
