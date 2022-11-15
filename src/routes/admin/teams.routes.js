@@ -5,7 +5,7 @@ import {
   update,
   teamProfilePicture,
   deleteTeam,
-} from "../../controllers/teams.controller.js";
+} from "../../controllers/admin/teams.controller.js";
 import { login, admin } from "../../middlewares/auth.js";
 import Express from "express";
 const router = Express.Router();
