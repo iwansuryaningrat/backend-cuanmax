@@ -1,11 +1,11 @@
-import db from "../models/index.js";
+import db from "../../models/index.js";
 const Teams = db.teams;
 
 // Fetch all teams data (DONE)
 const findAll = (req, res) => {
-  const { status } = req.query;
+  const { active } = req.query;
 
-  let condition = status ? {} : { status: "Active" };
+  let condition = active ? { status: "Active" } : {};
 
   Teams.find(condition)
     .then((result) => {
@@ -20,6 +20,13 @@ const findAll = (req, res) => {
           contact,
         };
       });
+
+      // Check if there is any data
+      if (data.length === 0) {
+        return res.status(404).send({
+          message: "No data found.",
+        });
+      }
 
       res.send({
         message: "Teams successfully fetched.",
