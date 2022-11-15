@@ -201,12 +201,20 @@
                   "password": {
                     "type": "string",
                     "format": "password"
+                  },
+                  "rememberMe": {
+                    "type": "boolean",
+                    "description": "Remember me or not",
+                    "example": false,
+                    "default": false,
+                    "nullable": true
                   }
                 },
                 "required": ["email", "password"],
                 "example": {
                   "email": "example@mail.com",
-                  "password": "123456"
+                  "password": "123456",
+                  "rememberMe": false
                 }
               }
             }
