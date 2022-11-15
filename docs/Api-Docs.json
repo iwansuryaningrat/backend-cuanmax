@@ -1343,46 +1343,7 @@
           }
         ],
         "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "position": {
-                    "type": "string"
-                  },
-                  "instagram": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  },
-                  "twitter": {
-                    "type": "string"
-                  },
-                  "linkedin": {
-                    "type": "string"
-                  }
-                },
-                "example": {
-                  "name": "Name",
-                  "description": "description",
-                  "position": "CEO",
-                  "instagram": "https://www.instagram.com/username/",
-                  "email": "example@mail.com",
-                  "twitter": "https://www.twitter.com/username/",
-                  "linkedin": "https://www.linkedin.com/username/"
-                },
-                "required": ["name", "description", "position"]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/Teams Body"
         },
         "responses": {
           "200": {
@@ -1626,6 +1587,58 @@
           }
         }
       },
+      "put": {
+        "tags": ["Teams - Admin"],
+        "summary": "Update Team",
+        "description": "Update Team for Admin",
+        "operationId": "updateTeamforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Team ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Teams Body"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team data successfully updated."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      },
       "delete": {
         "tags": ["Teams - Admin"],
         "summary": "Delete Team",
@@ -1669,6 +1682,63 @@
           },
           "404": {
             "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/teams/{Team ID}/teamprofile": {
+      "put": {
+        "tags": ["Teams - Admin"],
+        "summary": "Update Team Profile",
+        "description": "Update Team Profile for Admin",
+        "operationId": "updateTeamProfileforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Team ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Change Profile Picture"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team profile successfully updated."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable Entity"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -2257,12 +2327,58 @@
               "properties": {
                 "image": {
                   "type": "string",
-                  "format": "binary"
+                  "format": "binary",
+                  "required": true,
+                  "description": "Image file",
+                  "nullable": false
                 }
               }
             },
             "example": {
               "image": "file"
+            }
+          }
+        }
+      },
+      "Teams Body": {
+        "description": "Teams Body",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                },
+                "instagram": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "twitter": {
+                  "type": "string"
+                },
+                "linkedin": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "name": "Name",
+                "description": "description",
+                "position": "CEO",
+                "instagram": "https://www.instagram.com/username/",
+                "email": "example@mail.com",
+                "twitter": "https://www.twitter.com/username/",
+                "linkedin": "https://www.linkedin.com/username/"
+              },
+              "required": ["name", "description", "position"]
             }
           }
         }
