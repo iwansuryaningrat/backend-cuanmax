@@ -1,6 +1,7 @@
 import db from "../models/index.js";
 const Users = db.users;
 import bcrypt from "bcrypt";
+import adminCheck from "../services/admincheck.js";
 
 // Fetch all users - Admin Only (Done)
 const findAll = (req, res) => {
@@ -138,7 +139,7 @@ const findOne = (req, res) => {
 };
 
 // Delete a user with the specified id in the request - Admin Only (Done)
-const deleteUSer = (req, res) => {
+const deleteUSer = async (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -147,7 +148,16 @@ const deleteUSer = (req, res) => {
     });
   }
 
-  Users.findByIdAndRemove(id)
+  // If selected user is admin, then don't delete
+  const admincheck = await adminCheck(id);
+
+  if (admincheck) {
+    return res.status(405).send({
+      message: "Admin user can't be deleted!",
+    });
+  }
+
+  await Users.findByIdAndRemove(id)
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -403,12 +413,43 @@ const createReferalCode = (req, res) => {
     });
 };
 
-// Change Pro Member into Basic Member While Pro Member's Subscription is Expired (Done)
-// const changeProMemberToBasicMember = async (req, res) => {
-//   const date = new Date().getTime();
+// Change Pro Member into Basic Member While Pro Member's Subscription is Expired (Done - Not Tested)
+const changeProMemberToBasicMember = async (req, res) => {
+  const date = new Date().getTime();
 
-//   await Users.updateMany(
-//     { ""subscription.expiredAt"": { $lt: date } },
+  await Users.updateMany(
+    { "type.accountType.subscription.expiredAt": { $lt: date } }, // Find all users whose subscription is expired
+    {
+      $set: {
+        "type.accountType.type": "Basic Member", // Change their account type to Basic Member
+        "type.accountType.subscription": {
+          // Set their subscription to null
+          expiredAt: null,
+        },
+      },
+    }
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(200).send({
+          message: "No user updated",
+        });
+      }
+
+      const count = result.nModified;
+
+      res.send({
+        message: `${count} user(s) changed from Pro Member to Basic Member.`,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message:
+          err.message ||
+          "Some error occurred while changing Pro Member to Basic Member.",
+      });
+    });
+};
 
 export {
   findAll,
@@ -418,4 +459,5 @@ export {
   changePassword,
   changeProfilePicture,
   createReferalCode,
+  changeProMemberToBasicMember,
 };
