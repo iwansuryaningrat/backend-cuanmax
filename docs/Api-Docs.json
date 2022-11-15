@@ -784,6 +784,9 @@
           "404": {
             "$ref": "#/components/responses/Not Found"
           },
+          "405": {
+            "$ref": "#/components/responses/Method Not Allowed"
+          },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
           }
@@ -1413,6 +1416,111 @@
             "$ref": "#/components/responses/Internal Server Error"
           }
         }
+      },
+      "get": {
+        "tags": ["Teams - Admin"],
+        "summary": "Get All Teams",
+        "description": "Get All Teams for Admin",
+        "operationId": "getAllTeamsforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Status of the team, true for only active teams, false for all teams",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "position": {
+                            "type": "string"
+                          },
+                          "photo": {
+                            "type": "string"
+                          },
+                          "contact": {
+                            "type": "object",
+                            "properties": {
+                              "instagram": {
+                                "type": "string"
+                              },
+                              "email": {
+                                "type": "string"
+                              },
+                              "twitter": {
+                                "type": "string"
+                              },
+                              "linkedin": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Teams successfully fetched.",
+                  "data": [
+                    {
+                      "id": "5f9f1b9b9c9d0c0017b8b1a1",
+                      "name": "Name",
+                      "description": "description",
+                      "position": "CEO",
+                      "photo": "https://example.com/photo.jpg",
+                      "contact": {
+                        "instagram": "https://www.instagram.com/username/",
+                        "email": "example@mail.com",
+                        "twitter": "https://www.twitter.com/username/",
+                        "linkedin": "https://www.linkedin.com/username/"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
       }
     }
   },
@@ -1517,6 +1625,24 @@
               },
               "example": {
                 "message": "User not found!"
+              }
+            }
+          }
+        }
+      },
+      "Method Not Allowed": {
+        "description": "Method Not Allowed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "Method Not Allowed!"
               }
             }
           }
