@@ -27,7 +27,10 @@ const findAll = (req, res) => {
       }
 
       const data = result.map((item) => {
-        const { _id, name, username, email, phone, address, type } = item;
+        const { _id, name, username, email, phone, address, birthday, type } =
+          item;
+
+        birthday = new Date(birthday).toString();
 
         return {
           id: _id,
@@ -36,6 +39,7 @@ const findAll = (req, res) => {
           email,
           phone,
           address,
+          birthday,
           memberType: type.accountType.member,
           subscription: {
             startAt: new Date(type.accountType.subscription.startAt).toString(),
@@ -86,7 +90,7 @@ const findOne = (req, res) => {
         email,
         phone,
         address,
-        gender,
+        birthday,
         image,
         type,
         referal,
@@ -107,7 +111,7 @@ const findOne = (req, res) => {
         email,
         phone,
         address,
-        gender,
+        birthday: new Date(birthday).toString(),
         image,
         type: {
           isAdmin: type.isAdmin,
@@ -202,7 +206,7 @@ const update = (req, res) => {
           email: result.email,
           phone: result.phone,
           address: result.address,
-          gender: result.gender,
+          birthday: new Date(result.birthday).toString(),
           image: result.image,
           referal: result.referal,
         },
