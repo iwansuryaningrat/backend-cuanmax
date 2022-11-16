@@ -41,6 +41,7 @@ const loggingin = async (req, res) => {
                 admin: user.type.isAdmin,
                 role: user.type.accountType.member,
                 isActivated: user.type.isActivated,
+                image: user.image.imageLink,
               },
               process.env.JWT_SECRET,
               {
@@ -53,14 +54,6 @@ const loggingin = async (req, res) => {
             return res.status(200).send({
               message: "Login Success!",
               token: token,
-              user: {
-                id: user.id,
-                name: user.name,
-                username: user.username,
-                email: user.email,
-                image: user.image.imageLink,
-                role: user.type.accountType.member,
-              },
             });
           } else {
             return res.status(401).send({
