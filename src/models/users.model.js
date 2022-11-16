@@ -21,7 +21,7 @@ export default (mongoose) => {
       address: {
         type: String,
       },
-      gender: {
+      birthday: {
         type: String,
       },
       password: {
