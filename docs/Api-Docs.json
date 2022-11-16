@@ -638,6 +638,9 @@
                           "address": {
                             "type": "string"
                           },
+                          "birthday": {
+                            "type": "string"
+                          },
                           "memberType": {
                             "type": "string"
                           },
@@ -675,6 +678,7 @@
                         "email": "example@mail.com",
                         "phone": "081234567890",
                         "address": "Jl. Jalan",
+                        "birthday": "1999-01-01",
                         "memberType": "Admin",
                         "subscription": {
                           "startat": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
