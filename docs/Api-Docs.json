@@ -2102,7 +2102,7 @@
                     "address": {
                       "type": "string"
                     },
-                    "gender": {
+                    "birthday": {
                       "type": "string"
                     },
                     "image": {
@@ -2168,6 +2168,9 @@
                   "username": "username",
                   "email": "example@mail.com",
                   "image": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
+                  "phone": "081234567890",
+                  "address": "Jl. Example",
+                  "birthday": "1990-01-01",
                   "type": {
                     "memberType": "Pro Member",
                     "subscription": {
@@ -2333,7 +2336,7 @@
                 "address": {
                   "type": "string"
                 },
-                "gender": {
+                "birthday": {
                   "type": "string"
                 }
               }
@@ -2342,7 +2345,7 @@
               "name": "Example Name",
               "phone": "081234567890",
               "address": "Example Address",
-              "gender": "Laki - Laki"
+              "birthday": "1990-01-01"
             }
           }
         }
