@@ -21,7 +21,7 @@ export default (mongoose) => {
         type: Date,
         require: true,
       },
-      cover: {
+      thumbnail: {
         photoName: {
           type: String,
         },
