@@ -21,7 +21,9 @@ export default (mongoose) => {
       photosUrl: {
         type: String,
         require: true,
-        default: "",
+        default:
+          // "https://api.cuanmax.com/assets/images/default-profile-picture.png",
+          "http://localhost:8080/assets/images/default-profile-picture.png",
       },
       status: {
         type: String,
