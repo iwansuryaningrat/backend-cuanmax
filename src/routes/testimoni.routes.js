@@ -1,0 +1,12 @@
+import { findAll, findOne } from "../controllers/testimoni.controller.js";
+import Express from "express";
+const router = Express.Router();
+
+const testimoniRouter = (app) => {
+  router.get("/", findAll);
+  router.get("/:id", findOne);
+
+  app.use("/v1/testimoni", router);
+};
+
+export default testimoniRouter;
