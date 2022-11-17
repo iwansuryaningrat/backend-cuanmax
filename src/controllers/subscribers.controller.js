@@ -122,6 +122,7 @@ const findOne = (req, res) => {
     });
 };
 
+// Delete a Subscribers with the specified id in the request (DONE)
 const deleteSubs = (req, res) => {
   const { id } = req.params;
 
@@ -140,8 +141,7 @@ const deleteSubs = (req, res) => {
       }
 
       res.send({
-        message: "Playlist was deleted",
-        timestamp: new Date().toString(),
+        message: "Playlist was successfully deleted.",
       });
     })
     .catch((err) => {
@@ -151,7 +151,8 @@ const deleteSubs = (req, res) => {
     });
 };
 
-const update = (req, res) => {
+// Update a Subscribers by the id in the request (DONE)
+const deactivate = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -169,9 +170,7 @@ const update = (req, res) => {
       }
 
       res.send({
-        message: "Subscriber was updated.",
-        timestamp: new Date().toString(),
-        data: result,
+        message: "Subscriber was successfully deactivated.",
       });
     })
     .catch((err) => {
@@ -181,4 +180,4 @@ const update = (req, res) => {
     });
 };
 
-export { findAll, create, findOne, deleteSubs, update };
+export { findAll, create, findOne, deleteSubs, deactivate };
