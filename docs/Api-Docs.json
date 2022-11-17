@@ -1974,7 +1974,7 @@
                       "email": "example@mail.com",
                       "startDate": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
                       "endDate": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
-                      "status": false
+                      "status": "Active"
                     }
                   ]
                 }
@@ -1983,6 +1983,80 @@
           },
           "400": {
             "$ref": "#/components/responses/Bad Request"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/subscribers/{Subscriber ID}": {
+      "get": {
+        "tags": ["Subscribers - Admin"],
+        "summary": "Get Subscriber",
+        "description": "Get Subscriber",
+        "operationId": "getSubscriber",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Subscriber ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        },
+                        "startDate": {
+                          "type": "string"
+                        },
+                        "endDate": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Subscriber successfully fetched.",
+                  "data": {
+                    "email": "example@mail.com",
+                    "startDate": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
+                    "endDate": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
+                    "status": "Active"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
           },
           "403": {
             "$ref": "#/components/responses/Forbidden"
@@ -2039,7 +2113,7 @@
           "type": "string"
         }
       },
-      "Subscribers ID": {
+      "Subscriber ID": {
         "name": "Subscribers ID",
         "in": "path",
         "description": "Subscribers ID",
