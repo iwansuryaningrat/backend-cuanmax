@@ -1911,6 +1911,90 @@
           }
         }
       }
+    },
+    "/admin/subscribers": {
+      "get": {
+        "tags": ["Subscribers - Admin"],
+        "summary": "Get All Subscribers",
+        "description": "Get All Subscribers",
+        "operationId": "getAllSubscribers",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Subscribers Status",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          },
+                          "startDate": {
+                            "type": "string"
+                          },
+                          "endDate": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Subscribers successfully fetched.",
+                  "data": [
+                    {
+                      "email": "example@mail.com",
+                      "startDate": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
+                      "endDate": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
+                      "status": false
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
