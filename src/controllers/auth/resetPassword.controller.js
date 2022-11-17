@@ -99,9 +99,7 @@ const forgotPassword = async (req, res) => {
   })
     .then((user) => {
       if (!user) {
-        return res.status(404).send({
-          message: "User not found!",
-        });
+        return false;
       } else {
         return user;
       }
@@ -112,30 +110,36 @@ const forgotPassword = async (req, res) => {
       });
     });
 
-  const token = jwt.sign(
-    {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      username: user.username,
-    },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: "10m", // 10 minutes
-    }
-  );
-
-  // Send email to user with reset password link
-  const response = await forgotPasswordMailer(user, token);
-
-  if (response === "Email sent") {
-    return res.status(200).send({
-      message: "Email has been sent!",
+  if (!user) {
+    return res.status(404).send({
+      message: "User not found!",
     });
   } else {
-    return res.status(500).send({
-      message: "Error when sending email!",
-    });
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        username: user.username,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "10m", // 10 minutes
+      }
+    );
+
+    // Send email to user with reset password link
+    const response = await forgotPasswordMailer(user, token);
+
+    if (response === "Email sent") {
+      return res.status(200).send({
+        message: "Email has been sent!",
+      });
+    } else {
+      return res.status(500).send({
+        message: "Error when sending email!",
+      });
+    }
   }
 };
 
