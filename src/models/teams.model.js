@@ -16,9 +16,14 @@ export default (mongoose) => {
       photo: {
         photoName: {
           type: String,
+          default: "default-profile-picture.png",
         },
         photoLink: {
           type: String,
+          require: true,
+          default:
+            // "https://api.cuanmax.com/assets/images/default-profile-picture.png",
+            "http://localhost:8080/assets/images/default-profile-picture.png",
         },
       },
       contact: {
