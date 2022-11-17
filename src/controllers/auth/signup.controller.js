@@ -9,7 +9,7 @@ import { signupMailer } from "../../services/mailer.js";
 const signup = async (req, res) => {
   const { name, email, username } = req.body;
   let password = req.body.password;
-  const admin = req.body.admin ? req.body.admin : false;
+  const admin = req.body.admin === true ? true : false;
 
   if (!name || !username || !email || !password) {
     return res.status(400).send({
@@ -31,7 +31,7 @@ const signup = async (req, res) => {
   // now we set user password to hashed password
   const encryptedPassword = await bcrypt.hash(password, salt);
 
-  var member = admin ? "Admin" : "Basic Member";
+  var member = admin === true ? "Admin" : "Basic Member";
 
   const referalCode = Math.random().toString(36).substring(2, 10);
 
