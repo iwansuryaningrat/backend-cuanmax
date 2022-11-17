@@ -50,7 +50,7 @@ export default (mongoose) => {
         },
         default: "Upcoming",
       },
-      cover: {
+      thumbnail: {
         imageName: {
           type: String,
         },
