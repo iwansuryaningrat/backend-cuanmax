@@ -18,6 +18,7 @@ const findAll = (req, res) => {
     });
 };
 
+// Subscribers Controller for users (DONE)
 const create = (req, res) => {
   const { email } = req.body;
 
@@ -31,23 +32,21 @@ const create = (req, res) => {
     .then((result) => {
       if (result) {
         return res.status(422).send({
-          message: "Email already exists.",
+          message: "You are already subscribed.",
         });
       }
 
       const subscribers = new Subscribers({
         email: email,
         startDate: new Date().toString(),
-        status: "active",
+        status: "Active",
       });
 
       subscribers
         .save()
         .then((result) => {
           res.status(200).send({
-            message: "Playlist successfully added.",
-            timestamp: new Date().toString(),
-            data: result,
+            message: "You have successfully subscribed.",
           });
         })
         .catch((err) => {
