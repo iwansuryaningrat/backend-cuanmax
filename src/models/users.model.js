@@ -31,11 +31,14 @@ export default (mongoose) => {
       image: {
         imageName: {
           type: String,
+          default: "default-profile-picture.png",
         },
         imageLink: {
           type: String,
+          require: true,
           default:
-            "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
+            // "https://api.cuanmax.com/assets/images/default-profile-picture.png",
+            "http://localhost:8080/assets/images/default-profile-picture.png",
         },
       },
       type: {
