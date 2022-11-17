@@ -14,7 +14,7 @@ export default (mongoose) => {
         type: String,
         require: true,
       },
-      body: {
+      testimoni: {
         type: String,
         require: true,
       },
