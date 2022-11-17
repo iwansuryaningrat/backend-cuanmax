@@ -1854,6 +1854,63 @@
           }
         }
       }
+    },
+    "/subscribers": {
+      "post": {
+        "tags": ["Subscribers"],
+        "summary": "Subscribe",
+        "description": "Subscribe",
+        "operationId": "subscribe",
+        "requestBody": {
+          "description": "Subscribe",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                },
+                "required": ["email"],
+                "example": {
+                  "email": "example@mail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "You have successfully subscribed."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable Entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1892,6 +1949,16 @@
         "name": "Team ID",
         "in": "path",
         "description": "Team ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Subscribers ID": {
+        "name": "Subscribers ID",
+        "in": "path",
+        "description": "Subscribers ID",
         "required": true,
         "allowEmptyValue": false,
         "schema": {
