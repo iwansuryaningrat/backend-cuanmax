@@ -23,8 +23,8 @@ const findAll = (req, res) => {
       const data = result.map((item) => {
         return {
           email: item.email,
-          startDate: item.startDate,
-          endDate: item.endDate,
+          startDate: item.startDate.toString(),
+          endDate: item.endDate.toString(),
           status: item.status,
         };
       });
@@ -85,6 +85,7 @@ const create = (req, res) => {
     });
 };
 
+// Find a single Subscribers with an id (DONE)
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -102,16 +103,21 @@ const findOne = (req, res) => {
         });
       }
 
+      const data = {
+        email: result.email,
+        startDate: result.startDate.toString(),
+        endDate: result.endDate.toString(),
+        status: result.status,
+      };
+
       res.send({
         message: "Subscriber was found.",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Some error while showing Subscribers.",
-        timestamp: new Date().toString(),
       });
     });
 };
@@ -154,7 +160,7 @@ const update = (req, res) => {
     });
   }
 
-  Subscribers.findByIdAndUpdate(id, req.body, { new: true })
+  Subscribers.findByIdAndUpdate(id, { status: "Inactive" }, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
