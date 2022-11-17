@@ -1,14 +1,37 @@
 import db from "../models/index.js";
 const Subscribers = db.subscribers;
 
+// Fetch all Subscribers (DONE)
 const findAll = (req, res) => {
-  Subscribers.find()
+  const { active } = req.query;
+
+  var condition = {};
+
+  if (active) {
+    condition.status = "Active";
+  }
+
+  Subscribers.find(condition)
     .sort({ createdAt: -1 })
     .then((result) => {
+      if (result.length === 0) {
+        return res.status(404).send({
+          message: "No Subscribers found",
+        });
+      }
+
+      const data = result.map((item) => {
+        return {
+          email: item.email,
+          startDate: item.startDate,
+          endDate: item.endDate,
+          status: item.status,
+        };
+      });
+
       res.send({
         message: "Subscribers successfully fetched.",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
