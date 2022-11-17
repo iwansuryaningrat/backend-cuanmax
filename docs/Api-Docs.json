@@ -2182,21 +2182,101 @@
           "format": "int64"
         }
       },
-      "User ID": {
-        "name": "User ID",
+      "token": {
+        "name": "token",
         "in": "path",
-        "description": "User ID",
+        "description": "Token",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Liveclass ID": {
+        "name": "Liveclass ID",
+        "in": "path",
+        "description": "Liveclass ID",
         "required": true,
         "allowEmptyValue": false,
         "schema": {
           "type": "string"
         }
       },
-      "token": {
-        "name": "token",
+      "Liveclass Transaction ID": {
+        "name": "Liveclass Transaction ID",
         "in": "path",
-        "description": "Token",
+        "description": "Liveclass Transaction ID",
         "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Membership Transaction ID": {
+        "name": "Membership Transaction ID",
+        "in": "path",
+        "description": "Membership Transaction ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Message ID": {
+        "name": "Message ID",
+        "in": "path",
+        "description": "Message ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "News ID": {
+        "name": "News ID",
+        "in": "path",
+        "description": "News ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Playlist ID": {
+        "name": "Playlist ID",
+        "in": "path",
+        "description": "Playlist ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Pricing ID": {
+        "name": "Pricing ID",
+        "in": "path",
+        "description": "Pricing ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Service ID": {
+        "name": "Service ID",
+        "in": "path",
+        "description": "Service ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Subscriber ID": {
+        "name": "Subscriber ID",
+        "in": "path",
+        "description": "Subscriber ID",
+        "required": true,
+        "allowEmptyValue": false,
         "schema": {
           "type": "string"
         }
@@ -2211,10 +2291,50 @@
           "type": "string"
         }
       },
-      "Subscriber ID": {
-        "name": "Subscribers ID",
+      "Testimoni ID": {
+        "name": "Testimoni ID",
         "in": "path",
-        "description": "Subscribers ID",
+        "description": "Testimoni ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "User ID": {
+        "name": "User ID",
+        "in": "path",
+        "description": "User ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Video ID": {
+        "name": "Video ID",
+        "in": "path",
+        "description": "Video ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Voucher ID": {
+        "name": "VOucher ID",
+        "in": "path",
+        "description": "VOucher ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Watchlist ID": {
+        "name": "Watchlist ID",
+        "in": "path",
+        "description": "Watchlist ID",
         "required": true,
         "allowEmptyValue": false,
         "schema": {
