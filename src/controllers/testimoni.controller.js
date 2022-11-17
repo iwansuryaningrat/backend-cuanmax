@@ -1,10 +1,78 @@
 import db from "../models/index.js";
 const Testimoni = db.testimoni;
 
-const findAll = (req, res) => {
-  Testimoni.find()
+// Find all testimoni for admin
+const findAllAdmin = (req, res) => {
+  const { active } = req.query;
+  let condition = {};
+
+  if (active === true) {
+    condition = { status: "Active" };
+  } else if (active === false) {
+    condition = { status: "Inactive" };
+  } else {
+    condition = {};
+  }
+
+  Testimoni.find(condition)
     .then((result) => {
-      res.send(result);
+      if (!result || result.length === 0) {
+        return res.status(404).send({
+          message: "Testimoni not found",
+        });
+      }
+
+      const data = result.map((item) => {
+        const { _id, name, position, company, testimoni, photosUrl, status } =
+          item;
+        return {
+          id: _id,
+          name,
+          position,
+          company,
+          testimoni,
+          photosUrl,
+          status,
+        };
+      });
+
+      res.send({
+        message: "Testimoni was successfully retrieved",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while retrieving testimoni.",
+      });
+    });
+};
+
+// Find All testimoni for public
+const findAll = (req, res) => {
+  Testimoni.find({ status: "Active" })
+    .then((result) => {
+      if (!result || result.length === 0) {
+        return res.status(404).send({
+          message: "Testimoni not found",
+        });
+      }
+
+      const data = result.map((item) => {
+        const { name, position, company, testimoni, photosUrl } = item;
+        return {
+          name,
+          position,
+          company,
+          testimoni,
+          photosUrl,
+        };
+      });
+
+      res.send({
+        message: "Testimoni was successfully retrieved",
+        data,
+      });
     })
     .catch((err) => {
       return res.status(500).send({
@@ -111,4 +179,4 @@ const update = (req, res) => {
     });
 };
 
-export { findAll, findOne, create, deleteTesti, update };
+export { findAllAdmin, findAll, findOne, create, deleteTesti, update };
