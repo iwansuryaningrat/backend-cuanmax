@@ -1,5 +1,5 @@
 import {
-  findAll,
+  findAllAdmin,
   findOne,
   create,
   deleteTesti,
@@ -10,8 +10,8 @@ import Express from "express";
 const router = Express.Router();
 
 const testimoniAdminRouter = (app) => {
-  router.get("/", findAll);
-  router.get("/:id", findOne);
+  router.get("/", login, admin, findAllAdmin);
+  router.get("/:id", login, admin, findOne);
   router.post("/", login, admin, create);
   router.put("/:id", login, admin, update);
   router.delete("/:id", login, admin, deleteTesti);
