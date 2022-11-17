@@ -98,8 +98,8 @@ import subscribersRouter from "./src/routes/subscribers.routes.js"; // Subscribe
 subscribersRouter(app); // Subscribers Router
 import teamsRouter from "./src/routes/teams.routes.js"; // Teams Router
 teamsRouter(app); // Teams Router
-// import testimoniRouter from "./src/routes/testimoni.routes.js"; // Testimoni Router
-// testimoniRouter(app); // Testimoni Router
+import testimoniRouter from "./src/routes/testimoni.routes.js"; // Testimoni Router
+testimoniRouter(app); // Testimoni Router
 import apiDocsRouter from "./src/routes/api-docs.routes.js"; // API Docs Router
 apiDocsRouter(app); // API Docs Router
 
@@ -114,7 +114,8 @@ import subscribersAdminRouter from "./src/routes/admin/subscribers.routes.js"; /
 subscribersAdminRouter(app); // Subscribers Router
 import teamsRouterAdmin from "./src/routes/admin/teams.routes.js"; // Teams Router
 teamsRouterAdmin(app); // Teams Router
-// Testimoni Router
+import testimoniAdminRouter from "./src/routes/admin/testimoni.routes.js"; // Testimoni Router
+testimoniAdminRouter(app); // Testimoni Router
 // Transactions Router
 import usersAdminRouter from "./src/routes/admin/users.routes.js"; // Users Router
 usersAdminRouter(app); // Users Router
