@@ -138,7 +138,7 @@ const forgotPasswordMailer = async (email, token) => {
     <div class="card">
     <h1>Reset Password</h1>
     <p>Click the button below to reset your password.</p>
-    <a href="http://localhost:3000/auth/reset-password/${token}">Reset</a>
+    <a href="http://localhost:3000/forgot-password/reset/${token}">Reset</a>
     </div>
     </div>
     </body>
