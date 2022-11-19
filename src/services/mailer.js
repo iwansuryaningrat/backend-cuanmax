@@ -5,6 +5,7 @@ import "dotenv/config";
 
 const signupMailer = async (email, token) => {
   const DOMAIN = process.env.MAILGUN_DOMAIN;
+  // Test MAIL
   const testMail = process.env.TEST_MAIL;
   const API_KEY = process.env.MAILGUN_API_KEY;
   const mg = mailgun({ apiKey: API_KEY, domain: DOMAIN });
@@ -83,6 +84,7 @@ const signupMailer = async (email, token) => {
 
 const forgotPasswordMailer = async (email, token) => {
   const DOMAIN = process.env.MAILGUN_DOMAIN;
+  // Test MAIL
   const testMail = process.env.TEST_MAIL;
   const API_KEY = process.env.MAILGUN_API_KEY;
   const mg = mailgun({ apiKey: API_KEY, domain: DOMAIN });
