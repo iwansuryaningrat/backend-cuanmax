@@ -25,7 +25,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Done
+// Create and Save a new Message to the database (Done)
 const create = (req, res) => {
   const { firstName, lastName, email, subject, body } = req.body;
 
@@ -35,11 +35,11 @@ const create = (req, res) => {
     });
   }
 
-  const message = new Message({
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
-    subject: subject,
+  const message = new Messages({
+    firstName,
+    lastName,
+    email,
+    subject,
     message: body,
   });
 
