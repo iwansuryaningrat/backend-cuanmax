@@ -174,6 +174,7 @@ const deleteTesti = (req, res) => {
     });
 };
 
+// Update a testimoni by the id in the request (Done)
 const update = (req, res) => {
   const id = req.params.id;
 
@@ -183,7 +184,16 @@ const update = (req, res) => {
     });
   }
 
-  Testimoni.findByIdAndUpdate(id, req.body, { new: true })
+  const { name, position, company, testimoni } = req.body;
+
+  const data = {
+    name,
+    position,
+    company,
+    testimoni,
+  };
+
+  Testimoni.findByIdAndUpdate(id, data, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
