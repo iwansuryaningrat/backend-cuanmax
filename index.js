@@ -90,6 +90,8 @@ import authRouter from "./src/routes/auth.routes.js"; // Auth Router
 authRouter(app);
 // import coinmarketcapRouter from "./src/routes/coinmarketcap.routes.js"; // Coinmarketcap Router
 // coinmarketcapRouter(app); // Coinmarketcap Router
+import messagesRouter from "./src/routes/messages.routes.js"; // Messages Router
+messagesRouter(app); // Messages Router
 // import pricingRouter from "./src/routes/pricing.routes.js"; // Pricing Router
 // pricingRouter(app); // Pricing Router
 // import servicesRouter from "./src/routes/services.routes.js"; // Services Router
@@ -105,7 +107,8 @@ apiDocsRouter(app); // API Docs Router
 
 // * Admin Routers
 // Liveclass Router
-// Messages Router
+import messagesAdminRouter from "./src/routes/admin/messages.routes.js"; // Messages Router
+messagesAdminRouter(app); // Messages Router
 // News Router
 // Playlists Router
 // Pricing Router
