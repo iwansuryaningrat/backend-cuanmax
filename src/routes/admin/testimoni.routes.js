@@ -13,8 +13,8 @@ const testimoniAdminRouter = (app) => {
   router.get("/", login, admin, findAllAdmin);
   router.get("/:id", login, admin, findOne);
   router.post("/", login, admin, create);
-  router.put("/:id", login, admin, update);
   router.delete("/:id", login, admin, deleteTesti);
+  router.put("/:id", login, admin, update);
 
   app.use("/v1/admin/testimoni", router);
 };
