@@ -212,4 +212,41 @@ const update = (req, res) => {
     });
 };
 
-export { findAllAdmin, findAll, findOne, create, deleteTesti, update };
+// Deactivate a testimoni by the id in the request (Done)
+const deactivate = (req, res) => {
+  const id = req.params.id;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Testimoni ID is required",
+    });
+  }
+
+  Testimoni.findByIdAndUpdate(id, { status: "Inactive" }, { new: true })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Testimoni not found",
+        });
+      }
+
+      res.send({
+        message: "Testimoni was deactivated",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while deactivate testimoni.",
+      });
+    });
+};
+
+export {
+  findAllAdmin,
+  findAll,
+  findOne,
+  create,
+  deleteTesti,
+  update,
+  deactivate,
+};
