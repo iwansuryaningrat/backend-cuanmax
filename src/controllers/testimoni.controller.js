@@ -241,6 +241,40 @@ const deactivate = (req, res) => {
     });
 };
 
+// Upload photos testimoni (Done)
+const uploadPhotos = (req, res) => {
+  const id = req.params.id;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Testimoni ID is required",
+    });
+  }
+
+  const imageName = req.file.filename;
+  const photosUrl = `${req.protocol}://${req.get(
+    "host"
+  )}/assets/images/${imageName}`;
+
+  Testimoni.findByIdAndUpdate(id, { photosUrl }, { new: true })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Testimoni not found",
+        });
+      }
+
+      res.send({
+        message: "Testimoni was successfully uploaded",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while uploading testimoni.",
+      });
+    });
+};
+
 export {
   findAllAdmin,
   findAll,
@@ -249,4 +283,5 @@ export {
   deleteTesti,
   update,
   deactivate,
+  uploadPhotos,
 };
