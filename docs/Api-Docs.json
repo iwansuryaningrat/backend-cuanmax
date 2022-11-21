@@ -2265,6 +2265,91 @@
         }
       }
     },
+    "/admin/testimoni/{Testimoni ID}": {
+      "get": {
+        "tags": ["Testimoni - Admin"],
+        "summary": "Get Testimoni by ID",
+        "description": "Get Testimoni by ID",
+        "operationId": "getTestimoniByID",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Testimoni ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "position": {
+                          "type": "string"
+                        },
+                        "company": {
+                          "type": "string"
+                        },
+                        "testimoni": {
+                          "type": "string"
+                        },
+                        "photosUrl": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Testimoni successfully fetched.",
+                  "data": {
+                    "name": "John Doe",
+                    "position": "CEO",
+                    "company": "PT. Example",
+                    "testimoni": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    "photosUrl": "https://example.com",
+                    "status": "Active"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
     "/testimoni": {
       "get": {
         "tags": ["Testimoni"],
