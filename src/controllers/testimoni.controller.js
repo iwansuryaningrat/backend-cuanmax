@@ -145,6 +145,7 @@ const create = (req, res) => {
     });
 };
 
+// Delete a testimoni with the specified id in the request (Done)
 const deleteTesti = (req, res) => {
   const id = req.params.id;
 
