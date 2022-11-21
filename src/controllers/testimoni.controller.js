@@ -48,7 +48,7 @@ const findAllAdmin = (req, res) => {
     });
 };
 
-// Find All testimoni for public
+// Find All testimoni for public (Done)
 const findAll = (req, res) => {
   Testimoni.find({ status: "Active" })
     .then((result) => {
@@ -81,6 +81,7 @@ const findAll = (req, res) => {
     });
 };
 
+// Find a single testimoni with an id (Done)
 const findOne = (req, res) => {
   const id = req.params.id;
 
@@ -92,7 +93,27 @@ const findOne = (req, res) => {
 
   Testimoni.findById(id)
     .then((result) => {
-      res.send(result);
+      if (!result) {
+        return res.status(404).send({
+          message: "Testimoni not found",
+        });
+      }
+
+      const { _id, name, position, company, testimoni, photosUrl, status } =
+        result;
+
+      res.send({
+        message: "Testimoni was successfully retrieved",
+        data: {
+          id: _id,
+          name,
+          position,
+          company,
+          testimoni,
+          photosUrl,
+          status,
+        },
+      });
     })
     .catch((err) => {
       return res.status(500).send({
