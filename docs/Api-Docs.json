@@ -2500,6 +2500,57 @@
         }
       }
     },
+    "/admin/testimoni/deactivate/{Testimoni ID}": {
+      "put": {
+        "tags": ["Testimoni - Admin"],
+        "summary": "Deactivate Testimoni by ID",
+        "description": "Deactivate Testimoni by ID",
+        "operationId": "deactivateTestimoniByID",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Testimoni ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Testimonies successfully deactivated."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
     "/testimoni": {
       "get": {
         "tags": ["Testimoni"],
