@@ -4,7 +4,6 @@ const router = Express.Router();
 
 const testimoniRouter = (app) => {
   router.get("/", findAll);
-  router.get("/:id", findOne);
 
   app.use("/v1/testimoni", router);
 };
