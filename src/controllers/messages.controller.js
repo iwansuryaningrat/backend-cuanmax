@@ -57,7 +57,7 @@ const create = (req, res) => {
     });
 };
 
-// Done
+// Find Message By ID
 const findOne = (req, res) => {
   const { id } = req.params;
 
