@@ -1,7 +1,6 @@
 import {
   findAll,
   findOne,
-  create,
   read,
   reply,
   deleteMsg,
@@ -12,7 +11,6 @@ const router = Express.Router();
 
 const messagesAdminRouter = (app) => {
   router.get("/", login, admin, findAll);
-  router.post("/", login, admin, create);
   router.get("/:id", login, admin, findOne);
   router.get("/:id/read", login, admin, read);
   router.get("/:id/reply", login, admin, reply);
