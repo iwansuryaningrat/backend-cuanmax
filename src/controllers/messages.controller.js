@@ -117,7 +117,7 @@ const findOne = (req, res) => {
     });
 };
 
-// Update Status into Read
+// Update Status into Read (Done)
 const read = (req, res) => {
   const { id } = req.params;
 
@@ -135,7 +135,7 @@ const read = (req, res) => {
         });
       }
 
-      const { firstName, lastName, email, subject, message, status } = result;
+      const { firstName, lastName, email, subject, message } = result;
 
       const data = {
         firstName,
