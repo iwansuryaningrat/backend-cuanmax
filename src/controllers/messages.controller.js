@@ -1,7 +1,7 @@
 import db from "../models/index.js";
 const Messages = db.messages;
 
-// Done
+// Fetch All Messages from Database (Done)
 const findAll = (req, res) => {
   const { status } = req.query;
   const query = {};
@@ -13,9 +13,28 @@ const findAll = (req, res) => {
   Messages.find(query)
     .sort({ createdAt: -1 })
     .then((message) => {
+      if (message.length < 1) {
+        return res.status(404).send({
+          message: "No Message was Found!",
+        });
+      }
+
+      const data = message.map((item) => {
+        const { firstName, lastName, email, subject, message, status } = item;
+
+        return {
+          firstName,
+          lastName,
+          email,
+          subject,
+          message,
+          status,
+        };
+      });
+
       res.send({
         message: "All message were fetched successfully",
-        data: message,
+        data,
       });
     })
     .catch((err) => {
@@ -75,9 +94,20 @@ const findOne = (req, res) => {
         });
       }
 
+      const { firstName, lastName, email, subject, message, status } = result;
+
+      const data = {
+        firstName,
+        lastName,
+        email,
+        subject,
+        message,
+        status,
+      };
+
       res.send({
         message: "Message was successfully found",
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -87,7 +117,7 @@ const findOne = (req, res) => {
     });
 };
 
-// Done
+// Update Status into Read
 const read = (req, res) => {
   const { id } = req.params;
 
@@ -97,7 +127,7 @@ const read = (req, res) => {
     });
   }
 
-  Messages.findByIdAndUpdate(id, { status: "Readed" }, { new: true })
+  Messages.findByIdAndUpdate(id, { status: "Read" }, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -105,11 +135,20 @@ const read = (req, res) => {
         });
       }
 
-      result.status = "Readed";
+      const { firstName, lastName, email, subject, message, status } = result;
+
+      const data = {
+        firstName,
+        lastName,
+        email,
+        subject,
+        message,
+        status: "Readed",
+      };
 
       res.send({
         message: "Message read successfully.",
-        data: result,
+        data,
       });
     })
     .catch((err) => {
