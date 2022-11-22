@@ -94,8 +94,8 @@ import messagesRouter from "./src/routes/messages.routes.js"; // Messages Router
 messagesRouter(app); // Messages Router
 // import pricingRouter from "./src/routes/pricing.routes.js"; // Pricing Router
 // pricingRouter(app); // Pricing Router
-// import servicesRouter from "./src/routes/services.routes.js"; // Services Router
-// servicesRouter(app); // Services Router
+import servicesRouter from "./src/routes/services.routes.js"; // Services Router
+servicesRouter(app); // Services Router
 import subscribersRouter from "./src/routes/subscribers.routes.js"; // Subscribers Router
 subscribersRouter(app); // Subscribers Router
 import teamsRouter from "./src/routes/teams.routes.js"; // Teams Router
@@ -112,7 +112,8 @@ messagesAdminRouter(app); // Messages Router
 // News Router
 // Playlists Router
 // Pricing Router
-// Services Router
+import servicesAdminRouter from "./src/routes/admin/services.routes.js"; // Services Router
+servicesAdminRouter(app); // Services Router
 import subscribersAdminRouter from "./src/routes/admin/subscribers.routes.js"; // Subscribers Router
 subscribersAdminRouter(app); // Subscribers Router
 import teamsRouterAdmin from "./src/routes/admin/teams.routes.js"; // Teams Router
