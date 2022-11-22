@@ -87,7 +87,7 @@ app.listen(PORT, () => {
 
 // General Routers
 import authRouter from "./src/routes/auth.routes.js"; // Auth Router
-authRouter(app);
+authRouter(app); // Auth Router
 // import coinmarketcapRouter from "./src/routes/coinmarketcap.routes.js"; // Coinmarketcap Router
 // coinmarketcapRouter(app); // Coinmarketcap Router
 import messagesRouter from "./src/routes/messages.routes.js"; // Messages Router
@@ -128,13 +128,11 @@ usersAdminRouter(app); // Users Router
 // Watchlists Router
 
 // * Pro Users Routers
-// Users Router
-import usersProRouter from "./src/routes/pro_users/users.routes.js";
-usersProRouter(app);
+import usersProRouter from "./src/routes/pro_users/users.routes.js"; // Users Router
+usersProRouter(app); // Users Router
 
 // * Basic Users Routers
-// Users Router
-import usersRouter from "./src/routes/users/users.routes.js";
-usersRouter(app);
+import usersRouter from "./src/routes/users/users.routes.js"; // Users Router
+usersRouter(app); // Users Router
 
 export default app;
