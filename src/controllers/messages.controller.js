@@ -158,7 +158,7 @@ const read = (req, res) => {
     });
 };
 
-// Done
+// Update Status into Replied (Done)
 const reply = (req, res) => {
   const { id } = req.params;
 
@@ -176,11 +176,20 @@ const reply = (req, res) => {
         });
       }
 
-      result.status = "Replied";
+      const { firstName, lastName, email, subject, message } = result;
+
+      const data = {
+        firstName,
+        lastName,
+        email,
+        subject,
+        message,
+        status: "Replied",
+      };
 
       res.send({
         message: "Message status change successfully.",
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -190,6 +199,7 @@ const reply = (req, res) => {
     });
 };
 
+// Delete Message By Id (Done)
 const deleteMsg = (req, res) => {
   const { id } = req.params;
 
