@@ -1,13 +1,12 @@
 import db from "../models/index.js";
 const Services = db.services;
 
-// Done
+// Find all services
 const findAll = (req, res) => {
   Services.find()
     .then((result) => {
       res.send({
         message: "Services was found",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -18,7 +17,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Done
+// Create service
 const create = (req, res) => {
   const { serviceName, description, benefits } = req.body;
 
@@ -33,7 +32,6 @@ const create = (req, res) => {
     .then((result) => {
       res.status(200).send({
         message: "Service successfully added.",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -44,7 +42,7 @@ const create = (req, res) => {
     });
 };
 
-// Done
+// Update image service by id
 const uploadImage = (req, res) => {
   const { id } = req.params;
 
@@ -79,7 +77,6 @@ const uploadImage = (req, res) => {
 
       res.status(200).send({
         message: "Image successfully uploaded.",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -90,7 +87,7 @@ const uploadImage = (req, res) => {
     });
 };
 
-// Done
+// Find service by id
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -110,7 +107,6 @@ const findOne = (req, res) => {
 
       res.send({
         message: "Service was found",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -121,7 +117,7 @@ const findOne = (req, res) => {
     });
 };
 
-// Done
+// Delete service by id
 const deleteService = (req, res) => {
   const { id } = req.params;
 
@@ -141,7 +137,6 @@ const deleteService = (req, res) => {
 
       res.send({
         message: "Service was deleted",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -151,7 +146,7 @@ const deleteService = (req, res) => {
     });
 };
 
-// Done
+// Update service by id
 const update = (req, res) => {
   const { id } = req.params;
   const { serviceName, description, benefits } = req.body;
@@ -176,7 +171,6 @@ const update = (req, res) => {
 
       res.send({
         message: "Service was updated",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
