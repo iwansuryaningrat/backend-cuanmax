@@ -2841,6 +2841,260 @@
           }
         }
       }
+    },
+    "/admin/messages/{Message ID}": {
+      "get": {
+        "tags": ["Messages - Admin"],
+        "summary": "Get Messages By ID",
+        "description": "Get Messages By ID",
+        "operationId": "getMessagesByID",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Message ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "firstName": {
+                          "type": "string"
+                        },
+                        "lastName": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "subject": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Messages successfully fetched.",
+                  "data": {
+                    "id": "5f9c1b9b9c9c1c0017b5b1b1",
+                    "firstName": "John",
+                    "lastName": "Doe",
+                    "email": "example@mail.com",
+                    "subject": "Lorem ipsum dolor sit amet",
+                    "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    "status": "unread"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Messages - Admin"],
+        "summary": "Delete Messages By ID",
+        "description": "Delete Messages By ID",
+        "operationId": "deleteMessagesByID",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Message ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Messages successfully deleted."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/messages/{Message ID}/read": {
+      "put": {
+        "tags": ["Messages - Admin"],
+        "summary": "Read Messages By ID",
+        "description": "Read Messages By ID",
+        "operationId": "readMessagesByID",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Message ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Messages successfully read."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/messages/{Message ID}/reply": {
+      "post": {
+        "tags": ["Messages - Admin"],
+        "summary": "Reply Messages By ID",
+        "description": "Reply Messages By ID",
+        "operationId": "replyMessagesByID",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Message ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reply": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "reply": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Messages successfully replied."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
     }
   },
   "components": {
