@@ -20,9 +20,11 @@ const findAll = (req, res) => {
       }
 
       const data = message.map((item) => {
-        const { firstName, lastName, email, subject, message, status } = item;
+        const { _id, firstName, lastName, email, subject, message, status } =
+          item;
 
         return {
+          id: _id,
           firstName,
           lastName,
           email,
