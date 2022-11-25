@@ -3,6 +3,7 @@ import mailgun from "mailgun-js";
 // Import dotenv
 import "dotenv/config";
 
+// Verify Email Mailer
 const signupMailer = async (email, token) => {
   const DOMAIN = process.env.MAILGUN_DOMAIN;
   // Test MAIL
@@ -82,6 +83,7 @@ const signupMailer = async (email, token) => {
   return response;
 };
 
+// Forgot Password Mailer
 const forgotPasswordMailer = async (email, token) => {
   const DOMAIN = process.env.MAILGUN_DOMAIN;
   // Test MAIL
