@@ -47,7 +47,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Create service (Done)
+// Create service (Done)ut
 const create = (req, res) => {
   const { serviceName, description, benefits } = req.body;
 
@@ -71,7 +71,7 @@ const create = (req, res) => {
     });
 };
 
-// Update image service by id
+// Update image service by id (Done)
 const uploadImage = (req, res) => {
   const { id } = req.params;
 
@@ -106,7 +106,6 @@ const uploadImage = (req, res) => {
 
       res.status(200).send({
         message: "Image successfully uploaded.",
-        data: result,
       });
     })
     .catch((err) => {
