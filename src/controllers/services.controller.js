@@ -32,6 +32,7 @@ const findAll = (req, res) => {
           description: item.description,
           image: item.image,
           benefits: item.benefits,
+          status: item.status,
         };
       });
 
