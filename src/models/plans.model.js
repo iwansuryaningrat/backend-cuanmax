@@ -20,6 +20,7 @@ export default (mongoose) => {
       currency: {
         type: String,
         require: true,
+        default: "IDR",
       },
       feature: [
         {
@@ -33,6 +34,15 @@ export default (mongoose) => {
           },
         },
       ],
+      status: {
+        type: String,
+        require: true,
+        default: "Active",
+        enum: {
+          values: ["Active", "Inactive"],
+          message: "Status must be Active or Inactive",
+        },
+      },
     },
     { timestamps: true }
   );
