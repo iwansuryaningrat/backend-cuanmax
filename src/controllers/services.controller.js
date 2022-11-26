@@ -287,4 +287,5 @@ export {
   deleteService,
   update,
   addBenefit,
+  deactivate,
 };
