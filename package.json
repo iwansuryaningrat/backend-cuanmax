@@ -7,7 +7,7 @@
   "scripts": {
     "test": "mocha ./test/**/*.js --exit",
     "start": "nodemon index.js",
-    "migrate": "node ./src/services/seeder/users.seeder.js"
+    "migrate": "node ./src/services/seeder/index.js"
   },
   "repository": {
     "type": "git",
