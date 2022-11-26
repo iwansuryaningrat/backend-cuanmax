@@ -279,4 +279,12 @@ const deactivate = (req, res) => {
     });
 };
 
-export { findAll, create, uploadImage, findOne, deleteService, update };
+export {
+  findAll,
+  create,
+  uploadImage,
+  findOne,
+  deleteService,
+  update,
+  addBenefit,
+};
