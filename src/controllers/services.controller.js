@@ -4,15 +4,15 @@ const Services = db.services;
 // Find all services in database (Done)
 const findAll = (req, res) => {
   // Active filter by query params
-  const { active } = req.query;
+  let { active } = req.query;
+
+  active = active ? active : true;
 
   // Filter by active
   let condition = {};
 
   if (active) {
     condition = { status: "Active" };
-  } else if (active === false) {
-    condition = { status: "Inactive" };
   } else {
     condition = {};
   }
