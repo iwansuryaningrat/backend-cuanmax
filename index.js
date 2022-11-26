@@ -70,7 +70,7 @@ app.use(
 // );
 
 // MongoDB Connection
-import connect from "./src/services/db.connect.js";
+import connect from "./src/services/db.connect.service.js";
 connect();
 
 app.get("/", (req, res) => {

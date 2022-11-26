@@ -3,7 +3,7 @@ const Users = db.users;
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import bcrypt from "bcrypt";
-import { forgotPasswordMailer } from "../../services/mailer.js";
+import { forgotPasswordMailer } from "../../services/mailer.service.js";
 
 // Reset Password Controller Function (DONE)
 const resetPassword = async (req, res) => {

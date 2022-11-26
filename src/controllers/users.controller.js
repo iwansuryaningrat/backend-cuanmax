@@ -1,7 +1,7 @@
 import db from "../models/index.js";
 const Users = db.users;
 import bcrypt from "bcrypt";
-import adminCheck from "../services/admincheck.js";
+import adminCheck from "../services/admincheck.service.js";
 
 // Fetch all users - Admin Only (Done)
 const findAll = (req, res) => {

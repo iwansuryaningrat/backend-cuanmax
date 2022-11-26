@@ -3,7 +3,7 @@ const Users = db.users;
 import "dotenv/config";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { signupMailer } from "../../services/mailer.js";
+import { signupMailer } from "../../services/mailer.service.js";
 
 // Sign Up (DONE)
 const signup = async (req, res) => {
