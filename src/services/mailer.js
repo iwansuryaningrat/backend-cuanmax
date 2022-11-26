@@ -6,13 +6,11 @@ import "dotenv/config";
 // Verify Email Mailer
 const signupMailer = async (email, token) => {
   const DOMAIN = process.env.MAILGUN_DOMAIN;
-  // Test MAIL
-  const testMail = process.env.TEST_MAIL;
   const API_KEY = process.env.MAILGUN_API_KEY;
   const mg = mailgun({ apiKey: API_KEY, domain: DOMAIN });
   const data = {
     from: "Admin <admin@cuanmax.id>",
-    to: testMail,
+    to: email,
     subject: "Email Verification",
     html: `
     <html>
@@ -86,13 +84,11 @@ const signupMailer = async (email, token) => {
 // Forgot Password Mailer
 const forgotPasswordMailer = async (email, token) => {
   const DOMAIN = process.env.MAILGUN_DOMAIN;
-  // Test MAIL
-  const testMail = process.env.TEST_MAIL;
   const API_KEY = process.env.MAILGUN_API_KEY;
   const mg = mailgun({ apiKey: API_KEY, domain: DOMAIN });
   const data = {
     from: "Admin <admin@cuanmax.id>",
-    to: testMail,
+    to: email,
     subject: "Reset Password",
     html: `
     <html>
