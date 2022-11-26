@@ -47,7 +47,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Create service (Done)ut
+// Create service (Done)
 const create = (req, res) => {
   const { serviceName, description, benefits } = req.body;
 
@@ -115,7 +115,7 @@ const uploadImage = (req, res) => {
     });
 };
 
-// Find service by id
+// Find service by id (Done)
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -133,9 +133,17 @@ const findOne = (req, res) => {
         });
       }
 
+      const data = {
+        id: result._id,
+        serviceName: result.serviceName,
+        description: result.description,
+        image: result.image,
+        benefits: result.benefits,
+      };
+
       res.send({
         message: "Service was found",
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -145,7 +153,7 @@ const findOne = (req, res) => {
     });
 };
 
-// Delete service by id
+// Delete service by id (Done)
 const deleteService = (req, res) => {
   const { id } = req.params;
 
@@ -164,7 +172,7 @@ const deleteService = (req, res) => {
       }
 
       res.send({
-        message: "Service was deleted",
+        message: "Service was successfully deleted",
       });
     })
     .catch((err) => {
