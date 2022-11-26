@@ -74,20 +74,8 @@ export default (mongoose) => {
         },
       },
       referal: {
-        referalCode: {
-          type: String,
-          unique: true,
-          maxLength: [8, "Referal code must be 8 characters"],
-        },
-        referalCount: {
-          type: Number,
-          default: 0,
-        },
-        referalAccount: [{ username: String }],
-        referalAmount: {
-          type: Number,
-          default: 0,
-        },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Referral",
       },
     },
     { timestamps: true }
