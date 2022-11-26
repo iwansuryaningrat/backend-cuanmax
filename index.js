@@ -14,7 +14,7 @@ import {
   imageStorage,
   imageFileFilter,
 } from "./src/configs/imageUploader.config.js";
-import { videosStorage, videosFilter } from "./src/configs/videosUploader.js";
+// import { videosStorage, videosFilter } from "./src/configs/videosUploader.js";
 
 const app = express();
 
@@ -62,12 +62,12 @@ app.use(
 );
 
 // Configuration for All Video Files
-app.use(
-  multer({
-    storage: videosStorage,
-    fileFilter: videosFilter,
-  }).single("video")
-);
+// app.use(
+//   multer({
+//     storage: videosStorage,
+//     fileFilter: videosFilter,
+//   }).single("video")
+// );
 
 // MongoDB Connection
 import connect from "./src/services/db.connect.js";
