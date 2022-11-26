@@ -3121,14 +3121,28 @@
                           "id": {
                             "type": "string"
                           },
-                          "title": {
+                          "serviceName": {
                             "type": "string"
                           },
                           "description": {
                             "type": "string"
                           },
                           "image": {
-                            "type": "string"
+                            "type": "object",
+                            "properties": {
+                              "imageName": {
+                                "type": "string"
+                              },
+                              "imagePath": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "benefits": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
                           },
                           "status": {
                             "type": "string"
@@ -3142,16 +3156,113 @@
                   "message": "Services successfully fetched.",
                   "data": [
                     {
-                      "id": "5f9c1b9b9c9c1c0017b5b1b1",
-                      "title": "Lorem ipsum dolor sit amet",
+                      "id": "5f9f1b9b9c9d2b0017a5b0b1",
+                      "serviceName": "Service 1",
                       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                      "image": "https://example.com/image.jpg",
-                      "status": "active"
+                      "image": {
+                        "imageName": "service-1.jpg",
+                        "imagePath": "uploads/services/service-1.jpg"
+                      },
+                      "benefits": [
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                      ],
+                      "status": "Active"
                     }
                   ]
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/services/{Service ID}": {
+      "get": {
+        "tags": ["Services"],
+        "summary": "Get Service By ID",
+        "description": "Get Service By ID",
+        "operationId": "getServiceByID",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Service ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "serviceName": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "object",
+                          "properties": {
+                            "imageName": {
+                              "type": "string"
+                            },
+                            "imagePath": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "benefits": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "status": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Service successfully fetched.",
+                  "data": {
+                    "id": "5f9c1b9b9c9c1c0017b5b1b1",
+                    "serviceName": "Lorem ipsum dolor sit amet",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    "image": {
+                      "imageName": "image.jpg",
+                      "imagePath": "https://example.com/image.jpg"
+                    },
+                    "benefits": [
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                    ],
+                    "status": "active"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
           },
           "404": {
             "$ref": "#/components/responses/Not Found"
