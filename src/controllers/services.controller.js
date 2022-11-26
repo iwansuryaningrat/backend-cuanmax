@@ -47,7 +47,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Create service
+// Create service (Done)
 const create = (req, res) => {
   const { serviceName, description, benefits } = req.body;
 
@@ -62,7 +62,6 @@ const create = (req, res) => {
     .then((result) => {
       res.status(200).send({
         message: "Service successfully added.",
-        data: result,
       });
     })
     .catch((err) => {
