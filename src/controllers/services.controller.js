@@ -1,13 +1,43 @@
 import db from "../models/index.js";
 const Services = db.services;
 
-// Find all services
+// Find all services in database (Done)
 const findAll = (req, res) => {
-  Services.find()
+  // Active filter by query params
+  const { active } = req.query;
+
+  // Filter by active
+  let condition = {};
+
+  if (active) {
+    condition = { status: "Active" };
+  } else if (active === false) {
+    condition = { status: "Inactive" };
+  } else {
+    condition = {};
+  }
+
+  Services.find(condition)
     .then((result) => {
+      if (result.length === 0) {
+        return res.status(404).send({
+          message: "Services not found",
+        });
+      }
+
+      const data = result.map((item) => {
+        return {
+          id: item._id,
+          serviceName: item.serviceName,
+          description: item.description,
+          image: item.image,
+          benefits: item.benefits,
+        };
+      });
+
       res.send({
         message: "Services was found",
-        data: result,
+        data,
       });
     })
     .catch((err) => {
