@@ -182,7 +182,7 @@ const deleteService = (req, res) => {
     });
 };
 
-// Update service by id
+// Update service by id (Done)
 const update = (req, res) => {
   const { id } = req.params;
   const { serviceName, description, benefits } = req.body;
@@ -212,6 +212,69 @@ const update = (req, res) => {
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Some error while update service.",
+      });
+    });
+};
+
+// Add benefit to service by id (Done)
+const addBenefit = (req, res) => {
+  const { id } = req.params;
+  const { benefit } = req.body;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
+
+  Services.findByIdAndUpdate(
+    id,
+    { $push: { benefits: benefit } },
+    { new: true }
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Service not found",
+        });
+      }
+
+      res.send({
+        message: "Benefit was added",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while add benefit.",
+      });
+    });
+};
+
+// Deactivate service by id (Done)
+const deactivate = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
+
+  Services.findByIdAndUpdate(id, { status: "Inactive" }, { new: true })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Service not found",
+        });
+      }
+
+      res.send({
+        message: "Service was deactivated",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while deactivate service.",
       });
     });
 };
