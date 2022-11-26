@@ -1,8 +1,8 @@
 export default (mongoose) => {
   const Schema = mongoose.Schema;
-  const pricingSchema = new Schema(
+  const planSchema = new Schema(
     {
-      memberName: {
+      planName: {
         type: String,
         require: true,
       },
@@ -37,13 +37,13 @@ export default (mongoose) => {
     { timestamps: true }
   );
 
-  pricingSchema.method("toJSON", function () {
+  planSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Pricing = mongoose.model("Pricing", pricingSchema);
+  const Plans = mongoose.model("Plans", planSchema);
 
-  return Pricing;
+  return Plans;
 };
