@@ -2,10 +2,6 @@ import db from "../../models/index.js";
 const Users = db.users;
 import bcrypt from "bcrypt";
 
-// MongoDB Connection
-import connect from "../db.connect.service.js";
-connect();
-
 // Declare ObjectId type for mongoose
 import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
@@ -93,4 +89,5 @@ const usersSeederFunction = async () => {
   }
 };
 
-usersSeederFunction();
+// usersSeederFunction();
+export default usersSeederFunction;
