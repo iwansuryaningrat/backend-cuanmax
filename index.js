@@ -92,8 +92,8 @@ authRouter(app); // Auth Router
 // coinmarketcapRouter(app); // Coinmarketcap Router
 import messagesRouter from "./src/routes/messages.routes.js"; // Messages Router
 messagesRouter(app); // Messages Router
-// import pricingRouter from "./src/routes/pricing.routes.js"; // Pricing Router
-// pricingRouter(app); // Pricing Router
+import plansRouter from "./src/routes/plans.routes.js"; // Plans Router
+plansRouter(app); // Plans Router
 import servicesRouter from "./src/routes/services.routes.js"; // Services Router
 servicesRouter(app); // Services Router
 import subscribersRouter from "./src/routes/subscribers.routes.js"; // Subscribers Router
@@ -111,7 +111,8 @@ import messagesAdminRouter from "./src/routes/admin/messages.routes.js"; // Mess
 messagesAdminRouter(app); // Messages Router
 // News Router
 // Playlists Router
-// Pricing Router
+import plansAdminRouter from "./src/routes/admin/plans.routes.js"; // Plans Router
+plansAdminRouter(app); // Plans Router
 import servicesAdminRouter from "./src/routes/admin/services.routes.js"; // Services Router
 servicesAdminRouter(app); // Services Router
 import subscribersAdminRouter from "./src/routes/admin/subscribers.routes.js"; // Subscribers Router
