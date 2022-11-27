@@ -1,11 +1,16 @@
 export default (mongoose) => {
   const Schema = mongoose.Schema;
-  const referralSchema = new Schema(
+  const referralsSchema = new Schema(
     {
       referralCode: {
         type: String,
         unique: true,
         maxLength: [8, "Referral code must be 8 characters"],
+      },
+      referralUser: {
+        type: Schema.Types.ObjectId,
+        ref: "Users",
+        require: true,
       },
       referralCount: {
         type: Number,
@@ -74,13 +79,13 @@ export default (mongoose) => {
     { timestamps: true }
   );
 
-  referralSchema.method("toJSON", function () {
+  referralsSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Referral = mongoose.model("Referral", referralSchema);
+  const Referrals = mongoose.model("Referrals", referralsSchema);
 
-  return Referral;
+  return Referrals;
 };
