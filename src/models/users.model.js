@@ -76,9 +76,9 @@ export default (mongoose) => {
           require: true,
         },
       },
-      referal: {
+      referral: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Referral",
+        ref: "Referrals",
         require: false,
       },
     },
