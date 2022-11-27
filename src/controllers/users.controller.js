@@ -1,5 +1,6 @@
 import db from "../models/index.js";
 const Users = db.users;
+const Referral = db.referral;
 import bcrypt from "bcrypt";
 import adminCheck from "../services/admincheck.service.js";
 
@@ -357,7 +358,7 @@ const changeProfilePicture = (req, res) => {
     });
 };
 
-// Create Referal Code
+// Create Referal Code (Done)
 const createReferalCode = (req, res) => {
   const { id } = req.params;
   var { referalCode } = req.body;
@@ -378,7 +379,7 @@ const createReferalCode = (req, res) => {
     });
   }
 
-  const user = Users.findOne({ referal: referalCode })
+  Referral.findOne({ referralCode: referalCode })
     .then((result) => {
       if (result) {
         return res.status(409).send({
@@ -386,33 +387,52 @@ const createReferalCode = (req, res) => {
         });
       }
 
-      Users.findByIdAndUpdate(id, { referal: { referalCode } }, { new: true })
-        .then((result) => {
-          if (!result) {
-            return res.status(404).send({
-              message: "User not found",
-            });
-          }
+      const referral = new Referral({
+        referralCode: referalCode,
+      });
 
-          res.send({
-            message: "User's referal code created successfully.",
-            data: {
-              referal: result.referal,
+      referral
+        .save()
+        .then((result) => {
+          const referralId = result._id;
+
+          Users.findByIdAndUpdate(
+            id,
+            {
+              referal: new ObjectId(referralId),
             },
-          });
+            { new: true }
+          )
+            .then((result) => {
+              if (!result) {
+                return res.status(404).send({
+                  message: "User not found",
+                });
+              }
+
+              res.send({
+                message: "User's refer code created successfully.",
+              });
+            })
+            .catch((err) => {
+              return res.status(500).send({
+                message:
+                  err.message ||
+                  "Some error occurred while creating the referal code.",
+              });
+            });
         })
         .catch((err) => {
           return res.status(500).send({
             message:
-              err.message ||
-              "Some error occurred while creating the referal code.",
+              err.message || "Some error occurred while creating the referal.",
           });
         });
     })
     .catch((err) => {
       return res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the referal code.",
+          err.message || "Some error occurred while creating the referal.",
       });
     });
 };
