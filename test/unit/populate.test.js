@@ -12,8 +12,8 @@ const populate = async (id) => {
   await Users.findById(id)
     .populate({
       path: "referral",
-      //   select:
-      //     "referralCode referralUser referralCount referralAccount referralTotalAmount referralAvailableAmount referralWithDraw",
+      select:
+        "referralCode referralCount referralAccount referralTotalAmount referralAvailableAmount referralWithDraw referralWithDrawBank referralWithDrawHistory referralStatus ",
     })
     .then((result) => {
       console.log("result", result);
