@@ -1,6 +1,6 @@
 import db from "../models/index.js";
 const Users = db.users;
-const Referral = db.referral;
+const Referrals = db.referrals;
 import bcrypt from "bcrypt";
 import adminCheck from "../services/admincheck.service.js";
 
@@ -19,10 +19,17 @@ const findAll = (req, res) => {
     condition = { "type.accountType.member": "Basic Member" };
   } else if (pro) {
     condition = { "type.accountType.member": "Pro Member" };
+  } else {
+    condition = {};
   }
 
   Users.find(condition)
     .sort({ createdAt: -1 })
+    .populate({
+      path: "referral",
+      select:
+        "referralCode referralCount referralAccount referralTotalAmount referralAvailableAmount referralWithDraw referralWithDrawBank referralWithDrawHistory referralStatus ",
+    })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -31,8 +38,17 @@ const findAll = (req, res) => {
       }
 
       const data = result.map((item) => {
-        const { _id, name, username, email, phone, address, birthday, type } =
-          item;
+        var {
+          _id,
+          name,
+          username,
+          email,
+          phone,
+          address,
+          birthday,
+          type,
+          referral,
+        } = item;
 
         birthday = new Date(birthday).toString();
 
@@ -54,6 +70,7 @@ const findAll = (req, res) => {
           isNew: type.accountType.isNew,
           adminType: type.isAdmin,
           isActivated: type.isActivated,
+          referral,
         };
       });
 
@@ -63,6 +80,7 @@ const findAll = (req, res) => {
       });
     })
     .catch((err) => {
+      console.log(err);
       return res.status(500).send({
         message: err.message || "Some error occurred while fetching the Users.",
       });
@@ -80,7 +98,11 @@ const findOne = (req, res) => {
   }
 
   Users.findById(id)
-    .populate("referral")
+    .populate({
+      path: "referral",
+      select:
+        "referralCode referralCount referralAccount referralTotalAmount referralAvailableAmount referralWithDraw referralWithDrawBank referralWithDrawHistory referralStatus ",
+    })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -98,7 +120,7 @@ const findOne = (req, res) => {
         birthday,
         image,
         type,
-        referal,
+        referral,
       } = result;
 
       if (type.accountType.subscription.expiredAt == 0) {
@@ -132,7 +154,7 @@ const findOne = (req, res) => {
             isNew: type.accountType.isNew,
           },
         },
-        referal,
+        referral,
       };
 
       res.status(200).send({
@@ -213,7 +235,7 @@ const update = (req, res) => {
           address: result.address,
           birthday: new Date(result.birthday).toString(),
           image: result.image,
-          referal: result.referal,
+          referral: result.referral,
         },
       });
     })
@@ -362,10 +384,10 @@ const changeProfilePicture = (req, res) => {
     });
 };
 
-// Create Referal Code (Done)
+// Create Referral Code (Done)
 const createReferralCode = (req, res) => {
   const { id } = req.params;
-  var { referalCode } = req.body;
+  var { referralCode } = req.body;
 
   if (!id) {
     return res.status(400).send({
@@ -373,26 +395,27 @@ const createReferralCode = (req, res) => {
     });
   }
 
-  if (!referalCode)
-    // Generate random referal code with 8 characters
-    referalCode = Math.random().toString(36).substring(2, 10);
+  if (!referralCode)
+    // Generate random referral code with 8 characters
+    referralCode = Math.random().toString(36).substring(2, 10);
 
-  if (referalCode.length > 8) {
+  if (referralCode.length > 8) {
     return res.status(400).send({
-      message: "Referal Code must be 8 characters or less",
+      message: "Referral Code must be 8 characters or less",
     });
   }
 
-  Referral.findOne({ referralCode: referalCode })
+  Referrals.findOne({ referralCode: referralCode })
     .then((result) => {
       if (result) {
         return res.status(409).send({
-          message: "Referal Code already exists",
+          message: "Referral Code already exists",
         });
       }
 
-      const referral = new Referral({
-        referralCode: referalCode,
+      const referral = new Referrals({
+        referralCode: referralCode,
+        referralUser: id,
       });
 
       referral
@@ -403,7 +426,7 @@ const createReferralCode = (req, res) => {
           Users.findByIdAndUpdate(
             id,
             {
-              referal: new ObjectId(referralId),
+              referral: referralId,
             },
             { new: true }
           )
@@ -422,21 +445,21 @@ const createReferralCode = (req, res) => {
               return res.status(500).send({
                 message:
                   err.message ||
-                  "Some error occurred while creating the referal code.",
+                  "Some error occurred while creating the referral code.",
               });
             });
         })
         .catch((err) => {
           return res.status(500).send({
             message:
-              err.message || "Some error occurred while creating the referal.",
+              err.message || "Some error occurred while creating the referral.",
           });
         });
     })
     .catch((err) => {
       return res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the referal.",
+          err.message || "Some error occurred while creating the referral.",
       });
     });
 };
