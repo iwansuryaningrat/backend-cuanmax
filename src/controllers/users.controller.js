@@ -4,7 +4,10 @@ const Referral = db.referral;
 import bcrypt from "bcrypt";
 import adminCheck from "../services/admincheck.service.js";
 
-// Fetch all users - Admin Only (Done)
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
+
+// Fetch all users - Admin Only (need to be updated)
 const findAll = (req, res) => {
   const { admin, basic, pro } = req.query;
 
@@ -66,7 +69,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Find a single user with an id (Done)
+// Find a single user with an id (need to be updated)
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -77,6 +80,7 @@ const findOne = (req, res) => {
   }
 
   Users.findById(id)
+    .populate("referral")
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -475,6 +479,67 @@ const changeProMemberToBasicMember = async (req, res) => {
     });
 };
 
+// Request User Activation (Done)
+const requestUserActivation = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "User ID is required",
+    });
+  }
+
+  const result = await Users.findById(id)
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "User not found",
+        });
+      }
+
+      return result;
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving the user.",
+      });
+    });
+
+  if (result.type.isActivated === true) {
+    return res.status(409).send({
+      message: "User already activated",
+    });
+  }
+
+  // Generate token
+  const token = jwt.sign(
+    {
+      id: result._id,
+      name: result.name,
+      username: result.username,
+      email: result.email,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "10m",
+    }
+  );
+
+  // Send email
+  const response = await signupMailer(result.email, token);
+
+  if (response == "Email sent") {
+    return res.status(200).send({
+      message: "User registered successfully! Please check your email.",
+    });
+  } else {
+    return res.status(500).send({
+      message: "Failed to send email.",
+    });
+  }
+};
+
 export {
   findAll,
   findOne,
@@ -484,4 +549,5 @@ export {
   changeProfilePicture,
   createReferralCode,
   changeProMemberToBasicMember,
+  requestUserActivation,
 };
