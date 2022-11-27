@@ -119,7 +119,7 @@
       }
     },
     "/auth/verifyAccount/{token}": {
-      "get": {
+      "put": {
         "tags": ["Authentication"],
         "summary": "Verify Account",
         "description": "Verify Account to Cuanmax",

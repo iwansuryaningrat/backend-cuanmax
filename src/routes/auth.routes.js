@@ -17,7 +17,7 @@ const authRouter = (app) => {
   router.put("/resetPassword", login, resetPassword);
   router.post("/forgotPassword", forgotPassword);
   router.put("/resetPassword/:token", resetPasswordWithToken);
-  router.get("/verifyAccount/:token", verifyAccount);
+  router.put("/verifyAccount/:token", verifyAccount);
 
   app.use("/v1/auth", router);
 };
