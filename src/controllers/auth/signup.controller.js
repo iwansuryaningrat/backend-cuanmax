@@ -33,8 +33,6 @@ const signup = async (req, res) => {
 
   var member = admin === true ? "Admin" : "Basic Member";
 
-  const referalCode = Math.random().toString(36).substring(2, 10);
-
   // Create new user
   const newUser = new Users({
     name: name,
@@ -50,12 +48,6 @@ const signup = async (req, res) => {
         isNew: true,
       },
       isAdmin: admin,
-    },
-    referal: {
-      referalCode: referalCode,
-      referalCount: 0,
-      referalAccount: [],
-      referalAmount: 0,
     },
   });
 
