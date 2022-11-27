@@ -3,7 +3,7 @@ import {
   update,
   changePassword,
   changeProfilePicture,
-  createReferalCode,
+  createReferralCode,
 } from "../../controllers/users.controller.js";
 import { login, proMember } from "../../middlewares/auth.js";
 import userFinder from "../../middlewares/usersfinder.js";
@@ -28,11 +28,11 @@ const usersProRouter = (app) => {
     changeProfilePicture
   );
   router.put(
-    "/:id/createreferalcode",
+    "/:id/createreferralcode",
     login,
     proMember,
     userFinder,
-    createReferalCode
+    createReferralCode
   );
 
   app.use("/v1/pro/users", router);
