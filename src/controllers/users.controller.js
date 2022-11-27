@@ -357,7 +357,7 @@ const changeProfilePicture = (req, res) => {
     });
 };
 
-// Create Referal Code (Done)
+// Create Referal Code
 const createReferalCode = (req, res) => {
   const { id } = req.params;
   var { referalCode } = req.body;
