@@ -129,7 +129,7 @@ const forgotPassword = async (req, res) => {
     );
 
     // Send email to user with reset password link
-    const response = await forgotPasswordMailer(user, token);
+    const response = await forgotPasswordMailer(user.email, token);
 
     if (response === "Email sent") {
       return res.status(200).send({
