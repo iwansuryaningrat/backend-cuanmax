@@ -17,12 +17,15 @@ export default (mongoose) => {
       },
       phone: {
         type: String,
+        default: "",
       },
       address: {
         type: String,
+        default: "",
       },
       birthday: {
         type: String,
+        default: "",
       },
       password: {
         type: String,
@@ -76,6 +79,7 @@ export default (mongoose) => {
       referal: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Referral",
+        require: false,
       },
     },
     { timestamps: true }
