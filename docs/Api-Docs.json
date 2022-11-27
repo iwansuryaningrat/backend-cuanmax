@@ -1044,12 +1044,12 @@
         }
       }
     },
-    "/pro/users/{User ID}/createreferalcode": {
+    "/pro/users/{User ID}/createreferralcode": {
       "put": {
         "tags": ["Users - Pro Member"],
-        "summary": "Create Referal Code by ID",
-        "description": "Create Referal Code by ID for Pro Member",
-        "operationId": "createReferalCodeProMember",
+        "summary": "Create Referral Code by ID",
+        "description": "Create Referral Code by ID for Pro Member",
+        "operationId": "createReferralCodeProMember",
         "parameters": [
           {
             "$ref": "#/components/parameters/x-auth-token"
@@ -1064,16 +1064,16 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "referalCode": {
+                  "referralCode": {
                     "type": "string",
-                    "description": "Referal Code with max 8 characters",
+                    "description": "Referral Code with max 8 characters",
                     "nullable": true,
                     "maxLength": 8
                   }
                 }
               },
               "example": {
-                "referalCode": "123456"
+                "referralCode": "123456"
               }
             }
           }
@@ -1092,16 +1092,16 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "referal": {
+                        "referral": {
                           "type": "object",
                           "properties": {
-                            "referalCode": {
+                            "referralCode": {
                               "type": "string"
                             },
-                            "referalCount": {
+                            "referralCount": {
                               "type": "integer"
                             },
-                            "referalAccount": {
+                            "referralAccount": {
                               "type": "array",
                               "items": {
                                 "type": "string"
@@ -1114,12 +1114,12 @@
                   }
                 },
                 "example": {
-                  "message": "Referal code created successfully!",
+                  "message": "Referral code created successfully!",
                   "data": {
-                    "referal": {
-                      "referalCode": "123456",
-                      "referalCount": 0,
-                      "referalAccount": []
+                    "referral": {
+                      "referralCode": "123456",
+                      "referralCount": 0,
+                      "referralAccount": []
                     }
                   }
                 }
@@ -4265,16 +4265,16 @@
                         }
                       }
                     },
-                    "referal": {
+                    "referral": {
                       "type": "object",
                       "properties": {
-                        "referalCode": {
+                        "referralCode": {
                           "type": "string"
                         },
-                        "referalCount": {
+                        "referralCount": {
                           "type": "number"
                         },
-                        "referalAccount": {
+                        "referralAccount": {
                           "type": "array",
                           "items": {
                             "type": "object",
@@ -4310,10 +4310,10 @@
                     "isAdmin": false,
                     "isActivated": false
                   },
-                  "referal": {
-                    "referalCode": "123456",
-                    "referalCount": 0,
-                    "referalAccount": []
+                  "referral": {
+                    "referralCode": "123456",
+                    "referralCount": 0,
+                    "referralAccount": []
                   }
                 }
               }
@@ -4346,16 +4346,16 @@
                     "image": {
                       "type": "string"
                     },
-                    "referal": {
+                    "referral": {
                       "type": "object",
                       "properties": {
-                        "referalCode": {
+                        "referralCode": {
                           "type": "string"
                         },
-                        "referalCount": {
+                        "referralCount": {
                           "type": "number"
                         },
-                        "referalAccount": {
+                        "referralAccount": {
                           "type": "array",
                           "items": {
                             "type": "object",
@@ -4379,10 +4379,10 @@
                 "username": "johndoe",
                 "email": "example@mail.com",
                 "image": "https://example.com/image.jpg",
-                "referal": {
-                  "referalCode": "123456",
-                  "referalCount": 0,
-                  "referalAccount": []
+                "referral": {
+                  "referralCode": "123456",
+                  "referralCount": 0,
+                  "referralAccount": []
                 }
               }
             }
