@@ -359,7 +359,7 @@ const changeProfilePicture = (req, res) => {
 };
 
 // Create Referal Code (Done)
-const createReferalCode = (req, res) => {
+const createReferralCode = (req, res) => {
   const { id } = req.params;
   var { referalCode } = req.body;
 
@@ -482,6 +482,6 @@ export {
   update,
   changePassword,
   changeProfilePicture,
-  createReferalCode,
+  createReferralCode,
   changeProMemberToBasicMember,
 };
