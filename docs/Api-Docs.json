@@ -2665,11 +2665,6 @@
         "summary": "Get All Testimoni",
         "description": "Get All Testimoni",
         "operationId": "getAllTestimoniforUser",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/x-auth-token"
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
