@@ -5,9 +5,17 @@ const Teams = db.teams;
 const findAll = (req, res) => {
   Teams.find({ status: "Active" })
     .then((result) => {
+      // Check if there is any data
+      if (data.length === 0) {
+        return res.status(404).send({
+          message: "No data found.",
+        });
+      }
+
       const data = result.map((item) => {
-        const { name, description, position, photo, contact } = item;
+        const { _id, name, description, position, photo, contact } = item;
         return {
+          id: _id,
           name,
           description,
           position,
@@ -15,13 +23,6 @@ const findAll = (req, res) => {
           contact,
         };
       });
-
-      // Check if there is any data
-      if (data.length === 0) {
-        return res.status(404).send({
-          message: "No data found.",
-        });
-      }
 
       res.send({
         message: "Teams successfully fetched.",
