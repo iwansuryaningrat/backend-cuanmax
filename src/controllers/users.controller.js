@@ -377,11 +377,27 @@ const changeProfilePicture = (req, res) => {
           message: "User not found",
         });
       }
+
+      const token = jwt.sign(
+        {
+          id: result.id,
+          email: result.email,
+          name: result.name,
+          username: result.username,
+          admin: result.type.isAdmin,
+          role: result.type.accountType.member,
+          isActivated: result.type.isActivated,
+          image: result.image.imageLink,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "12h",
+        }
+      );
+
       res.send({
         message: "User's profile picture updated successfully.",
-        data: {
-          image: result.image,
-        },
+        token,
       });
     })
     .catch((err) => {
