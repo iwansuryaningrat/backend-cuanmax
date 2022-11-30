@@ -2,6 +2,7 @@ import db from "../models/index.js";
 const Users = db.users;
 const Referrals = db.referrals;
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import adminCheck from "../services/admincheck.service.js";
 
 import mongoose from "mongoose";
@@ -225,18 +226,26 @@ const update = (req, res) => {
         });
       }
 
-      res.send({
-        message: "User updated successfully.",
-        data: {
+      const token = jwt.sign(
+        {
+          id: result.id,
+          email: result.email,
           name: result.name,
           username: result.username,
-          email: result.email,
-          phone: result.phone,
-          address: result.address,
-          birthday: new Date(result.birthday).toString(),
-          image: result.image,
-          referral: result.referral,
+          admin: result.type.isAdmin,
+          role: result.type.accountType.member,
+          isActivated: result.type.isActivated,
+          image: result.image.imageLink,
         },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: timeExpire,
+        }
+      );
+
+      res.send({
+        message: "User updated successfully.",
+        token,
       });
     })
     .catch((err) => {
