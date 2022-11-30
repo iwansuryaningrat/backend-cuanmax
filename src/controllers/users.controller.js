@@ -239,7 +239,7 @@ const update = (req, res) => {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: timeExpire,
+          expiresIn: "12h",
         }
       );
 
