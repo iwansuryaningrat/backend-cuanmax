@@ -4380,60 +4380,14 @@
                 "message": {
                   "type": "string"
                 },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "username": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "image": {
-                      "type": "string"
-                    },
-                    "referral": {
-                      "type": "object",
-                      "properties": {
-                        "referralCode": {
-                          "type": "string"
-                        },
-                        "referralCount": {
-                          "type": "number"
-                        },
-                        "referralAccount": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "username": {
-                                "type": "string"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+                "token": {
+                  "type": "string"
                 }
               }
             },
             "example": {
               "message": "User updated successfully!",
-              "data": {
-                "name": "John Doe",
-                "username": "johndoe",
-                "email": "example@mail.com",
-                "image": "https://example.com/image.jpg",
-                "referral": {
-                  "referralCode": "123456",
-                  "referralCount": 0,
-                  "referralAccount": []
-                }
-              }
+              "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
             }
           }
         }
@@ -4466,32 +4420,14 @@
                 "message": {
                   "type": "string"
                 },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "image": {
-                      "type": "object",
-                      "properties": {
-                        "imageName": {
-                          "type": "string"
-                        },
-                        "imageLink": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
+                "token": {
+                  "type": "string"
                 }
               }
             },
             "example": {
               "message": "Picture changed successfully!",
-              "data": {
-                "image": {
-                  "imageName": "image.jpg",
-                  "imageLink": "https://example.com/image.jpg"
-                }
-              }
+              "token": "5f9c1b9b9c9c1c0017b5b1b1"
             }
           }
         }
