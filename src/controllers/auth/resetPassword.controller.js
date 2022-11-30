@@ -177,31 +177,33 @@ const resetPasswordWithToken = async (req, res) => {
               message: "User not found!",
             });
           } else {
-            if (user.password === password) {
-              return res.status(400).send({
-                message: "Password can't be the same!",
-              });
-            }
-
-            bcrypt.hash(password, 10, (err, hash) => {
-              if (err) {
-                return res.status(500).send({
-                  message: "Error when hashing password!",
-                });
-              } else {
-                user.password = hash;
-                user.save((err, user) => {
-                  if (err) {
-                    return res.status(500).send({
-                      message: "Error when updating password!",
-                    });
-                  } else {
-                    return res.status(200).send({
-                      message: "Password has been changed, please login!",
-                    });
-                  }
+            bcrypt.compare(user.password, password, (err, result) => {
+              if (result) {
+                return res.status(400).send({
+                  message: "Password can't be the same!",
                 });
               }
+
+              bcrypt.hash(password, 10, (err, hash) => {
+                if (err) {
+                  return res.status(500).send({
+                    message: "Error when hashing password!",
+                  });
+                } else {
+                  user.password = hash;
+                  user.save((err, user) => {
+                    if (err) {
+                      return res.status(500).send({
+                        message: "Error when updating password!",
+                      });
+                    } else {
+                      return res.status(200).send({
+                        message: "Password has been changed, please login!",
+                      });
+                    }
+                  });
+                }
+              });
             });
           }
         })
