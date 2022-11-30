@@ -6,7 +6,7 @@ const findAll = (req, res) => {
   Teams.find({ status: "Active" })
     .then((result) => {
       // Check if there is any data
-      if (data.length === 0) {
+      if (result.length === 0) {
         return res.status(404).send({
           message: "No data found.",
         });
