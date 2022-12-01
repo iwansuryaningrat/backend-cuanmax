@@ -16,9 +16,21 @@ const login = (req, res, next) => {
     req.user = decoded.user;
     next();
   } catch (err) {
-    return res.status(401).send({
-      message: "Token is not valid",
-    });
+    if (err.name === "TokenExpiredError") {
+      return res.status(401).send({
+        message: "Token is expired",
+      });
+    } else {
+      if (err.name === "TokenExpiredError") {
+        return res.status(401).send({
+          message: "Token is expired",
+        });
+      } else {
+        return res.status(401).send({
+          message: "Token is not valid",
+        });
+      }
+    }
   }
 };
 
@@ -43,9 +55,21 @@ const admin = (req, res, next) => {
       });
     }
   } catch (err) {
-    return res.status(401).send({
-      message: "Token is not valid",
-    });
+    if (err.name === "TokenExpiredError") {
+      return res.status(401).send({
+        message: "Token is expired",
+      });
+    } else {
+      if (err.name === "TokenExpiredError") {
+        return res.status(401).send({
+          message: "Token is expired",
+        });
+      } else {
+        return res.status(401).send({
+          message: "Token is not valid",
+        });
+      }
+    }
   }
 };
 
@@ -71,9 +95,54 @@ const proMember = (req, res, next) => {
       });
     }
   } catch (err) {
-    res.status(401).send({
-      message: "Token is not valid",
+    if (err.name === "TokenExpiredError") {
+      return res.status(401).send({
+        message: "Token is expired",
+      });
+    } else {
+      return res.status(401).send({
+        message: "Token is not valid",
+      });
+    }
+  }
+};
+
+// Super Admin Middleware (Done)
+const superAdmin = (req, res, next) => {
+  const token = req.header("x-auth-token");
+
+  if (!token) {
+    return res.status(401).send({
+      message: "No token, authorization denied",
     });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (decoded.role === "Super Admin" && decoded.admin) {
+      req.user = decoded.user;
+      next();
+    } else {
+      return res.status(403).send({
+        message: "Require Super Admin Role!",
+      });
+    }
+  } catch (err) {
+    if (err.name === "TokenExpiredError") {
+      return res.status(401).send({
+        message: "Token is expired",
+      });
+    } else {
+      if (err.name === "TokenExpiredError") {
+        return res.status(401).send({
+          message: "Token is expired",
+        });
+      } else {
+        return res.status(401).send({
+          message: "Token is not valid",
+        });
+      }
+    }
   }
 };
 
