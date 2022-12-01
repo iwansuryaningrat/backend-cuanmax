@@ -4,7 +4,7 @@ const Referrals = db.referrals;
 import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
 
-// Fetch all referrals from the database
+// Fetch all referrals from the database (Done)
 const findAll = (req, res) => {
   Referrals.find()
     .populate({
@@ -61,7 +61,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Find a single referral with an id
+// Find a single referral with an id (Done)
 const findOne = (req, res) => {
   const id = req.params.id;
 
@@ -120,3 +120,91 @@ const findOne = (req, res) => {
       });
     });
 };
+
+// Update a referral by the id in the request (Done)
+const update = (req, res) => {
+  const referralCode = req.params.referralCode;
+
+  if (!referralCode) {
+    return res.status(400).send({
+      message: "Invalid ID",
+    });
+  }
+
+  const { bankName, bankAccountName, bankAccountNumber } = req.body;
+  var Code = req.body.code;
+
+  if (!bankName || !bankAccountName || !bankAccountNumber) {
+    return res.status(400).send({
+      message: "Invalid data",
+    });
+  }
+
+  if (!Code) {
+    Code = referralCode;
+  }
+
+  Referrals.findOneAndUpdate(
+    { referralCode },
+    {
+      referralCode: Code,
+      referralWithDrawBank: {
+        withDrawBankName: bankName,
+        withDrawBankAccountName: bankAccountName,
+        withDrawBankAccountNumber: bankAccountNumber,
+      },
+    },
+    { new: true }
+  )
+    .then((referral) => {
+      if (!referral) {
+        res.status(404).send({
+          message: `Referral with id ${id} not found`,
+        });
+      }
+
+      res.send({
+        message: "Referral updated successfully",
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: `Error updating referral with id ${id}`,
+      });
+    });
+};
+
+// Verify a bank account of a referral by the id in the request (Done)
+const verify = (req, res) => {
+  const id = req.params.id;
+
+  if (!id || !ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: "Invalid ID",
+    });
+  }
+
+  Referrals.findByIdAndUpdate(
+    id,
+    { referralWithDrawBank: { withDrawBankAccountVerified: true } },
+    { new: true }
+  )
+    .then((referral) => {
+      if (!referral) {
+        res.status(404).send({
+          message: `Referral with id ${id} not found`,
+        });
+      }
+
+      res.send({
+        message: "Referral account verified successfully",
+      });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: `Error updating referral with id ${id}`,
+      });
+    });
+};
+
+export { findAll, findOne, update, verify };
