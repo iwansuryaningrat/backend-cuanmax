@@ -4,6 +4,7 @@ export default (mongoose) => {
     {
       referralCode: {
         type: String,
+        required: true,
         unique: true,
         maxLength: [8, "Referral code must be 8 characters"],
       },
