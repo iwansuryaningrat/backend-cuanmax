@@ -6,7 +6,7 @@ const router = Express.Router();
 const referralRouter = (app) => {
   router.put("/:referralCode", login, proMember, update);
 
-  app.use("/v1/referrals", router);
+  app.use("/v1/pro/referrals", router);
 };
 
 export default referralRouter;
