@@ -113,6 +113,8 @@ messagesAdminRouter(app); // Messages Router
 // Playlists Router
 import plansAdminRouter from "./src/routes/admin/plans.routes.js"; // Plans Router
 plansAdminRouter(app); // Plans Router
+import referralAdminRouter from "./src/routes/admin/referral.routes.js"; // Referral Router
+referralAdminRouter(app); // Referral Router
 import servicesAdminRouter from "./src/routes/admin/services.routes.js"; // Services Router
 servicesAdminRouter(app); // Services Router
 import subscribersAdminRouter from "./src/routes/admin/subscribers.routes.js"; // Subscribers Router
@@ -129,6 +131,8 @@ usersAdminRouter(app); // Users Router
 // Watchlists Router
 
 // * Pro Users Routers
+import referralRouter from "./src/routes/referral.routes.js"; // Referral Router
+referralRouter(app); // Referral Router
 import usersProRouter from "./src/routes/pro_users/users.routes.js"; // Users Router
 usersProRouter(app); // Users Router
 
