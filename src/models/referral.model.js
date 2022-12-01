@@ -50,14 +50,6 @@ export default (mongoose) => {
           },
         },
       ],
-      referralStatus: {
-        type: String,
-        default: "Active",
-        enum: {
-          values: ["Active", "Inactive"],
-          message: "Status must be Active or Inactive",
-        },
-      },
       referralWithDrawBank: {
         withDrawBankName: {
           type: String,
@@ -74,6 +66,14 @@ export default (mongoose) => {
         withDrawBankAccountVerified: {
           type: Boolean,
           default: false,
+        },
+      },
+      referralStatus: {
+        type: String,
+        default: "Active",
+        enum: {
+          values: ["Active", "Inactive"],
+          message: "Status must be Active or Inactive",
         },
       },
     },
