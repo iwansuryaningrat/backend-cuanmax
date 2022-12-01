@@ -6,4 +6,8 @@ connect();
 import usersSeederFunction from "./users.seeder.js";
 
 // Run Seeder
-usersSeederFunction();
+const userSeeder = await usersSeederFunction();
+console.log(userSeeder);
+
+//   end task
+process.exit();

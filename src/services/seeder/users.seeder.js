@@ -14,6 +14,23 @@ const encryptedPassword = await bcrypt.hash(password, salt);
 
 const usersSeeder = [
   {
+    name: "Super Admin",
+    username: "superadmin",
+    email: "admin@cuanmax.id",
+    phone: "088802851811",
+    address: "Jl. Admin",
+    birthday: "2000-12-14",
+    password: encryptedPassword,
+    type: {
+      accountType: {
+        member: "Super Admin",
+        isNew: false,
+      },
+      isAdmin: true,
+      isActivated: true,
+    },
+  },
+  {
     name: "Admin",
     username: "admin",
     email: "iwanadmin@gmail.com",
@@ -29,7 +46,6 @@ const usersSeeder = [
       isAdmin: true,
       isActivated: true,
     },
-    referal: ObjectId("5f9f1b9b9c9d2b0017a5b0b1"),
   },
   {
     name: "Basic Member",
@@ -50,7 +66,6 @@ const usersSeeder = [
       isAdmin: false,
       isActivated: true,
     },
-    referal: ObjectId("5f9f1b9b9c9d2b0017a5b0b1"),
   },
   {
     name: "Pro Member",
@@ -72,7 +87,6 @@ const usersSeeder = [
       isAdmin: false,
       isActivated: true,
     },
-    referal: ObjectId("5f9f1b9b9c9d2b0017a5b0b1"),
   },
 ];
 
@@ -81,11 +95,9 @@ const usersSeederFunction = async () => {
   try {
     await Users.deleteMany();
     await Users.insertMany(usersSeeder);
-    console.log("Users Seeder Created");
-    //   end task
-    process.exit();
+    return "Users Seeder Created";
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
