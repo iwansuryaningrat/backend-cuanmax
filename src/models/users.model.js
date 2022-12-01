@@ -49,6 +49,10 @@ export default (mongoose) => {
           member: {
             type: String,
             default: "Basic Member",
+            enum: {
+              values: ["Basic Member", "Pro Member", "Super Admin", "Admin"],
+              message: "Member type is not valid",
+            },
           },
           subscription: {
             startAt: {
