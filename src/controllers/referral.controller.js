@@ -215,8 +215,8 @@ const requestWD = (req, res) => {
       const withDrawAmount = amount;
       const withDrawDate = new Date().getTime();
 
-      Referrals.findByIdAndUpdate(
-        referral._id,
+      Referrals.findOneAndUpdate(
+        { referralCode },
         {
           referralAvailableAmount: newAvailableAmount,
           referralTotalAmount: newTotalAmount,
@@ -397,9 +397,9 @@ const verifyBank = (req, res) => {
 
 // Update withdraw status of a referral by the id in the request
 const updateWDStatus = (req, res) => {
-  const id = req.params.id;
+  const wdID = req.params.wdID;
 
-  if (!id || !ObjectId.isValid(id)) {
+  if (!wdID || !ObjectId.isValid(wdID)) {
     return res.status(400).send({
       message: "Invalid ID",
     });
@@ -413,13 +413,17 @@ const updateWDStatus = (req, res) => {
     });
   }
 
-  Referrals.findByIdAndUpdate(
-    id,
+  Referrals.findOneAndUpdate(
     {
-      referralWithDrawHistory: {
-        withDrawStatus,
-        withDrawDate: new Date().getTime(),
-      },
+      referralWithDrawHistory: { $elemMatch: { _id: wdID } },
+    },
+    {
+      referralWithDrawHistory: [
+        {
+          withDrawStatus,
+          withDrawDate: new Date().getTime(),
+        },
+      ],
     },
     { new: true }
   )
