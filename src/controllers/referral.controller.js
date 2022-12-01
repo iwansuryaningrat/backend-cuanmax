@@ -304,7 +304,7 @@ const showAllVerification = (req, res) => {
     });
 };
 
-// Show all referrals with withdraw request (withDrawStatus = "Pending")
+// Show all referrals with withdraw request (withDrawStatus = "Pending") (Done)
 const showAllWithdraw = (req, res) => {
   Referrals.find({
     referralWithDrawHistory: { $elemMatch: { withDrawStatus: "Pending" } },
