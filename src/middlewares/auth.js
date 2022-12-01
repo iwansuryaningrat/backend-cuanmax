@@ -146,4 +146,4 @@ const superAdmin = (req, res, next) => {
   }
 };
 
-export { login, admin, proMember };
+export { login, admin, proMember, superAdmin };
