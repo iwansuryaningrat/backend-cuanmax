@@ -26,17 +26,17 @@ export default (mongoose) => {
         type: Number,
         default: 0,
       },
-      referralWithDraw: {
+      referralWithDrawCount: {
         type: Number,
         default: 0,
       },
       referralWithDrawHistory: [
         {
-          amount: {
+          withDrawAmount: {
             type: Number,
             default: 0,
           },
-          status: {
+          withDrawStatus: {
             type: String,
             default: "Pending",
             enum: {
@@ -44,7 +44,7 @@ export default (mongoose) => {
               message: "Status must be Pending, Success or Failed",
             },
           },
-          timestamps: {
+          withDrawDate: {
             type: Number,
             default: 0,
           },
