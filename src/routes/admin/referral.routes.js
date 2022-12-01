@@ -16,7 +16,7 @@ const referralAdminRouter = (app) => {
   router.get("/request/verification", login, admin, showAllVerification);
   router.get("/request/withdraw", login, admin, showAllWithdraw);
   router.put("/bankverify/:id", login, admin, verifyBank);
-  router.put("/wdstatus/:wdID", login, admin, updateWDStatus);
+  router.put("/:id/:wdID", login, admin, updateWDStatus);
 
   app.use("/v1/admin/referrals", router);
 };
