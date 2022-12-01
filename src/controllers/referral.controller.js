@@ -175,7 +175,7 @@ const update = (req, res) => {
     });
 };
 
-// Request for a referral to withdraw
+// Request for a referral to withdraw (Done)
 const requestWD = (req, res) => {
   const referralCode = req.params.referralCode;
 
@@ -221,8 +221,8 @@ const requestWD = (req, res) => {
           referralAvailableAmount: newAvailableAmount,
           referralTotalAmount: newTotalAmount,
           referralWithDrawCount: newReferralWithDrawCount,
-          referralWithDrawHistory: {
-            $push: {
+          $push: {
+            referralWithDrawHistory: {
               withDrawAmount,
               withDrawDate,
             },
