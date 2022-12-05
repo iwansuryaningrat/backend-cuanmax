@@ -122,7 +122,7 @@ const findOne = (req, res) => {
 };
 
 // Update a referral by the id in the request (Done)
-const update = (req, res) => {
+const addBankAccount = (req, res) => {
   const referralCode = req.params.referralCode;
 
   if (!referralCode) {
@@ -131,29 +131,68 @@ const update = (req, res) => {
     });
   }
 
-  const { bankName, bankAccountName, bankAccountNumber } = req.body;
-  var Code = req.body.code;
+  const { bank_name, account_name, account_number } = req.body;
 
-  if (!bankName || !bankAccountName || !bankAccountNumber) {
+  if (!bank_name || !account_name || !account_number) {
     return res.status(400).send({
       message: "Invalid data",
     });
   }
 
-  if (!Code) {
-    Code = referralCode;
-  }
-
   Referrals.findOneAndUpdate(
     { referralCode },
     {
-      referralCode: Code,
       referralWithDrawBank: {
-        withDrawBankName: bankName,
-        withDrawBankAccountName: bankAccountName,
-        withDrawBankAccountNumber: bankAccountNumber,
+        withDrawBankName: bank_name,
+        withDrawBankAccountName: account_name,
+        withDrawBankAccountNumber: account_number,
         withDrawBankAccountVerified: false,
       },
+    },
+    { new: true }
+  )
+    .then((referral) => {
+      if (!referral) {
+        return res.status(404).send({
+          message: `Referral with id ${id} not found`,
+        });
+      }
+
+      res.send({
+        message: "Referral updated successfully",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: `Error updating referral with id ${id}`,
+      });
+    });
+};
+
+// Change Referral Code (Done)
+const changeReferralCode = (req, res) => {
+  const referralCode = req.params.referralCode;
+
+  if (!referralCode) {
+    return res.status(400).send({
+      message: "Invalid ID",
+    });
+  }
+
+  const { newReferralCode } = req.body;
+
+  if (!newReferralCode) {
+    return res.status(400).send({
+      message: "Invalid data",
+    });
+  }
+
+  Referrals.findOneAndUpdate(
+    {
+      referralCode,
+    },
+    {
+      referralCode: newReferralCode,
     },
     { new: true }
   )
@@ -447,10 +486,11 @@ const updateWDStatus = (req, res) => {
 export {
   findAll,
   findOne,
-  update,
+  addBankAccount,
   requestWD,
   showAllVerification,
   showAllWithdraw,
   verifyBank,
   updateWDStatus,
+  changeReferralCode,
 };
