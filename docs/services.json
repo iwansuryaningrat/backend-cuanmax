@@ -19,7 +19,792 @@
       "url": "http://159.223.84.116/api/v1"
     }
   ],
-  "paths": {},
+  "paths": {
+    "/services": {
+      "get": {
+        "tags": ["Services"],
+        "summary": "Get All Services",
+        "description": "Get All Services",
+        "operationId": "getAllServices",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "serviceName": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "image": {
+                            "type": "object",
+                            "properties": {
+                              "imageName": {
+                                "type": "string"
+                              },
+                              "imagePath": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "benefits": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "status": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Services successfully fetched.",
+                  "data": [
+                    {
+                      "id": "5f9f1b9b9c9d2b0017a5b0b1",
+                      "serviceName": "Service 1",
+                      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                      "image": {
+                        "imageName": "service-1.jpg",
+                        "imagePath": "uploads/services/service-1.jpg"
+                      },
+                      "benefits": [
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                      ],
+                      "status": "Active"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/services/{Service ID}": {
+      "get": {
+        "tags": ["Services"],
+        "summary": "Get Service By ID",
+        "description": "Get Service By ID",
+        "operationId": "getServiceByID",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Service ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "serviceName": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "object",
+                          "properties": {
+                            "imageName": {
+                              "type": "string"
+                            },
+                            "imagePath": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "benefits": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "status": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Service successfully fetched.",
+                  "data": {
+                    "id": "5f9c1b9b9c9c1c0017b5b1b1",
+                    "serviceName": "Lorem ipsum dolor sit amet",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    "image": {
+                      "imageName": "image.jpg",
+                      "imagePath": "https://example.com/image.jpg"
+                    },
+                    "benefits": [
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                    ],
+                    "status": "active"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/services": {
+      "post": {
+        "tags": ["Services - Admin"],
+        "summary": "Add Service",
+        "description": "Add Service for Admin",
+        "operationId": "addServiceforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "serviceName": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "benefits": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "example": {
+                "serviceName": "Lorem ipsum dolor sit amet",
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                "benefits": [
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Service successfully created."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Services - Admin"],
+        "summary": "Get All Services",
+        "description": "Get All Services for Admin",
+        "operationId": "getAllServicesforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Status of the service",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            },
+            "example": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "serviceName": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "image": {
+                            "type": "object",
+                            "properties": {
+                              "imageName": {
+                                "type": "string"
+                              },
+                              "imagePath": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "benefits": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "status": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Services successfully fetched.",
+                  "data": [
+                    {
+                      "id": "5f9f1b9b9c9d2b0017a5b0b1",
+                      "serviceName": "Service 1",
+                      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                      "image": {
+                        "imageName": "service-1.jpg",
+                        "imagePath": "uploads/services/service-1.jpg"
+                      },
+                      "benefits": [
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                      ],
+                      "status": "Active"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/services/{Service ID}": {
+      "get": {
+        "tags": ["Services - Admin"],
+        "summary": "Get Service",
+        "description": "Get Service for Admin",
+        "operationId": "getServiceforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Service ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "serviceName": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "object",
+                          "properties": {
+                            "imageName": {
+                              "type": "string"
+                            },
+                            "imagePath": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "benefits": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "status": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Service successfully fetched.",
+                  "data": {
+                    "id": "5f9c1b9b9c9c1c0017b5b1b1",
+                    "serviceName": "Lorem ipsum dolor sit amet",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    "image": {
+                      "imageName": "image.jpg",
+                      "imagePath": "https://example.com/image.jpg"
+                    },
+                    "benefits": [
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                    ],
+                    "status": "active"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Services - Admin"],
+        "summary": "Update Service",
+        "description": "Update Service for Admin",
+        "operationId": "updateServiceforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Service ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "serviceName": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "benefits": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "example": {
+                "serviceName": "Lorem ipsum dolor sit amet",
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                "benefits": [
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Service successfully updated."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Services - Admin"],
+        "summary": "Delete Service",
+        "description": "Delete Service for Admin",
+        "operationId": "deleteServiceforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Service ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Service successfully deleted."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/services/{Service ID}/upload-image": {
+      "put": {
+        "tags": ["Services - Admin"],
+        "summary": "Upload Service Image",
+        "description": "Upload Service Image for Admin",
+        "operationId": "uploadServiceImageforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Service ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "example": {
+                "image": "image.jpg"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Service image successfully uploaded."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/services/{Service ID}/add-benefit": {
+      "put": {
+        "tags": ["Services - Admin"],
+        "summary": "Add Benefit",
+        "description": "Add Benefit for Admin",
+        "operationId": "addBenefitforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Service ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Add benefit to service in array type",
+                "properties": {
+                  "benefit": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "benefit": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Benefit successfully added."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/services/{Service ID}/deactivate": {
+      "put": {
+        "tags": ["Services - Admin"],
+        "summary": "Deactivate Service",
+        "description": "Deactivate Service for Admin",
+        "operationId": "deactivateServiceforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Service ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Service successfully deactivated."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    }
+  },
   "components": {
     "parameters": {
       "x-auth-token": {
@@ -33,85 +818,6 @@
           "format": "int64"
         }
       },
-      "token": {
-        "name": "token",
-        "in": "path",
-        "description": "Token",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Liveclass ID": {
-        "name": "Liveclass ID",
-        "in": "path",
-        "description": "Liveclass ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Liveclass Transaction ID": {
-        "name": "Liveclass Transaction ID",
-        "in": "path",
-        "description": "Liveclass Transaction ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Membership Transaction ID": {
-        "name": "Membership Transaction ID",
-        "in": "path",
-        "description": "Membership Transaction ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Message ID": {
-        "name": "Message ID",
-        "in": "path",
-        "description": "Message ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "News ID": {
-        "name": "News ID",
-        "in": "path",
-        "description": "News ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Playlist ID": {
-        "name": "Playlist ID",
-        "in": "path",
-        "description": "Playlist ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Pricing ID": {
-        "name": "Pricing ID",
-        "in": "path",
-        "description": "Pricing ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
       "Service ID": {
         "name": "Service ID",
         "in": "path",
@@ -122,76 +828,6 @@
           "type": "string"
         },
         "example": "5f9f1b9b9c9d2b0017a5b0b1"
-      },
-      "Subscriber ID": {
-        "name": "Subscriber ID",
-        "in": "path",
-        "description": "Subscriber ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Team ID": {
-        "name": "Team ID",
-        "in": "path",
-        "description": "Team ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Testimoni ID": {
-        "name": "Testimoni ID",
-        "in": "path",
-        "description": "Testimoni ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "User ID": {
-        "name": "User ID",
-        "in": "path",
-        "description": "User ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Video ID": {
-        "name": "Video ID",
-        "in": "path",
-        "description": "Video ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Voucher ID": {
-        "name": "VOucher ID",
-        "in": "path",
-        "description": "VOucher ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Watchlist ID": {
-        "name": "Watchlist ID",
-        "in": "path",
-        "description": "Watchlist ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
       }
     },
     "responses": {
@@ -338,341 +974,8 @@
             }
           }
         }
-      },
-      "Show Profile Success": {
-        "description": "Successful Operation",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "username": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "phone": {
-                      "type": "string"
-                    },
-                    "address": {
-                      "type": "string"
-                    },
-                    "birthday": {
-                      "type": "string"
-                    },
-                    "image": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "object",
-                      "properties": {
-                        "memberType": {
-                          "type": "string"
-                        },
-                        "subscription": {
-                          "type": "object",
-                          "properties": {
-                            "startAt": {
-                              "type": "number"
-                            },
-                            "expiredAt": {
-                              "type": "number"
-                            }
-                          }
-                        },
-                        "isNew": {
-                          "type": "boolean"
-                        },
-                        "isAdmin": {
-                          "type": "boolean"
-                        },
-                        "isActivated": {
-                          "type": "boolean"
-                        }
-                      }
-                    },
-                    "referral": {
-                      "type": "object",
-                      "properties": {
-                        "referralCode": {
-                          "type": "string"
-                        },
-                        "referralCount": {
-                          "type": "number"
-                        },
-                        "referralAccount": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "username": {
-                                "type": "string"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "example": {
-                "message": "User fetched successfully!",
-                "data": {
-                  "name": "Example Name",
-                  "username": "username",
-                  "email": "example@mail.com",
-                  "image": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
-                  "phone": "081234567890",
-                  "address": "Jl. Example",
-                  "birthday": "1990-01-01",
-                  "type": {
-                    "memberType": "Pro Member",
-                    "subscription": {
-                      "startat": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
-                      "expiredAt": null
-                    },
-                    "isNew": true,
-                    "isAdmin": false,
-                    "isActivated": false
-                  },
-                  "referral": {
-                    "referralCode": "123456",
-                    "referralCount": 0,
-                    "referralAccount": []
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "Update Profile Success": {
-        "description": "Successful Operation",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                },
-                "token": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "message": "User updated successfully!",
-              "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
-            }
-          }
-        }
-      },
-      "Change Password Success": {
-        "description": "Successful Operation",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "message": "Password changed successfully!"
-              }
-            }
-          }
-        }
-      },
-      "Change Profile Picture Success": {
-        "description": "Successful Operation",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                },
-                "token": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "message": "Picture changed successfully!",
-              "token": "5f9c1b9b9c9c1c0017b5b1b1"
-            }
-          }
-        }
       }
     },
-    "requestBodies": {
-      "Edit Profile": {
-        "description": "Edit Profile",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "phone": {
-                  "type": "string"
-                },
-                "address": {
-                  "type": "string"
-                },
-                "birthday": {
-                  "type": "string"
-                }
-              },
-              "required": ["name", "phone", "address", "birthday"],
-              "example": {
-                "name": "Example Name",
-                "phone": "081234567890",
-                "address": "Example Address",
-                "birthday": "1990-01-01"
-              }
-            }
-          }
-        }
-      },
-      "Change Password": {
-        "description": "Change Password",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "oldPassword": {
-                  "type": "string"
-                },
-                "newPassword": {
-                  "type": "string"
-                }
-              },
-              "required": ["oldPassword", "newPassword"],
-              "example": {
-                "oldPassword": "123456",
-                "newPassword": "1234567"
-              }
-            }
-          }
-        }
-      },
-      "Change Profile Picture": {
-        "description": "Change Profile Picture",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "image": {
-                  "type": "string",
-                  "format": "binary",
-                  "required": true,
-                  "description": "Image file",
-                  "nullable": false
-                }
-              }
-            },
-            "example": {
-              "image": "file"
-            }
-          }
-        }
-      },
-      "Teams Body": {
-        "description": "Teams Body",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "position": {
-                  "type": "string"
-                },
-                "instagram": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "twitter": {
-                  "type": "string"
-                },
-                "linkedin": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "name": "Name",
-                "description": "description",
-                "position": "CEO",
-                "instagram": "https://www.instagram.com/username/",
-                "email": "example@mail.com",
-                "twitter": "https://www.twitter.com/username/",
-                "linkedin": "https://www.linkedin.com/username/"
-              },
-              "required": ["name", "description", "position"]
-            }
-          }
-        }
-      },
-      "Testimoni Body": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "position": {
-                  "type": "string"
-                },
-                "company": {
-                  "type": "string"
-                },
-                "testimoni": {
-                  "type": "string"
-                }
-              },
-              "required": ["name", "position", "company", "testimoni"],
-              "example": {
-                "name": "John Doe",
-                "position": "CEO",
-                "company": "PT. Example",
-                "testimoni": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-              }
-            }
-          }
-        }
-      }
-    }
+    "requestBodies": {}
   }
 }
