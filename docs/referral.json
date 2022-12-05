@@ -19,7 +19,170 @@
       "url": "http://159.223.84.116/api/v1"
     }
   ],
-  "paths": {},
+  "paths": {
+    "/pro/referrals/{Referral Code}": {
+      "put": {
+        "tags": ["Referrals - Pro Member"],
+        "summary": "Update Referral Code",
+        "description": "Update Referral Code",
+        "operationId": "updateReferralCode",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Referral Code"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update Referral Code"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Referral Code Updated"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/pro/referrals/addbank/{Referral Code}": {
+      "put": {
+        "tags": ["Referrals - Pro Member"],
+        "summary": "Add Bank Account",
+        "description": "Add Bank Account",
+        "operationId": "addBankAccount",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Referral Code"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Add Bank Account"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Referral Code Updated"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/pro/referrals/wd/{Referral Code}": {
+      "post": {
+        "tags": ["Referrals - Pro Member"],
+        "summary": "Withdraw Referral",
+        "description": "Request Withdraw Referral Bonus",
+        "operationId": "withdrawReferralBonus",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Referral Code"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Withdraw Referral Bonus"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Withdraw request has been sent"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    }
+  },
   "components": {
     "parameters": {
       "x-auth-token": {
@@ -33,126 +196,6 @@
           "format": "int64"
         }
       },
-      "token": {
-        "name": "token",
-        "in": "path",
-        "description": "Token",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Liveclass ID": {
-        "name": "Liveclass ID",
-        "in": "path",
-        "description": "Liveclass ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Liveclass Transaction ID": {
-        "name": "Liveclass Transaction ID",
-        "in": "path",
-        "description": "Liveclass Transaction ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Membership Transaction ID": {
-        "name": "Membership Transaction ID",
-        "in": "path",
-        "description": "Membership Transaction ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Message ID": {
-        "name": "Message ID",
-        "in": "path",
-        "description": "Message ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "News ID": {
-        "name": "News ID",
-        "in": "path",
-        "description": "News ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Playlist ID": {
-        "name": "Playlist ID",
-        "in": "path",
-        "description": "Playlist ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Pricing ID": {
-        "name": "Pricing ID",
-        "in": "path",
-        "description": "Pricing ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Service ID": {
-        "name": "Service ID",
-        "in": "path",
-        "description": "ID of the service",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        },
-        "example": "5f9f1b9b9c9d2b0017a5b0b1"
-      },
-      "Subscriber ID": {
-        "name": "Subscriber ID",
-        "in": "path",
-        "description": "Subscriber ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Team ID": {
-        "name": "Team ID",
-        "in": "path",
-        "description": "Team ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Testimoni ID": {
-        "name": "Testimoni ID",
-        "in": "path",
-        "description": "Testimoni ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
       "User ID": {
         "name": "User ID",
         "in": "path",
@@ -163,30 +206,10 @@
           "type": "string"
         }
       },
-      "Video ID": {
-        "name": "Video ID",
+      "Referral Code": {
+        "name": "Referral Code",
         "in": "path",
-        "description": "Video ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Voucher ID": {
-        "name": "VOucher ID",
-        "in": "path",
-        "description": "VOucher ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Watchlist ID": {
-        "name": "Watchlist ID",
-        "in": "path",
-        "description": "Watchlist ID",
+        "description": "Referral Code",
         "required": true,
         "allowEmptyValue": false,
         "schema": {
@@ -338,336 +361,68 @@
             }
           }
         }
-      },
-      "Show Profile Success": {
-        "description": "Successful Operation",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "username": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "phone": {
-                      "type": "string"
-                    },
-                    "address": {
-                      "type": "string"
-                    },
-                    "birthday": {
-                      "type": "string"
-                    },
-                    "image": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "object",
-                      "properties": {
-                        "memberType": {
-                          "type": "string"
-                        },
-                        "subscription": {
-                          "type": "object",
-                          "properties": {
-                            "startAt": {
-                              "type": "number"
-                            },
-                            "expiredAt": {
-                              "type": "number"
-                            }
-                          }
-                        },
-                        "isNew": {
-                          "type": "boolean"
-                        },
-                        "isAdmin": {
-                          "type": "boolean"
-                        },
-                        "isActivated": {
-                          "type": "boolean"
-                        }
-                      }
-                    },
-                    "referral": {
-                      "type": "object",
-                      "properties": {
-                        "referralCode": {
-                          "type": "string"
-                        },
-                        "referralCount": {
-                          "type": "number"
-                        },
-                        "referralAccount": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "username": {
-                                "type": "string"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "example": {
-                "message": "User fetched successfully!",
-                "data": {
-                  "name": "Example Name",
-                  "username": "username",
-                  "email": "example@mail.com",
-                  "image": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
-                  "phone": "081234567890",
-                  "address": "Jl. Example",
-                  "birthday": "1990-01-01",
-                  "type": {
-                    "memberType": "Pro Member",
-                    "subscription": {
-                      "startat": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
-                      "expiredAt": null
-                    },
-                    "isNew": true,
-                    "isAdmin": false,
-                    "isActivated": false
-                  },
-                  "referral": {
-                    "referralCode": "123456",
-                    "referralCount": 0,
-                    "referralAccount": []
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "Update Profile Success": {
-        "description": "Successful Operation",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                },
-                "token": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "message": "User updated successfully!",
-              "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
-            }
-          }
-        }
-      },
-      "Change Password Success": {
-        "description": "Successful Operation",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "message": "Password changed successfully!"
-              }
-            }
-          }
-        }
-      },
-      "Change Profile Picture Success": {
-        "description": "Successful Operation",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                },
-                "token": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "message": "Picture changed successfully!",
-              "token": "5f9c1b9b9c9c1c0017b5b1b1"
-            }
-          }
-        }
       }
     },
     "requestBodies": {
-      "Edit Profile": {
-        "description": "Edit Profile",
+      "Add Bank Account": {
+        "description": "Add Bank Account",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
+                "bank_name": {
                   "type": "string"
                 },
-                "phone": {
+                "account_number": {
                   "type": "string"
                 },
-                "address": {
-                  "type": "string"
-                },
-                "birthday": {
+                "account_name": {
                   "type": "string"
                 }
               },
-              "required": ["name", "phone", "address", "birthday"],
               "example": {
-                "name": "Example Name",
-                "phone": "081234567890",
-                "address": "Example Address",
-                "birthday": "1990-01-01"
+                "bank_name": "Access Bank",
+                "account_number": "1234567890",
+                "account_name": "John Doe"
               }
             }
           }
         }
       },
-      "Change Password": {
-        "description": "Change Password",
+      "Update Referral Code": {
+        "description": "Update Referral Code",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "oldPassword": {
-                  "type": "string"
-                },
-                "newPassword": {
-                  "type": "string"
-                }
-              },
-              "required": ["oldPassword", "newPassword"],
-              "example": {
-                "oldPassword": "123456",
-                "newPassword": "1234567"
-              }
-            }
-          }
-        }
-      },
-      "Change Profile Picture": {
-        "description": "Change Profile Picture",
-        "content": {
-          "multipart/form-data": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "image": {
+                "newReferralCode": {
                   "type": "string",
-                  "format": "binary",
-                  "required": true,
-                  "description": "Image file",
-                  "nullable": false
+                  "required": true
                 }
+              },
+              "example": {
+                "newReferralCode": "1234567890"
               }
-            },
-            "example": {
-              "image": "file"
             }
           }
         }
       },
-      "Teams Body": {
-        "description": "Teams Body",
+      "Withdraw Referral Bonus": {
+        "description": "Withdraw Referral Bonus",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "position": {
-                  "type": "string"
-                },
-                "instagram": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "twitter": {
-                  "type": "string"
-                },
-                "linkedin": {
-                  "type": "string"
+                "amount": {
+                  "type": "string",
+                  "required": true
                 }
               },
               "example": {
-                "name": "Name",
-                "description": "description",
-                "position": "CEO",
-                "instagram": "https://www.instagram.com/username/",
-                "email": "example@mail.com",
-                "twitter": "https://www.twitter.com/username/",
-                "linkedin": "https://www.linkedin.com/username/"
-              },
-              "required": ["name", "description", "position"]
-            }
-          }
-        }
-      },
-      "Testimoni Body": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "position": {
-                  "type": "string"
-                },
-                "company": {
-                  "type": "string"
-                },
-                "testimoni": {
-                  "type": "string"
-                }
-              },
-              "required": ["name", "position", "company", "testimoni"],
-              "example": {
-                "name": "John Doe",
-                "position": "CEO",
-                "company": "PT. Example",
-                "testimoni": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                "amount": "1000"
               }
             }
           }
