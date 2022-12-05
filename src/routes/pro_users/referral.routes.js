@@ -1,5 +1,5 @@
-import { update, requestWD } from "../controllers/referral.controller.js";
-import { login, proMember } from "../middlewares/auth.js";
+import { update, requestWD } from "../../controllers/referral.controller.js";
+import { login, proMember } from "../../middlewares/auth.js";
 import Express from "express";
 const router = Express.Router();
 
