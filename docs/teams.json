@@ -19,7 +19,559 @@
       "url": "http://159.223.84.116/api/v1"
     }
   ],
-  "paths": {},
+  "paths": {
+    "/admin/teams": {
+      "post": {
+        "tags": ["Teams - Admin"],
+        "summary": "Create Team",
+        "description": "Create Team for Admin",
+        "operationId": "createTeam",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Teams Body"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully created."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Teams - Admin"],
+        "summary": "Get All Teams",
+        "description": "Get All Teams for Admin",
+        "operationId": "getAllTeamsforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "description": "Filter by active status",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "position": {
+                            "type": "string"
+                          },
+                          "photo": {
+                            "type": "string"
+                          },
+                          "contact": {
+                            "type": "object",
+                            "properties": {
+                              "instagram": {
+                                "type": "string"
+                              },
+                              "email": {
+                                "type": "string"
+                              },
+                              "twitter": {
+                                "type": "string"
+                              },
+                              "linkedin": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Teams successfully fetched.",
+                  "data": [
+                    {
+                      "id": "5f9f1b9b9c9d0c0017b8b1a1",
+                      "name": "Name",
+                      "description": "description",
+                      "position": "CEO",
+                      "photo": "https://example.com/photo.jpg",
+                      "contact": {
+                        "instagram": "https://www.instagram.com/username/",
+                        "email": "example@mail.com",
+                        "twitter": "https://www.twitter.com/username/",
+                        "linkedin": "https://www.linkedin.com/username/"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/teams/{Team ID}": {
+      "get": {
+        "tags": ["Teams - Admin"],
+        "summary": "Get Team",
+        "description": "Get Team for Admin",
+        "operationId": "getTeamforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Team ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "position": {
+                          "type": "string"
+                        },
+                        "photo": {
+                          "type": "string"
+                        },
+                        "contact": {
+                          "type": "object",
+                          "properties": {
+                            "instagram": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "twitter": {
+                              "type": "string"
+                            },
+                            "linkedin": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully fetched.",
+                  "data": {
+                    "id": "5f9f1b9b9c9d0c0017b8b1a1",
+                    "name": "Name",
+                    "description": "description",
+                    "position": "CEO",
+                    "photo": "https://example.com/photo.jpg",
+                    "contact": {
+                      "instagram": "https://www.instagram.com/username/",
+                      "email": "example@mail.com",
+                      "twitter": "https://www.twitter.com/username/",
+                      "linkedin": "https://www.linkedin.com/username/"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Teams - Admin"],
+        "summary": "Update Team",
+        "description": "Update Team for Admin",
+        "operationId": "updateTeamforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Team ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Teams Body"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team data successfully updated."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Teams - Admin"],
+        "summary": "Delete Team",
+        "description": "Delete Team for Admin",
+        "operationId": "deleteTeamforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Team ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully deleted."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/teams/{Team ID}/teamprofile": {
+      "put": {
+        "tags": ["Teams - Admin"],
+        "summary": "Update Team Profile",
+        "description": "Update Team Profile for Admin",
+        "operationId": "updateTeamProfileforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Team ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Change Profile Picture"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team profile successfully updated."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable Entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/teams/{Team ID}/deactivate": {
+      "put": {
+        "tags": ["Teams - Admin"],
+        "summary": "Deactivate Team",
+        "description": "Deactivate Team for Admin",
+        "operationId": "deactivateTeamforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Team ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully deactivated."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/teams": {
+      "get": {
+        "tags": ["Teams"],
+        "summary": "Get All Teams",
+        "description": "Get All Teams",
+        "operationId": "getAllTeams",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "position": {
+                            "type": "string"
+                          },
+                          "photo": {
+                            "type": "string"
+                          },
+                          "contact": {
+                            "type": "object",
+                            "properties": {
+                              "instagram": {
+                                "type": "string"
+                              },
+                              "email": {
+                                "type": "string"
+                              },
+                              "twitter": {
+                                "type": "string"
+                              },
+                              "linkedin": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Teams successfully fetched.",
+                  "data": [
+                    {
+                      "name": "Name",
+                      "description": "description",
+                      "position": "CEO",
+                      "photo": "https://example.com/photo.jpg",
+                      "contact": {
+                        "instagram": "https://www.instagram.com/username/",
+                        "email": "example@mail.com",
+                        "twitter": "https://www.twitter.com/username/",
+                        "linkedin": "https://www.linkedin.com/username/"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    }
+  },
   "components": {
     "parameters": {
       "x-auth-token": {
@@ -33,160 +585,10 @@
           "format": "int64"
         }
       },
-      "token": {
-        "name": "token",
-        "in": "path",
-        "description": "Token",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Liveclass ID": {
-        "name": "Liveclass ID",
-        "in": "path",
-        "description": "Liveclass ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Liveclass Transaction ID": {
-        "name": "Liveclass Transaction ID",
-        "in": "path",
-        "description": "Liveclass Transaction ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Membership Transaction ID": {
-        "name": "Membership Transaction ID",
-        "in": "path",
-        "description": "Membership Transaction ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Message ID": {
-        "name": "Message ID",
-        "in": "path",
-        "description": "Message ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "News ID": {
-        "name": "News ID",
-        "in": "path",
-        "description": "News ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Playlist ID": {
-        "name": "Playlist ID",
-        "in": "path",
-        "description": "Playlist ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Pricing ID": {
-        "name": "Pricing ID",
-        "in": "path",
-        "description": "Pricing ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Service ID": {
-        "name": "Service ID",
-        "in": "path",
-        "description": "ID of the service",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        },
-        "example": "5f9f1b9b9c9d2b0017a5b0b1"
-      },
-      "Subscriber ID": {
-        "name": "Subscriber ID",
-        "in": "path",
-        "description": "Subscriber ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
       "Team ID": {
         "name": "Team ID",
         "in": "path",
         "description": "Team ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Testimoni ID": {
-        "name": "Testimoni ID",
-        "in": "path",
-        "description": "Testimoni ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "User ID": {
-        "name": "User ID",
-        "in": "path",
-        "description": "User ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Video ID": {
-        "name": "Video ID",
-        "in": "path",
-        "description": "Video ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Voucher ID": {
-        "name": "VOucher ID",
-        "in": "path",
-        "description": "VOucher ID",
-        "required": true,
-        "allowEmptyValue": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      "Watchlist ID": {
-        "name": "Watchlist ID",
-        "in": "path",
-        "description": "Watchlist ID",
         "required": true,
         "allowEmptyValue": false,
         "schema": {
@@ -338,246 +740,9 @@
             }
           }
         }
-      },
-      "Show Profile Success": {
-        "description": "Successful Operation",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                },
-                "data": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "username": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "phone": {
-                      "type": "string"
-                    },
-                    "address": {
-                      "type": "string"
-                    },
-                    "birthday": {
-                      "type": "string"
-                    },
-                    "image": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "object",
-                      "properties": {
-                        "memberType": {
-                          "type": "string"
-                        },
-                        "subscription": {
-                          "type": "object",
-                          "properties": {
-                            "startAt": {
-                              "type": "number"
-                            },
-                            "expiredAt": {
-                              "type": "number"
-                            }
-                          }
-                        },
-                        "isNew": {
-                          "type": "boolean"
-                        },
-                        "isAdmin": {
-                          "type": "boolean"
-                        },
-                        "isActivated": {
-                          "type": "boolean"
-                        }
-                      }
-                    },
-                    "referral": {
-                      "type": "object",
-                      "properties": {
-                        "referralCode": {
-                          "type": "string"
-                        },
-                        "referralCount": {
-                          "type": "number"
-                        },
-                        "referralAccount": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "username": {
-                                "type": "string"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "example": {
-                "message": "User fetched successfully!",
-                "data": {
-                  "name": "Example Name",
-                  "username": "username",
-                  "email": "example@mail.com",
-                  "image": "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
-                  "phone": "081234567890",
-                  "address": "Jl. Example",
-                  "birthday": "1990-01-01",
-                  "type": {
-                    "memberType": "Pro Member",
-                    "subscription": {
-                      "startat": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
-                      "expiredAt": null
-                    },
-                    "isNew": true,
-                    "isAdmin": false,
-                    "isActivated": false
-                  },
-                  "referral": {
-                    "referralCode": "123456",
-                    "referralCount": 0,
-                    "referralAccount": []
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "Update Profile Success": {
-        "description": "Successful Operation",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                },
-                "token": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "message": "User updated successfully!",
-              "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
-            }
-          }
-        }
-      },
-      "Change Password Success": {
-        "description": "Successful Operation",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              },
-              "example": {
-                "message": "Password changed successfully!"
-              }
-            }
-          }
-        }
-      },
-      "Change Profile Picture Success": {
-        "description": "Successful Operation",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                },
-                "token": {
-                  "type": "string"
-                }
-              }
-            },
-            "example": {
-              "message": "Picture changed successfully!",
-              "token": "5f9c1b9b9c9c1c0017b5b1b1"
-            }
-          }
-        }
       }
     },
     "requestBodies": {
-      "Edit Profile": {
-        "description": "Edit Profile",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "phone": {
-                  "type": "string"
-                },
-                "address": {
-                  "type": "string"
-                },
-                "birthday": {
-                  "type": "string"
-                }
-              },
-              "required": ["name", "phone", "address", "birthday"],
-              "example": {
-                "name": "Example Name",
-                "phone": "081234567890",
-                "address": "Example Address",
-                "birthday": "1990-01-01"
-              }
-            }
-          }
-        }
-      },
-      "Change Password": {
-        "description": "Change Password",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "oldPassword": {
-                  "type": "string"
-                },
-                "newPassword": {
-                  "type": "string"
-                }
-              },
-              "required": ["oldPassword", "newPassword"],
-              "example": {
-                "oldPassword": "123456",
-                "newPassword": "1234567"
-              }
-            }
-          }
-        }
-      },
       "Change Profile Picture": {
         "description": "Change Profile Picture",
         "content": {
@@ -639,36 +804,6 @@
                 "linkedin": "https://www.linkedin.com/username/"
               },
               "required": ["name", "description", "position"]
-            }
-          }
-        }
-      },
-      "Testimoni Body": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "position": {
-                  "type": "string"
-                },
-                "company": {
-                  "type": "string"
-                },
-                "testimoni": {
-                  "type": "string"
-                }
-              },
-              "required": ["name", "position", "company", "testimoni"],
-              "example": {
-                "name": "John Doe",
-                "position": "CEO",
-                "company": "PT. Example",
-                "testimoni": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-              }
             }
           }
         }
