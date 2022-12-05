@@ -1,7 +1,6 @@
 export default (mongoose) => {
   const Schema = mongoose.Schema;
-
-  const schema = new Schema(
+  const videosSchema = new Schema(
     {
       title: {
         type: String,
@@ -20,37 +19,39 @@ export default (mongoose) => {
         thumbnailLink: {
           type: String,
           require: true,
+          default: "example.jpg",
         },
       },
       playlist: {
-        playlistId: {
-          type: Schema.Types.ObjectId,
-          ref: "Playlists",
-          require: true,
-        },
-        playlistTitle: {
-          type: String,
-          require: true,
-        },
+        type: Schema.Types.ObjectId,
+        ref: "Playlists",
+        require: true,
       },
       tags: [String],
       views: Number,
       likes: Number,
       dislikes: Number,
       duration: Number,
-      category: String,
       date: Date,
-      status: String,
+      status: {
+        type: String,
+        require: true,
+        enum: {
+          values: ["Draft", "Published", "Archived"],
+          message: "Status must be Draft, Published or Archived",
+        },
+        default: "Draft",
+      },
     },
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  videosSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Videos = mongoose.model("videos", schema);
+  const Videos = mongoose.model("Videos", videosSchema);
   return Videos;
 };

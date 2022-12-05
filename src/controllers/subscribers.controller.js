@@ -1,14 +1,37 @@
 import db from "../models/index.js";
 const Subscribers = db.subscribers;
 
+// Fetch all Subscribers (DONE)
 const findAll = (req, res) => {
-  Subscribers.find()
+  const { active } = req.query;
+
+  var condition = {};
+
+  if (active) {
+    condition.status = "Active";
+  }
+
+  Subscribers.find(condition)
     .sort({ createdAt: -1 })
     .then((result) => {
+      if (result.length === 0) {
+        return res.status(404).send({
+          message: "No Subscribers found",
+        });
+      }
+
+      const data = result.map((item) => {
+        return {
+          email: item.email,
+          startDate: item.startDate.toString(),
+          endDate: item.endDate.toString(),
+          status: item.status,
+        };
+      });
+
       res.send({
         message: "Subscribers successfully fetched.",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -18,6 +41,7 @@ const findAll = (req, res) => {
     });
 };
 
+// Subscribers Controller for users (DONE)
 const create = (req, res) => {
   const { email } = req.body;
 
@@ -31,23 +55,21 @@ const create = (req, res) => {
     .then((result) => {
       if (result) {
         return res.status(422).send({
-          message: "Email already exists.",
+          message: "You are already subscribed.",
         });
       }
 
       const subscribers = new Subscribers({
         email: email,
         startDate: new Date().toString(),
-        status: "active",
+        status: "Active",
       });
 
       subscribers
         .save()
         .then((result) => {
           res.status(200).send({
-            message: "Playlist successfully added.",
-            timestamp: new Date().toString(),
-            data: result,
+            message: "You have successfully subscribed.",
           });
         })
         .catch((err) => {
@@ -63,6 +85,7 @@ const create = (req, res) => {
     });
 };
 
+// Find a single Subscribers with an id (DONE)
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -80,20 +103,26 @@ const findOne = (req, res) => {
         });
       }
 
+      const data = {
+        email: result.email,
+        startDate: result.startDate.toString(),
+        endDate: result.endDate.toString(),
+        status: result.status,
+      };
+
       res.send({
         message: "Subscriber was found.",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Some error while showing Subscribers.",
-        timestamp: new Date().toString(),
       });
     });
 };
 
+// Delete a Subscribers with the specified id in the request (DONE)
 const deleteSubs = (req, res) => {
   const { id } = req.params;
 
@@ -112,8 +141,7 @@ const deleteSubs = (req, res) => {
       }
 
       res.send({
-        message: "Playlist was deleted",
-        timestamp: new Date().toString(),
+        message: "Playlist was successfully deleted.",
       });
     })
     .catch((err) => {
@@ -123,7 +151,8 @@ const deleteSubs = (req, res) => {
     });
 };
 
-const update = (req, res) => {
+// Update a Subscribers by the id in the request (DONE)
+const deactivate = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -132,7 +161,7 @@ const update = (req, res) => {
     });
   }
 
-  Subscribers.findByIdAndUpdate(id, req.body, { new: true })
+  Subscribers.findByIdAndUpdate(id, { status: "Inactive" }, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -141,9 +170,7 @@ const update = (req, res) => {
       }
 
       res.send({
-        message: "Subscriber was updated.",
-        timestamp: new Date().toString(),
-        data: result,
+        message: "Subscriber was successfully deactivated.",
       });
     })
     .catch((err) => {
@@ -153,4 +180,4 @@ const update = (req, res) => {
     });
 };
 
-export { findAll, create, findOne, deleteSubs, update };
+export { findAll, create, findOne, deleteSubs, deactivate };

@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const messagesSchema = new Schema(
     {
       firstName: {
         type: String,
@@ -21,17 +22,23 @@ export default (mongoose) => {
       status: {
         type: String,
         require: true,
+        enum: {
+          values: ["Unread", "Read", "Replied"],
+          message: "Status must be Unread, Read, or Replied",
+        },
+        default: "Unread",
       },
     },
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  messagesSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Messages = mongoose.model("messages", schema);
+  const Messages = mongoose.model("Messages", messagesSchema);
+
   return Messages;
 };

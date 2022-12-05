@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const usersSchema = new Schema(
     {
       name: {
         type: String,
@@ -16,12 +17,15 @@ export default (mongoose) => {
       },
       phone: {
         type: String,
+        default: "",
       },
       address: {
         type: String,
+        default: "",
       },
-      gender: {
+      birthday: {
         type: String,
+        default: "",
       },
       password: {
         type: String,
@@ -30,21 +34,39 @@ export default (mongoose) => {
       image: {
         imageName: {
           type: String,
+          default: "default-profile-picture.png",
         },
         imageLink: {
           type: String,
+          require: true,
           default:
-            "https://res.cloudinary.com/dzqbzqgjw/image/upload/v1599098981/default-user-image_qjqjqj.png",
+            // "https://api.cuanmax.com/assets/images/default-profile-picture.png",
+            "http://localhost:8080/assets/images/default-profile-picture.png",
         },
       },
       type: {
         accountType: {
-          member: String,
-          startDate: Date,
-          endDate: Date,
+          member: {
+            type: String,
+            default: "Basic Member",
+            enum: {
+              values: ["Basic Member", "Pro Member", "Super Admin", "Admin"],
+              message: "Member type is not valid",
+            },
+          },
+          subscription: {
+            startAt: {
+              type: Number,
+              default: 0,
+            },
+            expiredAt: {
+              type: Number,
+              default: 0,
+            },
+          },
           isNew: {
             type: Boolean,
-            default: false,
+            default: true,
           },
         },
         isAdmin: {
@@ -58,28 +80,22 @@ export default (mongoose) => {
           require: true,
         },
       },
-      referal: {
-        referalCode: {
-          type: String,
-          unique: true,
-        },
-        referalCount: Number,
-        referalAccount: [{ username: String }],
-        referalAmount: {
-          type: Number,
-          default: 0,
-        },
+      referral: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Referrals",
+        require: false,
       },
     },
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  usersSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Users = mongoose.model("users", schema);
+  const Users = mongoose.model("Users", usersSchema);
+
   return Users;
 };

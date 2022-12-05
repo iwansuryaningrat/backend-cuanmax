@@ -4,14 +4,21 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 import bcrypt from "bcrypt";
 
-const login = async (req, res) => {
-  const { email, password } = req.body;
+// Login Controller Function (DONE)
+const loggingin = async (req, res) => {
+  const { email, password, rememberMe } = req.body;
 
   // Validate request
   if (!email && !password) {
     return res.status(400).send({
       message: "Invalid Email or Password!",
     });
+  }
+
+  if (rememberMe) {
+    var timeExpire = "24h";
+  } else {
+    var timeExpire = "12h";
   }
 
   await Users.findOne({
@@ -30,20 +37,22 @@ const login = async (req, res) => {
                 id: user.id,
                 email: user.email,
                 name: user.name,
+                username: user.username,
                 admin: user.type.isAdmin,
                 role: user.type.accountType.member,
+                isActivated: user.type.isActivated,
+                image: user.image.imageLink,
               },
               process.env.JWT_SECRET,
               {
-                expiresIn: "3h",
+                expiresIn: timeExpire,
               }
             );
 
             res.setHeader("Content-Type", "Application/json");
 
             return res.status(200).send({
-              message: "Login Success",
-              timestamp: new Date().toString(),
+              message: "Login Success!",
               token: token,
             });
           } else {
@@ -61,4 +70,4 @@ const login = async (req, res) => {
     });
 };
 
-export default login;
+export default loggingin;

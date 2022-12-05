@@ -1,13 +1,14 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const newsSchema = new Schema(
     {
       title: {
         type: String,
         require: true,
       },
       author: {
-        type: String,
-        require: true,
+        type: Schema.Types.ObjectId,
+        ref: "Users",
       },
       category: {
         type: String,
@@ -20,7 +21,7 @@ export default (mongoose) => {
         type: Date,
         require: true,
       },
-      cover: {
+      thumbnail: {
         photoName: {
           type: String,
         },
@@ -38,16 +39,26 @@ export default (mongoose) => {
           },
         },
       ],
+      status: {
+        type: String,
+        require: true,
+        enum: {
+          values: ["Draft", "Published", "Archived"],
+          message: "Status must be Draft, Published or Archived",
+        },
+        default: "Draft",
+      },
     },
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  newsSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const News = mongoose.model("news", schema);
+  const News = mongoose.model("News", newsSchema);
+
   return News;
 };

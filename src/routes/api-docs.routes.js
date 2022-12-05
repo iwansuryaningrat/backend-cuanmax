@@ -1,10 +1,7 @@
 import Express from "express";
 const router = Express.Router();
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "../../docs/Cuanmax-API-Docs.json" assert { type: "json" };
-
-router.use("/api-docs", swaggerUi.serve);
-router.get("/api-docs", swaggerUi.setup(swaggerDocument));
+import swaggerDocument from "../../docs/Api-Docs.json" assert { type: "json" };
 
 const apiDocsRouter = (app) => {
   const options = {
@@ -13,7 +10,7 @@ const apiDocsRouter = (app) => {
 
   router.use("/", swaggerUi.serve);
   router.get("/", swaggerUi.setup(swaggerDocument, options));
-  app.use("/api-docs", router);
+  app.use("/dev/api-docs", router);
 };
 
 export default apiDocsRouter;
