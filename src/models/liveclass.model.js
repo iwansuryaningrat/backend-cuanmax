@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const liveclassSchema = new Schema(
     {
       title: {
         type: String,
@@ -42,8 +43,14 @@ export default (mongoose) => {
       status: {
         type: String,
         require: true,
+        enum: {
+          values: ["Upcoming", "Closed", "Cancelled", "Ongoing", "Completed"],
+          message:
+            "Status must be Upcoming, Closed, Cancelled, Ongoing or Completed",
+        },
+        default: "Upcoming",
       },
-      cover: {
+      thumbnail: {
         imageName: {
           type: String,
         },
@@ -59,23 +66,25 @@ export default (mongoose) => {
           require: true,
         },
       ],
-      participants: [
-        {
-          email: {
-            type: String,
-          },
+      participants: {
+        participantsCount: {
+          type: Number,
+          require: true,
+          default: 0,
         },
-      ],
+        participantsList: [{ type: Schema.Types.ObjectId, ref: "Users" }],
+      },
     },
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  liveclassSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Liveclass = mongoose.model("liveclass", schema);
+  const Liveclass = mongoose.model("Liveclasses", liveclassSchema);
+
   return Liveclass;
 };

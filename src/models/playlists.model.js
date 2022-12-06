@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const playlistSchema = new Schema(
     {
       name: {
         type: String,
@@ -8,6 +9,11 @@ export default (mongoose) => {
       category: {
         type: String,
         require: true,
+        enum: {
+          values: ["Stock", "Crypto", "Money Management", "Trading Psychology"],
+          message:
+            "Category must be Stock, Crypto, Money Management, or Trading Psychology",
+        },
       },
       description: String,
       instructor: {
@@ -17,6 +23,10 @@ export default (mongoose) => {
       videoLevel: {
         type: String,
         require: true,
+        enum: {
+          values: ["Beginner", "Intermediate", "Advanced"],
+          message: "Level must be Beginner, Intermediate, or Advanced",
+        },
       },
       image: {
         imageName: {
@@ -32,18 +42,23 @@ export default (mongoose) => {
       status: {
         type: String,
         require: true,
-        default: "active",
+        enum: {
+          values: ["Draft", "Published", "Archived"],
+          message: "Status must be Draft, Published or Archived",
+        },
+        default: "Draft",
       },
     },
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  playlistSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Playlists = mongoose.model("playlists", schema);
+  const Playlists = mongoose.model("Playlists", playlistSchema);
+
   return Playlists;
 };

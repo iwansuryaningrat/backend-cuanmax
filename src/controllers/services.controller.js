@@ -1,14 +1,44 @@
 import db from "../models/index.js";
 const Services = db.services;
 
-// Done
+// Find all services in database (Done)
 const findAll = (req, res) => {
-  Services.find()
+  // Active filter by query params
+  let { active } = req.query;
+
+  active = active ? active : true;
+
+  // Filter by active
+  let condition = {};
+
+  if (active) {
+    condition = { status: "Active" };
+  } else {
+    condition = {};
+  }
+
+  Services.find(condition)
     .then((result) => {
+      if (result.length === 0) {
+        return res.status(404).send({
+          message: "Services not found",
+        });
+      }
+
+      const data = result.map((item) => {
+        return {
+          id: item._id,
+          serviceName: item.serviceName,
+          description: item.description,
+          image: item.image,
+          benefits: item.benefits,
+          status: item.status,
+        };
+      });
+
       res.send({
         message: "Services was found",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -18,7 +48,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Done
+// Create service (Done)
 const create = (req, res) => {
   const { serviceName, description, benefits } = req.body;
 
@@ -33,8 +63,6 @@ const create = (req, res) => {
     .then((result) => {
       res.status(200).send({
         message: "Service successfully added.",
-        timestamp: new Date().toString(),
-        data: result,
       });
     })
     .catch((err) => {
@@ -44,7 +72,7 @@ const create = (req, res) => {
     });
 };
 
-// Done
+// Update image service by id (Done)
 const uploadImage = (req, res) => {
   const { id } = req.params;
 
@@ -79,8 +107,6 @@ const uploadImage = (req, res) => {
 
       res.status(200).send({
         message: "Image successfully uploaded.",
-        timestamp: new Date().toString(),
-        data: result,
       });
     })
     .catch((err) => {
@@ -90,7 +116,7 @@ const uploadImage = (req, res) => {
     });
 };
 
-// Done
+// Find service by id (Done)
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -108,10 +134,17 @@ const findOne = (req, res) => {
         });
       }
 
+      const data = {
+        id: result._id,
+        serviceName: result.serviceName,
+        description: result.description,
+        image: result.image,
+        benefits: result.benefits,
+      };
+
       res.send({
         message: "Service was found",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -121,7 +154,7 @@ const findOne = (req, res) => {
     });
 };
 
-// Done
+// Delete service by id (Done)
 const deleteService = (req, res) => {
   const { id } = req.params;
 
@@ -140,8 +173,7 @@ const deleteService = (req, res) => {
       }
 
       res.send({
-        message: "Service was deleted",
-        timestamp: new Date().toString(),
+        message: "Service was successfully deleted",
       });
     })
     .catch((err) => {
@@ -151,7 +183,7 @@ const deleteService = (req, res) => {
     });
 };
 
-// Done
+// Update service by id (Done)
 const update = (req, res) => {
   const { id } = req.params;
   const { serviceName, description, benefits } = req.body;
@@ -176,7 +208,6 @@ const update = (req, res) => {
 
       res.send({
         message: "Service was updated",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -186,4 +217,76 @@ const update = (req, res) => {
     });
 };
 
-export { findAll, create, uploadImage, findOne, deleteService, update };
+// Add benefit to service by id (Done)
+const addBenefit = (req, res) => {
+  const { id } = req.params;
+  const { benefit } = req.body;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
+
+  Services.findByIdAndUpdate(
+    id,
+    { $push: { benefits: benefit } },
+    { new: true }
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Service not found",
+        });
+      }
+
+      res.send({
+        message: "Benefit was added",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while add benefit.",
+      });
+    });
+};
+
+// Deactivate service by id (Done)
+const deactivate = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Id is required",
+    });
+  }
+
+  Services.findByIdAndUpdate(id, { status: "Inactive" }, { new: true })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Service not found",
+        });
+      }
+
+      res.send({
+        message: "Service was deactivated",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while deactivate service.",
+      });
+    });
+};
+
+export {
+  findAll,
+  create,
+  uploadImage,
+  findOne,
+  deleteService,
+  update,
+  addBenefit,
+  deactivate,
+};

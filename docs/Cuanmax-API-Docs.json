@@ -2196,12 +2196,6 @@
                               }
                             }
                           }
-                        },
-                        "createdAt": {
-                          "type": "string"
-                        },
-                        "updatedAt": {
-                          "type": "string"
                         }
                       }
                     }
@@ -2391,12 +2385,6 @@
                             }
                           }
                         }
-                      },
-                      "createdAt": {
-                        "type": "string"
-                      },
-                      "updatedAt": {
-                        "type": "string"
                       }
                     }
                   }

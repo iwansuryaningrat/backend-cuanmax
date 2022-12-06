@@ -1,7 +1,7 @@
 import db from "../models/index.js";
 const Messages = db.messages;
 
-// Done
+// Fetch All Messages from Database (Done)
 const findAll = (req, res) => {
   const { status } = req.query;
   const query = {};
@@ -13,10 +13,30 @@ const findAll = (req, res) => {
   Messages.find(query)
     .sort({ createdAt: -1 })
     .then((message) => {
+      if (message.length < 1) {
+        return res.status(404).send({
+          message: "No Message was Found!",
+        });
+      }
+
+      const data = message.map((item) => {
+        const { _id, firstName, lastName, email, subject, message, status } =
+          item;
+
+        return {
+          id: _id,
+          firstName,
+          lastName,
+          email,
+          subject,
+          message,
+          status,
+        };
+      });
+
       res.send({
         message: "All message were fetched successfully",
-        timestamp: new Date().toString(),
-        data: message,
+        data,
       });
     })
     .catch((err) => {
@@ -26,7 +46,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Done
+// Create and Save a new Message to the database (Done)
 const create = (req, res) => {
   const { firstName, lastName, email, subject, body } = req.body;
 
@@ -36,13 +56,12 @@ const create = (req, res) => {
     });
   }
 
-  const message = new Message({
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
-    subject: subject,
+  const message = new Messages({
+    firstName,
+    lastName,
+    email,
+    subject,
     message: body,
-    status: "Unreaded",
   });
 
   message
@@ -50,7 +69,6 @@ const create = (req, res) => {
     .then((result) => {
       res.status(200).send({
         message: "Message sent successfully.",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -60,7 +78,7 @@ const create = (req, res) => {
     });
 };
 
-// Done
+// Find Message By ID (Done)
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -78,10 +96,20 @@ const findOne = (req, res) => {
         });
       }
 
+      const { firstName, lastName, email, subject, message, status } = result;
+
+      const data = {
+        firstName,
+        lastName,
+        email,
+        subject,
+        message,
+        status,
+      };
+
       res.send({
         message: "Message was successfully found",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -91,7 +119,7 @@ const findOne = (req, res) => {
     });
 };
 
-// Done
+// Update Status into Read (Done)
 const read = (req, res) => {
   const { id } = req.params;
 
@@ -101,7 +129,7 @@ const read = (req, res) => {
     });
   }
 
-  Messages.findByIdAndUpdate(id, { status: "Readed" }, { new: true })
+  Messages.findByIdAndUpdate(id, { status: "Read" }, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -109,12 +137,20 @@ const read = (req, res) => {
         });
       }
 
-      result.status = "Readed";
+      const { firstName, lastName, email, subject, message } = result;
+
+      const data = {
+        firstName,
+        lastName,
+        email,
+        subject,
+        message,
+        status: "Readed",
+      };
 
       res.send({
         message: "Message read successfully.",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -124,7 +160,7 @@ const read = (req, res) => {
     });
 };
 
-// Done
+// Update Status into Replied (Done)
 const reply = (req, res) => {
   const { id } = req.params;
 
@@ -142,12 +178,20 @@ const reply = (req, res) => {
         });
       }
 
-      result.status = "Replied";
+      const { firstName, lastName, email, subject, message } = result;
+
+      const data = {
+        firstName,
+        lastName,
+        email,
+        subject,
+        message,
+        status: "Replied",
+      };
 
       res.send({
         message: "Message status change successfully.",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -157,6 +201,7 @@ const reply = (req, res) => {
     });
 };
 
+// Delete Message By Id (Done)
 const deleteMsg = (req, res) => {
   const { id } = req.params;
 
@@ -176,7 +221,6 @@ const deleteMsg = (req, res) => {
 
       res.send({
         message: "Message was deleted",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
