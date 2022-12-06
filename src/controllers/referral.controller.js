@@ -319,11 +319,6 @@ const showAllVerification = (req, res) => {
           referralCode,
           referralUser,
           referralCount,
-          referralAccount,
-          referralTotalAmount,
-          referralAvailableAmount,
-          referralWithDrawCount,
-          referralWithDrawHistory,
           referralStatus,
           referralWithDrawBank,
         } = referral;
@@ -333,13 +328,8 @@ const showAllVerification = (req, res) => {
           referralUser,
           referralCode,
           referralCount,
-          referralAccount,
-          referralTotalAmount,
-          referralAvailableAmount,
-          referralWithDrawCount,
-          referralWithDrawHistory,
-          referralStatus,
           referralWithDrawBank,
+          referralStatus,
         };
       });
 
