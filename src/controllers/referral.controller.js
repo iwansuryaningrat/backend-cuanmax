@@ -6,7 +6,19 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch all referrals from the database (Done)
 const findAll = (req, res) => {
-  Referrals.find()
+  const { status } = req.query;
+
+  var condition = {};
+
+  if (status) {
+    condition = { referralStatus: "Active" };
+  } else if (status === false) {
+    condition = { referralStatus: "Inactive" };
+  } else {
+    condition = {};
+  }
+
+  Referrals.find(condition)
     .populate({
       path: "referralUser",
       select: "name username email",
@@ -43,8 +55,8 @@ const findAll = (req, res) => {
           referralAvailableAmount,
           referralWithDraw,
           referralWithDrawHistory,
-          referralStatus,
           referralWithDrawBank,
+          referralStatus,
         };
       });
 
