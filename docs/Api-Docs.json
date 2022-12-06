@@ -1996,16 +1996,7 @@
             "$ref": "#/components/parameters/x-auth-token"
           },
           {
-            "name": "status",
-            "in": "query",
-            "description": "Status of the service",
-            "required": false,
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "boolean",
-              "default": true
-            },
-            "example": true
+            "$ref": "#/components/parameters/Status"
           }
         ],
         "responses": {
@@ -2583,15 +2574,7 @@
             "$ref": "#/components/parameters/x-auth-token"
           },
           {
-            "name": "status",
-            "in": "query",
-            "description": "Subscribers Status",
-            "required": false,
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
+            "$ref": "#/components/parameters/Status"
           }
         ],
         "responses": {
@@ -4814,7 +4797,7 @@
         }
       },
       "Status": {
-        "name": "Status",
+        "name": "status",
         "in": "query",
         "description": "Status",
         "required": false,
