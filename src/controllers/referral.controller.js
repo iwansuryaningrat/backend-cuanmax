@@ -366,13 +366,10 @@ const showAllWithdraw = (req, res) => {
           _id,
           referralCode,
           referralUser,
-          referralCount,
-          referralAccount,
           referralTotalAmount,
           referralAvailableAmount,
           referralWithDrawCount,
           referralWithDrawHistory,
-          referralStatus,
           referralWithDrawBank,
         } = referral;
 
@@ -380,14 +377,11 @@ const showAllWithdraw = (req, res) => {
           id: _id,
           referralUser,
           referralCode,
-          referralCount,
-          referralAccount,
           referralTotalAmount,
           referralAvailableAmount,
           referralWithDrawCount,
           referralWithDrawHistory,
           referralWithDrawBank,
-          referralStatus,
         };
       });
 
