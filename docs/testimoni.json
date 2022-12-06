@@ -31,14 +31,7 @@
             "$ref": "#/components/parameters/x-auth-token"
           },
           {
-            "name": "status",
-            "in": "query",
-            "description": "Status of Testimoni",
-            "required": false,
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "boolean"
-            }
+            "$ref": "#/components/parameters/Status"
           }
         ],
         "responses": {
@@ -545,6 +538,16 @@
         "allowEmptyValue": false,
         "schema": {
           "type": "string"
+        }
+      },
+      "Status": {
+        "name": "status",
+        "in": "query",
+        "description": "Status",
+        "required": false,
+        "allowEmptyValue": true,
+        "schema": {
+          "type": "boolean"
         }
       }
     },
