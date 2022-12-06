@@ -945,6 +945,879 @@
         }
       }
     },
+    "/pro/referrals/{Referral Code}": {
+      "put": {
+        "tags": ["Referrals - Pro Member"],
+        "summary": "Update Referral Code",
+        "description": "Update Referral Code",
+        "operationId": "updateReferralCode",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Service ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "serviceName": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "object",
+                          "properties": {
+                            "imageName": {
+                              "type": "string"
+                            },
+                            "imagePath": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "benefits": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "status": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Service successfully fetched.",
+                  "data": {
+                    "id": "5f9c1b9b9c9c1c0017b5b1b1",
+                    "serviceName": "Lorem ipsum dolor sit amet",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    "image": {
+                      "imageName": "image.jpg",
+                      "imagePath": "https://example.com/image.jpg"
+                    },
+                    "benefits": [
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                    ],
+                    "status": "active"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/services": {
+      "post": {
+        "tags": ["Services - Admin"],
+        "summary": "Add Service",
+        "description": "Add Service for Admin",
+        "operationId": "addServiceforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Referral Code"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Update Referral Code"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Referral Code Updated"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/pro/referrals/addbank/{Referral Code}": {
+      "put": {
+        "tags": ["Referrals - Pro Member"],
+        "summary": "Add Bank Account",
+        "description": "Add Bank Account",
+        "operationId": "addBankAccount",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Referral Code"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Add Bank Account"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Referral Code Updated"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/pro/referrals/wd/{Referral Code}": {
+      "post": {
+        "tags": ["Referrals - Pro Member"],
+        "summary": "Withdraw Referral",
+        "description": "Request Withdraw Referral Bonus",
+        "operationId": "withdrawReferralBonus",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Referral Code"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Withdraw Referral Bonus"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Withdraw request has been sent"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/referrals/": {
+      "get": {
+        "tags": ["Referrals - Admin"],
+        "summary": "Get All Referrals",
+        "description": "Get All Referrals",
+        "operationId": "getAllReferrals",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Status"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "referralCode": {
+                            "type": "string"
+                          },
+                          "referralUser": {
+                            "type": "string"
+                          },
+                          "referralCount": {
+                            "type": "integer"
+                          },
+                          "referralAccount": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "username": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "referralTotalAmount": {
+                            "type": "integer"
+                          },
+                          "referralAvailableAmount": {
+                            "type": "integer"
+                          },
+                          "referralWithDrawCount": {
+                            "type": "integer"
+                          },
+                          "referralWithDrawHistory": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "withDrawAmount": {
+                                  "type": "integer"
+                                },
+                                "withDrawStatus": {
+                                  "type": "string"
+                                },
+                                "withDrawDate": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "referralWithDrawBank": {
+                            "type": "object",
+                            "properties": {
+                              "withDrawBankName": {
+                                "type": "string"
+                              },
+                              "withDrawBankAccountName": {
+                                "type": "string"
+                              },
+                              "withDrawBankAccountNumber": {
+                                "type": "string"
+                              },
+                              "withDrawBankAccountVerified": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "referralStatus": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Success",
+                    "data": [
+                      {
+                        "id": "5f9f9f9f9f9f9f9f9f9f9f9f",
+                        "referralCode": "123456",
+                        "referralUser": "5f9f9f9f9f9f9f9f9f9f9f9f",
+                        "referralCount": 0,
+                        "referralAccount": [],
+                        "referralTotalAmount": 0,
+                        "referralAvailableAmount": 0,
+                        "referralWithDrawCount": 0,
+                        "referralWithDrawHistory": [],
+                        "referralWithDrawBank": {
+                          "withDrawBankName": "BCA",
+                          "withDrawBankAccountName": "John Doe",
+                          "withDrawBankAccountNumber": "1234567890",
+                          "withDrawBankAccountVerified": true
+                        },
+                        "referralStatus": "active"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/referrals/{Referral ID}": {
+      "get": {
+        "tags": ["Referrals - Admin"],
+        "summary": "Get All Referrals",
+        "description": "Get All Referrals",
+        "operationId": "getAllReferrals",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Referral ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "referralCode": {
+                          "type": "string"
+                        },
+                        "referralUser": {
+                          "type": "string"
+                        },
+                        "referralCount": {
+                          "type": "integer"
+                        },
+                        "referralAccount": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "username": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "referralTotalAmount": {
+                          "type": "integer"
+                        },
+                        "referralAvailableAmount": {
+                          "type": "integer"
+                        },
+                        "referralWithDrawCount": {
+                          "type": "integer"
+                        },
+                        "referralWithDrawHistory": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "withDrawAmount": {
+                                "type": "integer"
+                              },
+                              "withDrawStatus": {
+                                "type": "string"
+                              },
+                              "withDrawDate": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        "referralWithDrawBank": {
+                          "type": "object",
+                          "properties": {
+                            "withDrawBankName": {
+                              "type": "string"
+                            },
+                            "withDrawBankAccountName": {
+                              "type": "string"
+                            },
+                            "withDrawBankAccountNumber": {
+                              "type": "string"
+                            },
+                            "withDrawBankAccountVerified": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "referralStatus": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Success",
+                    "data": {
+                      "id": "5f9f9f9f9f9f9f9f9f9f9f9f",
+                      "referralCode": "123456",
+                      "referralUser": "5f9f9f9f9f9f9f9f9f9f9f9f",
+                      "referralCount": 0,
+                      "referralAccount": [],
+                      "referralTotalAmount": 0,
+                      "referralAvailableAmount": 0,
+                      "referralWithDrawCount": 0,
+                      "referralWithDrawHistory": [],
+                      "referralWithDrawBank": {
+                        "withDrawBankName": "BCA",
+                        "withDrawBankAccountName": "John Doe",
+                        "withDrawBankAccountNumber": "1234567890",
+                        "withDrawBankAccountVerified": true
+                      },
+                      "referralStatus": "active"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/referrals/request/verification": {
+      "get": {
+        "tags": ["Referrals - Admin"],
+        "summary": "Get All Referrals Request Verification",
+        "description": "Get All Referrals Request Verification",
+        "operationId": "getAllReferralsRequestVerification",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "referralCode": {
+                            "type": "string"
+                          },
+                          "referralUser": {
+                            "type": "string"
+                          },
+                          "referralCount": {
+                            "type": "integer"
+                          },
+                          "referralWithDrawBank": {
+                            "type": "object",
+                            "properties": {
+                              "withDrawBankName": {
+                                "type": "string"
+                              },
+                              "withDrawBankAccountName": {
+                                "type": "string"
+                              },
+                              "withDrawBankAccountNumber": {
+                                "type": "string"
+                              },
+                              "withDrawBankAccountVerified": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "referralStatus": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Success",
+                    "data": [
+                      {
+                        "id": "5f9f9f9f9f9f9f9f9f9f9f9f",
+                        "referralCode": "123456",
+                        "referralUser": "5f9f9f9f9f9f9f9f9f9f9f9f",
+                        "referralCount": 0,
+                        "referralWithDrawBank": {
+                          "withDrawBankName": "BCA",
+                          "withDrawBankAccountName": "John Doe",
+                          "withDrawBankAccountNumber": "1234567890",
+                          "withDrawBankAccountVerified": true
+                        },
+                        "referralStatus": "Inactive"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/referrals/request/withdraw": {
+      "get": {
+        "tags": ["Referrals - Admin"],
+        "summary": "Get All Referrals Request Withdraw",
+        "description": "Get All Referrals Request Withdraw",
+        "operationId": "getAllReferralsRequestWithdraw",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "referralCode": {
+                            "type": "string"
+                          },
+                          "referralTotalAmount": {
+                            "type": "integer"
+                          },
+                          "referralAvailableAmount": {
+                            "type": "integer"
+                          },
+                          "referralWithDrawCount": {
+                            "type": "integer"
+                          },
+                          "referralWithDrawHistory": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "withDrawAmount": {
+                                  "type": "integer"
+                                },
+                                "withDrawStatus": {
+                                  "type": "string"
+                                },
+                                "withDrawDate": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          },
+                          "referralWithDrawBank": {
+                            "type": "object",
+                            "properties": {
+                              "withDrawBankName": {
+                                "type": "string"
+                              },
+                              "withDrawBankAccountName": {
+                                "type": "string"
+                              },
+                              "withDrawBankAccountNumber": {
+                                "type": "string"
+                              },
+                              "withDrawBankAccountVerified": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "message": "Success",
+                    "data": [
+                      {
+                        "id": "5f9f9f9f9f9f9f9f9f9f9f9f",
+                        "referralCode": "123456",
+                        "referralUser": "5f9f9f9f9f9f9f9f9f9f9f9f",
+                        "referralTotalAmount": 0,
+                        "referralAvailableAmount": 0,
+                        "referralWithDrawCount": 0,
+                        "referralWithDrawHistory": [],
+                        "referralWithDrawBank": {
+                          "withDrawBankName": "BCA",
+                          "withDrawBankAccountName": "John Doe",
+                          "withDrawBankAccountNumber": "1234567890",
+                          "withDrawBankAccountVerified": true
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/referrals/bankverify/{Referral ID}": {
+      "put": {
+        "tags": ["Referrals - Admin"],
+        "summary": "Verify Referral Bank Account",
+        "description": "Verify Referral Bank Account",
+        "operationId": "verifyReferralBankAccount",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Referral ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Referral bank account verified successfully"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/referrals/{Referral ID}/{Referral With Draw History ID}": {
+      "put": {
+        "tags": ["Referrals - Admin"],
+        "summary": "Update Referral With Draw History",
+        "description": "Update Referral With Draw History",
+        "operationId": "updateReferralWithDrawHistory",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Referral ID"
+          },
+          {
+            "$ref": "#/components/parameters/Referral With Draw History ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "withDrawStatus": {
+                    "type": "string",
+                    "enum": ["Approved", "Rejected", "Success", "Failed"]
+                  }
+                },
+                "example": {
+                  "withDrawStatus": "Approved"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "message": "Referral with draw history updated successfully"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
     "/services": {
       "get": {
         "tags": ["Services"],
@@ -2619,7 +3492,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Successful Operation",
             "content": {
               "application/json": {
                 "schema": {
@@ -2651,12 +3524,57 @@
                           "photosUrl": {
                             "type": "string"
                           },
-                          "status": {
+                          "birthday": {
                             "type": "string"
+                          },
+                          "memberType": {
+                            "type": "string"
+                          },
+                          "subscription": {
+                            "type": "object",
+                            "properties": {
+                              "startAt": {
+                                "type": "number"
+                              },
+                              "expiredAt": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          "isNew": {
+                            "type": "boolean"
+                          },
+                          "adminType": {
+                            "type": "string"
+                          },
+                          "isActivated": {
+                            "type": "boolean"
                           }
                         }
                       }
                     }
+                  },
+                  "example": {
+                    "message": "Users fetched successfully!",
+                    "data": [
+                      {
+                        "id": "5f9f1b9b9b9b9b9b9b9b9b9b",
+                        "name": "Admin",
+                        "username": "admin",
+                        "email": "example@mail.com",
+                        "phone": "081234567890",
+                        "address": "Jl. Jalan",
+                        "birthday": "1999-01-01",
+                        "memberType": "Admin",
+                        "subscription": {
+                          "startat": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
+                          "expiredAt": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)"
+                        },
+                        "isNew": false,
+                        "adminType": "Super Admin",
+                        "isActivated": true
+                      }
+                    ]
                   }
                 },
                 "example": {
@@ -2838,7 +3756,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Successful Operation",
             "content": {
               "application/json": {
                 "schema": {
@@ -2847,6 +3765,9 @@
                     "message": {
                       "type": "string"
                     }
+                  },
+                  "example": {
+                    "message": "User deleted successfully!"
                   }
                 },
                 "example": {
@@ -2866,6 +3787,9 @@
           },
           "404": {
             "$ref": "#/components/responses/Not Found"
+          },
+          "405": {
+            "$ref": "#/components/responses/Method Not Allowed"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -3024,6 +3948,9 @@
           "404": {
             "$ref": "#/components/responses/Not Found"
           },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
+          },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
           }
@@ -3090,8 +4017,20 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
           "404": {
             "$ref": "#/components/responses/Not Found"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable Entity"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -3251,6 +4190,43 @@
             "$ref": "#/components/responses/Internal Server Error"
           }
         }
+      },
+      "put": {
+        "tags": ["Users - Pro Member"],
+        "summary": "Update User by ID",
+        "description": "Update User by ID for Pro Member",
+        "operationId": "updateUserProMember",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/User ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Edit Profile"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Update Profile Success"
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
       }
     },
     "/admin/users/{User ID}": {
@@ -3372,6 +4348,9 @@
           "404": {
             "$ref": "#/components/responses/Not Found"
           },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable Entity"
+          },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
           }
@@ -3476,6 +4455,26 @@
             "$ref": "#/components/parameters/User ID"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "referralCode": {
+                    "type": "string",
+                    "description": "Referral Code with max 8 characters",
+                    "nullable": true,
+                    "maxLength": 8
+                  }
+                }
+              },
+              "example": {
+                "referralCode": "123456"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "$ref": "#/components/responses/Show Profile Success"
@@ -3491,6 +4490,9 @@
           },
           "404": {
             "$ref": "#/components/responses/Not Found"
+          },
+          "409": {
+            "$ref": "#/components/responses/Conflict"
           },
           "500": {
             "$ref": "#/components/responses/Internal Server Error"
@@ -4010,6 +5012,47 @@
         "name": "Playlist ID",
         "in": "path",
         "description": "Playlist ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+
+      "Referral Code": {
+        "name": "Referral Code",
+        "in": "path",
+        "description": "Referral Code",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Status": {
+        "name": "Status",
+        "in": "query",
+        "description": "Status",
+        "required": false,
+        "allowEmptyValue": true,
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "Referral ID": {
+        "name": "Referral ID",
+        "in": "path",
+        "description": "Referral ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Referral With Draw History ID": {
+        "name": "Referral With Draw History ID",
+        "in": "path",
+        "description": "Referral With Draw History ID",
         "required": true,
         "allowEmptyValue": false,
         "schema": {
@@ -4582,6 +5625,70 @@
                 "position": "CEO",
                 "company": "PT. Example",
                 "testimoni": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+              }
+            }
+          }
+        }
+      },
+      "Add Bank Account": {
+        "description": "Add Bank Account",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "bank_name": {
+                  "type": "string"
+                },
+                "account_number": {
+                  "type": "string"
+                },
+                "account_name": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "bank_name": "Access Bank",
+                "account_number": "1234567890",
+                "account_name": "John Doe"
+              }
+            }
+          }
+        }
+      },
+      "Update Referral Code": {
+        "description": "Update Referral Code",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "newReferralCode": {
+                  "type": "string",
+                  "required": true
+                }
+              },
+              "example": {
+                "newReferralCode": "1234567890"
+              }
+            }
+          }
+        }
+      },
+      "Withdraw Referral Bonus": {
+        "description": "Withdraw Referral Bonus",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "amount": {
+                  "type": "string",
+                  "required": true
+                }
+              },
+              "example": {
+                "amount": "1000"
               }
             }
           }

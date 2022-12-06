@@ -131,7 +131,7 @@ usersAdminRouter(app); // Users Router
 // Watchlists Router
 
 // * Pro Users Routers
-import referralRouter from "./src/routes/referral.routes.js"; // Referral Router
+import referralRouter from "./src/routes/pro_users/referral.routes.js"; // Referral Router
 referralRouter(app); // Referral Router
 import usersProRouter from "./src/routes/pro_users/users.routes.js"; // Users Router
 usersProRouter(app); // Users Router

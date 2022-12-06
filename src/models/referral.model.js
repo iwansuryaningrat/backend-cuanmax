@@ -40,7 +40,7 @@ export default (mongoose) => {
             type: String,
             default: "Pending",
             enum: {
-              values: ["Pending", "Success", "Failed"],
+              values: ["Pending", "Approved", "Rejected", "Success", "Failed"],
               message: "Status must be Pending, Success or Failed",
             },
           },
