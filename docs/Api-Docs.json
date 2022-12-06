@@ -16,7 +16,7 @@
   "servers": [
     {
       "description": "Cuanmax RESTful API Server",
-      "url": "http://localhost:8080/v1"
+      "url": "https://cuanmax-api.tech/v1"
     }
   ],
   "paths": {

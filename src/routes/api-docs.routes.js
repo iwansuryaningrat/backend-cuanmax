@@ -1,7 +1,7 @@
 import Express from "express";
 const router = Express.Router();
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "../../docs/Api-Docs.json" assert { type: "json" };
+import swaggerDocument from "../../docs/Api-Docs.json";
 
 const apiDocsRouter = (app) => {
   const options = {
