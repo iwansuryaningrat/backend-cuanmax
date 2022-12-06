@@ -285,16 +285,7 @@
             "$ref": "#/components/parameters/x-auth-token"
           },
           {
-            "name": "status",
-            "in": "query",
-            "description": "Status of the service",
-            "required": false,
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "boolean",
-              "default": true
-            },
-            "example": true
+            "$ref": "#/components/parameters/Status"
           }
         ],
         "responses": {
@@ -828,6 +819,16 @@
           "type": "string"
         },
         "example": "5f9f1b9b9c9d2b0017a5b0b1"
+      },
+      "Status": {
+        "name": "status",
+        "in": "query",
+        "description": "Status",
+        "required": false,
+        "allowEmptyValue": true,
+        "schema": {
+          "type": "boolean"
+        }
       }
     },
     "responses": {

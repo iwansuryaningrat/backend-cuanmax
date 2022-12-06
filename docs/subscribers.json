@@ -88,15 +88,7 @@
             "$ref": "#/components/parameters/x-auth-token"
           },
           {
-            "name": "status",
-            "in": "query",
-            "description": "Subscribers Status",
-            "required": false,
-            "allowEmptyValue": true,
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
+            "$ref": "#/components/parameters/Status"
           }
         ],
         "responses": {
@@ -358,6 +350,16 @@
         "allowEmptyValue": false,
         "schema": {
           "type": "string"
+        }
+      },
+      "Status": {
+        "name": "status",
+        "in": "query",
+        "description": "Status",
+        "required": false,
+        "allowEmptyValue": true,
+        "schema": {
+          "type": "boolean"
         }
       }
     },
