@@ -15,7 +15,11 @@
   },
   "servers": [
     {
-      "description": "Cuanmax RESTful API Server",
+      "description": "Cuanmax RESTful API Server for Production",
+      "url": "https://cuanmax-api.tech/v1"
+    },
+    {
+      "description": "Cuanmax RESTful API Server for Development",
       "url": "http://localhost:8080/v1"
     }
   ],
