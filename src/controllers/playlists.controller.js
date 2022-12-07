@@ -45,6 +45,36 @@ const findAll = (req, res) => {
     });
 };
 
+// Find All Playlists name and id for Admin
+const findAllNameId = (req, res) => {
+  Playlists.find()
+    .sort({ createdAt: -1 })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      const data = result.map((item) => {
+        return {
+          id: item._id,
+          name: item.name,
+        };
+      });
+
+      res.send({
+        message: "All playlist were fetched successfully",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while retrieving playlists.",
+      });
+    });
+};
+
 // Find All Playlists for Pro User
 const findAllforPro = (req, res) => {
   Playlists.find({ status: "Published" })
@@ -318,6 +348,7 @@ const deletePlaylist = (req, res) => {
 
 export {
   findAll,
+  findAllNameId,
   findAllforPro,
   findAllforUsers,
   create,
