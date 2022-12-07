@@ -128,7 +128,8 @@ testimoniAdminRouter(app); // Testimoni Router
 // Transactions Router
 import usersAdminRouter from "./src/routes/admin/users.routes.js"; // Users Router
 usersAdminRouter(app); // Users Router
-// Videos Router
+import videosAdminRouter from "./src/routes/admin/videos.routes.js"; // Videos Router
+videosAdminRouter(app); // Videos Router
 // Vouchers Router
 // Watchlists Router
 
@@ -139,6 +140,8 @@ import referralRouter from "./src/routes/pro_users/referral.routes.js"; // Refer
 referralRouter(app); // Referral Router
 import usersProRouter from "./src/routes/pro_users/users.routes.js"; // Users Router
 usersProRouter(app); // Users Router
+import videosRouter from "./src/routes/pro_users/videos.routes.js"; // Videos Router
+videosRouter(app); // Videos Router
 
 // * Basic Users Routers
 import playlistsRouter from "./src/routes/users/playlists.routes.js"; // Playlists Router
