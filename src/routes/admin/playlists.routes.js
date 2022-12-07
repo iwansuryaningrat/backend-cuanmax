@@ -3,6 +3,7 @@ import {
   findOne,
   create,
   update,
+  updateThumbnail,
   deletePlaylist,
 } from "../../controllers/playlists.controller.js";
 import { login, admin } from "../../middlewares/auth.js";
@@ -14,6 +15,7 @@ const playlistsAdminRouter = (app) => {
   router.post("/", login, admin, create);
   router.get("/:id", login, admin, findOne);
   router.put("/:id", login, admin, update);
+  router.put("/:id/thumbnail", login, admin, updateThumbnail);
   router.delete("/:id", login, admin, deletePlaylist);
 
   app.use("/api/v1/playlists", router);
