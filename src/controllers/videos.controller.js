@@ -205,8 +205,8 @@ const create = (req, res) => {
     });
 };
 
-// Upload thumbnail
-const uploadThumbnail = (req, res) => {
+// Update thumbnail
+const updateThumbnail = (req, res) => {
   const thumbnailName = req.file.filename;
   const thumbnailLink = `${req.protocol}://${req.get(
     "host"
@@ -257,5 +257,5 @@ export {
   deleteVideo,
   findByPlaylist,
   create,
-  uploadThumbnail,
+  updateThumbnail,
 };
