@@ -8,7 +8,6 @@ const findAll = (req, res) => {
     .then((result) => {
       res.send({
         message: "Videos was successfully retrieved",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -39,7 +38,6 @@ const findOne = (req, res) => {
 
       res.send({
         message: "Video was successfully retrieved",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -70,7 +68,6 @@ const update = (req, res) => {
 
       res.send({
         message: "Video was updated",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -100,7 +97,6 @@ const deleteVideo = (req, res) => {
 
       res.send({
         message: "Video was deleted",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -131,7 +127,6 @@ const findByPlaylist = (req, res) => {
 
       res.send({
         message: "Videos was successfully retrieved",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -145,62 +140,55 @@ const findByPlaylist = (req, res) => {
 // Create a video
 const create = (req, res) => {
   const {
+    playlistId,
     title,
     description,
-    playlistId,
+    videoURL,
     tags,
-    category,
     date,
     duration,
     status,
   } = req.body;
 
-  if (!title || !description || !playlistId || !category) {
+  var thumbnailName = req.file.filename;
+  var thumbnailLink = `${req.protocol}://${req.get(
+    "host"
+  )}/assets/images/${thumbnailName}`;
+
+  if (!title || !description || !playlistId || !videoURL) {
     return res.status(400).send({
       message:
-        "Title, description, playlistId, category, and status is required",
+        "Title, description, playlistId, videoURL, and status is required",
     });
   }
 
-  Playlist.findById(playlistId)
+  if (!req.file) {
+    thumbnailName = null;
+    thumbnailLink = null;
+  }
+
+  const video = new Videos({
+    title,
+    description,
+    url: videoURL,
+    thumbnail: { thumbnailName, thumbnailLink },
+    playlist: playlistId,
+    tags,
+    date: new Date(date).getTime(),
+    duration,
+    status,
+  });
+
+  video
+    .save()
     .then((result) => {
-      if (!result) {
-        return res.status(404).send({
-          message: "Playlist not found",
-        });
-      }
-
-      const playlistTitle = result.name;
-
-      const video = new Videos({
-        title,
-        description,
-        playlist: { playlistId, playlistTitle },
-        tags,
-        category,
-        date,
-        duration,
-        status,
+      res.send({
+        message: "Video was successfully created",
       });
-
-      video
-        .save()
-        .then((result) => {
-          res.send({
-            message: "Video was successfully created",
-            timestamp: new Date().toString(),
-            data: result,
-          });
-        })
-        .catch((err) => {
-          return res.status(500).send({
-            message: err.message || "Some error while creating video.",
-          });
-        });
     })
     .catch((err) => {
       return res.status(500).send({
-        message: err.message || "Some error while showing videos.",
+        message: err.message || "Some error while creating video.",
       });
     });
 };
@@ -240,7 +228,6 @@ const updateThumbnail = (req, res) => {
 
       res.send({
         message: "Video was updated",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
