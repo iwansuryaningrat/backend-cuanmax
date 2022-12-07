@@ -5,7 +5,7 @@ import {
   findByPlaylist,
   update,
   deleteVideo,
-  uploadThumbnail,
+  updateThumbnail,
 } from "../../controllers/videos.controller.js";
 import { login, admin, proMember } from "../../middlewares/auth.js";
 import Express from "express";
@@ -18,7 +18,7 @@ const videosAdminRouter = (app) => {
   router.put("/:id", login, admin, update);
   router.delete("/:id", login, admin, deleteVideo);
   router.post("/", login, admin, create);
-  router.post("/:id/thumbnail", login, admin, uploadThumbnail);
+  router.put("/:id/thumbnail", login, admin, updateThumbnail);
 
   app.use("/v1/admin/videos", router);
 };
