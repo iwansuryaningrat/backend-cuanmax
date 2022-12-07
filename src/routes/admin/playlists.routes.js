@@ -1,5 +1,6 @@
 import {
   findAll,
+  findAllNameId,
   findOne,
   create,
   update,
@@ -12,6 +13,7 @@ const router = Express.Router();
 
 const playlistsAdminRouter = (app) => {
   router.get("/", login, admin, findAll);
+  router.get("/name-id", login, admin, findAllNameId);
   router.post("/", login, admin, create);
   router.get("/:id", login, admin, findOne);
   router.put("/:id", login, admin, update);
