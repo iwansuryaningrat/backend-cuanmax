@@ -155,7 +155,7 @@ const create = (req, res) => {
     status,
   } = req.body;
 
-  if (!title || !description || !playlistId || !category || !status) {
+  if (!title || !description || !playlistId || !category) {
     return res.status(400).send({
       message:
         "Title, description, playlistId, category, and status is required",
@@ -250,6 +250,37 @@ const updateThumbnail = (req, res) => {
     });
 };
 
+// Update Video Status
+const updateStatus = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
+
+  const { status } = req.body;
+
+  Videos.findByIdAndUpdate(id, { status }, { new: true })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Video not found",
+        });
+      }
+
+      res.send({
+        message: "Video status was updated",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while update video.",
+      });
+    });
+};
+
 export {
   findAll,
   findOne,
@@ -258,4 +289,5 @@ export {
   findByPlaylist,
   create,
   updateThumbnail,
+  updateStatus,
 };
