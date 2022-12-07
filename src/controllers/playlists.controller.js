@@ -40,7 +40,7 @@ const findAll = (req, res) => {
 
 // Find All Playlists for Basic User
 const findAllforUsers = (req, res) => {
-  Playlists.find({ status: "Published" })
+  Playlists.find({ status: "Published", videoLevel: "Beginner" })
     .sort({ createdAt: -1 })
     .limit(3)
     .then((result) => {
