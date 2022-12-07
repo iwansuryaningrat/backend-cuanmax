@@ -1,7 +1,7 @@
 import db from "../models/index.js";
 const Playlists = db.playlists;
 
-// Done
+// Find All Playlists for Admin
 const findAll = (req, res) => {
   const { category, videoLevel } = req.params;
 
@@ -36,7 +36,46 @@ const findAll = (req, res) => {
     });
 };
 
-// Done
+// Find All Playlists for Pro User
+
+// Find All Playlists for Basic User
+const findAllforUsers = (req, res) => {
+  Playlists.find({ status: "Published" })
+    .sort({ createdAt: -1 })
+    .limit(3)
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      const data = result.map((item) => {
+        return {
+          id: item._id,
+          name: item.name,
+          category: item.category,
+          description: item.description,
+          instructor: item.instructor,
+          videoLevel: item.videoLevel,
+          image: item.image,
+          videoCount: item.videoCount,
+        };
+      });
+
+      res.send({
+        message: "All playlist were fetched successfully",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while retrieving playlists.",
+      });
+    });
+};
+
+// Create a new Playlist
 const create = (req, res) => {
   const photoName = req.file.filename;
   const photoLink = `${req.protocol}://${req.get(
@@ -69,7 +108,7 @@ const create = (req, res) => {
     });
 };
 
-// Done
+// Find details of a Playlist
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -99,7 +138,7 @@ const findOne = (req, res) => {
     });
 };
 
-// Done
+// Update a Playlist
 const update = (req, res) => {
   const { id } = req.params;
 
@@ -128,7 +167,7 @@ const update = (req, res) => {
     });
 };
 
-// Done
+// Delete a Playlist
 const deletePlaylist = (req, res) => {
   const { id } = req.params;
 
@@ -157,4 +196,6 @@ const deletePlaylist = (req, res) => {
     });
 };
 
-export { findAll, create, findOne, update, deletePlaylist };
+// Update Thumbnail of Playlist
+
+export { findAll, findAllforUsers, create, findOne, update, deletePlaylist };
