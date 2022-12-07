@@ -28,11 +28,25 @@ export default (mongoose) => {
         require: true,
       },
       tags: [String],
-      views: Number,
-      likes: Number,
-      dislikes: Number,
-      duration: Number,
-      date: Date,
+      views: {
+        type: Number,
+        default: 0,
+      },
+      likes: {
+        type: Number,
+        default: 0,
+      },
+      dislikes: {
+        type: Number,
+        default: 0,
+      },
+      duration: {
+        type: Number,
+        default: 0,
+      },
+      date: {
+        type: Number,
+      },
       status: {
         type: String,
         require: true,
