@@ -6,7 +6,6 @@ import {
   update,
   deleteVideo,
   uploadThumbnail,
-  uploadVideo,
 } from "../../controllers/videos.controller.js";
 import { login, admin, proMember } from "../../middlewares/auth.js";
 import Express from "express";
@@ -20,7 +19,6 @@ const videosAdminRouter = (app) => {
   router.delete("/:id", login, admin, deleteVideo);
   router.post("/", login, admin, create);
   router.post("/:id/thumbnail", login, admin, uploadThumbnail);
-  router.post("/:id/video", login, admin, uploadVideo);
 
   app.use("/v1/admin/videos", router);
 };
