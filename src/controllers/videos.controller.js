@@ -2,6 +2,7 @@ import db from "../models/index.js";
 const Videos = db.videos;
 const Playlist = db.playlists;
 
+// Find all videos for admin
 const findAll = (req, res) => {
   Videos.find()
     .then((result) => {
@@ -18,7 +19,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Done
+// Get Details of a video
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -49,7 +50,7 @@ const findOne = (req, res) => {
     });
 };
 
-// Done
+// Update a video
 const update = (req, res) => {
   const { id } = req.params;
 
@@ -79,7 +80,7 @@ const update = (req, res) => {
     });
 };
 
-// Done
+// Delete a video
 const deleteVideo = (req, res) => {
   const { id } = req.params;
 
@@ -109,7 +110,7 @@ const deleteVideo = (req, res) => {
     });
 };
 
-// Done
+// Find all videos by playlist
 const findByPlaylist = (req, res) => {
   const { playlistId } = req.params;
 
@@ -141,7 +142,7 @@ const findByPlaylist = (req, res) => {
     });
 };
 
-// Done
+// Create a video
 const create = (req, res) => {
   const {
     title,
@@ -204,7 +205,7 @@ const create = (req, res) => {
     });
 };
 
-// Done
+// Upload thumbnail
 const uploadThumbnail = (req, res) => {
   const thumbnailName = req.file.filename;
   const thumbnailLink = `${req.protocol}://${req.get(
@@ -249,47 +250,6 @@ const uploadThumbnail = (req, res) => {
     });
 };
 
-// Done
-const uploadVideo = (req, res) => {
-  const { id } = req.params;
-
-  if (!id) {
-    return res.status(400).send({
-      message: "Video ID is required",
-    });
-  }
-
-  const videoName = req.file.filename;
-  const videoLink = `${req.protocol}://${req.get(
-    "host"
-  )}/assets/videos/${videoName}`;
-
-  if (!req.file) {
-    return res.status(400).send({
-      message: "Video file is required",
-    });
-  }
-
-  Videos.findByIdAndUpdate(id, { url: videoLink }, { new: true })
-    .then((result) => {
-      if (!result) {
-        return res.status(404).send({
-          message: "Video not found",
-        });
-      }
-
-      res.send({
-        message: "Video was updated",
-        timestamp: new Date().toString(),
-      });
-    })
-    .catch((err) => {
-      return res.status(500).send({
-        message: err.message || "Some error while update video.",
-      });
-    });
-};
-
 export {
   findAll,
   findOne,
@@ -298,5 +258,4 @@ export {
   findByPlaylist,
   create,
   uploadThumbnail,
-  uploadVideo,
 };
