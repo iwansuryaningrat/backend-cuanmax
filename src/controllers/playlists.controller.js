@@ -3,17 +3,13 @@ const Playlists = db.playlists;
 
 // Find All Playlists for Admin
 const findAll = (req, res) => {
-  const { category, videoLevel } = req.params;
+  const { category, videoLevel, status } = req.query;
 
-  const query = {};
+  var query = {};
 
-  if (category) {
-    query.category = category;
-  }
-
-  if (videoLevel) {
-    query.videoLevel = videoLevel;
-  }
+  if (category) query.category = category;
+  if (videoLevel) query.videoLevel = videoLevel;
+  if (status) query.status = status;
 
   Playlists.find(query)
     .sort({ createdAt: -1 })
@@ -24,9 +20,22 @@ const findAll = (req, res) => {
         });
       }
 
+      const data = result.map((item) => {
+        return {
+          id: item._id,
+          name: item.name,
+          category: item.category,
+          description: item.description,
+          instructor: item.instructor,
+          videoLevel: item.videoLevel,
+          image: item.image,
+          videoCount: item.videoCount,
+        };
+      });
+
       res.send({
         message: "All playlist were fetched successfully",
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -37,6 +46,40 @@ const findAll = (req, res) => {
 };
 
 // Find All Playlists for Pro User
+const findAllforPro = (req, res) => {
+  Playlists.find({ status: "Published" })
+    .sort({ createdAt: -1 })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      const data = result.map((item) => {
+        return {
+          id: item._id,
+          name: item.name,
+          category: item.category,
+          description: item.description,
+          instructor: item.instructor,
+          videoLevel: item.videoLevel,
+          image: item.image,
+          videoCount: item.videoCount,
+        };
+      });
+
+      res.send({
+        message: "All playlist were fetched successfully",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while retrieving playlists.",
+      });
+    });
+};
 
 // Find All Playlists for Basic User
 const findAllforUsers = (req, res) => {
@@ -167,6 +210,49 @@ const update = (req, res) => {
     });
 };
 
+// Update Thumbnail of Playlist
+const updateThumbnail = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Playlist ID is required",
+    });
+  }
+
+  const photoName = req.file.filename;
+  const photoLink = `${req.protocol}://${req.get(
+    "host"
+  )}/assets/images/${photoName}`;
+
+  Playlists.findByIdAndUpdate(
+    id,
+    {
+      image: {
+        imageName: photoName,
+        imageLink: photoLink,
+      },
+    },
+    { new: true }
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      res.send({
+        message: "Playlist thumbnail was updated",
+      });
+    })
+    .catch((err) => {
+      return res.status(409).send({
+        message: err.message || "Some error while update playlist.",
+      });
+    });
+};
+
 // Delete a Playlist
 const deletePlaylist = (req, res) => {
   const { id } = req.params;
@@ -196,6 +282,13 @@ const deletePlaylist = (req, res) => {
     });
 };
 
-// Update Thumbnail of Playlist
-
-export { findAll, findAllforUsers, create, findOne, update, deletePlaylist };
+export {
+  findAll,
+  findAllforPro,
+  findAllforUsers,
+  create,
+  findOne,
+  update,
+  updateThumbnail,
+  deletePlaylist,
+};
