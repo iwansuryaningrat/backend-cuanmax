@@ -26,7 +26,6 @@ const findAll = (req, res) => {
 
       res.send({
         message: "All playlist were fetched successfully",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -61,7 +60,6 @@ const create = (req, res) => {
     .then((result) => {
       res.status(200).send({
         message: "Playlist successfully added.",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -91,7 +89,6 @@ const findOne = (req, res) => {
 
       res.send({
         message: "Playlist was fetched successfully",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -122,7 +119,6 @@ const update = (req, res) => {
 
       res.send({
         message: "Playlist was updated",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -152,7 +148,6 @@ const deletePlaylist = (req, res) => {
 
       res.send({
         message: "Playlist was deleted",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
