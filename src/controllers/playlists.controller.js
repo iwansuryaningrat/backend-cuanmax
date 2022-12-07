@@ -120,25 +120,30 @@ const findAllforUsers = (req, res) => {
 
 // Create a new Playlist
 const create = (req, res) => {
+  if (!req.file) {
+    return res.status(400).send({
+      message: "Image is required",
+    });
+  }
+
   const photoName = req.file.filename;
   const photoLink = `${req.protocol}://${req.get(
     "host"
   )}/assets/images/${photoName}`;
 
-  const playlists = new Playlists({
-    name: req.body.name,
-    category: req.body.category,
-    description: req.body.description,
+  const { name, category, description, instructor, videoLevel } = req.body;
+
+  Playlists.save({
+    name,
+    category,
+    description,
+    instructor,
+    videoLevel,
     image: {
       imageName: photoName,
       imageLink: photoLink,
     },
-    videoCount: 0,
-    status: "active",
-  });
-
-  playlists
-    .save(playlists)
+  })
     .then((result) => {
       res.status(200).send({
         message: "Playlist successfully added.",
