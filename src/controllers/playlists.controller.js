@@ -133,6 +133,12 @@ const create = (req, res) => {
 
   const { name, category, description, instructor, videoLevel } = req.body;
 
+  if (!name || !description || !videoLevel) {
+    return res.status(400).send({
+      message: "Name, Description and Video Level are required",
+    });
+  }
+
   Playlists.save({
     name,
     category,
@@ -174,9 +180,20 @@ const findOne = (req, res) => {
         });
       }
 
+      const data = {
+        id: result._id,
+        name: result.name,
+        category: result.category,
+        description: result.description,
+        instructor: result.instructor,
+        videoLevel: result.videoLevel,
+        image: result.image,
+        videoCount: result.videoCount,
+      };
+
       res.send({
         message: "Playlist was fetched successfully",
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -196,7 +213,19 @@ const update = (req, res) => {
     });
   }
 
-  Playlists.findByIdAndUpdate(id, req.body, { new: true })
+  const { name, category, description, instructor, videoLevel } = req.body;
+
+  Playlists.findByIdAndUpdate(
+    id,
+    {
+      name,
+      category,
+      description,
+      instructor,
+      videoLevel,
+    },
+    { new: true }
+  )
     .then((result) => {
       if (!result) {
         return res.status(404).send({
