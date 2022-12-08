@@ -292,7 +292,7 @@ const deleteFeature = (req, res) => {
     });
 };
 
-// Deactivae a feature from a plan - Done
+// Deactivate a feature from a plan - Done
 const deactivateFeature = (req, res) => {
   const { id } = req.params;
   const { features } = req.body;
