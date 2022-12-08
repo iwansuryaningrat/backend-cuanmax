@@ -232,6 +232,36 @@ const deactivate = (req, res) => {
     });
 };
 
+// Add feature to a plan - Done
+const addFeature = (req, res) => {
+  const { id } = req.params;
+  const { features } = req.body;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Plans ID is required",
+    });
+  }
+
+  Plans.findByIdAndUpdate(id, { $push: { features: features } }, { new: true })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Plans not found",
+        });
+      }
+
+      res.send({
+        message: "Feature was successfully added to plan",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while adding feature to plan.",
+      });
+    });
+};
+
 export {
   findAll,
   findAllforUsers,
@@ -240,4 +270,5 @@ export {
   update,
   create,
   deactivate,
+  addFeature,
 };
