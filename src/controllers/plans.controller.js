@@ -143,7 +143,7 @@ const deletePlan = (req, res) => {
     });
 };
 
-// Done
+// Update a plan by the id in the request - Done
 const update = (req, res) => {
   const { id } = req.params;
 
@@ -163,7 +163,6 @@ const update = (req, res) => {
 
       res.send({
         message: "Plans was successfully updated",
-        data: result,
       });
     })
     .catch((err) => {
