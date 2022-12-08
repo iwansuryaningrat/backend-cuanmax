@@ -1,7 +1,7 @@
 import {
   findAll,
   findOne,
-  deletePrice,
+  deletePlan,
   create,
   update,
   deactivate,
@@ -13,7 +13,7 @@ const router = Express.Router();
 const plansAdminRouter = (app) => {
   router.get("/", findAll);
   router.get("/:id", findOne);
-  router.delete("/:id", login, admin, deletePrice);
+  router.delete("/:id", login, admin, deletePlan);
   router.post("/", login, admin, create);
   router.put("/:id", login, admin, update);
   router.put("/deactivate/:id", login, admin, deactivate);
