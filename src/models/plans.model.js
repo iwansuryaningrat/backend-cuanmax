@@ -31,6 +31,7 @@ export default (mongoose) => {
           status: {
             type: Boolean,
             require: true,
+            default: true,
           },
         },
       ],
