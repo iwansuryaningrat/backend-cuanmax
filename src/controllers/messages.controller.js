@@ -1,5 +1,8 @@
+import jwt from "jsonwebtoken";
 import db from "../models/index.js";
 const Messages = db.messages;
+
+import replyMessage from "./function/reply.function.js";
 
 // Fetch All Messages from Database (Done)
 const findAll = (req, res) => {
@@ -161,8 +164,20 @@ const read = (req, res) => {
 };
 
 // Update Status into Replied (Done)
-const reply = (req, res) => {
+const reply = async (req, res) => {
   const { id } = req.params;
+
+  const { message } = req.body;
+  const token = req.header("x-auth-token");
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+  if (!message) {
+    return res.status(400).send({
+      message: "Message is required",
+    });
+  }
+
+  const userID = decoded.id;
 
   if (!id) {
     return res.status(400).send({
@@ -170,7 +185,7 @@ const reply = (req, res) => {
     });
   }
 
-  Messages.findByIdAndUpdate(id, { status: "Replied" }, { new: true })
+  const result = await Messages.findById(id)
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -178,27 +193,27 @@ const reply = (req, res) => {
         });
       }
 
-      const { firstName, lastName, email, subject, message } = result;
-
-      const data = {
-        firstName,
-        lastName,
-        email,
-        subject,
-        message,
-        status: "Replied",
-      };
-
-      res.send({
-        message: "Message status change successfully.",
-        data,
-      });
+      return result;
     })
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Some error while update message.",
       });
     });
+
+  const { email, subject } = result;
+
+  const response = await replyMessage(userID, id, email, subject, message);
+
+  if (response === "Message replied successfully.") {
+    res.send({
+      message: response,
+    });
+  } else {
+    res.status(400).send({
+      message: response,
+    });
+  }
 };
 
 // Delete Message By Id (Done)
