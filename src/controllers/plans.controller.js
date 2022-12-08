@@ -262,6 +262,36 @@ const addFeature = (req, res) => {
     });
 };
 
+// Delete feature from a plan - Done
+const deleteFeature = (req, res) => {
+  const { id } = req.params;
+  const { features } = req.body;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Plans ID is required",
+    });
+  }
+
+  Plans.findByIdAndUpdate(id, { $pull: { features: features } }, { new: true })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Plans not found",
+        });
+      }
+
+      res.send({
+        message: "Feature was successfully deleted from plan",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while deleting feature from plan.",
+      });
+    });
+};
+
 export {
   findAll,
   findAllforUsers,
@@ -271,4 +301,5 @@ export {
   create,
   deactivate,
   addFeature,
+  deleteFeature,
 };
