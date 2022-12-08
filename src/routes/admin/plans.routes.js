@@ -7,6 +7,7 @@ import {
   deactivate,
   addFeature,
   deleteFeature,
+  deactivateFeature,
 } from "../../controllers/plans.controller.js";
 import { login, admin } from "../../middlewares/auth.js";
 import Express from "express";
@@ -21,6 +22,7 @@ const plansAdminRouter = (app) => {
   router.put("/deactivate/:id", login, admin, deactivate);
   router.post("/add-feature/:id", login, admin, addFeature);
   router.delete("/delete-feature/:id", login, admin, deleteFeature);
+  router.put("/deactivate-feature/:id", login, admin, deactivateFeature);
 
   app.use("/v1/admin/plans", router);
 };
