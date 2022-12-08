@@ -1,7 +1,7 @@
 import db from "../models/index.js";
 const Plans = db.plans;
 
-// Get all plans for Users
+// Get all plans for Users (Active only) - Done
 const findAllforUsers = (req, res) => {
   Plans.find({ status: "Active" })
     .then((result) => {
@@ -19,7 +19,7 @@ const findAllforUsers = (req, res) => {
           price: plan.price,
           discountPrice: plan.discountPrice,
           currency: plan.currency,
-          feature: plan.feature,
+          features: plan.features,
         };
       });
 
@@ -35,7 +35,7 @@ const findAllforUsers = (req, res) => {
     });
 };
 
-// Get all plans for Admin
+// Get all plans for Admin - Done
 const findAll = (req, res) => {
   const { status } = req.query;
 
@@ -57,7 +57,7 @@ const findAll = (req, res) => {
           price: plan.price,
           discountPrice: plan.discountPrice,
           currency: plan.currency,
-          feature: plan.feature,
+          features: plan.features,
           status: plan.status,
         };
       });
@@ -74,7 +74,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Done
+// Find a single plan with an id - Done
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -92,10 +92,19 @@ const findOne = (req, res) => {
         });
       }
 
+      const plan = {
+        id: result._id,
+        name: result.planName,
+        duration: result.duration,
+        price: result.price,
+        discountPrice: result.discountPrice,
+        currency: result.currency,
+        features: result.features,
+      };
+
       res.send({
-        message: "Plans was successfully found",
-        timestamp: new Date().toString(),
-        data: result,
+        message: "Plan was successfully found",
+        data: plan,
       });
     })
     .catch((err) => {
@@ -125,7 +134,6 @@ const deletePrice = (req, res) => {
 
       res.send({
         message: "Plans was deleted",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -155,7 +163,6 @@ const update = (req, res) => {
 
       res.send({
         message: "Plans was successfully updated",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -166,19 +173,19 @@ const update = (req, res) => {
     });
 };
 
-// Done
+// Create and Save a new Plans - Done
 const create = (req, res) => {
-  const { memberName, duration, price, discountPrice, currency, features } =
+  const { planName, duration, price, discountPrice, currency, features } =
     req.body;
 
-  if (!memberName || !duration || !price || !currency || !features) {
+  if (!planName || !duration || !price || !discountPrice || !features) {
     return res.status(400).send({
       message: "All fields are required",
     });
   }
 
   Plans.create({
-    memberName,
+    planName,
     duration,
     price,
     discountPrice,
@@ -187,16 +194,51 @@ const create = (req, res) => {
   })
     .then((result) => {
       res.send({
-        message: "Plans was successfully created",
-        timestamp: new Date().toString(),
-        data: result,
+        message: "Plan was successfully created",
       });
     })
     .catch((err) => {
       return res.status(500).send({
-        message: err.message || "Some error while creating plans.",
+        message: err.message || "Some error while creating plan.",
       });
     });
 };
 
-export { findAll, findAllforUsers, findOne, deletePrice, update, create };
+// Deactivate a plan - Done
+const deactivate = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Plans ID is required",
+    });
+  }
+
+  Plans.findByIdAndUpdate(id, { status: "Inactive" }, { new: true })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Plans not found",
+        });
+      }
+
+      res.send({
+        message: "Plans was successfully deactivated",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while deactivating plans.",
+      });
+    });
+};
+
+export {
+  findAll,
+  findAllforUsers,
+  findOne,
+  deletePrice,
+  update,
+  create,
+  deactivate,
+};
