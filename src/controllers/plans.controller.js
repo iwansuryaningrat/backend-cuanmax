@@ -115,7 +115,7 @@ const findOne = (req, res) => {
 };
 
 // Done
-const deletePrice = (req, res) => {
+const deletePlan = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -237,7 +237,7 @@ export {
   findAll,
   findAllforUsers,
   findOne,
-  deletePrice,
+  deletePlan,
   update,
   create,
   deactivate,
