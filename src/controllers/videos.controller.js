@@ -1,6 +1,5 @@
 import db from "../models/index.js";
 const Videos = db.videos;
-const Playlist = db.playlists;
 
 // Find all videos for admin
 const findAll = (req, res) => {
