@@ -22,7 +22,7 @@ export default (mongoose) => {
         require: true,
         default: "IDR",
       },
-      feature: [
+      features: [
         {
           name: {
             type: String,
