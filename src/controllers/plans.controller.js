@@ -1,14 +1,70 @@
 import db from "../models/index.js";
 const Plans = db.plans;
 
-// Done
-const findAll = (req, res) => {
-  Plans.find()
+// Get all plans for Users
+const findAllforUsers = (req, res) => {
+  Plans.find({ status: "Active" })
     .then((result) => {
+      if (!result || result.length === 0) {
+        return res.status(404).send({
+          message: "No plan was found",
+        });
+      }
+
+      const plans = result.map((plan) => {
+        return {
+          id: plan._id,
+          name: plan.planName,
+          duration: plan.duration,
+          price: plan.price,
+          discountPrice: plan.discountPrice,
+          currency: plan.currency,
+          feature: plan.feature,
+        };
+      });
+
       res.send({
         message: "Plans successfully fetched",
-        timestamp: new Date().toString(),
-        data: result,
+        data: plans,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while retrieving plans.",
+      });
+    });
+};
+
+// Get all plans for Admin
+const findAll = (req, res) => {
+  const { status } = req.query;
+
+  var condition = status;
+
+  Plans.find(condition)
+    .then((result) => {
+      if (!result || result.length === 0) {
+        return res.status(404).send({
+          message: "No plan was found",
+        });
+      }
+
+      const plans = result.map((plan) => {
+        return {
+          id: plan._id,
+          name: plan.planName,
+          duration: plan.duration,
+          price: plan.price,
+          discountPrice: plan.discountPrice,
+          currency: plan.currency,
+          feature: plan.feature,
+          status: plan.status,
+        };
+      });
+
+      res.send({
+        message: "Plans successfully fetched",
+        data: plans,
       });
     })
     .catch((err) => {
@@ -143,4 +199,4 @@ const create = (req, res) => {
     });
 };
 
-export { findAll, findOne, deletePrice, update, create };
+export { findAll, findAllforUsers, findOne, deletePrice, update, create };
