@@ -237,9 +237,9 @@ const addFeature = (req, res) => {
   const { id } = req.params;
   const { features } = req.body;
 
-  if (!id) {
+  if (!id || !features) {
     return res.status(400).send({
-      message: "Plans ID is required",
+      message: "Plans ID and feature name is required",
     });
   }
 
@@ -267,9 +267,9 @@ const deleteFeature = (req, res) => {
   const { id } = req.params;
   const { features } = req.body;
 
-  if (!id) {
+  if (!id || !features) {
     return res.status(400).send({
-      message: "Plans ID is required",
+      message: "Plans ID and feature name is required",
     });
   }
 
@@ -292,6 +292,42 @@ const deleteFeature = (req, res) => {
     });
 };
 
+// Deactivae a feature from a plan - Done
+const deactivateFeature = (req, res) => {
+  const { id } = req.params;
+  const { features } = req.body;
+  const name = features.name;
+
+  if (!id || !features) {
+    return res.status(400).send({
+      message: "Plans ID and feature name is required",
+    });
+  }
+
+  Plans.updateOne(
+    { _id: id, "features.name": name },
+    { $set: { "features.$.status": false } },
+    { new: true }
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Plans not found",
+        });
+      }
+
+      res.send({
+        message: "Feature was successfully deactivated from plan",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message:
+          err.message || "Some error while deactivating feature from plan.",
+      });
+    });
+};
+
 export {
   findAll,
   findAllforUsers,
@@ -302,4 +338,5 @@ export {
   deactivate,
   addFeature,
   deleteFeature,
+  deactivateFeature,
 };
