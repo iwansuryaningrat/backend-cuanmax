@@ -3,7 +3,9 @@ const Videos = db.videos;
 
 // Find all videos for admin
 const findAll = (req, res) => {
-  Videos.find()
+  const { status } = req.query;
+
+  Videos.find({ status })
     .then((result) => {
       res.send({
         message: "Videos was successfully retrieved",
