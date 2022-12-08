@@ -114,7 +114,7 @@ const findOne = (req, res) => {
     });
 };
 
-// Done
+// Delete a plan with the specified id in the request - Done
 const deletePlan = (req, res) => {
   const { id } = req.params;
 
@@ -133,7 +133,7 @@ const deletePlan = (req, res) => {
       }
 
       res.send({
-        message: "Plans was deleted",
+        message: "Plan was successfully deleted",
       });
     })
     .catch((err) => {
