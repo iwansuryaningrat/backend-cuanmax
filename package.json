@@ -7,7 +7,7 @@
   "scripts": {
     "test": "mocha ./test/**/*.js --exit",
     "start": "node --experimental-json-modules index.js",
-    "dev": "nodemon index.js",
+    "dev": "nodemon --experimental-json-modules index.js",
     "migrate": "node ./src/services/seeder/index.js"
   },
   "repository": {
