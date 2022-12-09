@@ -243,9 +243,21 @@ const update = (req, res) => {
         }
       );
 
+      const refreshToken = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: timeExpire2,
+        }
+      );
+
       res.send({
         message: "User updated successfully.",
         token,
+        refreshToken,
       });
     })
     .catch((err) => {
@@ -395,9 +407,21 @@ const changeProfilePicture = (req, res) => {
         }
       );
 
+      const refreshToken = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: timeExpire2,
+        }
+      );
+
       res.send({
         message: "User's profile picture updated successfully.",
         token,
+        refreshToken,
       });
     })
     .catch((err) => {
