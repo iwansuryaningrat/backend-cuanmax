@@ -20,7 +20,7 @@
     },
     {
       "description": "Cuanmax RESTful API Server for Development",
-      "url": "http://localhost:8080/v1"
+      "url": "https://dev.cuanmax-api.tech/v1"
     }
   ],
   "paths": {
