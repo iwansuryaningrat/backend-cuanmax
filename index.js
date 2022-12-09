@@ -102,8 +102,8 @@ import teamsRouter from "./src/routes/teams.routes.js"; // Teams Router
 teamsRouter(app); // Teams Router
 import testimoniRouter from "./src/routes/testimoni.routes.js"; // Testimoni Router
 testimoniRouter(app); // Testimoni Router
-import apiDocsRouter from "./src/routes/api-docs.routes.js"; // API Docs Router
-apiDocsRouter(app); // API Docs Router
+// import apiDocsRouter from "./src/routes/api-docs.routes.js"; // API Docs Router
+// apiDocsRouter(app); // API Docs Router
 
 // * Admin Routers
 // Liveclass Router
