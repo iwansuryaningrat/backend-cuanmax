@@ -1,7 +1,6 @@
 import loggingin from "../controllers/auth/login.controller.js";
 import signup from "../controllers/auth/signup.controller.js";
 import {
-  resetPassword,
   forgotPassword,
   resetPasswordWithToken,
 } from "../controllers/auth/resetPassword.controller.js";
@@ -14,7 +13,6 @@ const authRouter = (app) => {
 
   router.post("/login", loggingin);
   router.post("/signup", signup);
-  router.put("/resetPassword", login, resetPassword);
   router.post("/forgotPassword", forgotPassword);
   router.put("/resetPassword/:token", resetPasswordWithToken);
   router.put("/verifyAccount/:token", verifyAccount);
