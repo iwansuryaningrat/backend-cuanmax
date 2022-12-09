@@ -8,7 +8,7 @@ import {
   changeProMemberToBasicMember,
 } from "../../controllers/users.controller.js";
 import { login, admin } from "../../middlewares/auth.js";
-import userFinder from "../../middlewares/usersfinder.js";
+import { userFinder } from "../../middlewares/usersfinder.js";
 import Express from "express";
 const router = Express.Router();
 
