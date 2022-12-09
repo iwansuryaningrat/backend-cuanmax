@@ -16,9 +16,11 @@ const loggingin = async (req, res) => {
   }
 
   if (rememberMe) {
-    var timeExpire = "24h";
+    var timeExpire1 = "5m";
+    var timeExpire2 = "10m";
   } else {
-    var timeExpire = "12h";
+    var timeExpire1 = "3m";
+    var timeExpire2 = "5m";
   }
 
   await Users.findOne({
@@ -45,7 +47,18 @@ const loggingin = async (req, res) => {
               },
               process.env.JWT_SECRET,
               {
-                expiresIn: timeExpire,
+                expiresIn: timeExpire1,
+              }
+            );
+
+            const refreshToken = jwt.sign(
+              {
+                id: user.id,
+                email: user.email,
+              },
+              process.env.JWT_SECRET,
+              {
+                expiresIn: timeExpire2,
               }
             );
 
@@ -53,7 +66,8 @@ const loggingin = async (req, res) => {
 
             return res.status(200).send({
               message: "Login Success!",
-              token: token,
+              token,
+              refreshToken,
             });
           } else {
             return res.status(401).send({
