@@ -83,7 +83,7 @@ const findAll = (req, res) => {
 
 // Find a single testimoni with an id (Done)
 const findOne = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -124,14 +124,34 @@ const findOne = (req, res) => {
 
 // Create and Save a new testimoni (Done)
 const create = (req, res) => {
-  const testimoni = new Testimoni({
-    name: req.body.name,
-    position: req.body.position,
-    company: req.body.company,
-    testimoni: req.body.testimoni,
+  const { name, position, company, testimoni } = req.body;
+
+  if (!name || !position || !company || !testimoni) {
+    return res.status(400).send({
+      message: "Name, Position, Company, and Testimoni are required",
+    });
+  }
+
+  if (!req.file) {
+    return res.status(400).send({
+      message: "Photos are required",
+    });
+  }
+
+  const imageName = req.file.filename;
+  const photosUrl = `${req.protocol}://${req.get(
+    "host"
+  )}/assets/images/${imageName}`;
+
+  const newTestimoni = new Testimoni({
+    name,
+    position,
+    company,
+    testimoni,
+    photosUrl,
   });
 
-  testimoni
+  newTestimoni
     .save()
     .then((result) => {
       res.send({
@@ -147,7 +167,7 @@ const create = (req, res) => {
 
 // Delete a testimoni with the specified id in the request (Done)
 const deleteTesti = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -214,7 +234,7 @@ const update = (req, res) => {
 
 // Deactivate a testimoni by the id in the request (Done)
 const deactivate = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
@@ -243,7 +263,7 @@ const deactivate = (req, res) => {
 
 // Upload photos testimoni (Done)
 const uploadPhotos = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).send({
