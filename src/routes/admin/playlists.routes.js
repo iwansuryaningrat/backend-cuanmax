@@ -20,7 +20,7 @@ const playlistsAdminRouter = (app) => {
   router.put("/:id/thumbnail", login, admin, updateThumbnail);
   router.delete("/:id", login, admin, deletePlaylist);
 
-  app.use("/api/v1/playlists", router);
+  app.use("/v1/admin/playlists", router);
 };
 
 export default playlistsAdminRouter;
