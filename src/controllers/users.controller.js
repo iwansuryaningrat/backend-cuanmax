@@ -239,18 +239,18 @@ const update = (req, res) => {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: "12h",
+          expiresIn: "3h",
         }
       );
 
       const refreshToken = jwt.sign(
         {
-          id: user.id,
-          email: user.email,
+          id: result.id,
+          email: result.email,
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: timeExpire2,
+          expiresIn: "6h",
         }
       );
 
@@ -403,18 +403,18 @@ const changeProfilePicture = (req, res) => {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: "12h",
+          expiresIn: "3h",
         }
       );
 
       const refreshToken = jwt.sign(
         {
-          id: user.id,
-          email: user.email,
+          id: result.id,
+          email: result.email,
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: timeExpire2,
+          expiresIn: "6h",
         }
       );
 
