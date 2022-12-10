@@ -36,7 +36,7 @@ const refreshToken = async (req, res) => {
             },
             process.env.JWT_SECRET,
             {
-              expiresIn: "5m",
+              expiresIn: "3h",
             }
           );
           const refreshToken = jwt.sign(
@@ -46,7 +46,7 @@ const refreshToken = async (req, res) => {
             },
             process.env.JWT_SECRET,
             {
-              expiresIn: "10m",
+              expiresIn: "6h",
             }
           );
           return res.status(200).send({
