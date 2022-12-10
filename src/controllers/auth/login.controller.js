@@ -16,11 +16,11 @@ const loggingin = async (req, res) => {
   }
 
   if (rememberMe) {
-    var timeExpire1 = "5m";
-    var timeExpire2 = "10m";
+    var timeExpire1 = "3h";
+    var timeExpire2 = "6h";
   } else {
-    var timeExpire1 = "3m";
-    var timeExpire2 = "5m";
+    var timeExpire1 = "6h";
+    var timeExpire2 = "12h";
   }
 
   await Users.findOne({
