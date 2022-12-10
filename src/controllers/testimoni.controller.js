@@ -285,7 +285,7 @@ const uploadPhotos = (req, res) => {
       }
 
       res.send({
-        message: "Testimoni was successfully uploaded",
+        message: "Testimoni photo was successfully uploaded",
       });
     })
     .catch((err) => {
