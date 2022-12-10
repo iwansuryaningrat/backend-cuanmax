@@ -113,7 +113,7 @@ const findOne = (req, res) => {
       const data = {
         id: result._id,
         email: result.email,
-        startDate: result.startDate,
+        startDate: new Date(result.startDate).toString(),
         endDate: newEndDate,
         status: result.status,
       };
@@ -169,29 +169,30 @@ const deactivate = (req, res) => {
     });
   }
 
-  const endDate = new Date().getTime();
+  const endDate = new Date();
+  console.log(endDate);
 
-  Subscribers.findByIdAndUpdate(
-    id,
-    { endDate, status: "Inactive" },
-    { new: true }
-  )
-    .then((result) => {
-      if (!result) {
-        return res.status(404).send({
-          message: "Subscriber not found",
-        });
-      }
+  // Subscribers.findByIdAndUpdate(
+  //   id,
+  //   { endDate, status: "Inactive" },
+  //   { new: true }
+  // )
+  //   .then((result) => {
+  //     if (!result) {
+  //       return res.status(404).send({
+  //         message: "Subscriber not found",
+  //       });
+  //     }
 
-      res.send({
-        message: "Subscriber was successfully deactivated.",
-      });
-    })
-    .catch((err) => {
-      return res.status(500).send({
-        message: err.message || "Some error while updating Subscribers.",
-      });
-    });
+  //     res.send({
+  //       message: "Subscriber was successfully deactivated.",
+  //     });
+  //   })
+  //   .catch((err) => {
+  //     return res.status(500).send({
+  //       message: err.message || "Some error while updating Subscribers.",
+  //     });
+  //   });
 };
 
 export { findAll, create, findOne, deleteSubs, deactivate };
