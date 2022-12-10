@@ -50,7 +50,7 @@ export default (mongoose) => {
           values: ["Draft", "Published", "Archived"],
           message: "Status must be Draft, Published or Archived",
         },
-        default: "Draft",
+        default: "Published",
       },
     },
     { timestamps: true }
