@@ -6,7 +6,7 @@ import {
   teamProfilePicture,
   deleteTeam,
   deactivate,
-} from "../../controllers/admin/teams.controller.js";
+} from "../../controllers/teams.controller.js";
 import { login, admin } from "../../middlewares/auth.js";
 import Express from "express";
 const router = Express.Router();
