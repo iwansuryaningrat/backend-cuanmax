@@ -95,17 +95,15 @@ const findOne = (req, res) => {
         });
       }
 
-      const data = result.map((item) => {
-        const { _id, name, description, position, photo, contact } = item;
-        return {
-          id: _id,
-          name,
-          description,
-          position,
-          photo,
-          contact,
-        };
-      });
+      const { _id, name, description, position, photo, contact } = result;
+      const data = {
+        id: _id,
+        name,
+        description,
+        position,
+        photo,
+        contact,
+      };
 
       res.send({
         message: "Team successfully retrieved.",
@@ -194,21 +192,19 @@ const update = (req, res) => {
     });
   }
 
-  const data = req.body.map((item) => {
-    const { name, description, position, email, instagram, twitter, linkedin } =
-      item;
-    return {
-      name,
-      description,
-      position,
-      contact: {
-        email,
-        instagram: instagram === null ? "" : instagram,
-        twitter: twitter === null ? "" : twitter,
-        linkedin: linkedin === null ? "" : linkedin,
-      },
-    };
-  });
+  const { name, description, position, email, instagram, twitter, linkedin } =
+    req.body;
+  const data = {
+    name,
+    description,
+    position,
+    contact: {
+      email,
+      instagram,
+      twitter,
+      linkedin,
+    },
+  };
 
   Teams.findByIdAndUpdate(id, data, { new: true })
     .then((result) => {
