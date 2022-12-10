@@ -21,11 +21,15 @@ const findAll = (req, res) => {
       }
 
       const data = result.map((item) => {
+        const { _id, email, startDate, endDate, status } = item;
+        let newEndDate = new Date(endDate).toString();
+        if (endDate == null || endDate == 0) newEndDate = null;
         return {
-          email: item.email,
-          startDate: item.startDate.toString(),
-          endDate: item.endDate.toString(),
-          status: item.status,
+          id: _id,
+          email: email,
+          startDate: new Date(startDate).toString(),
+          endDate: newEndDate,
+          status: status,
         };
       });
 
@@ -161,7 +165,13 @@ const deactivate = (req, res) => {
     });
   }
 
-  Subscribers.findByIdAndUpdate(id, { status: "Inactive" }, { new: true })
+  const endDate = new Date().getTime();
+
+  Subscribers.findByIdAndUpdate(
+    id,
+    { endDate, status: "Inactive" },
+    { new: true }
+  )
     .then((result) => {
       if (!result) {
         return res.status(404).send({
