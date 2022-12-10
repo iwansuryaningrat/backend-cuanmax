@@ -248,7 +248,7 @@ const requestWD = (req, res) => {
     .then((referral) => {
       if (!referral) {
         return res.status(404).send({
-          message: `Referral with id ${id} not found`,
+          message: `Referral not found`,
         });
       }
 
@@ -288,13 +288,13 @@ const requestWD = (req, res) => {
         })
         .catch((err) => {
           res.status(500).send({
-            message: `Error updating referral with id ${id}`,
+            message: `Error updating referral`,
           });
         });
     })
     .catch((err) => {
       return res.status(500).send({
-        message: `Error retrieving referral with id ${id}`,
+        message: `Error retrieving referral`,
       });
     });
 };
