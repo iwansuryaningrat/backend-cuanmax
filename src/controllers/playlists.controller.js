@@ -169,7 +169,7 @@ const create = (req, res) => {
     });
   }
 
-  Playlists.save({
+  Playlists.insert({
     name,
     category,
     description,
