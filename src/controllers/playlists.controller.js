@@ -169,7 +169,7 @@ const create = (req, res) => {
     });
   }
 
-  Playlists.insert({
+  const playlist = new Playlists({
     name,
     category,
     description,
@@ -179,7 +179,10 @@ const create = (req, res) => {
       imageName: photoName,
       imageLink: photoLink,
     },
-  })
+  });
+
+  playlist
+    .save()
     .then((result) => {
       res.status(200).send({
         message: "Playlist successfully added.",
