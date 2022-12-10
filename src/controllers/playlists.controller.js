@@ -349,6 +349,43 @@ const deletePlaylist = (req, res) => {
     });
 };
 
+// Change Playlist Status
+const changeStatus = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Playlist ID is required",
+    });
+  }
+
+  const { status } = req.body;
+
+  Playlists.findByIdAndUpdate(
+    id,
+    {
+      status,
+    },
+    { new: true }
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      res.send({
+        message: "Playlist status was updated",
+      });
+    })
+    .catch((err) => {
+      return res.status(409).send({
+        message: err.message || "Some error while update playlist.",
+      });
+    });
+};
+
 export {
   findAll,
   findAllNameId,
@@ -359,4 +396,5 @@ export {
   update,
   updateThumbnail,
   deletePlaylist,
+  changeStatus,
 };
