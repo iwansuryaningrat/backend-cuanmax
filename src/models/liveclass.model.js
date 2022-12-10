@@ -72,7 +72,14 @@ export default (mongoose) => {
           require: true,
           default: 0,
         },
-        participantsList: [{ type: Schema.Types.ObjectId, ref: "Users" }],
+        participantsList: [
+          {
+            userID: {
+              type: Schema.Types.ObjectId,
+              ref: "Users",
+            },
+          },
+        ],
       },
     },
     { timestamps: true }
