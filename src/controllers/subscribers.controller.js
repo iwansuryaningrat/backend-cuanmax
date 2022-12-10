@@ -107,10 +107,14 @@ const findOne = (req, res) => {
         });
       }
 
+      let newEndDate = new Date(result.endDate).toString();
+      if (result.endDate == null || result.endDate == 0) newEndDate = null;
+
       const data = {
+        id: result._id,
         email: result.email,
-        startDate: result.startDate.toString(),
-        endDate: result.endDate.toString(),
+        startDate: result.startDate,
+        endDate: newEndDate,
         status: result.status,
       };
 
