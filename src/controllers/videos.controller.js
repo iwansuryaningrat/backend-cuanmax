@@ -1,6 +1,8 @@
 import db from "../models/index.js";
 const Videos = db.videos;
 
+import updatePlaylistVideoCount from "./function/playlist.function.js";
+
 // Find all videos for admin
 const findAll = (req, res) => {
   const { status } = req.query;
@@ -139,7 +141,7 @@ const findByPlaylist = (req, res) => {
 };
 
 // Create a video
-const create = (req, res) => {
+const create = async (req, res) => {
   const { playlistId, title, description, videoURL, tags, duration, status } =
     req.body;
 
@@ -172,18 +174,30 @@ const create = (req, res) => {
     status,
   });
 
-  video
+  const result = await video
     .save()
     .then((result) => {
-      res.send({
-        message: "Video was successfully created",
-      });
+      return true;
     })
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Some error while creating video.",
       });
     });
+
+  if (result) {
+    const updatePlaylist = await updatePlaylistVideoCount(playlistId);
+
+    if (updatePlaylist === true) {
+      res.send({
+        message: "Video was created",
+      });
+    } else {
+      return res.status(500).send({
+        message: "Some error while creating video.",
+      });
+    }
+  }
 };
 
 // Update thumbnail
