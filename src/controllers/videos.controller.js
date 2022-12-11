@@ -117,7 +117,7 @@ const findByPlaylist = (req, res) => {
     });
   }
 
-  Videos.find({ playlist: { playlistId: playlistId } })
+  Videos.find({ playlist: playlistId })
     .sort({ createdAt: 1 })
     .then((result) => {
       if (!result) {
