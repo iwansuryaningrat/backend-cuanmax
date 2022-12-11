@@ -21,6 +21,22 @@ const findAll = (req, res) => {
     });
 };
 
+// Find all videos for Pro Member
+const findAllPro = (req, res) => {
+  Videos.find({ status: "Published" })
+    .then((result) => {
+      res.send({
+        message: "Videos was successfully retrieved",
+        data: result,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while retrieving videos.",
+      });
+    });
+};
+
 // Get Details of a video
 const findOne = (req, res) => {
   const { id } = req.params;
@@ -109,7 +125,7 @@ const deleteVideo = (req, res) => {
     });
 };
 
-// Find all videos by playlist
+// Find all videos by playlist ID for Admin
 const findByPlaylist = (req, res) => {
   const { playlistId } = req.params;
 
@@ -120,6 +136,37 @@ const findByPlaylist = (req, res) => {
   }
 
   Videos.find({ playlist: playlistId })
+    .sort({ createdAt: 1 })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Video not found",
+        });
+      }
+
+      res.send({
+        message: "Videos was successfully retrieved",
+        data: result,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while showing videos.",
+      });
+    });
+};
+
+// Find all videos by playlist ID for Pro Member
+const findByPlaylistPro = (req, res) => {
+  const { playlistId } = req.params;
+
+  if (!playlistId) {
+    return res.status(400).send({
+      message: "Playlist ID is required",
+    });
+  }
+
+  Videos.find({ playlist: playlistId, status: "Published" })
     .sort({ createdAt: 1 })
     .then((result) => {
       if (!result) {
@@ -277,10 +324,12 @@ const updateStatus = (req, res) => {
 
 export {
   findAll,
+  findAllPro,
   findOne,
+  findByPlaylist,
+  findByPlaylistPro,
   update,
   deleteVideo,
-  findByPlaylist,
   create,
   updateThumbnail,
   updateStatus,
