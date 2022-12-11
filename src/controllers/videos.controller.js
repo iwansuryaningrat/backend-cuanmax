@@ -7,7 +7,13 @@ import updatePlaylistVideoCount from "./function/playlist.function.js";
 const findAll = (req, res) => {
   const { status } = req.query;
 
-  Videos.find({ status })
+  var condition = {};
+
+  if (status) {
+    condition = { status };
+  }
+
+  Videos.find(condition)
     .then((result) => {
       const data = result.map((video) => {
         const {
