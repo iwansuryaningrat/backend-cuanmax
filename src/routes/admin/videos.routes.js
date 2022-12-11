@@ -15,7 +15,7 @@ const router = Express.Router();
 const videosAdminRouter = (app) => {
   router.get("/", login, proMember, findAll);
   router.get("/:id", login, proMember, findOne);
-  router.get("/:playlistId", login, proMember, findByPlaylist);
+  router.get("/:playlistId/playlist", login, proMember, findByPlaylist);
   router.post("/", login, admin, create);
   router.put("/:id", login, admin, update);
   router.put("/:id/thumbnail", login, admin, updateThumbnail);
