@@ -16,11 +16,11 @@ const videosAdminRouter = (app) => {
   router.get("/", login, proMember, findAll);
   router.get("/:id", login, proMember, findOne);
   router.get("/:playlistId", login, proMember, findByPlaylist);
-  router.put("/:id", login, admin, update);
-  router.delete("/:id", login, admin, deleteVideo);
   router.post("/", login, admin, create);
+  router.put("/:id", login, admin, update);
   router.put("/:id/thumbnail", login, admin, updateThumbnail);
   router.put("/:id/status", login, admin, updateStatus);
+  router.delete("/:id", login, admin, deleteVideo);
 
   app.use("/v1/admin/videos", router);
 };
