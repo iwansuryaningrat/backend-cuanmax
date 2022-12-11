@@ -1,9 +1,13 @@
 import db from "../models/index.js";
 const Videos = db.videos;
 
-import updatePlaylistVideoCount from "./function/playlist.function.js";
+import {
+  incrementPlaylistVideoCount,
+  decrementPlaylistVideoCount,
+} from "./function/playlist.function.js";
+import updateVideoUrl from "./function/videos.function.js";
 
-// Find all videos for admin
+// Find all videos for admin (DONE)
 const findAll = (req, res) => {
   const { status } = req.query;
 
@@ -65,7 +69,7 @@ const findAll = (req, res) => {
     });
 };
 
-// Find all videos for Pro Member
+// Find all videos for Pro Member (DONE)
 const findAllPro = (req, res) => {
   Videos.find({ status: "Published" })
     .populate({
@@ -117,7 +121,7 @@ const findAllPro = (req, res) => {
     });
 };
 
-// Find all videos by playlist ID for Admin
+// Find all videos by playlist ID for Admin (DONE)
 const findByPlaylist = (req, res) => {
   const { playlistId } = req.params;
 
@@ -185,7 +189,7 @@ const findByPlaylist = (req, res) => {
     });
 };
 
-// Find all videos by playlist ID for Pro Member
+// Find all videos by playlist ID for Pro Member (DONE)
 const findByPlaylistPro = (req, res) => {
   const { playlistId } = req.params;
 
@@ -251,7 +255,7 @@ const findByPlaylistPro = (req, res) => {
     });
 };
 
-// Get Details of a video
+// Get Details of a video by ID for Admin (DONE)
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -301,8 +305,10 @@ const findOne = (req, res) => {
 };
 
 // Update a video
-const update = (req, res) => {
+const update = async (req, res) => {
   const { id } = req.params;
+
+  const { title, description, url, tags, duration, status } = req.body;
 
   if (!id) {
     return res.status(400).send({
@@ -310,7 +316,26 @@ const update = (req, res) => {
     });
   }
 
-  Videos.findByIdAndUpdate(id, req.body, { new: true })
+  if (url) {
+    const response = await updateVideoUrl(id, url);
+    if (response !== true) {
+      return res.status(409).send({
+        message: response,
+      });
+    }
+  }
+
+  Videos.findByIdAndUpdate(
+    id,
+    {
+      title,
+      description,
+      tags,
+      duration,
+      status,
+    },
+    { new: true }
+  )
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -404,7 +429,10 @@ const create = async (req, res) => {
     });
 
   if (result) {
-    const updatePlaylist = await updatePlaylistVideoCount(playlistId);
+    const updatePlaylist = await {
+      incrementPlaylistVideoCount,
+      decrementPlaylistVideoCount,
+    }(playlistId);
 
     if (updatePlaylist === true) {
       res.send({
@@ -493,6 +521,21 @@ const updateStatus = (req, res) => {
     });
 };
 
+// Change Video URL
+const changeVideoUrl = async (id, url) => {};
+
+// Change Playlist Video
+const changePlaylistVideo = async (id, playlistId) => {};
+
+// Watch video only for pro users if video is published
+const watchVideo = async (req, res) => {};
+
+// Like video only for pro users if video is published
+const likeVideo = async (req, res) => {};
+
+// Dislike video only for pro users if video is published
+const dislikeVideo = async (req, res) => {};
+
 export {
   findAll,
   findAllPro,
@@ -504,4 +547,9 @@ export {
   create,
   updateThumbnail,
   updateStatus,
+  changeVideoUrl,
+  changePlaylistVideo,
+  watchVideo,
+  likeVideo,
+  dislikeVideo,
 };
