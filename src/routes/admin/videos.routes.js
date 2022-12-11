@@ -1,12 +1,14 @@
 import {
-  create,
   findAll,
   findOne,
   findByPlaylist,
+  create,
   update,
-  deleteVideo,
   updateThumbnail,
   updateStatus,
+  changeVideoUrl,
+  changePlaylistVideo,
+  deleteVideo,
 } from "../../controllers/videos.controller.js";
 import { login, admin, proMember } from "../../middlewares/auth.js";
 import Express from "express";
