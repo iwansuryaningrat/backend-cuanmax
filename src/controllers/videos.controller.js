@@ -140,7 +140,7 @@ const findByPlaylist = (req, res) => {
     });
 };
 
-// Create a video
+// Create a video and update playlist video count (DONE)
 const create = async (req, res) => {
   const { playlistId, title, description, videoURL, tags, duration, status } =
     req.body;
