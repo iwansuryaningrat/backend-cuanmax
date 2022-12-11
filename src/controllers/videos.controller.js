@@ -14,6 +14,11 @@ const findAll = (req, res) => {
   }
 
   Videos.find(condition)
+    .populate({
+      path: "playlist",
+      select: "_id name videoLevel videoCount status",
+    })
+    .sort({ createdAt: -1 })
     .then((result) => {
       const data = result.map((video) => {
         const {
@@ -63,6 +68,11 @@ const findAll = (req, res) => {
 // Find all videos for Pro Member
 const findAllPro = (req, res) => {
   Videos.find({ status: "Published" })
+    .populate({
+      path: "playlist",
+      select: "_id name videoLevel videoCount",
+    })
+    .sort({ createdAt: -1 })
     .then((result) => {
       const data = result.map((video) => {
         const {
@@ -118,6 +128,10 @@ const findByPlaylist = (req, res) => {
   }
 
   Videos.find({ playlist: playlistId })
+    .populate({
+      path: "playlist",
+      select: "_id name videoLevel videoCount status",
+    })
     .sort({ createdAt: 1 })
     .then((result) => {
       if (!result) {
@@ -182,7 +196,11 @@ const findByPlaylistPro = (req, res) => {
   }
 
   Videos.find({ playlist: playlistId, status: "Published" })
-    .sort({ createdAt: 1 })
+    .populate({
+      path: "playlist",
+      select: "_id name videoLevel videoCount",
+    })
+    .sort({ createdAt: -1 })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
