@@ -287,6 +287,12 @@ const updateThumbnail = (req, res) => {
     });
   }
 
+  if (!req.file) {
+    return res.status(400).send({
+      message: "Image is required",
+    });
+  }
+
   const photoName = req.file.filename;
   const photoLink = `${req.protocol}://${req.get(
     "host"
