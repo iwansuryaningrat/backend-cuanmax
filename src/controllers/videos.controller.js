@@ -140,16 +140,8 @@ const findByPlaylist = (req, res) => {
 
 // Create a video
 const create = (req, res) => {
-  const {
-    playlistId,
-    title,
-    description,
-    videoURL,
-    tags,
-    date,
-    duration,
-    status,
-  } = req.body;
+  const { playlistId, title, description, videoURL, tags, duration, status } =
+    req.body;
 
   var thumbnailName = req.file.filename;
   var thumbnailLink = `${req.protocol}://${req.get(
@@ -175,7 +167,7 @@ const create = (req, res) => {
     thumbnail: { thumbnailName, thumbnailLink },
     playlist: playlistId,
     tags,
-    date: new Date(date).getTime(),
+    date: new Date().getTime(),
     duration,
     status,
   });
