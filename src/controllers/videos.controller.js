@@ -262,6 +262,10 @@ const findOne = (req, res) => {
   }
 
   Videos.findById(id)
+    .populate({
+      path: "playlist",
+      select: "_id name videoLevel videoCount status",
+    })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
