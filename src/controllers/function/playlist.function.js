@@ -2,12 +2,22 @@ import db from "../../models/index.js";
 const Playlists = db.playlists;
 
 // Update Playlist video count
-export const updatePlaylistVideoCount = async (playlistId) => {
-  const playlist = await Playlists.findOne({ where: { id: playlistId } });
+const updatePlaylistVideoCount = async (playlistId) => {
+  const playlist = await Playlists.findById(playlistId);
   if (playlist) {
     const videoCount = playlist.videoCount;
-    playlist.update({ videoCount: videoCount + 1 });
+    return await Playlists.findByIdAndUpdate(playlistId, {
+      videoCount: videoCount + 1,
+    })
+      .then((result) => {
+        return true;
+      })
+      .catch((err) => {
+        return err.message;
+      });
   } else {
-    throw new Error("Playlist not found");
+    return false;
   }
 };
+
+export default updatePlaylistVideoCount;
