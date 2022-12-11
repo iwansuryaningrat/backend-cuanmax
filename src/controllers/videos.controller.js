@@ -273,9 +273,24 @@ const findOne = (req, res) => {
         });
       }
 
+      const data = {
+        _id,
+        title,
+        description,
+        url,
+        thumbnail,
+        playlist,
+        tags,
+        views,
+        likes,
+        dislikes,
+        duration,
+        date,
+      };
+
       res.send({
         message: "Video was successfully retrieved",
-        data: result,
+        data,
       });
     })
     .catch((err) => {
