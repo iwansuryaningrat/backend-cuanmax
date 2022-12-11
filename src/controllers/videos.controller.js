@@ -9,9 +9,42 @@ const findAll = (req, res) => {
 
   Videos.find({ status })
     .then((result) => {
+      const data = result.map((video) => {
+        const {
+          _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date,
+          status,
+        } = video;
+        return {
+          _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date,
+          status,
+        };
+      });
+
       res.send({
         message: "Videos was successfully retrieved",
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -25,14 +58,171 @@ const findAll = (req, res) => {
 const findAllPro = (req, res) => {
   Videos.find({ status: "Published" })
     .then((result) => {
+      const data = result.map((video) => {
+        const {
+          _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date,
+        } = video;
+        return {
+          _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date,
+        };
+      });
+
       res.send({
         message: "Videos was successfully retrieved",
-        data: result,
+        data,
       });
     })
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Some error while retrieving videos.",
+      });
+    });
+};
+
+// Find all videos by playlist ID for Admin
+const findByPlaylist = (req, res) => {
+  const { playlistId } = req.params;
+
+  if (!playlistId) {
+    return res.status(400).send({
+      message: "Playlist ID is required",
+    });
+  }
+
+  Videos.find({ playlist: playlistId })
+    .sort({ createdAt: 1 })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Video not found",
+        });
+      }
+
+      const data = result.map((video) => {
+        const {
+          _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date,
+          status,
+        } = video;
+        return {
+          _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date,
+          status,
+        };
+      });
+
+      res.send({
+        message: "Videos was successfully retrieved",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while showing videos.",
+      });
+    });
+};
+
+// Find all videos by playlist ID for Pro Member
+const findByPlaylistPro = (req, res) => {
+  const { playlistId } = req.params;
+
+  if (!playlistId) {
+    return res.status(400).send({
+      message: "Playlist ID is required",
+    });
+  }
+
+  Videos.find({ playlist: playlistId, status: "Published" })
+    .sort({ createdAt: 1 })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Video not found",
+        });
+      }
+
+      const data = result.map((video) => {
+        const {
+          _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date,
+        } = video;
+        return {
+          _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date,
+        };
+      });
+
+      res.send({
+        message: "Videos was successfully retrieved",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while showing videos.",
       });
     });
 };
@@ -121,68 +311,6 @@ const deleteVideo = (req, res) => {
     .catch((err) => {
       return res.status(409).send({
         message: err.message || "Some error while delete video.",
-      });
-    });
-};
-
-// Find all videos by playlist ID for Admin
-const findByPlaylist = (req, res) => {
-  const { playlistId } = req.params;
-
-  if (!playlistId) {
-    return res.status(400).send({
-      message: "Playlist ID is required",
-    });
-  }
-
-  Videos.find({ playlist: playlistId })
-    .sort({ createdAt: 1 })
-    .then((result) => {
-      if (!result) {
-        return res.status(404).send({
-          message: "Video not found",
-        });
-      }
-
-      res.send({
-        message: "Videos was successfully retrieved",
-        data: result,
-      });
-    })
-    .catch((err) => {
-      return res.status(500).send({
-        message: err.message || "Some error while showing videos.",
-      });
-    });
-};
-
-// Find all videos by playlist ID for Pro Member
-const findByPlaylistPro = (req, res) => {
-  const { playlistId } = req.params;
-
-  if (!playlistId) {
-    return res.status(400).send({
-      message: "Playlist ID is required",
-    });
-  }
-
-  Videos.find({ playlist: playlistId, status: "Published" })
-    .sort({ createdAt: 1 })
-    .then((result) => {
-      if (!result) {
-        return res.status(404).send({
-          message: "Video not found",
-        });
-      }
-
-      res.send({
-        message: "Videos was successfully retrieved",
-        data: result,
-      });
-    })
-    .catch((err) => {
-      return res.status(500).send({
-        message: err.message || "Some error while showing videos.",
       });
     });
 };
