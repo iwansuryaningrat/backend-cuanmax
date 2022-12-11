@@ -61,14 +61,6 @@ app.use(
   }).single("image")
 );
 
-// Configuration for All Video Files
-// app.use(
-//   multer({
-//     storage: videosStorage,
-//     fileFilter: videosFilter,
-//   }).single("video")
-// );
-
 // MongoDB Connection
 import connect from "./src/services/db.connect.service.js";
 connect();
