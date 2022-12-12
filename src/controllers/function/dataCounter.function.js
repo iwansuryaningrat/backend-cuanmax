@@ -21,34 +21,36 @@ const Videos = db.videos;
 const Vouchers = db.vouchers;
 
 // Count Data
-const dataCounter = async (Model, condition) => {
+const dataCounter = async (Model, itemPerPage, condition) => {
+  let dataCount = 0;
   if (condition !== undefined || condition !== null) {
-    const result = await Model.where(condition)
+    dataCount = await Model.where(condition)
       .countDocuments({})
       .then((docCount) => {
         console.log(condition);
-        return docCount + 2;
+        return docCount;
       })
       .catch((err) => {
         return err.message;
       });
-    return result;
   } else {
-    const result = await Model.countDocuments({})
+    dataCount = await Model.countDocuments({})
       .then((docCount) => {
-        return docCount + 1;
+        return docCount;
       })
       .catch((err) => {
         return err.message;
       });
-    return result;
   }
+
+  const pageCount = Math.ceil(dataCount / itemPerPage);
+  return { dataCount, dataPerPage: itemPerPage, pageCount };
 };
 
 export default dataCounter;
 
 // const test = async () => {
-//   const docCount = await dataCounter(Videos, { status: "Archived" });
+//   const docCount = await dataCounter(Videos, 5, { status: "Published" });
 //   console.log(docCount);
 //   process.exit(0);
 // };
