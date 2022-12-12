@@ -9,16 +9,28 @@ import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch All Messages from Database (Done)
-const findAll = (req, res) => {
-  const { status } = req.query;
+const findAll = async (req, res) => {
+  const { status, page } = req.query;
   const query = {};
 
   if (status) {
     query.status = status;
   }
 
-  Messages.find(query)
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Messages, pageLimit, query);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  await Messages.find(query)
     .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(pageLimit)
     .then((message) => {
       if (message.length < 1) {
         return res.status(404).send({
@@ -44,6 +56,7 @@ const findAll = (req, res) => {
       res.send({
         message: "All message were fetched successfully",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
