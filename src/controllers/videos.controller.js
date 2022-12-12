@@ -1,6 +1,9 @@
 import db from "../models/index.js";
 const Videos = db.videos;
 
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
+
 import {
   incrementPlaylistVideoCount,
   decrementPlaylistVideoCount,
@@ -265,7 +268,7 @@ const findByPlaylistPro = (req, res) => {
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
@@ -331,7 +334,7 @@ const update = async (req, res) => {
 
   const { title, description, url, tags, duration, status } = req.body;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
@@ -379,7 +382,7 @@ const update = async (req, res) => {
 const deleteVideo = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
@@ -476,7 +479,7 @@ const updateThumbnail = (req, res) => {
 
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
@@ -515,7 +518,7 @@ const updateThumbnail = (req, res) => {
 const updateStatus = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
@@ -546,7 +549,7 @@ const updateStatus = (req, res) => {
 const changeVideoUrl = async (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
@@ -571,7 +574,7 @@ const changeVideoUrl = async (req, res) => {
 const changePlaylistVideo = async (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
@@ -615,7 +618,7 @@ const changePlaylistVideo = async (req, res) => {
 const watchVideo = async (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
@@ -670,7 +673,7 @@ const watchVideo = async (req, res) => {
 const likeVideo = async (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
@@ -707,7 +710,7 @@ const likeVideo = async (req, res) => {
 const dislikeVideo = async (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
