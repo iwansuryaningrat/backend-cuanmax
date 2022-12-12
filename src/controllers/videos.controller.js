@@ -1,5 +1,6 @@
 import db from "../models/index.js";
 const Videos = db.videos;
+import dataCounter from "./function/dataCounter.function.js";
 
 import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
