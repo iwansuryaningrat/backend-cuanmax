@@ -1,12 +1,27 @@
 import db from "../models/index.js";
 const Plans = db.plans;
+import dataCounter from "./function/dataCounter.function.js";
 
 import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
 
 // Get all plans for Users (Active only) - Done
-const findAllforUsers = (req, res) => {
-  Plans.find({ status: "Active" })
+const findAllforUsers = async (req, res) => {
+  const { page, pageLimit } = req.query;
+
+  const condition = { status: "Active" };
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Plans, pageLimit, condition);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  await Plans.find(condition)
+    .skip(skip)
+    .limit(pageLimit)
     .then((result) => {
       if (!result || result.length === 0) {
         return res.status(404).send({
@@ -29,6 +44,7 @@ const findAllforUsers = (req, res) => {
       res.send({
         message: "Plans successfully fetched",
         data: plans,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -39,12 +55,25 @@ const findAllforUsers = (req, res) => {
 };
 
 // Get all plans for Admin - Done
-const findAll = (req, res) => {
-  const { status } = req.query;
+const findAll = async (req, res) => {
+  const { status, page } = req.query;
 
-  var condition = status;
+  var condition = { status };
 
-  Plans.find(condition)
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Messages, pageLimit, condition);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  await Plans.find(condition)
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(pageLimit)
     .then((result) => {
       if (!result || result.length === 0) {
         return res.status(404).send({
@@ -68,6 +97,7 @@ const findAll = (req, res) => {
       res.send({
         message: "Plans successfully fetched",
         data: plans,
+        page: pageData,
       });
     })
     .catch((err) => {
