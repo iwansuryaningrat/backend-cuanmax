@@ -62,7 +62,7 @@ const findAll = async (req, res) => {
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
-  const dataCount = await dataCounter(Messages, pageLimit, condition);
+  const dataCount = await dataCounter(Plans, pageLimit, condition);
   const pageData = {
     currentPage: page,
     pageCount: dataCount.pageCount,
