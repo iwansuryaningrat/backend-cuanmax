@@ -28,9 +28,9 @@ const findAll = async (req, res) => {
   };
 
   await Messages.find(query)
-    .sort({ createdAt: -1 })
     .skip(skip)
     .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((message) => {
       if (message.length < 1) {
         return res.status(404).send({
