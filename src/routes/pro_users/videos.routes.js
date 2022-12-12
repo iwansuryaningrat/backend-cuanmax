@@ -12,7 +12,7 @@ const router = Express.Router();
 const videosRouter = (app) => {
   router.get("/", login, proMember, findAllPro);
   router.get("/:playlistId/playlist", login, proMember, findByPlaylistPro);
-  router.put("/:id/watch", login, proMember, watchVideo);
+  router.get("/:id/watch", login, proMember, watchVideo);
   router.put("/:id/like", login, proMember, likeVideo);
   router.put("/:id/dislike", login, proMember, dislikeVideo);
 
