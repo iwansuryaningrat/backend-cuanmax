@@ -1,16 +1,29 @@
 import db from "../models/index.js";
 const Teams = db.teams;
+import dataCounter from "./function/dataCounter.function.js";
 
 import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch all teams data (DONE)
-const findAll = (req, res) => {
-  const { active } = req.query;
+const findAll = async (req, res) => {
+  const { active, page, pageLimit } = req.query;
 
   let condition = active ? { status: "Active" } : {};
 
-  Teams.find(condition)
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Teams, pageLimit, condition);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  await Teams.find(condition)
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((result) => {
       // Check if there is any data
       if (result.length === 0) {
@@ -36,6 +49,7 @@ const findAll = (req, res) => {
       res.send({
         message: "Teams successfully fetched.",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
