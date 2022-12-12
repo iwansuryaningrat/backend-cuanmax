@@ -1,6 +1,9 @@
 import db from "../models/index.js";
 const Plans = db.plans;
 
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
+
 // Get all plans for Users (Active only) - Done
 const findAllforUsers = (req, res) => {
   Plans.find({ status: "Active" })
@@ -78,7 +81,7 @@ const findAll = (req, res) => {
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Plans Id is required",
     });
@@ -118,7 +121,7 @@ const findOne = (req, res) => {
 const deletePlan = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Plans ID is required",
     });
@@ -147,7 +150,7 @@ const deletePlan = (req, res) => {
 const update = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Plans ID is required",
     });
@@ -207,7 +210,7 @@ const create = (req, res) => {
 const deactivate = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Plans ID is required",
     });
@@ -237,7 +240,7 @@ const addFeature = (req, res) => {
   const { id } = req.params;
   const { features } = req.body;
 
-  if (!id || !features) {
+  if (!id || !ObjectId.isValid(id) || !features) {
     return res.status(400).send({
       message: "Plans ID and feature name is required",
     });
@@ -267,7 +270,7 @@ const deleteFeature = (req, res) => {
   const { id } = req.params;
   const { features } = req.body;
 
-  if (!id || !features) {
+  if (!id || !ObjectId.isValid(id) || !features) {
     return res.status(400).send({
       message: "Plans ID and feature name is required",
     });
@@ -298,7 +301,7 @@ const deactivateFeature = (req, res) => {
   const { features } = req.body;
   const name = features.name;
 
-  if (!id || !features) {
+  if (!id || !ObjectId.isValid(id) || !features) {
     return res.status(400).send({
       message: "Plans ID and feature name is required",
     });
