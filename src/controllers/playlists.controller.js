@@ -1,5 +1,6 @@
 import db from "../models/index.js";
 const Playlists = db.playlists;
+import dataCounter from "./function/dataCounter.function.js";
 
 import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
