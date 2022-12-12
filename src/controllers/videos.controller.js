@@ -9,6 +9,7 @@ import {
   incrementPlaylistVideoCount,
   decrementPlaylistVideoCount,
 } from "./function/playlist.function.js";
+
 import {
   updateVideoUrl,
   updateVideoViews,
@@ -19,7 +20,7 @@ import {
 
 // Find all videos for admin (DONE)
 const findAll = (req, res) => {
-  const { status } = req.query;
+  const { status, page } = req.query;
 
   var condition = {};
 
@@ -27,11 +28,23 @@ const findAll = (req, res) => {
     condition = { status };
   }
 
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = dataCounter(Videos, pageLimit, condition);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
   Videos.find(condition)
     .populate({
       path: "playlist",
       select: "_id name videoLevel videoCount status",
     })
+    .skip(skip)
+    .limit(pageLimit)
     .sort({ createdAt: -1 })
     .then((result) => {
       const data = result.map((video) => {
@@ -70,6 +83,7 @@ const findAll = (req, res) => {
       res.send({
         message: "Videos was successfully retrieved",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -80,12 +94,27 @@ const findAll = (req, res) => {
 };
 
 // Find all videos for Pro Member (DONE)
-const findAllPro = (req, res) => {
-  Videos.find({ status: "Published" })
+const findAllPro = async (req, res) => {
+  const { page, pageLimit } = req.query;
+
+  const condition = { status: "Published" };
+
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Videos, pageLimit, condition);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  await Videos.find(condition)
     .populate({
       path: "playlist",
       select: "_id name videoLevel videoCount",
     })
+    .skip(skip)
+    .limit(pageLimit)
     .sort({ createdAt: -1 })
     .then((result) => {
       const data = result.map((video) => {
@@ -122,6 +151,7 @@ const findAllPro = (req, res) => {
       res.send({
         message: "Videos was successfully retrieved",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
