@@ -91,7 +91,7 @@ const findOne = (req, res) => {
     .then((referral) => {
       if (!referral) {
         return res.status(404).send({
-          message: `Referral with id ${id} not found`,
+          message: `Referral not found`,
         });
       }
 
@@ -128,7 +128,7 @@ const findOne = (req, res) => {
     })
     .catch((err) => {
       return res.status(500).send({
-        message: `Error retrieving referral with id ${id}`,
+        message: `Error retrieving referral`,
       });
     });
 };
@@ -166,7 +166,7 @@ const addBankAccount = (req, res) => {
     .then((referral) => {
       if (!referral) {
         return res.status(404).send({
-          message: `Referral with id ${id} not found`,
+          message: `Referral not found`,
         });
       }
 
@@ -176,7 +176,7 @@ const addBankAccount = (req, res) => {
     })
     .catch((err) => {
       return res.status(500).send({
-        message: `Error updating referral with id ${id}`,
+        message: `Error updating referral`,
       });
     });
 };
@@ -211,7 +211,7 @@ const changeReferralCode = (req, res) => {
     .then((referral) => {
       if (!referral) {
         return res.status(404).send({
-          message: `Referral with id ${id} not found`,
+          message: `Referral not found`,
         });
       }
 
@@ -221,7 +221,7 @@ const changeReferralCode = (req, res) => {
     })
     .catch((err) => {
       return res.status(500).send({
-        message: `Error updating referral with id ${id}`,
+        message: `Error updating referral`,
       });
     });
 };
@@ -232,7 +232,7 @@ const requestWD = (req, res) => {
 
   if (!referralCode) {
     return res.status(400).send({
-      message: "Invalid ID",
+      message: "Referral code is required",
     });
   }
 
@@ -415,7 +415,7 @@ const verifyBank = (req, res) => {
     .then((referral) => {
       if (!referral) {
         return res.status(404).send({
-          message: `Referral with id ${id} not found`,
+          message: `Referral not found`,
         });
       }
 
@@ -425,7 +425,7 @@ const verifyBank = (req, res) => {
     })
     .catch((err) => {
       return res.status(500).send({
-        message: `Error updating referral with id ${id}`,
+        message: `Error updating referral`,
       });
     });
 };
@@ -464,7 +464,7 @@ const updateWDStatus = (req, res) => {
     .then((referral) => {
       if (!referral) {
         return res.status(404).send({
-          message: `Referral with id ${id} not found`,
+          message: `Referral not found`,
         });
       }
 
@@ -474,7 +474,7 @@ const updateWDStatus = (req, res) => {
     })
     .catch((err) => {
       return res.status(500).send({
-        message: `Error updating referral with id ${id}`,
+        message: `Error updating referral`,
       });
     });
 };
