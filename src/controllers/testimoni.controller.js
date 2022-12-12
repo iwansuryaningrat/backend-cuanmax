@@ -1,6 +1,9 @@
 import db from "../models/index.js";
 const Testimoni = db.testimoni;
 
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
+
 // Find all testimoni for admin
 const findAllAdmin = (req, res) => {
   const { active } = req.query;
@@ -85,7 +88,7 @@ const findAll = (req, res) => {
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Testimoni ID is required",
     });
@@ -169,7 +172,7 @@ const create = (req, res) => {
 const deleteTesti = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Testimoni ID is required",
     });
@@ -198,7 +201,7 @@ const deleteTesti = (req, res) => {
 const update = (req, res) => {
   const id = req.params.id;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Testimoni ID is required",
     });
@@ -236,7 +239,7 @@ const update = (req, res) => {
 const deactivate = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Testimoni ID is required",
     });
@@ -265,7 +268,7 @@ const deactivate = (req, res) => {
 const uploadPhotos = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Testimoni ID is required",
     });
