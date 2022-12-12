@@ -6,8 +6,8 @@ import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch all referrals from the database (Done)
-const findAll = (req, res) => {
-  const { status } = req.query;
+const findAll = async (req, res) => {
+  const { status, page } = req.query;
 
   var condition = {};
 
@@ -19,11 +19,23 @@ const findAll = (req, res) => {
     condition = {};
   }
 
-  Referrals.find(condition)
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Referrals, pageLimit, condition);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  await Referrals.find(condition)
     .populate({
       path: "referralUser",
       select: "name username email",
     })
+    .skip(skip)
+    .limit(pageLimit)
     .sort({ createdAt: -1 })
     .then((referrals) => {
       if (referrals.length < 0) {
@@ -64,6 +76,7 @@ const findAll = (req, res) => {
       res.send({
         message: "Referrals fetched successfully",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -301,12 +314,28 @@ const requestWD = (req, res) => {
 };
 
 // Show all referrals with verification bank account request (Done)
-const showAllVerification = (req, res) => {
-  Referrals.find({ "referralWithDrawBank.withDrawBankAccountVerified": false })
+const showAllVerification = async (req, res) => {
+  const { page } = req.query;
+  const query = { "referralWithDrawBank.withDrawBankAccountVerified": false };
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Referrals, pageLimit, query);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  await Referrals.find(query)
     .populate({
       path: "referralUser",
       select: "name username email",
     })
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((referrals) => {
       if (!referrals) {
         return res.status(404).send({
@@ -337,6 +366,7 @@ const showAllVerification = (req, res) => {
       res.send({
         message: "Referrals fetched successfully",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -347,14 +377,28 @@ const showAllVerification = (req, res) => {
 };
 
 // Show all referrals with withdraw request (withDrawStatus = "Pending") (Done)
-const showAllWithdraw = (req, res) => {
-  Referrals.find({
-    referralWithDrawHistory: { $elemMatch: { withDrawStatus: "Pending" } },
-  })
+const showAllWithdraw = async (req, res) => {
+  const { page } = req.query;
+  const query = { "referralWithDrawHistory.withDrawStatus": "Pending" };
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Referrals, pageLimit, query);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  await Referrals.find(query)
     .populate({
       path: "referralUser",
       select: "name username email",
     })
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((referrals) => {
       if (!referrals) {
         return res.status(404).send({
@@ -389,6 +433,7 @@ const showAllWithdraw = (req, res) => {
       res.send({
         message: "Referrals fetched successfully",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
