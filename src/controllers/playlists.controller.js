@@ -1,6 +1,9 @@
 import db from "../models/index.js";
 const Playlists = db.playlists;
 
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
+
 // Find All Playlists for Admin
 const findAll = (req, res) => {
   const { category, videoLevel, status } = req.query;
@@ -199,7 +202,7 @@ const create = (req, res) => {
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Playlist ID is required",
     });
@@ -240,7 +243,7 @@ const findOne = (req, res) => {
 const update = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Playlist ID is required",
     });
@@ -281,7 +284,7 @@ const update = (req, res) => {
 const updateThumbnail = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Playlist ID is required",
     });
@@ -330,7 +333,7 @@ const updateThumbnail = (req, res) => {
 const deletePlaylist = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Playlist ID is required",
     });
@@ -359,7 +362,7 @@ const deletePlaylist = (req, res) => {
 const changeStatus = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Playlist ID is required",
     });
