@@ -6,8 +6,8 @@ import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
 
 // Find All Playlists for Admin
-const findAll = (req, res) => {
-  const { category, videoLevel, status } = req.query;
+const findAll = async (req, res) => {
+  const { category, videoLevel, status, page } = req.query;
 
   var query = {};
 
@@ -15,7 +15,19 @@ const findAll = (req, res) => {
   if (videoLevel) query.videoLevel = videoLevel;
   if (status) query.status = status;
 
-  Playlists.find(query)
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Playlists, pageLimit, query);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  await Playlists.find(query)
+    .skip(skip)
+    .limit(pageLimit)
     .sort({ createdAt: -1 })
     .then((result) => {
       if (!result) {
@@ -40,6 +52,7 @@ const findAll = (req, res) => {
       res.send({
         message: "All playlist were fetched successfully",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -64,6 +77,7 @@ const findAllNameId = (req, res) => {
         return {
           id: item._id,
           name: item.name,
+          status: item.status,
         };
       });
 
@@ -80,8 +94,23 @@ const findAllNameId = (req, res) => {
 };
 
 // Find All Playlists for Pro User
-const findAllforPro = (req, res) => {
-  Playlists.find({ status: "Published" })
+const findAllforPro = async (req, res) => {
+  const { page, pageLimit } = req.query;
+
+  const query = { status: "Published" };
+
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Playlists, pageLimit, query);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  await Playlists.find(query)
+    .skip(skip)
+    .limit(pageLimit)
     .sort({ createdAt: -1 })
     .then((result) => {
       if (!result) {
@@ -106,6 +135,7 @@ const findAllforPro = (req, res) => {
       res.send({
         message: "All playlist were fetched successfully",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -118,8 +148,8 @@ const findAllforPro = (req, res) => {
 // Find All Playlists for Basic User
 const findAllforUsers = (req, res) => {
   Playlists.find({ status: "Published", videoLevel: "Beginner" })
-    .sort({ createdAt: -1 })
     .limit(3)
+    .sort({ createdAt: -1 })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
