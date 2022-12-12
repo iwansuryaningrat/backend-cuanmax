@@ -5,7 +5,13 @@ import {
   incrementPlaylistVideoCount,
   decrementPlaylistVideoCount,
 } from "./function/playlist.function.js";
-import updateVideoUrl from "./function/videos.function.js";
+import {
+  updateVideoUrl,
+  updateVideoViews,
+  updateVideoLikes,
+  updateVideoDislikes,
+  updatePlaylistVideo,
+} from "./function/videos.function.js";
 
 // Find all videos for admin (DONE)
 const findAll = (req, res) => {
@@ -521,20 +527,203 @@ const updateStatus = (req, res) => {
     });
 };
 
-// Change Video URL
-const changeVideoUrl = async (id, url) => {};
+// Change Video URL (Need to be tested)
+const changeVideoUrl = async (req, res) => {
+  const { id } = req.params;
 
-// Change Playlist Video
-const changePlaylistVideo = async (id, playlistId) => {};
+  if (!id) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
 
-// Watch video only for pro users if video is published
-const watchVideo = async (req, res) => {};
+  const { url } = req.body;
 
-// Like video only for pro users if video is published
-const likeVideo = async (req, res) => {};
+  const result = await updateVideoUrl(id, url);
 
-// Dislike video only for pro users if video is published
-const dislikeVideo = async (req, res) => {};
+  if (result === true) {
+    res.send({
+      message: "Video URL was updated",
+    });
+  } else {
+    return res.status(500).send({
+      message: "Some error while update video.",
+    });
+  }
+};
+
+// Change Playlist Video (Need to be tested)
+const changePlaylistVideo = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
+
+  const { playlistId } = req.body;
+
+  const video = await Videos.findById(id);
+
+  if (!video) {
+    return res.status(404).send({
+      message: "Video not found",
+    });
+  }
+
+  const updatePlaylist = await {
+    incrementPlaylistVideoCount,
+    decrementPlaylistVideoCount,
+  }(playlistId, video.playlist);
+
+  if (updatePlaylist === true) {
+    const result = await updatePlaylistVideo(id, playlistId);
+
+    if (result === true) {
+      res.send({
+        message: "Video playlist was updated",
+      });
+    } else {
+      return res.status(500).send({
+        message: "Some error while update video.",
+      });
+    }
+  } else {
+    return res.status(500).send({
+      message: "Some error while update video.",
+    });
+  }
+};
+
+// Watch video only for pro users if video is published (Need to be tested)
+const watchVideo = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
+
+  const video = await Videos.findById(id).populate({
+    path: "playlist",
+    select: "_id name videoLevel videoCount",
+  });
+
+  if (!video) {
+    return res.status(404).send({
+      message: "Video not found",
+    });
+  }
+
+  if (video.status !== "Published") {
+    return res.status(400).send({
+      message: "Video is not published",
+    });
+  }
+
+  const updateViews = await updateVideoViews(id);
+
+  if (updateViews === true) {
+    const data = {
+      title: video.title,
+      description: video.description,
+      url: video.url,
+      thumbnail: video.thumbnail,
+      playlist: video.playlist,
+      tags: video.tags,
+      views: video.views,
+      likes: video.likes,
+      dislikes: video.dislikes,
+      duration: video.duration,
+      date: video.date,
+    };
+
+    res.send({
+      message: "Video successfully watched",
+      data,
+    });
+  } else {
+    return res.status(500).send({
+      message: "Some error while watching video.",
+    });
+  }
+};
+
+// Like video only for pro users if video is published (Need to be tested)
+const likeVideo = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
+
+  const video = await Videos.findById(id);
+
+  if (!video) {
+    return res.status(404).send({
+      message: "Video not found",
+    });
+  }
+
+  if (video.status !== "Published") {
+    return res.status(400).send({
+      message: "Video is not published",
+    });
+  }
+
+  const updateLikes = await updateVideoLikes(id);
+
+  if (updateLikes === true) {
+    res.send({
+      message: "Video was liked",
+    });
+  } else {
+    return res.status(500).send({
+      message: "Some error while update video likes.",
+    });
+  }
+};
+
+// Dislike video only for pro users if video is published (Need to be tested)
+const dislikeVideo = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
+
+  const video = await Videos.findById(id);
+
+  if (!video) {
+    return res.status(404).send({
+      message: "Video not found",
+    });
+  }
+
+  if (video.status !== "Published") {
+    return res.status(400).send({
+      message: "Video is not published",
+    });
+  }
+
+  const updateDislikes = await updateVideoDislikes(id);
+
+  if (updateDislikes === true) {
+    res.send({
+      message: "Video was disliked",
+    });
+  } else {
+    return res.status(500).send({
+      message: "Some error while update video dislikes.",
+    });
+  }
+};
 
 export {
   findAll,
