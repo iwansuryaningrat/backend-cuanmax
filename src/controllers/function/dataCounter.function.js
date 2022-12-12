@@ -1,7 +1,3 @@
-// MongoDB Connection
-// import connect from "../../services/db.connect.service.js";
-// connect();
-
 import db from "../../models/index.js";
 const Liveclass = db.liveclass;
 const LiveclassTransactions = db.liveclassTransactions;
@@ -27,7 +23,6 @@ const dataCounter = async (Model, itemPerPage, condition) => {
     dataCount = await Model.where(condition)
       .countDocuments({})
       .then((docCount) => {
-        console.log(condition);
         return docCount;
       })
       .catch((err) => {
