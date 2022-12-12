@@ -1,6 +1,6 @@
 // MongoDB Connection
-import connect from "../../services/db.connect.service.js";
-connect();
+// import connect from "../../services/db.connect.service.js";
+// connect();
 
 import db from "../../models/index.js";
 const Liveclass = db.liveclass;
