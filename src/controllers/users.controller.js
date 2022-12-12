@@ -10,8 +10,8 @@ import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch all users - Admin Only (need to be updated)
-const findAll = (req, res) => {
-  const { admin, basic, pro } = req.query;
+const findAll = async (req, res) => {
+  const { admin, basic, pro, page } = req.query;
 
   var condition = {};
 
@@ -25,13 +25,25 @@ const findAll = (req, res) => {
     condition = {};
   }
 
-  Users.find(condition)
-    .sort({ createdAt: -1 })
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Users, pageLimit, condition);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  await Users.find(condition)
     .populate({
       path: "referral",
       select:
         "referralCode referralCount referralAccount referralTotalAmount referralAvailableAmount referralWithDraw referralWithDrawBank referralWithDrawHistory referralStatus ",
     })
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -79,6 +91,7 @@ const findAll = (req, res) => {
       res.status(200).send({
         message: "Users fetched successfully!",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
