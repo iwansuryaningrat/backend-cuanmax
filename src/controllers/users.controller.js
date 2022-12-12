@@ -92,7 +92,7 @@ const findAll = (req, res) => {
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "User ID is required!",
     });
@@ -174,7 +174,7 @@ const findOne = (req, res) => {
 const deleteUSer = async (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "User ID is required",
     });
@@ -212,7 +212,7 @@ const deleteUSer = async (req, res) => {
 const update = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "User ID is required.",
     });
@@ -273,7 +273,7 @@ const changePassword = (req, res) => {
   const { oldPassword } = req.body;
   let newPassword = req.body.newPassword;
 
-  if (!id || !oldPassword || !newPassword) {
+  if (!id || !ObjectId.isValid(id) || !oldPassword || !newPassword) {
     return res.status(400).send({
       message: "User ID, Old Password, and New Password are required",
     });
@@ -349,7 +349,7 @@ const changePassword = (req, res) => {
 const changeProfilePicture = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "User ID is required",
     });
@@ -438,7 +438,7 @@ const createReferralCode = (req, res) => {
   const { id } = req.params;
   var { referralCode } = req.body;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "User ID is required",
     });
@@ -555,7 +555,7 @@ const changeProMemberToBasicMember = async (req, res) => {
 const requestUserActivation = async (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "User ID is required",
     });
