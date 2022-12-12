@@ -22,9 +22,9 @@ const videosAdminRouter = (app) => {
   router.put("/:id", login, admin, update);
   router.put("/:id/thumbnail", login, admin, updateThumbnail);
   router.put("/:id/status", login, admin, updateStatus);
-  router.delete("/:id", login, admin, deleteVideo);
   router.put("/:id/url", login, admin, changeVideoUrl);
   router.put("/:id/playlist", login, admin, changePlaylistVideo);
+  router.delete("/:id", login, admin, deleteVideo);
 
   app.use("/v1/admin/videos", router);
 };
