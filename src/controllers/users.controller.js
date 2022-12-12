@@ -4,6 +4,7 @@ const Referrals = db.referrals;
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import adminCheck from "./function/admincheck.function.js";
+import dataCounter from "./function/dataCounter.function.js";
 
 import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
