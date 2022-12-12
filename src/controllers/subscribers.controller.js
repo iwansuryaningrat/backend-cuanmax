@@ -1,6 +1,9 @@
 import db from "../models/index.js";
 const Subscribers = db.subscribers;
 
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
+
 // Fetch all Subscribers (DONE)
 const findAll = (req, res) => {
   const { active } = req.query;
@@ -93,7 +96,7 @@ const create = (req, res) => {
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Subscriber ID is required.",
     });
@@ -134,7 +137,7 @@ const findOne = (req, res) => {
 const deleteSubs = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Subscriber ID is required.",
     });
@@ -163,7 +166,7 @@ const deleteSubs = (req, res) => {
 const deactivate = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Subscriber ID is required.",
     });
