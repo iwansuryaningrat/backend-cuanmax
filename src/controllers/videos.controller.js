@@ -637,7 +637,7 @@ const watchVideo = async (req, res) => {
       likes: video.likes,
       dislikes: video.dislikes,
       duration: video.duration,
-      date: video.date,
+      date: new Date(video.date).toString(),
     };
 
     res.send({
