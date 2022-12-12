@@ -4,6 +4,9 @@ const Messages = db.messages;
 
 import replyMessage from "./function/reply.function.js";
 
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
+
 // Fetch All Messages from Database (Done)
 const findAll = (req, res) => {
   const { status } = req.query;
@@ -85,7 +88,7 @@ const create = (req, res) => {
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Message ID is required",
     });
@@ -126,7 +129,7 @@ const findOne = (req, res) => {
 const read = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Message ID is required",
     });
@@ -179,7 +182,7 @@ const reply = async (req, res) => {
 
   const userID = decoded.id;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Message ID is required",
     });
@@ -220,7 +223,7 @@ const reply = async (req, res) => {
 const deleteMsg = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Message ID is required",
     });
