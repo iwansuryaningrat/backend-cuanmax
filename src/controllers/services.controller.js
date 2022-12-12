@@ -1,6 +1,9 @@
 import db from "../models/index.js";
 const Services = db.services;
 
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
+
 // Find all services in database (Done)
 const findAll = (req, res) => {
   // Active filter by query params
@@ -76,7 +79,7 @@ const create = (req, res) => {
 const uploadImage = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Id is required",
     });
@@ -120,7 +123,7 @@ const uploadImage = (req, res) => {
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Id is required",
     });
@@ -158,7 +161,7 @@ const findOne = (req, res) => {
 const deleteService = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Id is required",
     });
@@ -188,7 +191,7 @@ const update = (req, res) => {
   const { id } = req.params;
   const { serviceName, description, benefits } = req.body;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Id is required",
     });
@@ -222,7 +225,7 @@ const addBenefit = (req, res) => {
   const { id } = req.params;
   const { benefit } = req.body;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Id is required",
     });
@@ -255,7 +258,7 @@ const addBenefit = (req, res) => {
 const deactivate = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Id is required",
     });
