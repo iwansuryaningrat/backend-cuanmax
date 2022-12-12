@@ -56,6 +56,7 @@ const findAll = async (req, res) => {
       res.send({
         message: "Services was found",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
