@@ -1,6 +1,9 @@
 import db from "../models/index.js";
 const Teams = db.teams;
 
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
+
 // Fetch all teams data (DONE)
 const findAll = (req, res) => {
   const { active } = req.query;
@@ -81,7 +84,7 @@ const findAllforUsers = (req, res) => {
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Team ID is required.",
     });
@@ -121,7 +124,7 @@ const findOne = (req, res) => {
 const deleteTeam = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Team ID is required.",
     });
@@ -186,7 +189,7 @@ const create = (req, res) => {
 const update = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Teams ID is required",
     });
@@ -229,7 +232,7 @@ const update = (req, res) => {
 const teamProfilePicture = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Teams ID is required",
     });
@@ -271,7 +274,7 @@ const teamProfilePicture = (req, res) => {
 const deactivate = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Teams ID is required",
     });
