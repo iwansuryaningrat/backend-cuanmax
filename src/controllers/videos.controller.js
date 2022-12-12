@@ -58,7 +58,7 @@ const findAll = (req, res) => {
           likes,
           dislikes,
           duration,
-          date,
+          date: new Date(date).toString(),
           status,
         };
       });
@@ -111,7 +111,7 @@ const findAllPro = (req, res) => {
           likes,
           dislikes,
           duration,
-          date,
+          date: new Date(date).toString(),
         };
       });
 
@@ -178,7 +178,7 @@ const findByPlaylist = (req, res) => {
           likes,
           dislikes,
           duration,
-          date,
+          date: new Date(date).toString(),
           status,
         };
       });
@@ -245,7 +245,7 @@ const findByPlaylistPro = (req, res) => {
           likes,
           dislikes,
           duration,
-          date,
+          date: new Date(date).toString(),
         };
       });
 
@@ -283,7 +283,7 @@ const findOne = (req, res) => {
         });
       }
 
-      const data = {
+      const {
         _id,
         title,
         description,
@@ -296,6 +296,21 @@ const findOne = (req, res) => {
         dislikes,
         duration,
         date,
+      } = result;
+
+      const data = {
+        _id,
+        title,
+        description,
+        url,
+        thumbnail,
+        playlist,
+        tags,
+        views,
+        likes,
+        dislikes,
+        duration,
+        date: new Date(date).toString(),
       };
 
       res.send({
