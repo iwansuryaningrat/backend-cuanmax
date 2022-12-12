@@ -6,8 +6,8 @@ import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch all Subscribers (DONE)
-const findAll = (req, res) => {
-  const { active } = req.query;
+const findAll = async (req, res) => {
+  const { active, page } = req.query;
 
   var condition = {};
 
@@ -15,7 +15,19 @@ const findAll = (req, res) => {
     condition.status = "Active";
   }
 
-  Subscribers.find(condition)
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Subscribers, pageLimit, condition);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  await Subscribers.find(condition)
+    .skip(skip)
+    .limit(pageLimit)
     .sort({ createdAt: -1 })
     .then((result) => {
       if (result.length === 0) {
@@ -40,6 +52,7 @@ const findAll = (req, res) => {
       res.send({
         message: "Subscribers successfully fetched.",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
