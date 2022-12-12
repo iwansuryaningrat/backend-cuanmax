@@ -71,9 +71,9 @@ const findAll = async (req, res) => {
   };
 
   await Plans.find(condition)
-    .sort({ createdAt: -1 })
     .skip(skip)
     .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((result) => {
       if (!result || result.length === 0) {
         return res.status(404).send({
