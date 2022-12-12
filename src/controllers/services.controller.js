@@ -1,13 +1,14 @@
 import db from "../models/index.js";
 const Services = db.services;
+import dataCounter from "./function/dataCounter.function.js";
 
 import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
 
 // Find all services in database (Done)
-const findAll = (req, res) => {
+const findAll = async (req, res) => {
   // Active filter by query params
-  let { active } = req.query;
+  let { active, page } = req.query;
 
   active = active ? active : true;
 
@@ -20,7 +21,20 @@ const findAll = (req, res) => {
     condition = {};
   }
 
-  Services.find(condition)
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Services, pageLimit, condition);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  await Services.find(condition)
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((result) => {
       if (result.length === 0) {
         return res.status(404).send({
