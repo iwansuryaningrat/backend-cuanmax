@@ -1,12 +1,4 @@
-import {
-  findAll,
-  findOne,
-  create,
-  deleteClass,
-  update,
-  uploadThumbnail,
-} from "../controllers/liveclass.controller.js";
-import { login, admin } from "../middlewares/auth.js";
+import { findAll, findOne } from "../controllers/liveclass.controller.js";
 import Express from "express";
 const router = Express.Router();
 
