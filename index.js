@@ -82,6 +82,8 @@ import authRouter from "./src/routes/auth.routes.js"; // Auth Router
 authRouter(app); // Auth Router
 // import coinmarketcapRouter from "./src/routes/coinmarketcap.routes.js"; // Coinmarketcap Router
 // coinmarketcapRouter(app); // Coinmarketcap Router
+import liveClassRouter from "./src/routes/liveclass.routes.js"; // Live Class Router
+liveClassRouter(app); // Live Class Router
 import messagesRouter from "./src/routes/messages.routes.js"; // Messages Router
 messagesRouter(app); // Messages Router
 import plansRouter from "./src/routes/plans.routes.js"; // Plans Router
@@ -98,7 +100,8 @@ testimoniRouter(app); // Testimoni Router
 // apiDocsRouter(app); // API Docs Router
 
 // * Admin Routers
-// Liveclass Router
+import liveClassAdminRouter from "./src/routes/admin/liveclass.routes.js"; // Liveclass Router
+liveClassAdminRouter(app); // Liveclass Router
 import messagesAdminRouter from "./src/routes/admin/messages.routes.js"; // Messages Router
 messagesAdminRouter(app); // Messages Router
 // News Router
