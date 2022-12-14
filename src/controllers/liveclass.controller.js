@@ -5,7 +5,7 @@ import dataCounter from "./function/dataCounter.function.js";
 
 // Find all liveclasses (Done)
 const findAll = (req, res) => {
-  const { status, category, tags } = req.query;
+  const { status, category, tags, page } = req.query;
   const query = status ? { status: status } : {};
 
   if (category) {
@@ -16,13 +16,29 @@ const findAll = (req, res) => {
     query.tags = { $in: tags.split(",") };
   }
 
+  const pageLimit = 10;
+  const skip = page ? (page - 1) * pageLimit : 0;
+  const dataCount = dataCounter(Liveclass, pageLimit, query);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
   Liveclass.find(query)
+    .populate({
+      path: "participants.participantsList.userID",
+      select: "name username email",
+    })
+    .skip(skip)
+    .limit(pageLimit)
     .sort({ createdAt: -1 })
     .then((liveclasses) => {
       res.send({
         message: "All liveclasses were fetched successfully",
-        timestamp: new Date().toString(),
         data: liveclasses,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -44,6 +60,10 @@ const findOne = (req, res) => {
   }
 
   Liveclass.findById(id)
+    .populate({
+      path: "participants.participantsList.userID",
+      select: "name username email",
+    })
     .then((liveclass) => {
       if (!liveclass) {
         return res.status(404).send({
@@ -52,7 +72,6 @@ const findOne = (req, res) => {
       }
       res.send({
         message: "Liveclass was fetched successfully",
-        timestamp: new Date().toString(),
         data: liveclass,
       });
     })
@@ -82,7 +101,6 @@ const deleteClass = (req, res) => {
       }
       res.send({
         message: "Liveclass was deleted successfully",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -112,13 +130,11 @@ const update = (req, res) => {
 
       res.send({
         message: "Live Class was updated",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Some error while updating live class.",
-        timestamp: new Date().toString(),
       });
     });
 };
@@ -145,7 +161,6 @@ const create = (req, res) => {
     .then((result) => {
       res.send({
         message: "Live Class was created",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -153,7 +168,6 @@ const create = (req, res) => {
       return res.status(500).send({
         message:
           err.message || "Some error occurred while creating Live Class.",
-        timestamp: new Date().toString(),
       });
     });
 };
@@ -183,13 +197,11 @@ const uploadThumbnail = (req, res) => {
 
       return res.status(200).send({
         message: "Live Class was updated",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Some error while updating live class.",
-        timestamp: new Date().toString(),
       });
     });
 };
