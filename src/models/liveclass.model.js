@@ -40,16 +40,6 @@ export default (mongoose) => {
         type: String,
         require: true,
       },
-      status: {
-        type: String,
-        require: true,
-        enum: {
-          values: ["Upcoming", "Closed", "Cancelled", "Ongoing", "Completed"],
-          message:
-            "Status must be Upcoming, Closed, Cancelled, Ongoing or Completed",
-        },
-        default: "Upcoming",
-      },
       thumbnail: {
         imageName: {
           type: String,
@@ -80,6 +70,16 @@ export default (mongoose) => {
             },
           },
         ],
+      },
+      status: {
+        type: String,
+        require: true,
+        enum: {
+          values: ["Upcoming", "Closed", "Cancelled", "Ongoing", "Completed"],
+          message:
+            "Status must be Upcoming, Closed, Cancelled, Ongoing or Completed",
+        },
+        default: "Upcoming",
       },
     },
     { timestamps: true }
