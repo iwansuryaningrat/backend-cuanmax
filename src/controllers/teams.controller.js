@@ -7,12 +7,12 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch all teams data (DONE)
 const findAll = async (req, res) => {
-  const { active, page, pageLimit } = req.query;
+  let { active, page, pageLimit } = req.query;
 
   let condition = active ? { status: "Active" } : {};
 
-  if (page === null) page = 1;
-  if (pageLimit === null) pageLimit = 10;
+  if (page === undefined) page = 1;
+  if (pageLimit === undefined) pageLimit = 10;
 
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Teams, pageLimit, condition);
