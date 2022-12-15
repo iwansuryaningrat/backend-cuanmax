@@ -81,7 +81,7 @@ const findAllForUsers = (req, res) => {
     .then((liveclasses) => {
       if (!liveclasses) {
         return res.status(404).send({
-          message: "Liveclasses not found",
+          message: "No liveclass was found",
         });
       }
 
