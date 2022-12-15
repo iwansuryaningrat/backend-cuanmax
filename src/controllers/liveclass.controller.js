@@ -43,9 +43,44 @@ const findAll = async (req, res) => {
         });
       }
 
+      const data = liveclasses.map((liveclass) => {
+        const {
+          _id,
+          title,
+          liveclassCode,
+          price,
+          description,
+          category,
+          tags,
+          date,
+          time,
+          location,
+          benefits,
+          thumbnail,
+          participants,
+          status,
+        } = liveclass;
+        return {
+          id: _id,
+          title,
+          liveclassCode,
+          price,
+          description,
+          category,
+          tags,
+          date,
+          time,
+          location,
+          thumbnail,
+          benefits,
+          participants,
+          status,
+        };
+      });
+
       res.send({
         message: "All liveclasses were fetched successfully",
-        data: liveclasses,
+        data,
         page: pageData,
       });
     })
@@ -92,6 +127,7 @@ const findAllForUsers = async (req, res) => {
         const {
           _id,
           title,
+          liveclassCode,
           price,
           description,
           category,
@@ -105,6 +141,7 @@ const findAllForUsers = async (req, res) => {
         return {
           id: _id,
           title,
+          liveclassCode,
           price,
           description,
           category,
@@ -112,8 +149,8 @@ const findAllForUsers = async (req, res) => {
           date,
           time,
           location,
-          benefits,
           thumbnail,
+          benefits,
         };
       });
 
