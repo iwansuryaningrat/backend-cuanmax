@@ -1,5 +1,6 @@
 import db from "../models/index.js";
 const Watchlist = db.watchlist;
+import dataCounter from "./function/dataCounter.function.js";
 
 // Done
 const findAll = (req, res) => {
