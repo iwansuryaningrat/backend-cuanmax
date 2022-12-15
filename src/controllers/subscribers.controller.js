@@ -7,7 +7,7 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch all Subscribers (DONE)
 const findAll = async (req, res) => {
-  const { active, page } = req.query;
+  let { active, page } = req.query;
 
   var condition = {};
 
@@ -15,7 +15,7 @@ const findAll = async (req, res) => {
     condition.status = "Active";
   }
 
-  if (page === null) page = 1;
+  if (page === undefined) page = 1;
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
