@@ -11,6 +11,9 @@ const findAll = async (req, res) => {
 
   let condition = active ? { status: "Active" } : {};
 
+  if (page === null) page = 1;
+  if (pageLimit === null) pageLimit = 10;
+
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Teams, pageLimit, condition);
   const pageData = {
