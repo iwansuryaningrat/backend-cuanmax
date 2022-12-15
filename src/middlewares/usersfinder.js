@@ -54,7 +54,7 @@ const verifyUser = (req, res, next) => {
       });
   } catch (err) {
     return res.status(401).send({
-      message: "Token is not valid",
+      message: err.message || "Token is not valid",
     });
   }
 };
