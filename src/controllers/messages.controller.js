@@ -11,7 +11,7 @@ const ObjectId = mongoose.Types.ObjectId;
 // Fetch All Messages from Database (Done)
 const findAll = async (req, res) => {
   let { status, page } = req.query;
-  const query = {};
+  let query = {};
 
   if (status) {
     query.status = status;
