@@ -4,8 +4,8 @@ const Liveclass = db.liveclass;
 import dataCounter from "./function/dataCounter.function.js";
 
 // Find all liveclasses (Done)
-const findAll = (req, res) => {
-  const { status, category, tags, page } = req.query;
+const findAll = async (req, res) => {
+  let { status, category, tags, page } = req.query;
   const query = status ? { status: status } : {};
 
   if (category) {
@@ -16,11 +16,11 @@ const findAll = (req, res) => {
     query.tags = { $in: tags.split(",") };
   }
 
-  if (page === null) page = 1;
+  if (page === undefined) page = 1;
 
   const pageLimit = 10;
   const skip = page ? (page - 1) * pageLimit : 0;
-  const dataCount = dataCounter(Liveclass, pageLimit, query);
+  const dataCount = await dataCounter(Liveclass, pageLimit, query);
   const pageData = {
     currentPage: page,
     pageCount: dataCount.pageCount,
@@ -28,7 +28,7 @@ const findAll = (req, res) => {
     dataCount: dataCount.dataCount,
   };
 
-  Liveclass.find(query)
+  await Liveclass.find(query)
     .populate({
       path: "participants.participantsList.userID",
       select: "name username email",
@@ -58,14 +58,14 @@ const findAll = (req, res) => {
 };
 
 // Find All liveclasses for Users (Done)
-const findAllForUsers = (req, res) => {
-  const { page, pageLimit } = req.query;
+const findAllForUsers = async (req, res) => {
+  let { page, pageLimit } = req.query;
 
-  if (page === null) page = 1;
-  if (pageLimit === null) pageLimit = 9;
+  if (page === undefined) page = 1;
+  if (pageLimit === undefined) pageLimit = 9;
 
   const skip = page ? (page - 1) * pageLimit : 0;
-  const dataCount = dataCounter(Liveclass, pageLimit);
+  const dataCount = await dataCounter(Liveclass, pageLimit);
   const pageData = {
     currentPage: page,
     pageCount: dataCount.pageCount,
@@ -73,7 +73,7 @@ const findAllForUsers = (req, res) => {
     dataCount: dataCount.dataCount,
   };
 
-  Liveclass.find({
+  await Liveclass.find({
     status: {
       $in: ["Upcoming", "Closed", "Ongoing"],
     },
@@ -255,6 +255,8 @@ const create = (req, res) => {
     });
   }
 
+  const theDate = new Date(date).toDateString();
+
   const liveclass = new Liveclass({
     title: title,
     liveclassCode: liveclassCode,
@@ -262,7 +264,7 @@ const create = (req, res) => {
     category: category,
     description: description,
     tags: tags,
-    date: date,
+    date: theDate,
     time: time,
     location: location,
     thumbnail: {
@@ -278,8 +280,7 @@ const create = (req, res) => {
     .save()
     .then((result) => {
       res.send({
-        message: "Live Class was created",
-        data: result,
+        message: "Live class was successfully created",
       });
     })
     .catch((err) => {
