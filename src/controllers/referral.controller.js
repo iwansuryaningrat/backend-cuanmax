@@ -9,6 +9,8 @@ const ObjectId = mongoose.Types.ObjectId;
 const findAll = async (req, res) => {
   const { status, page } = req.query;
 
+  if (page === null) page = 1;
+
   var condition = {};
 
   if (status) {
@@ -318,6 +320,8 @@ const showAllVerification = async (req, res) => {
   const { page } = req.query;
   const query = { "referralWithDrawBank.withDrawBankAccountVerified": false };
 
+  if (page === null) page = 1;
+
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Referrals, pageLimit, query);
@@ -380,6 +384,8 @@ const showAllVerification = async (req, res) => {
 const showAllWithdraw = async (req, res) => {
   const { page } = req.query;
   const query = { "referralWithDrawHistory.withDrawStatus": "Pending" };
+
+  if (page === null) page = 1;
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
