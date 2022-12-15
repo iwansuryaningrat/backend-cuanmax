@@ -99,6 +99,9 @@ const findAllforPro = async (req, res) => {
 
   const query = { status: "Published" };
 
+  if (page === null) page = 1;
+  if (pageLimit === null) pageLimit = 10;
+
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Playlists, pageLimit, query);
   const pageData = {
