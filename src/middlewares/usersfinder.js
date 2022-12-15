@@ -33,14 +33,6 @@ const userFinder = (req, res, next) => {
 
 // Verify User that available in database
 const verifyUser = (req, res, next) => {
-  const token = req.header("x-auth-token");
-
-  if (!token) {
-    return res.status(401).send({
-      message: "No token, authorization denied",
-    });
-  }
-
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const id = decoded.id;
