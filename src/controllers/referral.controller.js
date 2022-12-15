@@ -7,9 +7,9 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch all referrals from the database (Done)
 const findAll = async (req, res) => {
-  const { status, page } = req.query;
+  let { status, page } = req.query;
 
-  if (page === null) page = 1;
+  if (page === undefined) page = 1;
 
   var condition = {};
 
@@ -317,10 +317,10 @@ const requestWD = (req, res) => {
 
 // Show all referrals with verification bank account request (Done)
 const showAllVerification = async (req, res) => {
-  const { page } = req.query;
+  let { page } = req.query;
   const query = { "referralWithDrawBank.withDrawBankAccountVerified": false };
 
-  if (page === null) page = 1;
+  if (page === undefined) page = 1;
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
@@ -382,10 +382,10 @@ const showAllVerification = async (req, res) => {
 
 // Show all referrals with withdraw request (withDrawStatus = "Pending") (Done)
 const showAllWithdraw = async (req, res) => {
-  const { page } = req.query;
+  let { page } = req.query;
   const query = { "referralWithDrawHistory.withDrawStatus": "Pending" };
 
-  if (page === null) page = 1;
+  if (page === undefined) page = 1;
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
