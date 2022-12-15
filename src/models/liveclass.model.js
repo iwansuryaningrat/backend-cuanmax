@@ -29,7 +29,7 @@ export default (mongoose) => {
         },
       ],
       date: {
-        type: Date,
+        type: String,
         require: true,
       },
       time: {
@@ -44,7 +44,7 @@ export default (mongoose) => {
         imageName: {
           type: String,
         },
-        imagePath: {
+        imageLink: {
           type: String,
           require: true,
           default: "example.jpg",
