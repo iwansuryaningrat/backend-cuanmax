@@ -49,6 +49,77 @@ const findAll = (req, res) => {
     });
 };
 
+// Find All liveclasses for Users (Done)
+const findAllForUsers = (req, res) => {
+  const { page, pageLimit } = req.query;
+
+  const skip = page ? (page - 1) * pageLimit : 0;
+  const dataCount = dataCounter(Liveclass, pageLimit);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  Liveclass.find({
+    status: {
+      $in: ["Upcoming", "Closed", "Ongoing"],
+    },
+  })
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
+    .then((liveclasses) => {
+      if (!liveclasses) {
+        return res.status(404).send({
+          message: "Liveclasses not found",
+        });
+      }
+
+      const data = liveclasses.map((liveclass) => {
+        const {
+          _id,
+          title,
+          price,
+          description,
+          category,
+          tags,
+          date,
+          time,
+          location,
+          benefits,
+          thumbnail,
+        } = liveclass;
+        return {
+          id: _id,
+          title,
+          price,
+          description,
+          category,
+          tags,
+          date,
+          time,
+          location,
+          benefits,
+          thumbnail,
+        };
+      });
+
+      res.send({
+        message: "All liveclasses were fetched successfully",
+        data,
+        page: pageData,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving liveclasses.",
+      });
+    });
+};
+
 // Find liveclass by id (Done)
 const findOne = (req, res) => {
   const { id } = req.params;
@@ -206,4 +277,12 @@ const uploadThumbnail = (req, res) => {
     });
 };
 
-export { findAll, findOne, deleteClass, update, create, uploadThumbnail };
+export {
+  findAll,
+  findAllForUsers,
+  findOne,
+  deleteClass,
+  update,
+  create,
+  uploadThumbnail,
+};
