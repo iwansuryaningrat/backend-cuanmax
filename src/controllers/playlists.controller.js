@@ -7,13 +7,15 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // Find All Playlists for Admin
 const findAll = async (req, res) => {
-  const { category, videoLevel, status, page } = req.query;
+  let { category, videoLevel, status, page } = req.query;
 
   var query = {};
 
   if (category) query.category = category;
   if (videoLevel) query.videoLevel = videoLevel;
   if (status) query.status = status;
+
+  if (page === undefined) page = 1;
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
@@ -95,12 +97,12 @@ const findAllNameId = (req, res) => {
 
 // Find All Playlists for Pro User
 const findAllforPro = async (req, res) => {
-  const { page, pageLimit } = req.query;
+  let { page, pageLimit } = req.query;
 
   const query = { status: "Published" };
 
-  if (page === null) page = 1;
-  if (pageLimit === null) pageLimit = 10;
+  if (page === undefined) page = 1;
+  if (pageLimit === undefined) pageLimit = 10;
 
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Playlists, pageLimit, query);
