@@ -37,6 +37,12 @@ const findAll = (req, res) => {
     .limit(pageLimit)
     .sort({ createdAt: -1 })
     .then((liveclasses) => {
+      if (!liveclasses) {
+        return res.status(404).send({
+          message: "No liveclass was found",
+        });
+      }
+
       res.send({
         message: "All liveclasses were fetched successfully",
         data: liveclasses,
