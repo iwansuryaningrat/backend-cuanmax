@@ -7,10 +7,10 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // Get all plans for Users (Active only) - Done
 const findAllforUsers = async (req, res) => {
-  const { page, pageLimit } = req.query;
+  let { page, pageLimit } = req.query;
 
-  if (page === null) page = 1;
-  if (pageLimit === null) pageLimit = 10;
+  if (page === undefined) page = 1;
+  if (pageLimit === undefined) pageLimit = 10;
 
   const condition = { status: "Active" };
   const skip = pageLimit * (page - 1);
@@ -59,11 +59,11 @@ const findAllforUsers = async (req, res) => {
 
 // Get all plans for Admin - Done
 const findAll = async (req, res) => {
-  const { status, page } = req.query;
+  let { status, page } = req.query;
 
   var condition = { status };
 
-  if (page === null) page = 1;
+  if (page === undefined) page = 1;
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
