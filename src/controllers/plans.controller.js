@@ -9,6 +9,9 @@ const ObjectId = mongoose.Types.ObjectId;
 const findAllforUsers = async (req, res) => {
   const { page, pageLimit } = req.query;
 
+  if (page === null) page = 1;
+  if (pageLimit === null) pageLimit = 10;
+
   const condition = { status: "Active" };
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Plans, pageLimit, condition);
@@ -59,6 +62,8 @@ const findAll = async (req, res) => {
   const { status, page } = req.query;
 
   var condition = { status };
+
+  if (page === null) page = 1;
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
