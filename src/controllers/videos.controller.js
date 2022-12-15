@@ -19,8 +19,8 @@ import {
 } from "./function/videos.function.js";
 
 // Find all videos for admin (DONE)
-const findAll = (req, res) => {
-  const { status, page } = req.query;
+const findAll = async (req, res) => {
+  let { status, page } = req.query;
 
   var condition = {};
 
@@ -28,11 +28,11 @@ const findAll = (req, res) => {
     condition = { status };
   }
 
-  if (page === null) page = 1;
+  if (page === undefined) page = 1;
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
-  const dataCount = dataCounter(Videos, pageLimit, condition);
+  const dataCount = await dataCounter(Videos, pageLimit, condition);
   const pageData = {
     currentPage: page,
     pageCount: dataCount.pageCount,
@@ -40,7 +40,7 @@ const findAll = (req, res) => {
     dataCount: dataCount.dataCount,
   };
 
-  Videos.find(condition)
+  await Videos.find(condition)
     .populate({
       path: "playlist",
       select: "_id name videoLevel videoCount status",
@@ -97,7 +97,7 @@ const findAll = (req, res) => {
 
 // Find all videos for Pro Member (DONE)
 const findAllPro = async (req, res) => {
-  const { page, pageLimit } = req.query;
+  let { page, pageLimit } = req.query;
 
   const condition = { status: "Published" };
 
@@ -167,9 +167,9 @@ const findAllPro = async (req, res) => {
 };
 
 // Find all videos by playlist ID for Admin (DONE)
-const findByPlaylist = (req, res) => {
+const findByPlaylist = async (req, res) => {
   const { playlistId } = req.params;
-  const { page } = req.query;
+  let { page } = req.query;
 
   if (!playlistId) {
     return res.status(400).send({
@@ -179,11 +179,11 @@ const findByPlaylist = (req, res) => {
 
   const condition = { playlist: playlistId };
 
-  if (page === null) page = 1;
+  if (page === undefined) page = 1;
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
-  const dataCount = dataCounter(Videos, pageLimit, condition);
+  const dataCount = await dataCounter(Videos, pageLimit, condition);
   const pageData = {
     currentPage: page,
     pageCount: dataCount.pageCount,
@@ -191,7 +191,7 @@ const findByPlaylist = (req, res) => {
     dataCount: dataCount.dataCount,
   };
 
-  Videos.find(condition)
+  await Videos.find(condition)
     .populate({
       path: "playlist",
       select: "_id name videoLevel videoCount status",
