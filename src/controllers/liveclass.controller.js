@@ -99,8 +99,15 @@ const findAllForUsers = async (req, res) => {
   if (page === undefined) page = 1;
   if (pageLimit === undefined) pageLimit = 9;
 
+  const condition = {
+    status: {
+      $in: ["Upcoming", "Closed", "Ongoing"],
+    },
+  };
+
   const skip = page ? (page - 1) * pageLimit : 0;
-  const dataCount = await dataCounter(Liveclass, pageLimit);
+  const dataCount = await dataCounter(Liveclass, pageLimit, condition);
+  console.log(dataCount);
   const pageData = {
     currentPage: page,
     pageCount: dataCount.pageCount,
@@ -108,11 +115,7 @@ const findAllForUsers = async (req, res) => {
     dataCount: dataCount.dataCount,
   };
 
-  await Liveclass.find({
-    status: {
-      $in: ["Upcoming", "Closed", "Ongoing"],
-    },
-  })
+  await Liveclass.find()
     .skip(skip)
     .limit(pageLimit)
     .sort({ createdAt: -1 })
@@ -162,8 +165,7 @@ const findAllForUsers = async (req, res) => {
     })
     .catch((err) => {
       return res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving liveclasses.",
+        message: "Some error occurred while retrieving liveclasses.",
       });
     });
 };
