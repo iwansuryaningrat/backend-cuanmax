@@ -6,7 +6,7 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // Find all testimoni for admin
 const findAllAdmin = async (req, res) => {
-  const { active, page } = req.query;
+  let { active, page } = req.query;
   let condition = {};
 
   if (active === true) {
@@ -17,7 +17,7 @@ const findAllAdmin = async (req, res) => {
     condition = {};
   }
 
-  if (page === null) page = 1;
+  if (page === undefined) page = 1;
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
