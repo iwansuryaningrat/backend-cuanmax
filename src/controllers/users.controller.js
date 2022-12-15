@@ -11,7 +11,7 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch all users - Admin Only (need to be updated)
 const findAll = async (req, res) => {
-  const { admin, basic, pro, page } = req.query;
+  let { admin, basic, pro, page } = req.query;
 
   var condition = {};
 
@@ -25,7 +25,7 @@ const findAll = async (req, res) => {
     condition = {};
   }
 
-  if (page === null) page = 1;
+  if (page === undefined) page = 1;
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
