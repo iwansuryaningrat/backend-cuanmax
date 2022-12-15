@@ -61,6 +61,9 @@ const findAll = (req, res) => {
 const findAllForUsers = (req, res) => {
   const { page, pageLimit } = req.query;
 
+  if (page === null) page = 1;
+  if (pageLimit === null) pageLimit = 9;
+
   const skip = page ? (page - 1) * pageLimit : 0;
   const dataCount = dataCounter(Liveclass, pageLimit);
   const pageData = {
