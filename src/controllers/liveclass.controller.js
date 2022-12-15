@@ -107,7 +107,6 @@ const findAllForUsers = async (req, res) => {
 
   const skip = page ? (page - 1) * pageLimit : 0;
   const dataCount = await dataCounter(Liveclass, pageLimit, condition);
-  console.log(dataCount);
   const pageData = {
     currentPage: page,
     pageCount: dataCount.pageCount,
