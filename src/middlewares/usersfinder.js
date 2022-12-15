@@ -33,8 +33,10 @@ const userFinder = (req, res, next) => {
 
 // Verify User that available in database
 const verifyUser = (req, res, next) => {
+  const refreshToken = req.body.refreshToken;
+
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
     const id = decoded.id;
     Users.findById(id)
       .then((user) => {
