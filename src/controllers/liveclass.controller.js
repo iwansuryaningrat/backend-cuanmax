@@ -223,19 +223,55 @@ const update = (req, res) => {
 
 // Create liveclass (Done)
 const create = (req, res) => {
+  const {
+    title,
+    liveclassCode,
+    price,
+    category,
+    description,
+    tags,
+    date,
+    time,
+    location,
+    status,
+    benefits,
+  } = req.body;
+
+  if (!title || !liveclassCode || !price || !date || !time || !location) {
+    return res.status(400).send({
+      message:
+        "Title, Live Class Code, Price, Date, Time, and Location are required.",
+    });
+  }
+
+  const photoName = req.file.filename;
+  const photoLink = `${req.protocol}://${req.get(
+    "host"
+  )}/assets/images/${photoName}`;
+
+  if (!req.file) {
+    return res.status(400).send({
+      message: "Thumbnail is required.",
+    });
+  }
+
   const liveclass = new Liveclass({
-    title: req.body.title,
-    liveclassCode: req.body.liveclassCode,
-    price: req.body.price,
-    category: req.body.category,
-    description: req.body.description,
-    tags: req.body.tags,
-    date: req.body.date,
-    time: req.body.time,
-    location: req.body.location,
-    status: req.body.status,
-    benefits: req.body.benefits,
+    title: title,
+    liveclassCode: liveclassCode,
+    price: price,
+    category: category,
+    description: description,
+    tags: tags,
+    date: date,
+    time: time,
+    location: location,
+    thumbnail: {
+      imageName: photoName,
+      imageLink: photoLink,
+    },
+    benefits: benefits,
     participants: [],
+    status: status,
   });
 
   liveclass
@@ -255,7 +291,7 @@ const create = (req, res) => {
 };
 
 // Need Testing
-const uploadThumbnail = (req, res) => {
+const updateThumbnail = (req, res) => {
   const photoName = req.file.filename;
   const photoLink = `${req.protocol}://${req.get(
     "host"
@@ -269,7 +305,11 @@ const uploadThumbnail = (req, res) => {
     });
   }
 
-  Liveclass.findByIdAndUpdate(id, { thumbnail: photoLink }, { new: true })
+  Liveclass.findByIdAndUpdate(
+    id,
+    { thumbnail: { imageName: photoName, imageLink: photoLink } },
+    { new: true }
+  )
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -295,5 +335,5 @@ export {
   deleteClass,
   update,
   create,
-  uploadThumbnail,
+  updateThumbnail,
 };
