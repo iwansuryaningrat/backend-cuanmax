@@ -16,7 +16,7 @@ const liveClassAdminRouter = (app) => {
   router.post("/", login, admin, create);
   router.delete("/:id", login, admin, deleteClass);
   router.put("/:id", login, admin, update);
-  router.post("/:id/thumbnail", login, admin, updateThumbnail);
+  router.put("/:id/thumbnail", login, admin, updateThumbnail);
 
   app.use("/v1/admin/liveclass", router);
 };
