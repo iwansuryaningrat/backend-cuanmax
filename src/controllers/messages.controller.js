@@ -10,14 +10,14 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch All Messages from Database (Done)
 const findAll = async (req, res) => {
-  const { status, page } = req.query;
+  let { status, page } = req.query;
   const query = {};
 
   if (status) {
     query.status = status;
   }
 
-  if (page === null) page = 1;
+  if (page === undefined) page = 1;
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
