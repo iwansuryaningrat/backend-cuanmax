@@ -20,11 +20,28 @@ const findAll = async (req, res) => {
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Playlists, pageLimit, query);
+
+  var currentPage = page;
+  const nextPage = currentPage++;
+  const prevPage = page - 1;
+
+  const link = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink = `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
   const pageData = {
     currentPage: page,
     pageCount: dataCount.pageCount,
     dataPerPage: pageLimit,
     dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
   };
 
   await Playlists.find(query)
@@ -106,11 +123,28 @@ const findAllforPro = async (req, res) => {
 
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Playlists, pageLimit, query);
+
+  var currentPage = page;
+  const nextPage = currentPage++;
+  const prevPage = page - 1;
+
+  const link = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink = `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
   const pageData = {
     currentPage: page,
     pageCount: dataCount.pageCount,
     dataPerPage: pageLimit,
     dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
   };
 
   await Playlists.find(query)
