@@ -17,10 +17,6 @@ export default (mongoose) => {
       tags: {
         type: [String],
       },
-      sector: {
-        type: String,
-        require: true,
-      },
       lastPrice: {
         type: Number,
         require: true,
