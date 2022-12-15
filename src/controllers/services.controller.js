@@ -21,7 +21,7 @@ const findAll = async (req, res) => {
     condition = {};
   }
 
-  if (page === null) page = 1;
+  if (page === undefined) page = 1;
 
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
