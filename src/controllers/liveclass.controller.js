@@ -6,7 +6,7 @@ import dataCounter from "./function/dataCounter.function.js";
 // Find all liveclasses (Done)
 const findAll = async (req, res) => {
   let { status, category, tags, page } = req.query;
-  const query = status ? { status: status } : {};
+  let query = status ? { status: status } : {};
 
   if (category) {
     query.category = category;
