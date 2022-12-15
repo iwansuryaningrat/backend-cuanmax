@@ -19,7 +19,7 @@ const Vouchers = db.vouchers;
 // Count Data
 const dataCounter = async (Model, itemPerPage, condition) => {
   let dataCount = 0;
-  if (condition !== undefined || condition !== null) {
+  if (condition !== undefined || condition !== null || condition !== {}) {
     dataCount = await Model.where(condition)
       .countDocuments({})
       .then((docCount) => {
