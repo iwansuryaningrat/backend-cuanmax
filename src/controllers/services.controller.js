@@ -21,6 +21,8 @@ const findAll = async (req, res) => {
     condition = {};
   }
 
+  if (page === null) page = 1;
+
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Services, pageLimit, condition);
@@ -298,8 +300,41 @@ const deactivate = (req, res) => {
     });
 };
 
+// Find all services for users (Done)
+const findAllForUsers = (req, res) => {
+  Services.find({ status: "Active" })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Service not found",
+        });
+      }
+
+      const data = result.map((item) => {
+        return {
+          id: item._id,
+          serviceName: item.serviceName,
+          description: item.description,
+          image: item.image,
+          benefits: item.benefits,
+        };
+      });
+
+      res.send({
+        message: "Services were found",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while showing services.",
+      });
+    });
+};
+
 export {
   findAll,
+  findAllForUsers,
   create,
   uploadImage,
   findOne,
