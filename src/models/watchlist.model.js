@@ -17,6 +17,10 @@ export default (mongoose) => {
       tags: {
         type: [String],
       },
+      date: {
+        type: String,
+        require: true,
+      },
       lastPrice: {
         type: Number,
         require: true,
