@@ -25,20 +25,22 @@ const findAll = async (req, res) => {
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Referrals, pageLimit, condition);
 
-  var currentPage = page;
-  const nextPage = currentPage++;
-  const prevPage = page - 1;
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
 
   const link = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
-  var nextLink = `${link}?page=${nextPage}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
   var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
   var lastLink = `${link}?page=${dataCount.pageCount}`;
   var firstLink = `${link}?page=1`;
 
   const pageData = {
-    currentPage: page,
+    currentPage: parseInt(page),
     pageCount: dataCount.pageCount,
-    dataPerPage: pageLimit,
+    dataPerPage: parseInt(pageLimit),
     dataCount: dataCount.dataCount,
     links: {
       next: nextLink,
@@ -343,20 +345,22 @@ const showAllVerification = async (req, res) => {
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Referrals, pageLimit, query);
 
-  var currentPage = page;
-  const nextPage = currentPage++;
-  const prevPage = page - 1;
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
 
   const link = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
-  var nextLink = `${link}?page=${nextPage}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
   var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
   var lastLink = `${link}?page=${dataCount.pageCount}`;
   var firstLink = `${link}?page=1`;
 
   const pageData = {
-    currentPage: page,
+    currentPage: parseInt(page),
     pageCount: dataCount.pageCount,
-    dataPerPage: pageLimit,
+    dataPerPage: parseInt(pageLimit),
     dataCount: dataCount.dataCount,
     links: {
       next: nextLink,
@@ -425,20 +429,22 @@ const showAllWithdraw = async (req, res) => {
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Referrals, pageLimit, query);
 
-  var currentPage = page;
-  const nextPage = currentPage++;
-  const prevPage = page - 1;
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
 
   const link = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
-  var nextLink = `${link}?page=${nextPage}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
   var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
   var lastLink = `${link}?page=${dataCount.pageCount}`;
   var firstLink = `${link}?page=1`;
 
   const pageData = {
-    currentPage: page,
+    currentPage: parseInt(page),
     pageCount: dataCount.pageCount,
-    dataPerPage: pageLimit,
+    dataPerPage: parseInt(pageLimit),
     dataCount: dataCount.dataCount,
     links: {
       next: nextLink,
