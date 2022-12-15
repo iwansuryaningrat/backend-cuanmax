@@ -329,7 +329,7 @@ const create = (req, res) => {
     });
 };
 
-// Need Testing
+// Update thumbnail (Done)
 const updateThumbnail = (req, res) => {
   const photoName = req.file.filename;
   const photoLink = `${req.protocol}://${req.get(
@@ -367,6 +367,49 @@ const updateThumbnail = (req, res) => {
     });
 };
 
+// Change status (Done)
+const changeStatus = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Live Class ID is required.",
+    });
+  }
+
+  const { status } = req.body;
+
+  if (!status) {
+    return res.status(400).send({
+      message: "Status is required.",
+    });
+  }
+
+  Liveclass.findByIdAndUpdate(
+    id,
+    {
+      status,
+    },
+    { new: true }
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Live Class not found",
+        });
+      }
+
+      return res.status(200).send({
+        message: "Live Class was updated",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while updating live class.",
+      });
+    });
+};
+
 export {
   findAll,
   findAllForUsers,
@@ -375,4 +418,5 @@ export {
   update,
   create,
   updateThumbnail,
+  changeStatus,
 };
