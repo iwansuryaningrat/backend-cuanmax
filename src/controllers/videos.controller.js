@@ -28,6 +28,8 @@ const findAll = (req, res) => {
     condition = { status };
   }
 
+  if (page === null) page = 1;
+
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
   const dataCount = dataCounter(Videos, pageLimit, condition);
@@ -99,6 +101,9 @@ const findAllPro = async (req, res) => {
 
   const condition = { status: "Published" };
 
+  if (page === null) page = 1;
+  if (pageLimit === null) pageLimit = 10;
+
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Videos, pageLimit, condition);
   const pageData = {
@@ -164,6 +169,7 @@ const findAllPro = async (req, res) => {
 // Find all videos by playlist ID for Admin (DONE)
 const findByPlaylist = (req, res) => {
   const { playlistId } = req.params;
+  const { page } = req.query;
 
   if (!playlistId) {
     return res.status(400).send({
@@ -171,11 +177,27 @@ const findByPlaylist = (req, res) => {
     });
   }
 
-  Videos.find({ playlist: playlistId })
+  const condition = { playlist: playlistId };
+
+  if (page === null) page = 1;
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = dataCounter(Videos, pageLimit, condition);
+  const pageData = {
+    currentPage: page,
+    pageCount: dataCount.pageCount,
+    dataPerPage: pageLimit,
+    dataCount: dataCount.dataCount,
+  };
+
+  Videos.find(condition)
     .populate({
       path: "playlist",
       select: "_id name videoLevel videoCount status",
     })
+    .skip(skip)
+    .limit(pageLimit)
     .sort({ createdAt: 1 })
     .then((result) => {
       if (!result) {
@@ -220,6 +242,7 @@ const findByPlaylist = (req, res) => {
       res.send({
         message: "Videos was successfully retrieved",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
