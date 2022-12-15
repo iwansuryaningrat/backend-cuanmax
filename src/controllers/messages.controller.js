@@ -17,6 +17,8 @@ const findAll = async (req, res) => {
     query.status = status;
   }
 
+  if (page === null) page = 1;
+
   const pageLimit = 10;
   const skip = pageLimit * (page - 1);
   const dataCount = await dataCounter(Messages, pageLimit, query);
