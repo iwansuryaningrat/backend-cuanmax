@@ -16,6 +16,8 @@ const findAll = (req, res) => {
     query.tags = { $in: tags.split(",") };
   }
 
+  if (page === null) page = 1;
+
   const pageLimit = 10;
   const skip = page ? (page - 1) * pageLimit : 0;
   const dataCount = dataCounter(Liveclass, pageLimit, query);
