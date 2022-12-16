@@ -88,6 +88,8 @@ import messagesRouter from "./src/routes/messages.routes.js"; // Messages Router
 messagesRouter(app); // Messages Router
 import plansRouter from "./src/routes/plans.routes.js"; // Plans Router
 plansRouter(app); // Plans Router
+import playlistsRouter from "./src/routes/playlists.routes.js"; // Playlists Router
+playlistsRouter(app); // Playlists Router
 import servicesRouter from "./src/routes/services.routes.js"; // Services Router
 servicesRouter(app); // Services Router
 import subscribersRouter from "./src/routes/subscribers.routes.js"; // Subscribers Router
@@ -142,8 +144,6 @@ import watchlistRouter from "./src/routes/pro_users/watchlist.routes.js"; // Wat
 watchlistRouter(app); // Watchlists Router
 
 // * Basic Users Routers
-import playlistsRouter from "./src/routes/users/playlists.routes.js"; // Playlists Router
-playlistsRouter(app); // Playlists Router
 import usersRouter from "./src/routes/users/users.routes.js"; // Users Router
 usersRouter(app); // Users Router
 
