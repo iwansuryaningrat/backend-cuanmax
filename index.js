@@ -86,6 +86,8 @@ import liveClassRouter from "./src/routes/liveclass.routes.js"; // Live Class Ro
 liveClassRouter(app); // Live Class Router
 import messagesRouter from "./src/routes/messages.routes.js"; // Messages Router
 messagesRouter(app); // Messages Router
+import notificationsRouter from "./src/routes/notifications.routes.js"; // Notifications Router
+notificationsRouter(app); // Notifications Router
 import plansRouter from "./src/routes/plans.routes.js"; // Plans Router
 plansRouter(app); // Plans Router
 import playlistsRouter from "./src/routes/playlists.routes.js"; // Playlists Router
