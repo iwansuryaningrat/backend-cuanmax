@@ -296,7 +296,6 @@ const requestWD = (req, res) => {
       }
 
       const newAvailableAmount = referralAvailableAmount - amount;
-      const newTotalAmount = referral.referralTotalAmount - amount;
       const newReferralWithDrawCount = referral.referralWithDrawCount + 1;
       const withDrawAmount = amount;
       const withDrawDate = new Date().getTime();
@@ -305,7 +304,6 @@ const requestWD = (req, res) => {
         { referralCode },
         {
           referralAvailableAmount: newAvailableAmount,
-          referralTotalAmount: newTotalAmount,
           referralWithDrawCount: newReferralWithDrawCount,
           $push: {
             referralWithDrawHistory: {
