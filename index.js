@@ -98,6 +98,8 @@ import teamsRouter from "./src/routes/teams.routes.js"; // Teams Router
 teamsRouter(app); // Teams Router
 import testimoniRouter from "./src/routes/testimoni.routes.js"; // Testimoni Router
 testimoniRouter(app); // Testimoni Router
+import vouchersRouter from "./src/routes/vouchers.routes.js"; // Vouchers Router
+vouchersRouter(app); // Vouchers Router
 // import apiDocsRouter from "./src/routes/api-docs.routes.js"; // API Docs Router
 // apiDocsRouter(app); // API Docs Router
 
@@ -127,7 +129,8 @@ import usersAdminRouter from "./src/routes/admin/users.routes.js"; // Users Rout
 usersAdminRouter(app); // Users Router
 import videosAdminRouter from "./src/routes/admin/videos.routes.js"; // Videos Router
 videosAdminRouter(app); // Videos Router
-// Vouchers Router
+import vouchersAdminRouter from "./src/routes/admin/vouchers.routes.js"; // Vouchers Router
+vouchersAdminRouter(app); // Vouchers Router
 import watchlistAdminRouter from "./src/routes/admin/watchlist.routes.js"; // Watchlists Router
 watchlistAdminRouter(app); // Watchlists Router
 
