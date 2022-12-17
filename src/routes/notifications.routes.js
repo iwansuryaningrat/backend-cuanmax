@@ -3,7 +3,8 @@ import Express from "express";
 const router = Express.Router();
 
 const notificationsRouter = (app) => {
-  app.post("/", notificationController);
+  router.post("/", notificationController);
+
   app.use("/v1/notifications", router);
 };
 
