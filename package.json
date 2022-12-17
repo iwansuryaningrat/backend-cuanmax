@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "mocha ./test/**/*.js --exit",
+    "test": "mocha ./test/unit/*.test.js --exit",
     "start": "node --experimental-json-modules index.js",
     "dev": "nodemon --experimental-json-modules index.js",
     "migrate": "node ./src/services/seeder/index.js"
@@ -46,6 +46,7 @@
     "swagger-ui-express": "^4.5.0"
   },
   "devDependencies": {
+    "jest": "^29.3.1",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.15",
     "supertest": "^6.2.4"
