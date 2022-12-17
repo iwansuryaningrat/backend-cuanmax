@@ -80,8 +80,8 @@ app.listen(PORT, () => {
 // General Routers
 import authRouter from "./src/routes/auth.routes.js"; // Auth Router
 authRouter(app); // Auth Router
-// import coinmarketcapRouter from "./src/routes/coinmarketcap.routes.js"; // Coinmarketcap Router
-// coinmarketcapRouter(app); // Coinmarketcap Router
+import coinmarketcapRouter from "./src/routes/coinmarketcap.routes.js"; // Coinmarketcap Router
+coinmarketcapRouter(app); // Coinmarketcap Router
 import liveClassRouter from "./src/routes/liveclass.routes.js"; // Live Class Router
 liveClassRouter(app); // Live Class Router
 import messagesRouter from "./src/routes/messages.routes.js"; // Messages Router
