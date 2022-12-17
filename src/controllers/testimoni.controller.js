@@ -28,7 +28,8 @@ const findAllAdmin = async (req, res) => {
   const nextPage = parseInt(page) + 1;
   const prevPage = parseInt(page) - 1;
 
-  const link = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
   var nextLink =
     nextPage > dataCount.pageCount
       ? `${link}?page=${dataCount.pageCount}`
@@ -178,8 +179,9 @@ const create = (req, res) => {
     });
   }
 
+  const protocol = req.protocol === "https" ? req.protocol : "https";
   const imageName = req.file.filename;
-  const photosUrl = `${req.protocol}://${req.get(
+  const photosUrl = `${protocol}://${req.get(
     "host"
   )}/assets/images/${imageName}`;
 
@@ -311,8 +313,9 @@ const uploadPhotos = (req, res) => {
     });
   }
 
+  const protocol = req.protocol === "https" ? req.protocol : "https";
   const imageName = req.file.filename;
-  const photosUrl = `${req.protocol}://${req.get(
+  const photosUrl = `${protocol}://${req.get(
     "host"
   )}/assets/images/${imageName}`;
 
