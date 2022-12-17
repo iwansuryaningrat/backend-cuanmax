@@ -35,8 +35,8 @@ const map = async (req, res) => {
   }
 };
 
-// Get Latest Data (Done)
-const latest = async (req, res) => {
+// Get Top Assets Data (Done)
+const topAssets = async (req, res) => {
   let { page, pageLimit } = req.query;
   let response = null;
 
@@ -355,4 +355,4 @@ const convertCoin = async (req, res) => {
   }
 };
 
-export { map, latest, info, price, convertCoin, topGainers };
+export { map, topAssets, info, price, convertCoin, topGainers };
