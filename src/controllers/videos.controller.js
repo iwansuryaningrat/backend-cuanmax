@@ -37,7 +37,8 @@ const findAll = async (req, res) => {
   const nextPage = parseInt(page) + 1;
   const prevPage = parseInt(page) - 1;
 
-  const link = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
   var nextLink =
     nextPage > dataCount.pageCount
       ? `${link}?page=${dataCount.pageCount}`
@@ -129,7 +130,8 @@ const findAllPro = async (req, res) => {
   const nextPage = parseInt(page) + 1;
   const prevPage = parseInt(page) - 1;
 
-  const link = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
   var nextLink =
     nextPage > dataCount.pageCount
       ? `${link}?page=${dataCount.pageCount}`
@@ -226,7 +228,8 @@ const findByPlaylist = async (req, res) => {
   const nextPage = parseInt(page) + 1;
   const prevPage = parseInt(page) - 1;
 
-  const link = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
   var nextLink =
     nextPage > dataCount.pageCount
       ? `${link}?page=${dataCount.pageCount}`
@@ -523,8 +526,9 @@ const create = async (req, res) => {
   const { playlistId, title, description, videoURL, tags, duration, status } =
     req.body;
 
+  const protocol = req.protocol === "https" ? req.protocol : "https";
   var thumbnailName = req.file.filename;
-  var thumbnailLink = `${req.protocol}://${req.get(
+  var thumbnailLink = `${protocol}://${req.get(
     "host"
   )}/assets/images/${thumbnailName}`;
 
@@ -583,8 +587,9 @@ const create = async (req, res) => {
 
 // Update thumbnail
 const updateThumbnail = (req, res) => {
+  const protocol = req.protocol === "https" ? req.protocol : "https";
   const thumbnailName = req.file.filename;
-  const thumbnailLink = `${req.protocol}://${req.get(
+  const thumbnailLink = `${protocol}://${req.get(
     "host"
   )}/assets/images/${thumbnailName}`;
 
