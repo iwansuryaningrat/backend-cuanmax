@@ -30,7 +30,8 @@ const findAll = async (req, res) => {
   const nextPage = parseInt(page) + 1;
   const prevPage = parseInt(page) - 1;
 
-  const link = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
   var nextLink =
     nextPage > dataCount.pageCount
       ? `${link}?page=${dataCount.pageCount}`
@@ -127,8 +128,9 @@ const uploadImage = (req, res) => {
     });
   }
 
+  const protocol = req.protocol === "https" ? req.protocol : "https";
   const photoName = req.file.filename;
-  const photoLink = `${req.protocol}://${req.get(
+  const photoLink = `${protocol}://${req.get(
     "host"
   )}/assets/images/${photoName}`;
 
