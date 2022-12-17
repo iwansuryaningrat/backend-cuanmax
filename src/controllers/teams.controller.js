@@ -20,7 +20,8 @@ const findAll = async (req, res) => {
   const nextPage = parseInt(page) + 1;
   const prevPage = parseInt(page) - 1;
 
-  const link = `${req.protocol}://${req.get("host")}${req.baseUrl}`;
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
   var nextLink =
     nextPage > dataCount.pageCount
       ? `${link}?page=${dataCount.pageCount}`
@@ -296,7 +297,6 @@ const teamProfilePicture = (req, res) => {
 
       res.send({
         message: "Team profile photo successfully updated.",
-        link: photoLink,
       });
     })
     .catch((err) => {
