@@ -30,13 +30,12 @@ const map = async (req, res) => {
 
     res.send({
       message: "Cryptocurrency map retrieved successfully",
-      timestamp: new Date().toString(),
       data: result,
     });
   }
 };
 
-// Done
+// Get Latest Data (Done)
 const latest = async (req, res) => {
   let response = null;
   try {
@@ -61,11 +60,53 @@ const latest = async (req, res) => {
   if (response) {
     // success
     const result = response.data.data;
+    const data = result.map((item) => {
+      const {
+        id,
+        name,
+        symbol,
+        slug,
+        num_market_pairs,
+        date_added,
+        max_supply,
+        total_supply,
+        cmc_rank,
+        last_updated,
+        quote,
+      } = item;
+      const data = quote.USD;
+      const dateAdded = new Date(date_added).toString();
+      const lastUpdated = new Date(last_updated).toString();
+      const changeData = {
+        price: data.price,
+        volume_24h: data.volume_24h,
+        volume_change_24h: data.volume_change_24h,
+        percent_change_1h: data.percent_change_1h,
+        percent_change_24h: data.percent_change_24h,
+        market_cap: data.market_cap,
+        last_updated: new Date(data.last_updated).toString(),
+      };
+
+      return {
+        id,
+        name,
+        symbol,
+        slug,
+        num_market_pairs,
+        date_added: dateAdded,
+        max_supply,
+        total_supply,
+        cmc_rank,
+        last_updated: lastUpdated,
+        quote: {
+          USD: changeData,
+        },
+      };
+    });
 
     res.send({
       message: "Cryptocurrency latest retrieved successfully",
-      timestamp: new Date().toString(),
-      data: result,
+      data,
     });
   }
 };
@@ -108,7 +149,6 @@ const info = async (req, res) => {
 
     res.send({
       message: "Cryptocurrency info retrieved successfully",
-      timestamp: new Date().toString(),
       data: data,
     });
   }
@@ -157,7 +197,6 @@ const price = async (req, res) => {
 
     res.send({
       message: "Cryptocurrency price retrieved successfully",
-      timestamp: new Date().toString(),
       data: result,
     });
   }
@@ -209,7 +248,6 @@ const convertCoin = async (req, res) => {
 
     res.send({
       message: "Cryptocurrency convert retrieved successfully",
-      timestamp: new Date().toString(),
       data: result,
     });
   }
