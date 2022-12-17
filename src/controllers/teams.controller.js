@@ -295,6 +295,7 @@ const teamProfilePicture = (req, res) => {
 
       res.send({
         message: "Team profile photo successfully updated.",
+        link: photoLink,
       });
     })
     .catch((err) => {
