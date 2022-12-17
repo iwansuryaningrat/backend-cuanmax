@@ -1,6 +1,6 @@
 import {
   map,
-  latest,
+  topAssets,
   info,
   price,
   convertCoin,
@@ -11,7 +11,7 @@ const router = Express.Router();
 
 const coinmarketcapRouter = (app) => {
   router.get("/map", map);
-  router.get("/latest", latest);
+  router.get("/top-assets", topAssets);
   router.get("/top-gainers", topGainers);
   router.get("/info", info);
   router.get("/price", price);
