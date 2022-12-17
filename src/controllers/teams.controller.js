@@ -280,8 +280,9 @@ const teamProfilePicture = (req, res) => {
     });
   }
 
+  const protocol = req.protocol === "https" ? req.protocol : "https";
   const photoName = req.file.filename;
-  const photoLink = `${req.protocol}://${req.get(
+  const photoLink = `${protocol}://${req.get(
     "host"
   )}/assets/images/${photoName}`;
 
