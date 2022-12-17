@@ -306,12 +306,12 @@ const price = async (req, res) => {
 
 // Done
 const convertCoin = async (req, res) => {
-  const { id, symbol, amount, convert } = req.query;
+  const { symbol, amount, convert } = req.query;
 
-  if (!id && !symbol) {
+  if (!symbol) {
     // error
     return res.status(400).send({
-      message: "ID or Symbol is required",
+      message: "Symbol is required",
     });
   }
 
