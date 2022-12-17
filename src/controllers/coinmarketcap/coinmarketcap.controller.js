@@ -37,11 +37,23 @@ const map = async (req, res) => {
 
 // Get Latest Data (Done)
 const latest = async (req, res) => {
+  let { page, pageLimit } = req.query;
   let response = null;
+
+  if (!page) {
+    page = 1;
+  }
+
+  if (!pageLimit) {
+    pageLimit = 10;
+  }
+
+  const start = (page - 1) * pageLimit + 1;
+
   try {
     response = await axios.get(
       process.env.COINMARKETCAP_ENDPOINT +
-        "v1/cryptocurrency/listings/latest?start=1&limit=10&convert=USD",
+        `v1/cryptocurrency/listings/latest?start=${start}&limit=${pageLimit}&convert=USD&sort=market_cap&sort_dir=desc`,
       {
         headers: {
           "X-CMC_PRO_API_KEY": process.env.COINMARKETCAP_API_KEY,
