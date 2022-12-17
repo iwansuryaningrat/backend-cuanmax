@@ -99,11 +99,14 @@ const latest = async (req, res) => {
         last_updated: new Date(data.last_updated).toString(),
       };
 
+      const logo = `https://s2.coinmarketcap.com/static/img/coins/64x64/${id}.png`;
+
       return {
         id,
         name,
         symbol,
         slug,
+        logo,
         num_market_pairs,
         date_added: dateAdded,
         max_supply,
