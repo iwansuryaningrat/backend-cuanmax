@@ -696,9 +696,30 @@ const changeVideoUrl = async (req, res) => {
     });
   }
 
-  const { url } = req.body;
+  let { url1080, url720, url480, url360 } = req.body;
 
-  const result = await updateVideoUrl(id, url);
+  const defaultData = await Videos.findById(id)
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Video not found",
+        });
+      }
+
+      return result;
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while update video.",
+      });
+    });
+
+  if (!url1080) url1080 = defaultData.url[0].url;
+  if (!url720) url720 = defaultData.url[1].url;
+  if (!url480) url480 = defaultData.url[2].url;
+  if (!url360) url360 = defaultData.url[3].url;
+
+  const result = await updateVideoUrl(id, url1080, url720, url480, url360);
 
   if (result === true) {
     res.send({

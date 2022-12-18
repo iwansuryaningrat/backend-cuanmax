@@ -2,9 +2,26 @@ import db from "../../models/index.js";
 const Videos = db.videos;
 
 // Update Video URL
-const updateVideoUrl = async (videoId, url) => {
+const updateVideoUrl = async (videoId, url1080, url720, url480, url360) => {
   return await Videos.findByIdAndUpdate(videoId, {
-    url,
+    url: [
+      {
+        quality: "1080p",
+        url: url1080,
+      },
+      {
+        quality: "720p",
+        url: url720,
+      },
+      {
+        quality: "480p",
+        url: url480,
+      },
+      {
+        quality: "360p",
+        url: url360,
+      },
+    ],
   })
     .then((result) => {
       return true;
