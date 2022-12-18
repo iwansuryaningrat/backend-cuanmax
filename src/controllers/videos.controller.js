@@ -526,7 +526,7 @@ const deleteVideo = (req, res) => {
 
 // Create a video and update playlist video count (DONE)
 const create = async (req, res) => {
-  const {
+  let {
     playlistId,
     title,
     description,
@@ -545,12 +545,14 @@ const create = async (req, res) => {
     "host"
   )}/assets/images/${thumbnailName}`;
 
-  if (!title || !description || !playlistId || !videoURL) {
+  if (!title || !description || !playlistId || !url1080 || !url720 || !url480) {
     return res.status(400).send({
       message:
         "Title, description, playlistId, videoURL, and status is required",
     });
   }
+
+  if (!url360) url360 = null;
 
   if (!req.file) {
     thumbnailName = null;
