@@ -101,9 +101,9 @@ teamsRouter(app); // Teams Router
 import testimoniRouter from "./src/routes/testimoni.routes.js"; // Testimoni Router
 testimoniRouter(app); // Testimoni Router
 import vouchersRouter from "./src/routes/vouchers.routes.js"; // Vouchers Router
-import transactionRouter from "./src/routes/transactions.routes.js"; // Transaction Router
-transactionRouter(app); // Transaction Router
 vouchersRouter(app); // Vouchers Router
+// import transactionRouter from "./src/routes/transactions.routes.js"; // Transaction Router
+// transactionRouter(app); // Transaction Router
 // import apiDocsRouter from "./src/routes/api-docs.routes.js"; // API Docs Router
 // apiDocsRouter(app); // API Docs Router
 
@@ -128,8 +128,8 @@ import teamsRouterAdmin from "./src/routes/admin/teams.routes.js"; // Teams Rout
 teamsRouterAdmin(app); // Teams Router
 import testimoniAdminRouter from "./src/routes/admin/testimoni.routes.js"; // Testimoni Router
 testimoniAdminRouter(app); // Testimoni Router
-import transactionAdminRouter from "./src/routes/admin/transactions.routes.js"; // Transactions Router
-transactionAdminRouter(app); // Transactions Router
+// import transactionAdminRouter from "./src/routes/admin/transactions.routes.js"; // Transactions Router
+// transactionAdminRouter(app); // Transactions Router
 import usersAdminRouter from "./src/routes/admin/users.routes.js"; // Users Router
 usersAdminRouter(app); // Users Router
 import videosAdminRouter from "./src/routes/admin/videos.routes.js"; // Videos Router
