@@ -526,8 +526,18 @@ const deleteVideo = (req, res) => {
 
 // Create a video and update playlist video count (DONE)
 const create = async (req, res) => {
-  const { playlistId, title, description, videoURL, tags, duration, status } =
-    req.body;
+  const {
+    playlistId,
+    title,
+    description,
+    url1080,
+    url720,
+    url480,
+    url360,
+    tags,
+    duration,
+    status,
+  } = req.body;
 
   const protocol = req.protocol === "https" ? req.protocol : "https";
   var thumbnailName = req.file.filename;
@@ -550,7 +560,12 @@ const create = async (req, res) => {
   const video = new Videos({
     title,
     description,
-    url: videoURL,
+    url: [
+      { quality: "1080p", url: url1080 },
+      { quality: "720p", url: url720 },
+      { quality: "480p", url: url480 },
+      { quality: "360p", url: url360 },
+    ],
     thumbnail: { thumbnailName, thumbnailLink },
     playlist: playlistId,
     tags,
