@@ -85,8 +85,9 @@ const findAll = async (req, res) => {
           date,
           status,
         } = video;
+
         return {
-          _id,
+          id: _id,
           title,
           description,
           url,
@@ -177,8 +178,9 @@ const findAllPro = async (req, res) => {
           duration,
           date,
         } = video;
+
         return {
-          _id,
+          id: _id,
           title,
           description,
           url,
@@ -282,8 +284,9 @@ const findByPlaylist = async (req, res) => {
           date,
           status,
         } = video;
+
         return {
-          _id,
+          id: _id,
           title,
           description,
           url,
@@ -351,7 +354,7 @@ const findByPlaylistPro = (req, res) => {
           date,
         } = video;
         return {
-          _id,
+          id: _id,
           title,
           description,
           url,
@@ -416,7 +419,7 @@ const findOne = (req, res) => {
       } = result;
 
       const data = {
-        _id,
+        id: _id,
         title,
         description,
         url,
