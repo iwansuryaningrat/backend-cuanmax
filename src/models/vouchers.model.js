@@ -22,6 +22,15 @@ export default (mongoose) => {
       },
       voucherType: {
         type: String,
+        require: true,
+        enum: {
+          values: ["Liveclass", "Membership"],
+          message: "Voucher type must be Percentage or Nominal",
+        },
+      },
+      forNewUSer: {
+        type: Boolean,
+        default: true,
       },
       status: {
         type: String,
@@ -31,10 +40,6 @@ export default (mongoose) => {
           message: "Status must be Active or Inactive",
         },
         default: "Active",
-      },
-      forNewUSer: {
-        type: Boolean,
-        default: true,
       },
     },
     { timestamps: true }
