@@ -545,7 +545,15 @@ const create = async (req, res) => {
     "host"
   )}/assets/images/${thumbnailName}`;
 
-  if (!title || !description || !playlistId || !url1080 || !url720 || !url480) {
+  if (
+    !title ||
+    !description ||
+    !playlistId ||
+    !url1080 ||
+    !url720 ||
+    !url480 ||
+    !duration
+  ) {
     return res.status(400).send({
       message:
         "Title, description, playlistId, videoURL, and status is required",
