@@ -7,10 +7,18 @@ export default (mongoose) => {
         require: true,
       },
       description: String,
-      url: {
-        type: String,
-        require: true,
-      },
+      url: [
+        {
+          quality: {
+            type: String,
+            require: true,
+          },
+          url: {
+            type: String,
+            require: true,
+          },
+        },
+      ],
       thumbnail: {
         thumbnailName: {
           type: String,
