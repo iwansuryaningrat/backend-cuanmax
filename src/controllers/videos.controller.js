@@ -588,10 +588,7 @@ const create = async (req, res) => {
     });
 
   if (result) {
-    const updatePlaylist = await {
-      incrementPlaylistVideoCount,
-      decrementPlaylistVideoCount,
-    }(playlistId);
+    const updatePlaylist = await incrementPlaylistVideoCount(playlistId);
 
     if (updatePlaylist === true) {
       res.send({
