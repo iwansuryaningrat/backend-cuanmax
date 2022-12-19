@@ -254,8 +254,16 @@ const update = (req, res) => {
 
 // Create and Save a new Plans - Done
 const create = (req, res) => {
-  const { planName, duration, price, discountPrice, currency, features } =
-    req.body;
+  const {
+    planName,
+    duration,
+    price,
+    discountPrice,
+    totalPrice,
+    currency,
+    favourite,
+    features,
+  } = req.body;
 
   if (!planName || !duration || !price || !discountPrice || !features) {
     return res.status(400).send({
@@ -268,7 +276,9 @@ const create = (req, res) => {
     duration,
     price,
     discountPrice,
+    totalPrice,
     currency,
+    favourite,
     features,
   })
     .then((result) => {
