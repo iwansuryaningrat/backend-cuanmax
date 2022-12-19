@@ -36,9 +36,6 @@ export default (mongoose) => {
         type: String,
         require: true,
       },
-      transactionReference: {
-        type: String,
-      },
       transactionUser: {
         type: Schema.Types.ObjectId,
         ref: "users",
