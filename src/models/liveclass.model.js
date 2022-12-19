@@ -14,6 +14,14 @@ export default (mongoose) => {
         type: Number,
         require: true,
       },
+      Discount: {
+        type: Number,
+        require: true,
+      },
+      totalPrice: {
+        type: Number,
+        require: true,
+      },
       description: {
         type: String,
         require: true,
