@@ -24,7 +24,7 @@ export default (mongoose) => {
         type: String,
         require: true,
         enum: {
-          values: ["Liveclass", "Membership"],
+          values: ["Liveclass", "Membership", "Both"],
           message: "Voucher type must be Percentage or Nominal",
         },
       },
