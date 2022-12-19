@@ -9,6 +9,7 @@ export default (mongoose) => {
       liveclassCode: {
         type: String,
         require: true,
+        unique: true,
       },
       price: {
         type: Number,
