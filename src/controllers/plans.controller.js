@@ -59,7 +59,9 @@ const findAllforUsers = async (req, res) => {
           duration: plan.duration,
           price: plan.price,
           discountPrice: plan.discountPrice,
+          totalPrice: plan.totalPrice,
           currency: plan.currency,
+          favourite: plan.favourite,
           features: plan.features,
         };
       });
