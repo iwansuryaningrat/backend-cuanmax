@@ -83,6 +83,7 @@ const findAllforUsers = async (req, res) => {
 const findAll = async (req, res) => {
   let { status, page } = req.query;
 
+  if (status === undefined) status = "Active";
   var condition = { status };
 
   if (page === undefined) page = 1;
