@@ -332,17 +332,17 @@ const create = (req, res) => {
     });
   }
 
-  const protocol = req.protocol === "https" ? req.protocol : "https";
-  const photoName = req.file.filename;
-  const photoLink = `${protocol}://${req.get(
-    "host"
-  )}/assets/images/${photoName}`;
-
   if (!req.file) {
     return res.status(400).send({
       message: "Thumbnail is required.",
     });
   }
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const photoName = req.file.filename;
+  const photoLink = `${protocol}://${req.get(
+    "host"
+  )}/assets/images/${photoName}`;
 
   const theDate = new Date(date).toDateString();
 
