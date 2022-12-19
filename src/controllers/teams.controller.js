@@ -269,7 +269,7 @@ const update = (req, res) => {
 const teamProfilePicture = (req, res) => {
   const { id } = req.params;
 
-  if (!id || !ObjectId.isValid(id)) {
+  if (!id) {
     return res.status(400).send({
       message: "Teams ID is required",
     });
