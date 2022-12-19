@@ -5,7 +5,7 @@ const Liveclass = db.liveclass;
 const Vouchers = db.vouchers;
 const Referrals = db.referrals;
 import createTransaction from "./midtrans/createPayment.function.js";
-import timeConvert from "./function/timeConverter.function.js";
+import addParticipant from "./function/liveclass.function.js";
 
 // Create and Save a new MembershipTransaction
 const create = async (req, res) => {
@@ -15,7 +15,7 @@ const create = async (req, res) => {
     return res.status(400).send({ message: "Content can not be empty!" });
   }
 
-  const { liveclassId, voucherCode } = req.body;
+  const { liveclassId, voucherCode, voucherDiscount, totalPrice } = req.body;
 
   // Validate request (must have a liveclass id in body)
   if (!liveclassId) {
@@ -49,38 +49,9 @@ const create = async (req, res) => {
       .send({ message: "You have already bought this liveclass!" });
   }
 
-  // Check user's voucher code (if any)
-  let voucher = null;
-  let referral = null;
-  if (voucherCode) {
-    // Find the voucher
-    voucher = await Vouchers.findOne({ voucherCode });
-    // if voucher not found, find referral code instead
-  }
-
-  // Check user's referral code (if any)
-  if (!voucher) {
-    // Find the referral
-    referral = await Referrals.findOne({ referralCode: voucherCode });
-  }
-
-  // Validate request (referral must exist)
-  if (!referral) {
-    return res.status(400).send({ message: "Referral not found!" });
-  }
-
-  // Validate request (voucher must exist)
-  if (!voucher) {
-    return res.status(400).send({ message: "Voucher not found!" });
-  }
-
-  if (voucher.voucherQuota <= 0) {
-    return res.status(400).send({ message: "Voucher quota is empty!" });
-  }
-
   const transaction_details = {
     order_id: `LC-${liveclass.liveclassCode}-${user._id}`,
-    gross_amount: liveclass.price,
+    gross_amount: totalPrice,
   };
 
   const items = [
@@ -90,7 +61,23 @@ const create = async (req, res) => {
       quantity: 1,
       name: liveclass.title,
     },
+    {
+      id: "DISCOUNT",
+      price: liveclass.discountPrice,
+      quantity: 1,
+      name: "Discount",
+    },
   ];
+
+  if (voucherCode) {
+    const voucherDiscountPrice = {
+      id: "VOUCHER",
+      price: voucherDiscount,
+      quantity: 1,
+      name: "Voucher Discount",
+    };
+    items.push(voucherDiscountPrice);
+  }
 
   // Split name into first name and last name
   const name = user.name.split(" ");
@@ -116,10 +103,40 @@ const create = async (req, res) => {
     return res.status(400).send({ message: "Transaction failed!" });
   }
 
-  return res.status(200).send(transaction);
-
   // Create a LiveclassTransaction
-  const liveclassTransaction = new LiveclassTransactions({});
+  const liveclassTransaction = new LiveclassTransactions({
+    paymentCode: transaction_details.order_id,
+    liveclassId: liveclass._id,
+    transactionAmount: transaction_details.gross_amount,
+    transactionDate: new Date().toString(),
+    transactionStatus: "Pending",
+    transactionDescription: "Liveclass Payment for " + user.name,
+    transactionUser: user._id,
+    voucherCode: voucherCode,
+  });
+
+  // Save LiveclassTransaction in the database
+  liveclassTransaction
+    .save(liveclassTransaction)
+    .then((data) => {
+      // Add user to liveclass's participant
+      const participant = addParticipant(user._id, liveclass._id);
+
+      if (participant) {
+        res.status(200).send({
+          message: "Transaction created successfully!",
+          data: transaction,
+        });
+      }
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Transaction.",
+      });
+    });
 };
 
-export { create };
+const findAll = (req, res) => {};
+
+export { create, findAll };
