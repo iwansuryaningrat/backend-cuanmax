@@ -63,7 +63,7 @@ const create = async (req, res) => {
     },
     {
       id: "DISCOUNT",
-      price: liveclass.discountPrice,
+      price: liveclass.discount,
       quantity: 1,
       name: "Discount",
     },
@@ -72,7 +72,7 @@ const create = async (req, res) => {
   if (voucherCode) {
     const voucherDiscountPrice = {
       id: "VOUCHER",
-      price: voucherDiscount,
+      price: -voucherDiscount,
       quantity: 1,
       name: "Voucher Discount",
     };
