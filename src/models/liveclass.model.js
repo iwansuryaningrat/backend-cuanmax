@@ -14,7 +14,7 @@ export default (mongoose) => {
         type: Number,
         require: true,
       },
-      Discount: {
+      discount: {
         type: Number,
         require: true,
       },
