@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
+import db from "../models/index.js";
+const Users = db.users;
 
 // User Finder Middleware
 const userFinder = (req, res, next) => {
@@ -29,4 +31,34 @@ const userFinder = (req, res, next) => {
   }
 };
 
-export default userFinder;
+// Verify User that available in database
+const verifyUser = (req, res, next) => {
+  const refreshToken = req.body.refreshToken;
+
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+    const id = decoded.id;
+    Users.findById(id)
+      .then((user) => {
+        if (!user) {
+          return res.status(404).send({
+            message: "User not found!",
+          });
+        } else {
+          req.user = decoded.user;
+          next();
+        }
+      })
+      .catch((err) => {
+        return res.status(500).send({
+          message: "Error retrieving User with id=" + id,
+        });
+      });
+  } catch (err) {
+    return res.status(401).send({
+      message: err.message || "Token is not valid",
+    });
+  }
+};
+
+export { userFinder, verifyUser };

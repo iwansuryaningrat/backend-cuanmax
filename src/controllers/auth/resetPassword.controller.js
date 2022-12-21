@@ -5,84 +5,6 @@ import "dotenv/config";
 import bcrypt from "bcrypt";
 import { forgotPasswordMailer } from "../../services/mailer.service.js";
 
-// Reset Password Controller Function (DONE)
-const resetPassword = async (req, res) => {
-  const { email, oldPassword, newPassword } = req.body;
-
-  // Validate request
-  if (!oldPassword && !newPassword) {
-    return res.status(400).send({
-      message: "Old Password and New Password can't be empty!",
-    });
-  }
-
-  if (oldPassword === newPassword) {
-    return res.status(400).send({
-      message: "Old Password and New Password can't be the same!",
-    });
-  }
-
-  await Users.findOne({
-    email,
-  })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).send({
-          message: "User not found!",
-        });
-      } else {
-        bcrypt.compare(oldPassword, user.password, (err, result) => {
-          if (result) {
-            bcrypt.hash(newPassword, 10, (err, hash) => {
-              if (err) {
-                return res.status(500).send({
-                  message: "Error when hashing password!",
-                });
-              } else {
-                user.password = hash;
-                user.save((err, user) => {
-                  if (err) {
-                    return res.status(500).send({
-                      message: "Error when updating password!",
-                    });
-                  } else {
-                    const token = jwt.sign(
-                      {
-                        id: user.id,
-                        email: user.email,
-                        name: user.name,
-                        admin: user.type.isAdmin,
-                        role: user.type.accountType.member,
-                      },
-                      process.env.JWT_SECRET,
-                      {
-                        expiresIn: "12h",
-                      }
-                    );
-
-                    return res.status(200).send({
-                      message: "Password has been changed!",
-                      token,
-                    });
-                  }
-                });
-              }
-            });
-          } else {
-            return res.status(401).send({
-              message: "Old Password incorrect!",
-            });
-          }
-        });
-      }
-    })
-    .catch((err) => {
-      return res.status(500).send({
-        message: "Error when updating password!",
-      });
-    });
-};
-
 // Request Reset Password Link Controller Function (DONE)
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
@@ -216,4 +138,4 @@ const resetPasswordWithToken = async (req, res) => {
   });
 };
 
-export { resetPassword, forgotPassword, resetPasswordWithToken };
+export { forgotPassword, resetPasswordWithToken };

@@ -6,7 +6,7 @@ import {
   createReferralCode,
 } from "../../controllers/users.controller.js";
 import { login, proMember } from "../../middlewares/auth.js";
-import userFinder from "../../middlewares/usersfinder.js";
+import { userFinder } from "../../middlewares/usersfinder.js";
 import Express from "express";
 const router = Express.Router();
 

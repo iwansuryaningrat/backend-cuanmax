@@ -16,13 +16,23 @@ export default (mongoose) => {
       },
       discountPrice: {
         type: Number,
+        require: true,
+      },
+      totalPrice: {
+        type: Number,
+        require: true,
       },
       currency: {
         type: String,
         require: true,
         default: "IDR",
       },
-      feature: [
+      favourite: {
+        type: Boolean,
+        require: true,
+        default: false,
+      },
+      features: [
         {
           name: {
             type: String,
@@ -31,6 +41,7 @@ export default (mongoose) => {
           status: {
             type: Boolean,
             require: true,
+            default: true,
           },
         },
       ],

@@ -1,4 +1,4 @@
-import { findAll, findOne } from "../controllers/testimoni.controller.js";
+import { findAll } from "../controllers/testimoni.controller.js";
 import Express from "express";
 const router = Express.Router();
 

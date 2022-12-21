@@ -1,16 +1,57 @@
+import jwt from "jsonwebtoken";
 import db from "../models/index.js";
 const Messages = db.messages;
 
+import replyMessage from "./function/reply.function.js";
+import dataCounter from "./function/dataCounter.function.js";
+
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
+
 // Fetch All Messages from Database (Done)
-const findAll = (req, res) => {
-  const { status } = req.query;
-  const query = {};
+const findAll = async (req, res) => {
+  let { status, page } = req.query;
+  let query = {};
 
   if (status) {
     query.status = status;
   }
 
-  Messages.find(query)
+  if (page === undefined) page = 1;
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Messages, pageLimit, query);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Messages.find(query)
+    .skip(skip)
+    .limit(pageLimit)
     .sort({ createdAt: -1 })
     .then((message) => {
       if (message.length < 1) {
@@ -37,6 +78,7 @@ const findAll = (req, res) => {
       res.send({
         message: "All message were fetched successfully",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -82,7 +124,7 @@ const create = (req, res) => {
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Message ID is required",
     });
@@ -123,7 +165,7 @@ const findOne = (req, res) => {
 const read = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Message ID is required",
     });
@@ -161,16 +203,28 @@ const read = (req, res) => {
 };
 
 // Update Status into Replied (Done)
-const reply = (req, res) => {
+const reply = async (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  const { message } = req.body;
+  const token = req.header("x-auth-token");
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+  if (!message) {
+    return res.status(400).send({
+      message: "Message is required",
+    });
+  }
+
+  const userID = decoded.id;
+
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Message ID is required",
     });
   }
 
-  Messages.findByIdAndUpdate(id, { status: "Replied" }, { new: true })
+  const result = await Messages.findById(id)
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -178,34 +232,34 @@ const reply = (req, res) => {
         });
       }
 
-      const { firstName, lastName, email, subject, message } = result;
-
-      const data = {
-        firstName,
-        lastName,
-        email,
-        subject,
-        message,
-        status: "Replied",
-      };
-
-      res.send({
-        message: "Message status change successfully.",
-        data,
-      });
+      return result;
     })
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Some error while update message.",
       });
     });
+
+  const { email, subject } = result;
+
+  const response = await replyMessage(userID, id, email, subject, message);
+
+  if (response === "Message replied successfully.") {
+    res.send({
+      message: response,
+    });
+  } else {
+    res.status(400).send({
+      message: response,
+    });
+  }
 };
 
 // Delete Message By Id (Done)
 const deleteMsg = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Message ID is required",
     });

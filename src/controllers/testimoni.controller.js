@@ -1,9 +1,14 @@
 import db from "../models/index.js";
 const Testimoni = db.testimoni;
 
+import dataCounter from "./function/dataCounter.function.js";
+
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
+
 // Find all testimoni for admin
-const findAllAdmin = (req, res) => {
-  const { active } = req.query;
+const findAllAdmin = async (req, res) => {
+  let { active, page } = req.query;
   let condition = {};
 
   if (active === true) {
@@ -14,7 +19,42 @@ const findAllAdmin = (req, res) => {
     condition = {};
   }
 
-  Testimoni.find(condition)
+  if (page === undefined) page = 1;
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Testimoni, pageLimit, condition);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Testimoni.find(condition)
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((result) => {
       if (!result || result.length === 0) {
         return res.status(404).send({
@@ -39,6 +79,7 @@ const findAllAdmin = (req, res) => {
       res.send({
         message: "Testimoni was successfully retrieved",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -83,9 +124,9 @@ const findAll = (req, res) => {
 
 // Find a single testimoni with an id (Done)
 const findOne = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Testimoni ID is required",
     });
@@ -124,14 +165,35 @@ const findOne = (req, res) => {
 
 // Create and Save a new testimoni (Done)
 const create = (req, res) => {
-  const testimoni = new Testimoni({
-    name: req.body.name,
-    position: req.body.position,
-    company: req.body.company,
-    testimoni: req.body.testimoni,
+  const { name, position, company, testimoni } = req.body;
+
+  if (!name || !position || !company || !testimoni) {
+    return res.status(400).send({
+      message: "Name, Position, Company, and Testimoni are required",
+    });
+  }
+
+  if (!req.file) {
+    return res.status(400).send({
+      message: "Photos are required",
+    });
+  }
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const imageName = req.file.filename;
+  const photosUrl = `${protocol}://${req.get(
+    "host"
+  )}/assets/images/${imageName}`;
+
+  const newTestimoni = new Testimoni({
+    name,
+    position,
+    company,
+    testimoni,
+    photosUrl,
   });
 
-  testimoni
+  newTestimoni
     .save()
     .then((result) => {
       res.send({
@@ -147,9 +209,9 @@ const create = (req, res) => {
 
 // Delete a testimoni with the specified id in the request (Done)
 const deleteTesti = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Testimoni ID is required",
     });
@@ -178,7 +240,7 @@ const deleteTesti = (req, res) => {
 const update = (req, res) => {
   const id = req.params.id;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Testimoni ID is required",
     });
@@ -214,9 +276,9 @@ const update = (req, res) => {
 
 // Deactivate a testimoni by the id in the request (Done)
 const deactivate = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Testimoni ID is required",
     });
@@ -243,16 +305,17 @@ const deactivate = (req, res) => {
 
 // Upload photos testimoni (Done)
 const uploadPhotos = (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Testimoni ID is required",
     });
   }
 
+  const protocol = req.protocol === "https" ? req.protocol : "https";
   const imageName = req.file.filename;
-  const photosUrl = `${req.protocol}://${req.get(
+  const photosUrl = `${protocol}://${req.get(
     "host"
   )}/assets/images/${imageName}`;
 
@@ -265,7 +328,7 @@ const uploadPhotos = (req, res) => {
       }
 
       res.send({
-        message: "Testimoni was successfully uploaded",
+        message: "Testimoni photo was successfully uploaded",
       });
     })
     .catch((err) => {

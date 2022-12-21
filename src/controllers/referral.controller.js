@@ -1,12 +1,15 @@
 import db from "../models/index.js";
 const Referrals = db.referrals;
+import dataCounter from "./function/dataCounter.function.js";
 
 import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch all referrals from the database (Done)
-const findAll = (req, res) => {
-  const { status } = req.query;
+const findAll = async (req, res) => {
+  let { status, page } = req.query;
+
+  if (page === undefined) page = 1;
 
   var condition = {};
 
@@ -18,11 +21,43 @@ const findAll = (req, res) => {
     condition = {};
   }
 
-  Referrals.find(condition)
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Referrals, pageLimit, condition);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Referrals.find(condition)
     .populate({
       path: "referralUser",
       select: "name username email",
     })
+    .skip(skip)
+    .limit(pageLimit)
     .sort({ createdAt: -1 })
     .then((referrals) => {
       if (referrals.length < 0) {
@@ -63,6 +98,7 @@ const findAll = (req, res) => {
       res.send({
         message: "Referrals fetched successfully",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -91,7 +127,7 @@ const findOne = (req, res) => {
     .then((referral) => {
       if (!referral) {
         return res.status(404).send({
-          message: `Referral with id ${id} not found`,
+          message: `Referral not found`,
         });
       }
 
@@ -128,7 +164,7 @@ const findOne = (req, res) => {
     })
     .catch((err) => {
       return res.status(500).send({
-        message: `Error retrieving referral with id ${id}`,
+        message: `Error retrieving referral`,
       });
     });
 };
@@ -166,7 +202,7 @@ const addBankAccount = (req, res) => {
     .then((referral) => {
       if (!referral) {
         return res.status(404).send({
-          message: `Referral with id ${id} not found`,
+          message: `Referral not found`,
         });
       }
 
@@ -176,7 +212,7 @@ const addBankAccount = (req, res) => {
     })
     .catch((err) => {
       return res.status(500).send({
-        message: `Error updating referral with id ${id}`,
+        message: `Error updating referral`,
       });
     });
 };
@@ -211,7 +247,7 @@ const changeReferralCode = (req, res) => {
     .then((referral) => {
       if (!referral) {
         return res.status(404).send({
-          message: `Referral with id ${id} not found`,
+          message: `Referral not found`,
         });
       }
 
@@ -221,7 +257,7 @@ const changeReferralCode = (req, res) => {
     })
     .catch((err) => {
       return res.status(500).send({
-        message: `Error updating referral with id ${id}`,
+        message: `Error updating referral`,
       });
     });
 };
@@ -232,7 +268,7 @@ const requestWD = (req, res) => {
 
   if (!referralCode) {
     return res.status(400).send({
-      message: "Invalid ID",
+      message: "Referral code is required",
     });
   }
 
@@ -248,7 +284,7 @@ const requestWD = (req, res) => {
     .then((referral) => {
       if (!referral) {
         return res.status(404).send({
-          message: `Referral with id ${id} not found`,
+          message: `Referral not found`,
         });
       }
 
@@ -261,7 +297,6 @@ const requestWD = (req, res) => {
       }
 
       const newAvailableAmount = referralAvailableAmount - amount;
-      const newTotalAmount = referral.referralTotalAmount - amount;
       const newReferralWithDrawCount = referral.referralWithDrawCount + 1;
       const withDrawAmount = amount;
       const withDrawDate = new Date().getTime();
@@ -270,7 +305,6 @@ const requestWD = (req, res) => {
         { referralCode },
         {
           referralAvailableAmount: newAvailableAmount,
-          referralTotalAmount: newTotalAmount,
           referralWithDrawCount: newReferralWithDrawCount,
           $push: {
             referralWithDrawHistory: {
@@ -288,24 +322,62 @@ const requestWD = (req, res) => {
         })
         .catch((err) => {
           res.status(500).send({
-            message: `Error updating referral with id ${id}`,
+            message: `Error updating referral`,
           });
         });
     })
     .catch((err) => {
       return res.status(500).send({
-        message: `Error retrieving referral with id ${id}`,
+        message: `Error retrieving referral`,
       });
     });
 };
 
 // Show all referrals with verification bank account request (Done)
-const showAllVerification = (req, res) => {
-  Referrals.find({ "referralWithDrawBank.withDrawBankAccountVerified": false })
+const showAllVerification = async (req, res) => {
+  let { page } = req.query;
+  const query = { "referralWithDrawBank.withDrawBankAccountVerified": false };
+
+  if (page === undefined) page = 1;
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Referrals, pageLimit, query);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Referrals.find(query)
     .populate({
       path: "referralUser",
       select: "name username email",
     })
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((referrals) => {
       if (!referrals) {
         return res.status(404).send({
@@ -336,6 +408,7 @@ const showAllVerification = (req, res) => {
       res.send({
         message: "Referrals fetched successfully",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -346,14 +419,50 @@ const showAllVerification = (req, res) => {
 };
 
 // Show all referrals with withdraw request (withDrawStatus = "Pending") (Done)
-const showAllWithdraw = (req, res) => {
-  Referrals.find({
-    referralWithDrawHistory: { $elemMatch: { withDrawStatus: "Pending" } },
-  })
+const showAllWithdraw = async (req, res) => {
+  let { page } = req.query;
+  const query = { "referralWithDrawHistory.withDrawStatus": "Pending" };
+
+  if (page === undefined) page = 1;
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Referrals, pageLimit, query);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Referrals.find(query)
     .populate({
       path: "referralUser",
       select: "name username email",
     })
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((referrals) => {
       if (!referrals) {
         return res.status(404).send({
@@ -388,6 +497,7 @@ const showAllWithdraw = (req, res) => {
       res.send({
         message: "Referrals fetched successfully",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -415,7 +525,7 @@ const verifyBank = (req, res) => {
     .then((referral) => {
       if (!referral) {
         return res.status(404).send({
-          message: `Referral with id ${id} not found`,
+          message: `Referral not found`,
         });
       }
 
@@ -425,7 +535,7 @@ const verifyBank = (req, res) => {
     })
     .catch((err) => {
       return res.status(500).send({
-        message: `Error updating referral with id ${id}`,
+        message: `Error updating referral`,
       });
     });
 };
@@ -464,7 +574,7 @@ const updateWDStatus = (req, res) => {
     .then((referral) => {
       if (!referral) {
         return res.status(404).send({
-          message: `Referral with id ${id} not found`,
+          message: `Referral not found`,
         });
       }
 
@@ -474,7 +584,7 @@ const updateWDStatus = (req, res) => {
     })
     .catch((err) => {
       return res.status(500).send({
-        message: `Error updating referral with id ${id}`,
+        message: `Error updating referral`,
       });
     });
 };

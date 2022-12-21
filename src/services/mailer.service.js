@@ -60,7 +60,7 @@ const signupMailer = async (email, token) => {
     <div class="card">
     <h1>Verify Email</h1>
     <p>Click the button below to verify your email address.</p>
-    <a href="http://localhost:3000/activate-account/${token}">Verify</a>
+    <a href="http://cuanmax.vercel.app/activate-account/${token}">Verify</a>
     </div>
     </div>
     </body>
@@ -138,7 +138,7 @@ const forgotPasswordMailer = async (email, token) => {
     <div class="card">
     <h1>Reset Password</h1>
     <p>Click the button below to reset your password.</p>
-    <a href="http://localhost:3000/forgot-password/reset/${token}">Reset</a>
+    <a href="http://cuanmax.vercel.app/forgot-password/reset/${token}">Reset</a>
     </div>
     </div>
     </body>

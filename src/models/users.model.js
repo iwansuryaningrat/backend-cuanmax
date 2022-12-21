@@ -41,7 +41,7 @@ export default (mongoose) => {
           require: true,
           default:
             // "https://api.cuanmax.com/assets/images/default-profile-picture.png",
-            "http://localhost:8080/assets/images/default-profile-picture.png",
+            "https://cuanmax-api.tech/assets/images/default-profile-picture.png",
         },
       },
       type: {

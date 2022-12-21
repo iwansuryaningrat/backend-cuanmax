@@ -9,8 +9,17 @@ export default (mongoose) => {
       liveclassCode: {
         type: String,
         require: true,
+        unique: true,
       },
       price: {
+        type: Number,
+        require: true,
+      },
+      discount: {
+        type: Number,
+        require: true,
+      },
+      totalPrice: {
         type: Number,
         require: true,
       },
@@ -29,7 +38,7 @@ export default (mongoose) => {
         },
       ],
       date: {
-        type: Date,
+        type: String,
         require: true,
       },
       time: {
@@ -40,21 +49,11 @@ export default (mongoose) => {
         type: String,
         require: true,
       },
-      status: {
-        type: String,
-        require: true,
-        enum: {
-          values: ["Upcoming", "Closed", "Cancelled", "Ongoing", "Completed"],
-          message:
-            "Status must be Upcoming, Closed, Cancelled, Ongoing or Completed",
-        },
-        default: "Upcoming",
-      },
       thumbnail: {
         imageName: {
           type: String,
         },
-        imagePath: {
+        imageLink: {
           type: String,
           require: true,
           default: "example.jpg",
@@ -72,7 +71,24 @@ export default (mongoose) => {
           require: true,
           default: 0,
         },
-        participantsList: [{ type: Schema.Types.ObjectId, ref: "Users" }],
+        participantsList: [
+          {
+            userID: {
+              type: Schema.Types.ObjectId,
+              ref: "Users",
+            },
+          },
+        ],
+      },
+      status: {
+        type: String,
+        require: true,
+        enum: {
+          values: ["Upcoming", "Closed", "Cancelled", "Ongoing", "Completed"],
+          message:
+            "Status must be Upcoming, Closed, Cancelled, Ongoing or Completed",
+        },
+        default: "Upcoming",
       },
     },
     { timestamps: true }
