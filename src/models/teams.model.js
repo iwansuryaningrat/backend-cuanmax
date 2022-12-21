@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const teamsSchema = new Schema(
     {
       name: {
         type: String,
@@ -15,27 +16,54 @@ export default (mongoose) => {
       photo: {
         photoName: {
           type: String,
+          default: "default-profile-picture.png",
         },
         photoLink: {
           type: String,
+          require: true,
+          default:
+            // "https://api.cuanmax.com/assets/images/default-profile-picture.png",
+            "https://cuanmax-api.tech/assets/images/default-profile-picture.png",
         },
       },
       contact: {
-        instagram: String,
-        twitter: String,
-        linkedin: String,
-        email: String,
+        instagram: {
+          type: String,
+          default: "",
+        },
+        twitter: {
+          type: String,
+          default: "",
+        },
+        linkedin: {
+          type: String,
+          default: "",
+        },
+        email: {
+          type: String,
+          default: "",
+        },
+      },
+      status: {
+        type: String,
+        require: true,
+        enum: {
+          values: ["Active", "Inactive"],
+          message: "Status must be Active or Inactive",
+        },
+        default: "Active",
       },
     },
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  teamsSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Teams = mongoose.model("teams", schema);
+  const Teams = mongoose.model("Teams", teamsSchema);
+
   return Teams;
 };

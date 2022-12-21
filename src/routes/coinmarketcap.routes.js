@@ -1,24 +1,23 @@
 import {
   map,
-  latest,
+  topAssets,
   info,
   price,
   convertCoin,
+  topGainers,
 } from "../controllers/coinmarketcap/coinmarketcap.controller.js";
 import Express from "express";
 const router = Express.Router();
-import headers from "../services/headers.js";
 
 const coinmarketcapRouter = (app) => {
-  app.use(headers);
-
   router.get("/map", map);
-  router.get("/latest", latest);
+  router.get("/top-assets", topAssets);
+  router.get("/top-gainers", topGainers);
   router.get("/info", info);
   router.get("/price", price);
   router.get("/convert", convertCoin);
 
-  app.use("/api/v1/cryptocurrency", router);
+  app.use("/v1/cryptocurrency", router);
 };
 
 export default coinmarketcapRouter;

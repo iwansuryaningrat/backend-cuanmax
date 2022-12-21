@@ -1,0 +1,195 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Cuanmax RESTful API",
+    "version": "1.0.0",
+    "description": "RESTful API for Cuanmax Application",
+    "contact": {
+      "name": "Iwan Suryaningrat",
+      "email": "iwansuryaningrat@cuanmax.id"
+    },
+    "license": {
+      "name": "APACHE 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "servers": [
+    {
+      "description": "Cuanmax RESTful API Server",
+      "url": "http://159.223.84.116/api/v1"
+    }
+  ],
+  "paths": {},
+  "components": {
+    "parameters": {
+      "x-auth-token": {
+        "name": "x-auth-token",
+        "in": "header",
+        "description": "JWT Token",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string",
+          "format": "int64"
+        }
+      },
+      "Plan ID": {
+        "name": "Plan ID",
+        "in": "path",
+        "description": "Plan ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "Bad Request": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "User ID is Required!"
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "No token, authorization denied!"
+              }
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "You are not authorized to do this action!"
+              }
+            }
+          }
+        }
+      },
+      "Not Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "User not found!"
+              }
+            }
+          }
+        }
+      },
+      "Method Not Allowed": {
+        "description": "Method Not Allowed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "Method Not Allowed!"
+              }
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Conflict",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "User Already Exist. Please Login"
+              }
+            }
+          }
+        }
+      },
+      "Unprocessable Entity": {
+        "description": "Unprocessable Entity",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "No file uploaded"
+              }
+            }
+          }
+        }
+      },
+      "Internal Server Error": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "Some error occurred while fetching data!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {}
+  }
+}

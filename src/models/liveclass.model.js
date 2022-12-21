@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const liveclassSchema = new Schema(
     {
       title: {
         type: String,
@@ -8,8 +9,17 @@ export default (mongoose) => {
       liveclassCode: {
         type: String,
         require: true,
+        unique: true,
       },
       price: {
+        type: Number,
+        require: true,
+      },
+      discount: {
+        type: Number,
+        require: true,
+      },
+      totalPrice: {
         type: Number,
         require: true,
       },
@@ -28,7 +38,7 @@ export default (mongoose) => {
         },
       ],
       date: {
-        type: Date,
+        type: String,
         require: true,
       },
       time: {
@@ -39,15 +49,11 @@ export default (mongoose) => {
         type: String,
         require: true,
       },
-      status: {
-        type: String,
-        require: true,
-      },
-      cover: {
+      thumbnail: {
         imageName: {
           type: String,
         },
-        imagePath: {
+        imageLink: {
           type: String,
           require: true,
           default: "example.jpg",
@@ -59,23 +65,42 @@ export default (mongoose) => {
           require: true,
         },
       ],
-      participants: [
-        {
-          email: {
-            type: String,
-          },
+      participants: {
+        participantsCount: {
+          type: Number,
+          require: true,
+          default: 0,
         },
-      ],
+        participantsList: [
+          {
+            userID: {
+              type: Schema.Types.ObjectId,
+              ref: "Users",
+            },
+          },
+        ],
+      },
+      status: {
+        type: String,
+        require: true,
+        enum: {
+          values: ["Upcoming", "Closed", "Cancelled", "Ongoing", "Completed"],
+          message:
+            "Status must be Upcoming, Closed, Cancelled, Ongoing or Completed",
+        },
+        default: "Upcoming",
+      },
     },
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  liveclassSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Liveclass = mongoose.model("liveclass", schema);
+  const Liveclass = mongoose.model("Liveclasses", liveclassSchema);
+
   return Liveclass;
 };

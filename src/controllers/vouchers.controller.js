@@ -1,15 +1,83 @@
 import db from "../models/index.js";
 const Vouchers = db.vouchers;
 const Users = db.users;
+import dataCounter from "./function/dataCounter.function.js";
 
-// Done
-const findAll = (req, res) => {
+// Find All Vouchers with Pagination (Done)
+const findAll = async (req, res) => {
+  let { page } = req.query;
+
+  if (page === undefined) page = 1;
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Videos, pageLimit, condition);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
   Vouchers.find()
+    .skip(skip)
+    .limit(pageLimit)
     .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Vouchers not found.",
+        });
+      }
+
+      const data = result.map((item) => {
+        const {
+          _id,
+          voucherCode,
+          voucherName,
+          voucherDescription,
+          voucherDiscount,
+          voucherQuota,
+          voucherType,
+          forNewUser,
+          status,
+        } = item;
+        return {
+          id: _id,
+          voucherCode,
+          voucherName,
+          voucherDescription,
+          voucherDiscount,
+          voucherQuota,
+          voucherType,
+          forNewUser,
+          status,
+        };
+      });
+
       return res.send({
         message: "Vouchers successfully fetched",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -19,7 +87,61 @@ const findAll = (req, res) => {
     });
 };
 
-// Done
+// Find a Voucher (Done)
+const findOne = (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({
+      message: "Voucher ID is required.",
+    });
+  }
+
+  Vouchers.findById(id)
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Voucher not found",
+        });
+      }
+
+      const {
+        _id,
+        voucherCode,
+        voucherName,
+        voucherDescription,
+        voucherDiscount,
+        voucherQuota,
+        voucherType,
+        forNewUser,
+        status,
+      } = result;
+
+      const data = {
+        id: _id,
+        voucherCode,
+        voucherName,
+        voucherDescription,
+        voucherDiscount,
+        voucherQuota,
+        voucherType,
+        forNewUser,
+        status,
+      };
+
+      res.send({
+        message: "Voucher was fetched",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while fetch voucher.",
+      });
+    });
+};
+
+// Create Voucher (Done)
 const create = (req, res) => {
   const {
     voucherCode,
@@ -28,6 +150,7 @@ const create = (req, res) => {
     voucherDiscount,
     voucherQuota,
     voucherType,
+    forNewUSer,
   } = req.body;
 
   if (!voucherCode || !voucherName || !voucherDiscount || !voucherQuota) {
@@ -43,6 +166,7 @@ const create = (req, res) => {
     voucherDiscount,
     voucherQuota,
     voucherType,
+    forNewUSer,
   });
 
   voucher
@@ -50,8 +174,6 @@ const create = (req, res) => {
     .then((result) => {
       res.send({
         message: "Voucher was created",
-        timestamp: new Date().toString(),
-        data: result,
       });
     })
     .catch((err) => {
@@ -61,7 +183,7 @@ const create = (req, res) => {
     });
 };
 
-// Done
+// Delete Voucher (Done)
 const deleteVoucher = (req, res) => {
   const { id } = req.params;
 
@@ -81,7 +203,6 @@ const deleteVoucher = (req, res) => {
 
       res.send({
         message: "Voucher was deleted",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -91,7 +212,7 @@ const deleteVoucher = (req, res) => {
     });
 };
 
-// Done
+// Update Voucher
 const update = (req, res) => {
   const { id } = req.params;
 
@@ -135,7 +256,6 @@ const update = (req, res) => {
 
       res.send({
         message: "Voucher was updated",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -145,37 +265,7 @@ const update = (req, res) => {
     });
 };
 
-// Done
-const findOne = (req, res) => {
-  const { id } = req.params;
-
-  if (!id) {
-    return res.status(400).send({
-      message: "Voucher ID is required.",
-    });
-  }
-
-  Vouchers.findById(id)
-    .then((result) => {
-      if (!result) {
-        return res.status(404).send({
-          message: "Voucher not found",
-        });
-      }
-
-      res.send({
-        message: "Voucher was fetched",
-        timestamp: new Date().toString(),
-        data: result,
-      });
-    })
-    .catch((err) => {
-      return res.status(500).send({
-        message: err.message || "Some error while fetch voucher.",
-      });
-    });
-};
-
+// Use Voucher
 const useVoucher = (req, res) => {
   const { username, voucherCode } = req.params;
 
@@ -198,7 +288,6 @@ const useVoucher = (req, res) => {
 
             res.send({
               message: "Voucher successfully used",
-              timestamp: new Date().toString(),
               data: result,
             });
           })

@@ -1,0 +1,514 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Cuanmax RESTful API",
+    "version": "1.0.0",
+    "description": "RESTful API for Cuanmax Application",
+    "contact": {
+      "name": "Iwan Suryaningrat",
+      "email": "iwansuryaningrat@cuanmax.id"
+    },
+    "license": {
+      "name": "APACHE 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "servers": [
+    {
+      "description": "Cuanmax RESTful API Server",
+      "url": "http://159.223.84.116/api/v1"
+    }
+  ],
+  "paths": {
+    "/subscribers": {
+      "post": {
+        "tags": ["Subscribers"],
+        "summary": "Subscribe",
+        "description": "Subscribe",
+        "operationId": "subscribe",
+        "requestBody": {
+          "description": "Subscribe",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                },
+                "required": ["email"],
+                "example": {
+                  "email": "example@mail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "You have successfully subscribed."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable Entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/subscribers": {
+      "get": {
+        "tags": ["Subscribers - Admin"],
+        "summary": "Get All Subscribers",
+        "description": "Get All Subscribers",
+        "operationId": "getAllSubscribers",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Status"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "email": {
+                            "type": "string"
+                          },
+                          "startDate": {
+                            "type": "string"
+                          },
+                          "endDate": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Subscribers successfully fetched.",
+                  "data": [
+                    {
+                      "email": "example@mail.com",
+                      "startDate": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
+                      "endDate": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
+                      "status": "Active"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/subscribers/{Subscriber ID}": {
+      "get": {
+        "tags": ["Subscribers - Admin"],
+        "summary": "Get Subscriber",
+        "description": "Get Subscriber",
+        "operationId": "getSubscriber",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Subscriber ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        },
+                        "startDate": {
+                          "type": "string"
+                        },
+                        "endDate": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Subscriber successfully fetched.",
+                  "data": {
+                    "email": "example@mail.com",
+                    "startDate": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
+                    "endDate": "Tue Nov 15 2022 01:59:28 GMT+0700 (Western Indonesia Time)",
+                    "status": "Active"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Subscribers - Admin"],
+        "summary": "Deactivate Subscriber",
+        "description": "Deactivate Subscriber",
+        "operationId": "updateSubscriber",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Subscriber ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Subscriber was successfully deactivated."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Subscribers - Admin"],
+        "summary": "Delete Subscriber",
+        "description": "Delete Subscriber",
+        "operationId": "deleteSubscriber",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Subscriber ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Subscriber was successfully deleted."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "x-auth-token": {
+        "name": "x-auth-token",
+        "in": "header",
+        "description": "JWT Token",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string",
+          "format": "int64"
+        }
+      },
+      "Subscriber ID": {
+        "name": "Subscriber ID",
+        "in": "path",
+        "description": "Subscriber ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Status": {
+        "name": "status",
+        "in": "query",
+        "description": "Status",
+        "required": false,
+        "allowEmptyValue": true,
+        "schema": {
+          "type": "boolean"
+        }
+      }
+    },
+    "responses": {
+      "Bad Request": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "User ID is Required!"
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "No token, authorization denied!"
+              }
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "You are not authorized to do this action!"
+              }
+            }
+          }
+        }
+      },
+      "Not Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "User not found!"
+              }
+            }
+          }
+        }
+      },
+      "Method Not Allowed": {
+        "description": "Method Not Allowed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "Method Not Allowed!"
+              }
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Conflict",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "User Already Exist. Please Login"
+              }
+            }
+          }
+        }
+      },
+      "Unprocessable Entity": {
+        "description": "Unprocessable Entity",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "No file uploaded"
+              }
+            }
+          }
+        }
+      },
+      "Internal Server Error": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "Some error occurred while fetching data!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {}
+  }
+}

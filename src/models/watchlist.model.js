@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const watchlistSchema = new Schema(
     {
       name: {
         type: String,
@@ -16,8 +17,9 @@ export default (mongoose) => {
       tags: {
         type: [String],
       },
-      sector: {
+      date: {
         type: String,
+        require: true,
       },
       lastPrice: {
         type: Number,
@@ -45,20 +47,26 @@ export default (mongoose) => {
           require: true,
         },
       },
-      isActive: {
-        type: Boolean,
-        default: true,
+      status: {
+        type: String,
+        require: true,
+        enum: {
+          values: ["Active", "Inactive"],
+          message: "Status must be Active or Inactive",
+        },
+        default: "Active",
       },
     },
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  watchlistSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Watchlist = mongoose.model("watchlists", schema);
+  const Watchlist = mongoose.model("Watchlists", watchlistSchema);
+
   return Watchlist;
 };

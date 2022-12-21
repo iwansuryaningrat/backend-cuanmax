@@ -1,14 +1,78 @@
 import db from "../models/index.js";
 const Teams = db.teams;
+import dataCounter from "./function/dataCounter.function.js";
 
-// Done
-const findAll = (req, res) => {
-  Teams.find()
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
+
+// Fetch all teams data (DONE)
+const findAll = async (req, res) => {
+  let { active, page, pageLimit } = req.query;
+
+  let condition = active ? { status: "Active" } : {};
+
+  if (page === undefined) page = 1;
+  if (pageLimit === undefined) pageLimit = 10;
+
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Teams, pageLimit, condition);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Teams.find(condition)
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((result) => {
+      // Check if there is any data
+      if (result.length === 0) {
+        return res.status(404).send({
+          message: "No data found.",
+        });
+      }
+
+      const data = result.map((item) => {
+        const { _id, name, description, position, photo, contact, status } =
+          item;
+        return {
+          id: _id,
+          name,
+          description,
+          position,
+          photo,
+          contact,
+          status,
+        };
+      });
+
       res.send({
         message: "Teams successfully fetched.",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -18,11 +82,46 @@ const findAll = (req, res) => {
     });
 };
 
-// Done
+// Fetch all teams data for users (DONE)
+const findAllforUsers = (req, res) => {
+  Teams.find({ status: "Active" })
+    .then((result) => {
+      // Check if there is any data
+      if (result.length === 0) {
+        return res.status(404).send({
+          message: "No data found.",
+        });
+      }
+
+      const data = result.map((item) => {
+        const { _id, name, description, position, photo, contact } = item;
+        return {
+          id: _id,
+          name,
+          description,
+          position,
+          photo,
+          contact,
+        };
+      });
+
+      res.send({
+        message: "Teams successfully fetched.",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while retrieving teams.",
+      });
+    });
+};
+
+// Fetch one team data (DONE)
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Team ID is required.",
     });
@@ -36,10 +135,19 @@ const findOne = (req, res) => {
         });
       }
 
+      const { _id, name, description, position, photo, contact } = result;
+      const data = {
+        id: _id,
+        name,
+        description,
+        position,
+        photo,
+        contact,
+      };
+
       res.send({
         message: "Team successfully retrieved.",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -49,11 +157,11 @@ const findOne = (req, res) => {
     });
 };
 
-// Done
+// Delete team data (DONE)
 const deleteTeam = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Team ID is required.",
     });
@@ -69,17 +177,16 @@ const deleteTeam = (req, res) => {
 
       res.send({
         message: "Team successfully deleted.",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
-      return res.status(409).send({
+      return res.status(500).send({
         message: err.message || "Some error while delete team.",
       });
     });
 };
 
-// Done
+// Create and Save a new Team data (Done)
 const create = (req, res) => {
   const { name, description, position, email } = req.body;
 
@@ -102,33 +209,44 @@ const create = (req, res) => {
   });
 
   team
-    .save(team)
+    .save()
     .then((result) => {
       res.status(200).send({
-        message: "Team successfully added.",
-        timestamp: new Date().toString(),
-        data: result,
+        message: "Team successfully created.",
       });
     })
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Some error while creating team.",
-        timestamp: new Date().toString(),
       });
     });
 };
 
-// Done
+// Update a Team by the id in the request (DONE)
 const update = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Teams ID is required",
     });
   }
 
-  Teams.findByIdAndUpdate(id, req.body, { new: true })
+  const { name, description, position, email, instagram, twitter, linkedin } =
+    req.body;
+  const data = {
+    name,
+    description,
+    position,
+    contact: {
+      email,
+      instagram,
+      twitter,
+      linkedin,
+    },
+  };
+
+  Teams.findByIdAndUpdate(id, data, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -137,20 +255,18 @@ const update = (req, res) => {
       }
 
       res.send({
-        message: "Team was updated",
-        timestamp: new Date().toString(),
+        message: "Team data successfully updated.",
       });
     })
     .catch((err) => {
       return res.status(500).send({
         message: err.message || "Some error while updating team.",
-        timestamp: new Date().toString(),
       });
     });
 };
 
-// Done
-const teamProfile = (req, res) => {
+// Upload photo (DONE)
+const teamProfilePicture = (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -165,8 +281,9 @@ const teamProfile = (req, res) => {
     });
   }
 
+  const protocol = req.protocol === "https" ? req.protocol : "https";
   const photoName = req.file.filename;
-  const photoLink = `${req.protocol}://${req.get(
+  const photoLink = `${protocol}://${req.get(
     "host"
   )}/assets/images/${photoName}`;
 
@@ -180,7 +297,6 @@ const teamProfile = (req, res) => {
 
       res.send({
         message: "Team profile photo successfully updated.",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -188,9 +304,46 @@ const teamProfile = (req, res) => {
         message:
           err.message ||
           "Some error occurred while changing the profile picture.",
-        timestamp: new Date().toString(),
       });
     });
 };
 
-export { findAll, findOne, deleteTeam, create, update, teamProfile };
+// Deactivate Team (DONE)
+const deactivate = (req, res) => {
+  const { id } = req.params;
+
+  if (!id || !ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: "Teams ID is required",
+    });
+  }
+
+  Teams.findByIdAndUpdate(id, { status: "Inactive" })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Team not found",
+        });
+      }
+
+      res.send({
+        message: "Team successfully deactivated.",
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while deactivating team.",
+      });
+    });
+};
+
+export {
+  findAll,
+  findAllforUsers,
+  findOne,
+  deleteTeam,
+  create,
+  update,
+  teamProfilePicture,
+  deactivate,
+};

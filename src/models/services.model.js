@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const servicesSchema = new Schema(
     {
       serviceName: {
         type: String,
@@ -21,16 +22,26 @@ export default (mongoose) => {
           benefitName: String,
         },
       ],
+      status: {
+        type: String,
+        require: true,
+        default: "Active",
+        enum: {
+          values: ["Active", "Inactive"],
+          message: "Status must be Active or Inactive",
+        },
+      },
     },
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  servicesSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Services = mongoose.model("services", schema);
+  const Services = mongoose.model("Services", servicesSchema);
+
   return Services;
 };

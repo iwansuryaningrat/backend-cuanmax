@@ -1,5 +1,6 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const TestimoniSchema = new Schema(
     {
       name: {
         type: String,
@@ -13,25 +14,37 @@ export default (mongoose) => {
         type: String,
         require: true,
       },
-      body: {
+      testimoni: {
         type: String,
         require: true,
       },
       photosUrl: {
         type: String,
         require: true,
-        default: "",
+        default:
+          // "https://api.cuanmax.com/assets/images/default-profile-picture.png",
+          "https://cuanmax-api.tech/assets/images/default-profile-picture.png",
+      },
+      status: {
+        type: String,
+        require: true,
+        enum: {
+          values: ["Active", "Inactive"],
+          message: "Status must be Active or Inactive",
+        },
+        default: "Active",
       },
     },
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  TestimoniSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Testimoni = mongoose.model("testimoni", schema);
+  const Testimoni = mongoose.model("Testimoni", TestimoniSchema);
+
   return Testimoni;
 };

@@ -1,22 +1,33 @@
 export default (mongoose) => {
-  const schema = mongoose.Schema(
+  const Schema = mongoose.Schema;
+  const subscribersSchema = new Schema(
     {
       email: {
         type: String,
         require: true,
       },
       startDate: Date,
-      status: String,
+      endDate: Date,
+      status: {
+        type: String,
+        require: true,
+        enum: {
+          values: ["Active", "Inactive"],
+          message: "Status must be Active or Inactive",
+        },
+        default: "Active",
+      },
     },
     { timestamps: true }
   );
 
-  schema.method("toJSON", function () {
+  subscribersSchema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  const Subscribers = mongoose.model("subscribers", schema);
+  const Subscribers = mongoose.model("Subscribers", subscribersSchema);
+
   return Subscribers;
 };

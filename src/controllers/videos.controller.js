@@ -1,14 +1,112 @@
 import db from "../models/index.js";
 const Videos = db.videos;
-const Playlist = db.playlists;
+import dataCounter from "./function/dataCounter.function.js";
 
-const findAll = (req, res) => {
-  Videos.find()
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
+
+import {
+  incrementPlaylistVideoCount,
+  decrementPlaylistVideoCount,
+} from "./function/playlist.function.js";
+
+import {
+  updateVideoUrl,
+  updateVideoViews,
+  updateVideoLikes,
+  updateVideoDislikes,
+  updatePlaylistVideo,
+} from "./function/videos.function.js";
+
+// Find all videos for admin (DONE)
+const findAll = async (req, res) => {
+  let { status, page } = req.query;
+
+  var condition = {};
+
+  if (status) {
+    condition = { status };
+  }
+
+  if (page === undefined) page = 1;
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Videos, pageLimit, condition);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Videos.find(condition)
+    .populate({
+      path: "playlist",
+      select: "_id name videoLevel videoCount status",
+    })
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((result) => {
+      const data = result.map((video) => {
+        const {
+          _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date,
+          status,
+        } = video;
+
+        return {
+          id: _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date: new Date(date).toString(),
+          status,
+        };
+      });
+
       res.send({
         message: "Videos was successfully retrieved",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -18,17 +116,151 @@ const findAll = (req, res) => {
     });
 };
 
-// Done
-const findOne = (req, res) => {
-  const { id } = req.params;
+// Find all videos for Pro Member (DONE)
+const findAllPro = async (req, res) => {
+  let { page, pageLimit } = req.query;
 
-  if (!id) {
+  const condition = { status: "Published" };
+
+  if (page === null) page = 1;
+  if (pageLimit === null) pageLimit = 10;
+
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Videos, pageLimit, condition);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Videos.find(condition)
+    .populate({
+      path: "playlist",
+      select: "_id name videoLevel videoCount",
+    })
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
+    .then((result) => {
+      const data = result.map((video) => {
+        const {
+          _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date,
+        } = video;
+
+        return {
+          id: _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date: new Date(date).toString(),
+        };
+      });
+
+      res.send({
+        message: "Videos was successfully retrieved",
+        data,
+        page: pageData,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while retrieving videos.",
+      });
+    });
+};
+
+// Find all videos by playlist ID for Admin (DONE)
+const findByPlaylist = async (req, res) => {
+  const { playlistId } = req.params;
+  let { page } = req.query;
+
+  if (!playlistId) {
     return res.status(400).send({
-      message: "Video ID is required",
+      message: "Playlist ID is required",
     });
   }
 
-  Videos.findById(id)
+  const condition = { playlist: playlistId };
+
+  if (page === undefined) page = 1;
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Videos, pageLimit, condition);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Videos.find(condition)
+    .populate({
+      path: "playlist",
+      select: "_id name videoLevel videoCount status",
+    })
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: 1 })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -36,10 +268,44 @@ const findOne = (req, res) => {
         });
       }
 
+      const data = result.map((video) => {
+        const {
+          _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date,
+          status,
+        } = video;
+
+        return {
+          id: _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date: new Date(date).toString(),
+          status,
+        };
+      });
+
       res.send({
-        message: "Video was successfully retrieved",
-        timestamp: new Date().toString(),
-        data: result,
+        message: "Videos was successfully retrieved",
+        data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -49,17 +315,168 @@ const findOne = (req, res) => {
     });
 };
 
-// Done
-const update = (req, res) => {
+// Find all videos by playlist ID for Pro Member (DONE)
+const findByPlaylistPro = (req, res) => {
+  const { playlistId } = req.params;
+
+  if (!playlistId) {
+    return res.status(400).send({
+      message: "Playlist ID is required",
+    });
+  }
+
+  Videos.find({ playlist: playlistId, status: "Published" })
+    .populate({
+      path: "playlist",
+      select: "_id name videoLevel videoCount",
+    })
+    .sort({ createdAt: -1 })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Video not found",
+        });
+      }
+
+      const data = result.map((video) => {
+        const {
+          _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date,
+        } = video;
+        return {
+          id: _id,
+          title,
+          description,
+          url,
+          thumbnail,
+          playlist,
+          tags,
+          views,
+          likes,
+          dislikes,
+          duration,
+          date: new Date(date).toString(),
+        };
+      });
+
+      res.send({
+        message: "Videos was successfully retrieved",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while showing videos.",
+      });
+    });
+};
+
+// Get Details of a video by ID for Admin (DONE)
+const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
   }
 
-  Videos.findByIdAndUpdate(id, req.body, { new: true })
+  Videos.findById(id)
+    .populate({
+      path: "playlist",
+      select: "_id name videoLevel videoCount status",
+    })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Video not found",
+        });
+      }
+
+      const {
+        _id,
+        title,
+        description,
+        url,
+        thumbnail,
+        playlist,
+        tags,
+        views,
+        likes,
+        dislikes,
+        duration,
+        date,
+      } = result;
+
+      const data = {
+        id: _id,
+        title,
+        description,
+        url,
+        thumbnail,
+        playlist,
+        tags,
+        views,
+        likes,
+        dislikes,
+        duration,
+        date: new Date(date).toString(),
+      };
+
+      res.send({
+        message: "Video was successfully retrieved",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while showing videos.",
+      });
+    });
+};
+
+// Update a video
+const update = async (req, res) => {
+  const { id } = req.params;
+
+  const { title, description, url, tags, duration, status } = req.body;
+
+  if (!id || !ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
+
+  if (url) {
+    const response = await updateVideoUrl(id, url);
+    if (response !== true) {
+      return res.status(409).send({
+        message: response,
+      });
+    }
+  }
+
+  Videos.findByIdAndUpdate(
+    id,
+    {
+      title,
+      description,
+      tags,
+      duration,
+      status,
+    },
+    { new: true }
+  )
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -69,7 +486,6 @@ const update = (req, res) => {
 
       res.send({
         message: "Video was updated",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -79,11 +495,11 @@ const update = (req, res) => {
     });
 };
 
-// Done
+// Delete a video
 const deleteVideo = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
@@ -99,7 +515,6 @@ const deleteVideo = (req, res) => {
 
       res.send({
         message: "Video was deleted",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -109,111 +524,103 @@ const deleteVideo = (req, res) => {
     });
 };
 
-// Done
-const findByPlaylist = (req, res) => {
-  const { playlistId } = req.params;
-
-  if (!playlistId) {
-    return res.status(400).send({
-      message: "Playlist ID is required",
-    });
-  }
-
-  Videos.find({ playlist: { playlistId: playlistId } })
-    .sort({ createdAt: 1 })
-    .then((result) => {
-      if (!result) {
-        return res.status(404).send({
-          message: "Video not found",
-        });
-      }
-
-      res.send({
-        message: "Videos was successfully retrieved",
-        timestamp: new Date().toString(),
-        data: result,
-      });
-    })
-    .catch((err) => {
-      return res.status(500).send({
-        message: err.message || "Some error while showing videos.",
-      });
-    });
-};
-
-// Done
-const create = (req, res) => {
-  const {
+// Create a video and update playlist video count (DONE)
+const create = async (req, res) => {
+  let {
+    playlistId,
     title,
     description,
-    playlistId,
+    url1080,
+    url720,
+    url480,
+    url360,
     tags,
-    category,
-    date,
     duration,
     status,
   } = req.body;
 
-  if (!title || !description || !playlistId || !category || !status) {
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  var thumbnailName = req.file.filename;
+  var thumbnailLink = `${protocol}://${req.get(
+    "host"
+  )}/assets/images/${thumbnailName}`;
+
+  if (
+    !title ||
+    !description ||
+    !playlistId ||
+    !url1080 ||
+    !url720 ||
+    !url480 ||
+    !duration
+  ) {
     return res.status(400).send({
       message:
-        "Title, description, playlistId, category, and status is required",
+        "Title, description, playlistId, videoURL, and status is required",
     });
   }
 
-  Playlist.findById(playlistId)
+  if (!url360) url360 = null;
+
+  if (!req.file) {
+    thumbnailName = null;
+    thumbnailLink = null;
+  }
+
+  const video = new Videos({
+    title,
+    description,
+    url: [
+      { quality: "1080p", url: url1080 },
+      { quality: "720p", url: url720 },
+      { quality: "480p", url: url480 },
+      { quality: "360p", url: url360 },
+    ],
+    thumbnail: { thumbnailName, thumbnailLink },
+    playlist: playlistId,
+    tags,
+    date: new Date().getTime(),
+    duration,
+    status,
+  });
+
+  const result = await video
+    .save()
     .then((result) => {
-      if (!result) {
-        return res.status(404).send({
-          message: "Playlist not found",
-        });
-      }
-
-      const playlistTitle = result.name;
-
-      const video = new Videos({
-        title,
-        description,
-        playlist: { playlistId, playlistTitle },
-        tags,
-        category,
-        date,
-        duration,
-        status,
-      });
-
-      video
-        .save()
-        .then((result) => {
-          res.send({
-            message: "Video was successfully created",
-            timestamp: new Date().toString(),
-            data: result,
-          });
-        })
-        .catch((err) => {
-          return res.status(500).send({
-            message: err.message || "Some error while creating video.",
-          });
-        });
+      return true;
     })
     .catch((err) => {
       return res.status(500).send({
-        message: err.message || "Some error while showing videos.",
+        message: err.message || "Some error while creating video.",
       });
     });
+
+  if (result) {
+    const updatePlaylist = await incrementPlaylistVideoCount(playlistId);
+
+    if (updatePlaylist === true) {
+      res.send({
+        message: "Video was created",
+      });
+    } else {
+      return res.status(500).send({
+        message: "Some error while creating video.",
+      });
+    }
+  }
 };
 
-// Done
-const uploadThumbnail = (req, res) => {
+// Update thumbnail
+const updateThumbnail = (req, res) => {
+  const protocol = req.protocol === "https" ? req.protocol : "https";
   const thumbnailName = req.file.filename;
-  const thumbnailLink = `${req.protocol}://${req.get(
+  const thumbnailLink = `${protocol}://${req.get(
     "host"
   )}/assets/images/${thumbnailName}`;
 
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
@@ -239,7 +646,6 @@ const uploadThumbnail = (req, res) => {
 
       res.send({
         message: "Video was updated",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -249,28 +655,19 @@ const uploadThumbnail = (req, res) => {
     });
 };
 
-// Done
-const uploadVideo = (req, res) => {
+// Update Video Status
+const updateStatus = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Video ID is required",
     });
   }
 
-  const videoName = req.file.filename;
-  const videoLink = `${req.protocol}://${req.get(
-    "host"
-  )}/assets/videos/${videoName}`;
+  const { status } = req.body;
 
-  if (!req.file) {
-    return res.status(400).send({
-      message: "Video file is required",
-    });
-  }
-
-  Videos.findByIdAndUpdate(id, { url: videoLink }, { new: true })
+  Videos.findByIdAndUpdate(id, { status }, { new: true })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -279,8 +676,7 @@ const uploadVideo = (req, res) => {
       }
 
       res.send({
-        message: "Video was updated",
-        timestamp: new Date().toString(),
+        message: "Video status was updated",
       });
     })
     .catch((err) => {
@@ -290,13 +686,239 @@ const uploadVideo = (req, res) => {
     });
 };
 
+// Change Video URL (Need to be tested)
+const changeVideoUrl = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id || !ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
+
+  let { url1080, url720, url480, url360 } = req.body;
+
+  const defaultData = await Videos.findById(id)
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Video not found",
+        });
+      }
+
+      return result;
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while update video.",
+      });
+    });
+
+  if (!url1080) url1080 = defaultData.url[0].url;
+  if (!url720) url720 = defaultData.url[1].url;
+  if (!url480) url480 = defaultData.url[2].url;
+  if (!url360) url360 = defaultData.url[3].url;
+
+  const result = await updateVideoUrl(id, url1080, url720, url480, url360);
+
+  if (result === true) {
+    res.send({
+      message: "Video URL was updated",
+    });
+  } else {
+    return res.status(500).send({
+      message: "Some error while update video.",
+    });
+  }
+};
+
+// Change Playlist Video (Need to be tested)
+const changePlaylistVideo = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id || !ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
+
+  const { playlistId } = req.body;
+
+  const video = await Videos.findById(id);
+
+  if (!video) {
+    return res.status(404).send({
+      message: "Video not found",
+    });
+  }
+
+  const updatePlaylist = await {
+    incrementPlaylistVideoCount,
+    decrementPlaylistVideoCount,
+  }(playlistId, video.playlist);
+
+  if (updatePlaylist === true) {
+    const result = await updatePlaylistVideo(id, playlistId);
+
+    if (result === true) {
+      res.send({
+        message: "Video playlist was updated",
+      });
+    } else {
+      return res.status(500).send({
+        message: "Some error while update video.",
+      });
+    }
+  } else {
+    return res.status(500).send({
+      message: "Some error while update video.",
+    });
+  }
+};
+
+// Watch video only for pro users if video is published (Need to be tested)
+const watchVideo = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id || !ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
+
+  const video = await Videos.findById(id).populate({
+    path: "playlist",
+    select: "_id name videoLevel videoCount",
+  });
+
+  if (!video) {
+    return res.status(404).send({
+      message: "Video not found",
+    });
+  }
+
+  if (video.status !== "Published") {
+    return res.status(400).send({
+      message: "Video is not published",
+    });
+  }
+
+  const updateViews = await updateVideoViews(id);
+
+  if (updateViews === true) {
+    const data = {
+      title: video.title,
+      description: video.description,
+      url: video.url,
+      thumbnail: video.thumbnail,
+      playlist: video.playlist,
+      tags: video.tags,
+      views: video.views,
+      likes: video.likes,
+      dislikes: video.dislikes,
+      duration: video.duration,
+      date: new Date(video.date).toString(),
+    };
+
+    res.send({
+      message: "Video successfully watched",
+      data,
+    });
+  } else {
+    return res.status(500).send({
+      message: "Some error while watching video.",
+    });
+  }
+};
+
+// Like video only for pro users if video is published (Need to be tested)
+const likeVideo = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id || !ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
+
+  const video = await Videos.findById(id);
+
+  if (!video) {
+    return res.status(404).send({
+      message: "Video not found",
+    });
+  }
+
+  if (video.status !== "Published") {
+    return res.status(400).send({
+      message: "Video is not published",
+    });
+  }
+
+  const updateLikes = await updateVideoLikes(id);
+
+  if (updateLikes === true) {
+    res.send({
+      message: "Video was liked",
+    });
+  } else {
+    return res.status(500).send({
+      message: "Some error while update video likes.",
+    });
+  }
+};
+
+// Dislike video only for pro users if video is published (Need to be tested)
+const dislikeVideo = async (req, res) => {
+  const { id } = req.params;
+
+  if (!id || !ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: "Video ID is required",
+    });
+  }
+
+  const video = await Videos.findById(id);
+
+  if (!video) {
+    return res.status(404).send({
+      message: "Video not found",
+    });
+  }
+
+  if (video.status !== "Published") {
+    return res.status(400).send({
+      message: "Video is not published",
+    });
+  }
+
+  const updateDislikes = await updateVideoDislikes(id);
+
+  if (updateDislikes === true) {
+    res.send({
+      message: "Video was disliked",
+    });
+  } else {
+    return res.status(500).send({
+      message: "Some error while update video dislikes.",
+    });
+  }
+};
+
 export {
   findAll,
+  findAllPro,
   findOne,
+  findByPlaylist,
+  findByPlaylistPro,
   update,
   deleteVideo,
-  findByPlaylist,
   create,
-  uploadThumbnail,
-  uploadVideo,
+  updateThumbnail,
+  updateStatus,
+  changeVideoUrl,
+  changePlaylistVideo,
+  watchVideo,
+  likeVideo,
+  dislikeVideo,
 };

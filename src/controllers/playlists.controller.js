@@ -1,21 +1,55 @@
 import db from "../models/index.js";
 const Playlists = db.playlists;
+import dataCounter from "./function/dataCounter.function.js";
 
-// Done
-const findAll = (req, res) => {
-  const { category, videoLevel } = req.params;
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
 
-  const query = {};
+// Find All Playlists for Admin
+const findAll = async (req, res) => {
+  let { category, videoLevel, status, page } = req.query;
 
-  if (category) {
-    query.category = category;
-  }
+  var query = {};
 
-  if (videoLevel) {
-    query.videoLevel = videoLevel;
-  }
+  if (category) query.category = category;
+  if (videoLevel) query.videoLevel = videoLevel;
+  if (status) query.status = status;
 
-  Playlists.find(query)
+  if (page === undefined) page = 1;
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Playlists, pageLimit, query);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Playlists.find(query)
+    .skip(skip)
+    .limit(pageLimit)
     .sort({ createdAt: -1 })
     .then((result) => {
       if (!result) {
@@ -24,10 +58,23 @@ const findAll = (req, res) => {
         });
       }
 
+      const data = result.map((item) => {
+        return {
+          id: item._id,
+          name: item.name,
+          category: item.category,
+          description: item.description,
+          instructor: item.instructor,
+          videoLevel: item.videoLevel,
+          image: item.image,
+          videoCount: item.videoCount,
+        };
+      });
+
       res.send({
         message: "All playlist were fetched successfully",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -37,31 +84,188 @@ const findAll = (req, res) => {
     });
 };
 
-// Done
+// Find All Playlists name and id for Admin
+const findAllNameId = (req, res) => {
+  Playlists.find()
+    .sort({ createdAt: -1 })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      const data = result.map((item) => {
+        return {
+          id: item._id,
+          name: item.name,
+          status: item.status,
+        };
+      });
+
+      res.send({
+        message: "All playlist were fetched successfully",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while retrieving playlists.",
+      });
+    });
+};
+
+// Find All Playlists for Pro User
+const findAllforPro = async (req, res) => {
+  let { page, pageLimit } = req.query;
+
+  const query = { status: "Published" };
+
+  if (page === undefined) page = 1;
+  if (pageLimit === undefined) pageLimit = 10;
+
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Playlists, pageLimit, query);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Playlists.find(query)
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      const data = result.map((item) => {
+        return {
+          id: item._id,
+          name: item.name,
+          category: item.category,
+          description: item.description,
+          instructor: item.instructor,
+          videoLevel: item.videoLevel,
+          image: item.image,
+          videoCount: item.videoCount,
+        };
+      });
+
+      res.send({
+        message: "All playlist were fetched successfully",
+        data,
+        page: pageData,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while retrieving playlists.",
+      });
+    });
+};
+
+// Find All Playlists for Basic User
+const findAllforUsers = (req, res) => {
+  Playlists.find({ status: "Published", videoLevel: "Beginner" })
+    .limit(3)
+    .sort({ createdAt: -1 })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      const data = result.map((item) => {
+        return {
+          id: item._id,
+          name: item.name,
+          category: item.category,
+          description: item.description,
+          instructor: item.instructor,
+          videoLevel: item.videoLevel,
+          image: item.image,
+          videoCount: item.videoCount,
+        };
+      });
+
+      res.send({
+        message: "All playlist were fetched successfully",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while retrieving playlists.",
+      });
+    });
+};
+
+// Create a new Playlist
 const create = (req, res) => {
+  if (!req.file) {
+    return res.status(400).send({
+      message: "Image is required",
+    });
+  }
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
   const photoName = req.file.filename;
-  const photoLink = `${req.protocol}://${req.get(
+  const photoLink = `${protocol}://${req.get(
     "host"
   )}/assets/images/${photoName}`;
 
-  const playlists = new Playlists({
-    name: req.body.name,
-    category: req.body.category,
-    description: req.body.description,
+  const { name, category, description, instructor, videoLevel } = req.body;
+
+  if (!name || !description || !videoLevel) {
+    return res.status(400).send({
+      message: "Name, Description and Video Level are required",
+    });
+  }
+
+  const playlist = new Playlists({
+    name,
+    category,
+    description,
+    instructor,
+    videoLevel,
     image: {
       imageName: photoName,
       imageLink: photoLink,
     },
-    videoCount: 0,
-    status: "active",
   });
 
-  playlists
-    .save(playlists)
+  playlist
+    .save()
     .then((result) => {
       res.status(200).send({
         message: "Playlist successfully added.",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -71,11 +275,11 @@ const create = (req, res) => {
     });
 };
 
-// Done
+// Find details of a Playlist
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Playlist ID is required",
     });
@@ -89,10 +293,20 @@ const findOne = (req, res) => {
         });
       }
 
+      const data = {
+        id: result._id,
+        name: result.name,
+        category: result.category,
+        description: result.description,
+        instructor: result.instructor,
+        videoLevel: result.videoLevel,
+        image: result.image,
+        videoCount: result.videoCount,
+      };
+
       res.send({
         message: "Playlist was fetched successfully",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
       });
     })
     .catch((err) => {
@@ -102,17 +316,29 @@ const findOne = (req, res) => {
     });
 };
 
-// Done
+// Update a Playlist
 const update = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Playlist ID is required",
     });
   }
 
-  Playlists.findByIdAndUpdate(id, req.body, { new: true })
+  const { name, category, description, instructor, videoLevel } = req.body;
+
+  Playlists.findByIdAndUpdate(
+    id,
+    {
+      name,
+      category,
+      description,
+      instructor,
+      videoLevel,
+    },
+    { new: true }
+  )
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -122,7 +348,6 @@ const update = (req, res) => {
 
       res.send({
         message: "Playlist was updated",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -132,11 +357,61 @@ const update = (req, res) => {
     });
 };
 
-// Done
+// Update Thumbnail of Playlist
+const updateThumbnail = (req, res) => {
+  const { id } = req.params;
+
+  if (!id || !ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: "Playlist ID is required",
+    });
+  }
+
+  if (!req.file) {
+    return res.status(400).send({
+      message: "Image is required",
+    });
+  }
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const photoName = req.file.filename;
+  const photoLink = `${protocol}://${req.get(
+    "host"
+  )}/assets/images/${photoName}`;
+
+  Playlists.findByIdAndUpdate(
+    id,
+    {
+      image: {
+        imageName: photoName,
+        imageLink: photoLink,
+      },
+    },
+    { new: true }
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      res.send({
+        message: "Playlist thumbnail was updated",
+      });
+    })
+    .catch((err) => {
+      return res.status(409).send({
+        message: err.message || "Some error while update playlist.",
+      });
+    });
+};
+
+// Delete a Playlist
 const deletePlaylist = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Playlist ID is required",
     });
@@ -152,7 +427,6 @@ const deletePlaylist = (req, res) => {
 
       res.send({
         message: "Playlist was deleted",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -162,4 +436,52 @@ const deletePlaylist = (req, res) => {
     });
 };
 
-export { findAll, create, findOne, update, deletePlaylist };
+// Change Playlist Status
+const changeStatus = (req, res) => {
+  const { id } = req.params;
+
+  if (!id || !ObjectId.isValid(id)) {
+    return res.status(400).send({
+      message: "Playlist ID is required",
+    });
+  }
+
+  const { status } = req.body;
+
+  Playlists.findByIdAndUpdate(
+    id,
+    {
+      status,
+    },
+    { new: true }
+  )
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Playlist not found",
+        });
+      }
+
+      res.send({
+        message: "Playlist status was updated",
+      });
+    })
+    .catch((err) => {
+      return res.status(409).send({
+        message: err.message || "Some error while update playlist.",
+      });
+    });
+};
+
+export {
+  findAll,
+  findAllNameId,
+  findAllforPro,
+  findAllforUsers,
+  create,
+  findOne,
+  update,
+  updateThumbnail,
+  deletePlaylist,
+  changeStatus,
+};

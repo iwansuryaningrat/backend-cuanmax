@@ -1,17 +1,14 @@
-// import { transactionsTest } from "../controllers/transactions.controller.js";
-// import { liveclassTransactions } from "../controllers/midtrans/midtrans.controller.js";
-import { login, admin } from "../middlewares/auth.js";
+import { create as liveclassTransaction } from "../controllers/liveclassTransaction.controller.js";
+import { create as membershipTransaction } from "../controllers/membershipTransaction.controller.js";
+
 import Express from "express";
 const router = Express.Router();
-import headers from "../services/headers.js";
 
-const transactionsRouter = (app) => {
-  app.use(headers);
+const transactionRouter = (app) => {
+  router.post("/:userId/liveclass", liveclassTransaction);
+  router.post("/:userId/membership", membershipTransaction);
 
-  // router.post("/:liveclassCode", liveclassTransactions);
-  // router.post("/", transactionsTest);
-
-  app.use("/api/v1/transactions", router);
+  app.use("/v1/transaction", router);
 };
 
-export default transactionsRouter;
+export default transactionRouter;

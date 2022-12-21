@@ -1,10 +1,11 @@
 import db from "../models/index.js";
 const Watchlist = db.watchlist;
+import dataCounter from "./function/dataCounter.function.js";
 
-// Done
-const findAll = (req, res) => {
-  const { category, tags, allData } = req.query;
-  const query = {};
+// Find All data for admin
+const findAll = async (req, res) => {
+  const { category, tags, page, date } = req.query;
+  let query = {};
 
   if (category) {
     query.category = category;
@@ -14,11 +15,43 @@ const findAll = (req, res) => {
     query.tags = { $in: tags.split(",") };
   }
 
-  if (!allData) {
-    query.isActive = true;
+  if (date) {
+    query.date = date;
   }
 
-  Watchlist.find(query)
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Watchlist, pageLimit, query);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Watchlist.find(query)
+    .skip(skip)
+    .limit(pageLimit)
     .sort({ createdAt: -1 })
     .then((result) => {
       if (!result) {
@@ -27,10 +60,39 @@ const findAll = (req, res) => {
         });
       }
 
+      const data = result.map((item) => {
+        const {
+          _id,
+          name,
+          code,
+          category,
+          tags,
+          date,
+          lastPrice,
+          buyArea,
+          stopLoss,
+          takeProfit,
+          status,
+        } = item;
+        return {
+          id: _id,
+          name,
+          code,
+          category,
+          tags,
+          date,
+          lastPrice,
+          buyArea,
+          stopLoss,
+          takeProfit,
+          status,
+        };
+      });
+
       res.send({
         message: "Watchlist fetched successfully",
-        timestamp: new Date().toString(),
-        data: result,
+        data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -41,7 +103,109 @@ const findAll = (req, res) => {
     });
 };
 
-// Done
+// Find All data for pro member
+const findAllPro = async (req, res) => {
+  const { category, tags, date } = req.query;
+  let query = {};
+  query.status = "Active";
+
+  if (category) {
+    query.category = category;
+  }
+
+  if (tags) {
+    query.tags = { $in: tags.split(",") };
+  }
+
+  if (date) {
+    query.date = date;
+  }
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Watchlist, pageLimit, query);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Watchlist.find(query)
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Watchlist not found",
+        });
+      }
+
+      const data = result.map((item) => {
+        const {
+          _id,
+          name,
+          code,
+          category,
+          tags,
+          date,
+          lastPrice,
+          buyArea,
+          stopLoss,
+          takeProfit,
+          status,
+        } = item;
+        return {
+          id: _id,
+          name,
+          code,
+          category,
+          tags,
+          date,
+          lastPrice,
+          buyArea,
+          stopLoss,
+          takeProfit,
+          status,
+        };
+      });
+
+      res.send({
+        message: "Watchlist fetched successfully",
+        data,
+        page: pageData,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        message:
+          err.message || "Some error occurred while retrieving watchlist.",
+      });
+    });
+};
+
+// Find one data by id
 const findOne = (req, res) => {
   const { id } = req.params;
 
@@ -61,7 +225,6 @@ const findOne = (req, res) => {
 
       res.send({
         message: "Watchlist successfully fetched",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -72,7 +235,7 @@ const findOne = (req, res) => {
     });
 };
 
-// Done
+// Delete one data by id
 const deleteWl = (req, res) => {
   const { id } = req.params;
 
@@ -92,7 +255,6 @@ const deleteWl = (req, res) => {
 
       res.send({
         message: "Watchlist was deleted",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -102,7 +264,7 @@ const deleteWl = (req, res) => {
     });
 };
 
-// Done
+// Non Activate one data by id
 const nonActivate = (req, res) => {
   const { id } = req.params;
 
@@ -122,7 +284,6 @@ const nonActivate = (req, res) => {
 
       res.send({
         message: "Watchlist was non-activated",
-        timestamp: new Date().toString(),
       });
     })
     .catch((err) => {
@@ -132,7 +293,7 @@ const nonActivate = (req, res) => {
     });
 };
 
-// Done
+// Create a data
 const create = (req, res) => {
   const {
     name,
@@ -201,7 +362,6 @@ const create = (req, res) => {
     .then((result) => {
       res.send({
         message: "Watchlist was created successfully",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -212,6 +372,7 @@ const create = (req, res) => {
     });
 };
 
+// Update a data
 const update = (req, res) => {
   const { id } = req.params;
 
@@ -279,7 +440,6 @@ const update = (req, res) => {
 
       res.send({
         message: "Watchlist was updated successfully",
-        timestamp: new Date().toString(),
         data: result,
       });
     })
@@ -290,4 +450,4 @@ const update = (req, res) => {
     });
 };
 
-export { findAll, findOne, deleteWl, nonActivate, create, update };
+export { findAll, findAllPro, findOne, deleteWl, nonActivate, create, update };
