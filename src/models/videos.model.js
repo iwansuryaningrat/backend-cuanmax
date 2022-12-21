@@ -7,10 +7,18 @@ export default (mongoose) => {
         require: true,
       },
       description: String,
-      url: {
-        type: String,
-        require: true,
-      },
+      url: [
+        {
+          quality: {
+            type: String,
+            require: true,
+          },
+          url: {
+            type: String,
+            require: true,
+          },
+        },
+      ],
       thumbnail: {
         thumbnailName: {
           type: String,
@@ -28,11 +36,25 @@ export default (mongoose) => {
         require: true,
       },
       tags: [String],
-      views: Number,
-      likes: Number,
-      dislikes: Number,
-      duration: Number,
-      date: Date,
+      views: {
+        type: Number,
+        default: 0,
+      },
+      likes: {
+        type: Number,
+        default: 0,
+      },
+      dislikes: {
+        type: Number,
+        default: 0,
+      },
+      duration: {
+        type: Number,
+        default: 0,
+      },
+      date: {
+        type: Number,
+      },
       status: {
         type: String,
         require: true,
@@ -40,7 +62,7 @@ export default (mongoose) => {
           values: ["Draft", "Published", "Archived"],
           message: "Status must be Draft, Published or Archived",
         },
-        default: "Draft",
+        default: "Published",
       },
     },
     { timestamps: true }

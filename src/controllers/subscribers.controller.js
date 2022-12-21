@@ -1,9 +1,13 @@
 import db from "../models/index.js";
 const Subscribers = db.subscribers;
+import dataCounter from "./function/dataCounter.function.js";
+
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch all Subscribers (DONE)
-const findAll = (req, res) => {
-  const { active } = req.query;
+const findAll = async (req, res) => {
+  let { active, page } = req.query;
 
   var condition = {};
 
@@ -11,7 +15,41 @@ const findAll = (req, res) => {
     condition.status = "Active";
   }
 
-  Subscribers.find(condition)
+  if (page === undefined) page = 1;
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Subscribers, pageLimit, condition);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Subscribers.find(condition)
+    .skip(skip)
+    .limit(pageLimit)
     .sort({ createdAt: -1 })
     .then((result) => {
       if (result.length === 0) {
@@ -21,17 +59,22 @@ const findAll = (req, res) => {
       }
 
       const data = result.map((item) => {
+        const { _id, email, startDate, endDate, status } = item;
+        let newEndDate = new Date(endDate).toString();
+        if (endDate == null || endDate == 0) newEndDate = null;
         return {
-          email: item.email,
-          startDate: item.startDate.toString(),
-          endDate: item.endDate.toString(),
-          status: item.status,
+          id: _id,
+          email: email,
+          startDate: new Date(startDate).toString(),
+          endDate: newEndDate,
+          status: status,
         };
       });
 
       res.send({
         message: "Subscribers successfully fetched.",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -89,7 +132,7 @@ const create = (req, res) => {
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Subscriber ID is required.",
     });
@@ -103,10 +146,14 @@ const findOne = (req, res) => {
         });
       }
 
+      let newEndDate = new Date(result.endDate).toString();
+      if (result.endDate == null || result.endDate == 0) newEndDate = null;
+
       const data = {
+        id: result._id,
         email: result.email,
-        startDate: result.startDate.toString(),
-        endDate: result.endDate.toString(),
+        startDate: new Date(result.startDate).toString(),
+        endDate: newEndDate,
         status: result.status,
       };
 
@@ -126,7 +173,7 @@ const findOne = (req, res) => {
 const deleteSubs = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Subscriber ID is required.",
     });
@@ -155,13 +202,19 @@ const deleteSubs = (req, res) => {
 const deactivate = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Subscriber ID is required.",
     });
   }
 
-  Subscribers.findByIdAndUpdate(id, { status: "Inactive" }, { new: true })
+  const endDate = new Date();
+
+  Subscribers.findByIdAndUpdate(
+    id,
+    { endDate, status: "Inactive" },
+    { new: true }
+  )
     .then((result) => {
       if (!result) {
         return res.status(404).send({

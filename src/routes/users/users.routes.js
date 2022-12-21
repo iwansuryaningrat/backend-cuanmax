@@ -6,7 +6,7 @@ import {
   requestUserActivation,
 } from "../../controllers/users.controller.js";
 import { login } from "../../middlewares/auth.js";
-import userFinder from "../../middlewares/usersfinder.js";
+import { userFinder } from "../../middlewares/usersfinder.js";
 import Express from "express";
 const router = Express.Router();
 

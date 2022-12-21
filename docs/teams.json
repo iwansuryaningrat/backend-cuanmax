@@ -19,5 +19,795 @@
       "url": "http://159.223.84.116/api/v1"
     }
   ],
-  "paths": {}
+  "paths": {
+    "/admin/teams": {
+      "post": {
+        "tags": ["Teams - Admin"],
+        "summary": "Create Team",
+        "description": "Create Team for Admin",
+        "operationId": "createTeam",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Teams Body"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully created."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Teams - Admin"],
+        "summary": "Get All Teams",
+        "description": "Get All Teams for Admin",
+        "operationId": "getAllTeamsforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "name": "active",
+            "in": "query",
+            "description": "Filter by active status",
+            "required": false,
+            "allowEmptyValue": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "position": {
+                            "type": "string"
+                          },
+                          "photo": {
+                            "type": "string"
+                          },
+                          "contact": {
+                            "type": "object",
+                            "properties": {
+                              "instagram": {
+                                "type": "string"
+                              },
+                              "email": {
+                                "type": "string"
+                              },
+                              "twitter": {
+                                "type": "string"
+                              },
+                              "linkedin": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Teams successfully fetched.",
+                  "data": [
+                    {
+                      "id": "5f9f1b9b9c9d0c0017b8b1a1",
+                      "name": "Name",
+                      "description": "description",
+                      "position": "CEO",
+                      "photo": "https://example.com/photo.jpg",
+                      "contact": {
+                        "instagram": "https://www.instagram.com/username/",
+                        "email": "example@mail.com",
+                        "twitter": "https://www.twitter.com/username/",
+                        "linkedin": "https://www.linkedin.com/username/"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/teams/{Team ID}": {
+      "get": {
+        "tags": ["Teams - Admin"],
+        "summary": "Get Team",
+        "description": "Get Team for Admin",
+        "operationId": "getTeamforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Team ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "position": {
+                          "type": "string"
+                        },
+                        "photo": {
+                          "type": "string"
+                        },
+                        "contact": {
+                          "type": "object",
+                          "properties": {
+                            "instagram": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "twitter": {
+                              "type": "string"
+                            },
+                            "linkedin": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully fetched.",
+                  "data": {
+                    "id": "5f9f1b9b9c9d0c0017b8b1a1",
+                    "name": "Name",
+                    "description": "description",
+                    "position": "CEO",
+                    "photo": "https://example.com/photo.jpg",
+                    "contact": {
+                      "instagram": "https://www.instagram.com/username/",
+                      "email": "example@mail.com",
+                      "twitter": "https://www.twitter.com/username/",
+                      "linkedin": "https://www.linkedin.com/username/"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Teams - Admin"],
+        "summary": "Update Team",
+        "description": "Update Team for Admin",
+        "operationId": "updateTeamforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Team ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Teams Body"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team data successfully updated."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Teams - Admin"],
+        "summary": "Delete Team",
+        "description": "Delete Team for Admin",
+        "operationId": "deleteTeamforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Team ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully deleted."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/teams/{Team ID}/teamprofile": {
+      "put": {
+        "tags": ["Teams - Admin"],
+        "summary": "Update Team Profile",
+        "description": "Update Team Profile for Admin",
+        "operationId": "updateTeamProfileforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Team ID"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Change Profile Picture"
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team profile successfully updated."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "422": {
+            "$ref": "#/components/responses/Unprocessable Entity"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/admin/teams/{Team ID}/deactivate": {
+      "put": {
+        "tags": ["Teams - Admin"],
+        "summary": "Deactivate Team",
+        "description": "Deactivate Team for Admin",
+        "operationId": "deactivateTeamforAdmin",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-auth-token"
+          },
+          {
+            "$ref": "#/components/parameters/Team ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Team successfully deactivated."
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Bad Request"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    },
+    "/teams": {
+      "get": {
+        "tags": ["Teams"],
+        "summary": "Get All Teams",
+        "description": "Get All Teams",
+        "operationId": "getAllTeams",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "position": {
+                            "type": "string"
+                          },
+                          "photo": {
+                            "type": "string"
+                          },
+                          "contact": {
+                            "type": "object",
+                            "properties": {
+                              "instagram": {
+                                "type": "string"
+                              },
+                              "email": {
+                                "type": "string"
+                              },
+                              "twitter": {
+                                "type": "string"
+                              },
+                              "linkedin": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Teams successfully fetched.",
+                  "data": [
+                    {
+                      "name": "Name",
+                      "description": "description",
+                      "position": "CEO",
+                      "photo": "https://example.com/photo.jpg",
+                      "contact": {
+                        "instagram": "https://www.instagram.com/username/",
+                        "email": "example@mail.com",
+                        "twitter": "https://www.twitter.com/username/",
+                        "linkedin": "https://www.linkedin.com/username/"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/Not Found"
+          },
+          "500": {
+            "$ref": "#/components/responses/Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "x-auth-token": {
+        "name": "x-auth-token",
+        "in": "header",
+        "description": "JWT Token",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string",
+          "format": "int64"
+        }
+      },
+      "Team ID": {
+        "name": "Team ID",
+        "in": "path",
+        "description": "Team ID",
+        "required": true,
+        "allowEmptyValue": false,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "Bad Request": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "User ID is Required!"
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "No token, authorization denied!"
+              }
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "You are not authorized to do this action!"
+              }
+            }
+          }
+        }
+      },
+      "Not Found": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "User not found!"
+              }
+            }
+          }
+        }
+      },
+      "Method Not Allowed": {
+        "description": "Method Not Allowed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "Method Not Allowed!"
+              }
+            }
+          }
+        }
+      },
+      "Conflict": {
+        "description": "Conflict",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "User Already Exist. Please Login"
+              }
+            }
+          }
+        }
+      },
+      "Unprocessable Entity": {
+        "description": "Unprocessable Entity",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "No file uploaded"
+              }
+            }
+          }
+        }
+      },
+      "Internal Server Error": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "message": "Some error occurred while fetching data!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "Change Profile Picture": {
+        "description": "Change Profile Picture",
+        "content": {
+          "multipart/form-data": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "image": {
+                  "type": "string",
+                  "format": "binary",
+                  "required": true,
+                  "description": "Image file",
+                  "nullable": false
+                }
+              }
+            },
+            "example": {
+              "image": "file"
+            }
+          }
+        }
+      },
+      "Teams Body": {
+        "description": "Teams Body",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "position": {
+                  "type": "string"
+                },
+                "instagram": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "twitter": {
+                  "type": "string"
+                },
+                "linkedin": {
+                  "type": "string"
+                }
+              },
+              "example": {
+                "name": "Name",
+                "description": "description",
+                "position": "CEO",
+                "instagram": "https://www.instagram.com/username/",
+                "email": "example@mail.com",
+                "twitter": "https://www.twitter.com/username/",
+                "linkedin": "https://www.linkedin.com/username/"
+              },
+              "required": ["name", "description", "position"]
+            }
+          }
+        }
+      }
+    }
+  }
 }
