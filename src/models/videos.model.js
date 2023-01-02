@@ -49,7 +49,7 @@ export default (mongoose) => {
         default: 0,
       },
       duration: {
-        type: Number,
+        type: String,
         default: 0,
       },
       date: {
