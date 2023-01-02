@@ -14,9 +14,7 @@ export default (mongoose) => {
         type: String,
         require: true,
       },
-      tags: {
-        type: [String],
-      },
+      tags: [{ type: String }],
       date: {
         type: Date,
         require: true,
