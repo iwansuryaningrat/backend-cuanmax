@@ -3,14 +3,15 @@ const Users = db.users;
 const Referrals = db.referrals;
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import adminCheck from "../services/admincheck.service.js";
+import adminCheck from "./function/admincheck.function.js";
+import dataCounter from "./function/dataCounter.function.js";
 
 import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
 
 // Fetch all users - Admin Only (need to be updated)
-const findAll = (req, res) => {
-  const { admin, basic, pro } = req.query;
+const findAll = async (req, res) => {
+  let { admin, basic, pro, page } = req.query;
 
   var condition = {};
 
@@ -24,13 +25,47 @@ const findAll = (req, res) => {
     condition = {};
   }
 
-  Users.find(condition)
-    .sort({ createdAt: -1 })
+  if (page === undefined) page = 1;
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Users, pageLimit, condition);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Users.find(condition)
     .populate({
       path: "referral",
       select:
         "referralCode referralCount referralAccount referralTotalAmount referralAvailableAmount referralWithDraw referralWithDrawBank referralWithDrawHistory referralStatus ",
     })
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((result) => {
       if (!result) {
         return res.status(404).send({
@@ -78,6 +113,7 @@ const findAll = (req, res) => {
       res.status(200).send({
         message: "Users fetched successfully!",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -92,7 +128,7 @@ const findAll = (req, res) => {
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "User ID is required!",
     });
@@ -174,7 +210,7 @@ const findOne = (req, res) => {
 const deleteUSer = async (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "User ID is required",
     });
@@ -212,7 +248,7 @@ const deleteUSer = async (req, res) => {
 const update = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "User ID is required.",
     });
@@ -239,13 +275,25 @@ const update = (req, res) => {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: "12h",
+          expiresIn: "3h",
+        }
+      );
+
+      const refreshToken = jwt.sign(
+        {
+          id: result.id,
+          email: result.email,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "6h",
         }
       );
 
       res.send({
         message: "User updated successfully.",
         token,
+        refreshToken,
       });
     })
     .catch((err) => {
@@ -261,7 +309,7 @@ const changePassword = (req, res) => {
   const { oldPassword } = req.body;
   let newPassword = req.body.newPassword;
 
-  if (!id || !oldPassword || !newPassword) {
+  if (!id || !ObjectId.isValid(id) || !oldPassword || !newPassword) {
     return res.status(400).send({
       message: "User ID, Old Password, and New Password are required",
     });
@@ -337,7 +385,7 @@ const changePassword = (req, res) => {
 const changeProfilePicture = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "User ID is required",
     });
@@ -356,8 +404,9 @@ const changeProfilePicture = (req, res) => {
     });
   }
 
+  const protocol = req.protocol === "https" ? req.protocol : "https";
   const imageName = req.file.filename;
-  const imageLink = `${req.protocol}://${req.get(
+  const imageLink = `${protocol}://${req.get(
     "host"
   )}/assets/images/${imageName}`;
 
@@ -391,13 +440,25 @@ const changeProfilePicture = (req, res) => {
         },
         process.env.JWT_SECRET,
         {
-          expiresIn: "12h",
+          expiresIn: "3h",
+        }
+      );
+
+      const refreshToken = jwt.sign(
+        {
+          id: result.id,
+          email: result.email,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "6h",
         }
       );
 
       res.send({
         message: "User's profile picture updated successfully.",
         token,
+        refreshToken,
       });
     })
     .catch((err) => {
@@ -414,7 +475,7 @@ const createReferralCode = (req, res) => {
   const { id } = req.params;
   var { referralCode } = req.body;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "User ID is required",
     });
@@ -531,7 +592,7 @@ const changeProMemberToBasicMember = async (req, res) => {
 const requestUserActivation = async (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "User ID is required",
     });

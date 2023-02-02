@@ -1,10 +1,14 @@
 import db from "../models/index.js";
 const Services = db.services;
+import dataCounter from "./function/dataCounter.function.js";
+
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
 
 // Find all services in database (Done)
-const findAll = (req, res) => {
+const findAll = async (req, res) => {
   // Active filter by query params
-  let { active } = req.query;
+  let { active, page } = req.query;
 
   active = active ? active : true;
 
@@ -17,7 +21,42 @@ const findAll = (req, res) => {
     condition = {};
   }
 
-  Services.find(condition)
+  if (page === undefined) page = 1;
+
+  const pageLimit = 10;
+  const skip = pageLimit * (page - 1);
+  const dataCount = await dataCounter(Services, pageLimit, condition);
+
+  const nextPage = parseInt(page) + 1;
+  const prevPage = parseInt(page) - 1;
+
+  const protocol = req.protocol === "https" ? req.protocol : "https";
+  const link = `${protocol}://${req.get("host")}${req.baseUrl}`;
+  var nextLink =
+    nextPage > dataCount.pageCount
+      ? `${link}?page=${dataCount.pageCount}`
+      : `${link}?page=${nextPage}`;
+  var prevLink = page > 1 ? `${link}?page=${prevPage}` : null;
+  var lastLink = `${link}?page=${dataCount.pageCount}`;
+  var firstLink = `${link}?page=1`;
+
+  const pageData = {
+    currentPage: parseInt(page),
+    pageCount: dataCount.pageCount,
+    dataPerPage: parseInt(pageLimit),
+    dataCount: dataCount.dataCount,
+    links: {
+      next: nextLink,
+      prev: prevLink,
+      last: lastLink,
+      first: firstLink,
+    },
+  };
+
+  await Services.find(condition)
+    .skip(skip)
+    .limit(pageLimit)
+    .sort({ createdAt: -1 })
     .then((result) => {
       if (result.length === 0) {
         return res.status(404).send({
@@ -39,6 +78,7 @@ const findAll = (req, res) => {
       res.send({
         message: "Services was found",
         data,
+        page: pageData,
       });
     })
     .catch((err) => {
@@ -76,20 +116,21 @@ const create = (req, res) => {
 const uploadImage = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Id is required",
     });
   }
 
-  if (!req.files) {
+  if (!req.file) {
     return res.status(400).send({
       message: "No files were uploaded.",
     });
   }
 
+  const protocol = req.protocol === "https" ? req.protocol : "https";
   const photoName = req.file.filename;
-  const photoLink = `${req.protocol}://${req.get(
+  const photoLink = `${protocol}://${req.get(
     "host"
   )}/assets/images/${photoName}`;
 
@@ -120,7 +161,7 @@ const uploadImage = (req, res) => {
 const findOne = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Id is required",
     });
@@ -158,7 +199,7 @@ const findOne = (req, res) => {
 const deleteService = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Id is required",
     });
@@ -188,7 +229,7 @@ const update = (req, res) => {
   const { id } = req.params;
   const { serviceName, description, benefits } = req.body;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Id is required",
     });
@@ -222,7 +263,7 @@ const addBenefit = (req, res) => {
   const { id } = req.params;
   const { benefit } = req.body;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Id is required",
     });
@@ -255,7 +296,7 @@ const addBenefit = (req, res) => {
 const deactivate = (req, res) => {
   const { id } = req.params;
 
-  if (!id) {
+  if (!id || !ObjectId.isValid(id)) {
     return res.status(400).send({
       message: "Id is required",
     });
@@ -280,8 +321,41 @@ const deactivate = (req, res) => {
     });
 };
 
+// Find all services for users (Done)
+const findAllForUsers = (req, res) => {
+  Services.find({ status: "Active" })
+    .then((result) => {
+      if (!result) {
+        return res.status(404).send({
+          message: "Service not found",
+        });
+      }
+
+      const data = result.map((item) => {
+        return {
+          id: item._id,
+          serviceName: item.serviceName,
+          description: item.description,
+          image: item.image,
+          benefits: item.benefits,
+        };
+      });
+
+      res.send({
+        message: "Services were found",
+        data,
+      });
+    })
+    .catch((err) => {
+      return res.status(500).send({
+        message: err.message || "Some error while showing services.",
+      });
+    });
+};
+
 export {
   findAll,
+  findAllForUsers,
   create,
   uploadImage,
   findOne,

@@ -8,7 +8,7 @@ import Express from "express";
 const router = Express.Router();
 
 const referralRouter = (app) => {
-  router.put("/addbank/:referralCode", login, proMember, addBankAccount);
+  router.post("/addbank/:referralCode", login, proMember, addBankAccount);
   router.put("/:referralCode", login, proMember, changeReferralCode);
   router.post("/wd/:referralCode", login, proMember, requestWD);
 

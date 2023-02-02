@@ -38,7 +38,11 @@ export default (mongoose) => {
           default: "https://via.placeholder.com/150",
         },
       },
-      videoCount: Number,
+      videoCount: {
+        type: Number,
+        require: true,
+        default: 0,
+      },
       status: {
         type: String,
         require: true,
@@ -46,7 +50,7 @@ export default (mongoose) => {
           values: ["Draft", "Published", "Archived"],
           message: "Status must be Draft, Published or Archived",
         },
-        default: "Draft",
+        default: "Published",
       },
     },
     { timestamps: true }

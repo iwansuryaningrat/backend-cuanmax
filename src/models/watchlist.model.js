@@ -17,7 +17,7 @@ export default (mongoose) => {
       tags: {
         type: [String],
       },
-      sector: {
+      date: {
         type: String,
         require: true,
       },
